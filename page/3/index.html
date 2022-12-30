@@ -183,7 +183,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2022-12-30 15:18:42 / Modified: 15:44:32" itemprop="dateCreated datePublished" datetime="2022-12-30T15:18:42+08:00">2022-12-30</time>
+              <time title="Created: 2022-12-30 15:18:42 / Modified: 16:49:28" itemprop="dateCreated datePublished" datetime="2022-12-30T15:18:42+08:00">2022-12-30</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -206,91 +206,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="『新手日記』Day-7-JavaScript-變數的資料型別"><a href="#『新手日記』Day-7-JavaScript-變數的資料型別" class="headerlink" title="『新手日記』Day-7 JavaScript 變數的資料型別"></a><strong>『新手日記』Day-7 JavaScript 變數的資料型別</strong></h1><p><img src="https://miro.medium.com/max/1400/1*INfjPtQvb9etMGLVuS0YMw.jpeg" alt="https://miro.medium.com/max/1400/1*INfjPtQvb9etMGLVuS0YMw.jpeg"></p>
-<h2 id="終於進入JavaScript了，撒花～～～～這次複習JavaScript主要會使用3份教材：AC課件："><a href="#終於進入JavaScript了，撒花～～～～這次複習JavaScript主要會使用3份教材：AC課件：" class="headerlink" title="終於進入JavaScript了，撒花～～～～這次複習JavaScript主要會使用3份教材：ＡＣ課件："></a><strong>終於進入JavaScript了，撒花～～～～這次複習JavaScript主要會使用3份教材：<em>ＡＣ課件：</em></strong></h2><p>一步步複習回去到學期2–2。</p>
-<h2 id="0-陷阱！0-誤解！8-天重新認識-JavaScript！："><a href="#0-陷阱！0-誤解！8-天重新認識-JavaScript！：" class="headerlink" title="0 陷阱！0 誤解！8 天重新認識 JavaScript！："></a><strong>0 陷阱！0 誤解！8 天重新認識 JavaScript！：</strong></h2><p><a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/users/20129300/ironman">Zet</a>學長在鐵人挑戰賽有一篇“學好 React 需要的前置基本功”有提到這位作者的兩篇發表的文章，在看的時候發現他有出書就買了&gt;&lt;”</p>
-<h2 id="Wilson-Ren的2022網頁開發全攻略："><a href="#Wilson-Ren的2022網頁開發全攻略：" class="headerlink" title="Wilson Ren的2022網頁開發全攻略："></a><strong><a target="_blank" rel="noopener" href="https://www.udemy.com/user/wilson-r-6/">Wilson Ren</a>的2022網頁開發全攻略：</strong></h2><p>這是在飛航學習時詢問大家如何先學習React，大家推薦的。剛好前面也有講前端的東西，想說就一路一起複習</p>
-<blockquote>
-<p>變數的資料型別</p>
-</blockquote>
-<p>會選這個主題是因為在上“2022網頁開發全攻略”時他有提到『Primitive data types』但我完全一點印象都沒有。因此決定針對這主題做一個筆記，避免自己再次忘掉</p>
-<p>由於JavaScript是個『弱型別』的程式語言，嚴格來說變數本身是不帶任何有資料型別的資訊，其中的『值』或『物件』才有。在JavaScript中，支援的型別有兩種類型，一種是object，另一種就是primitive。</p>
-<p>現在我來簡單介紹這兩個類型吧</p>
-<blockquote>
-<p>Primitive data types （原始的資料類型）</p>
-</blockquote>
-<p>在 JavaScript 的 ES6 標準裡，<strong>Primitive</strong>一共定義了以下 7種資料型別：（對你沒看錯是7種，在2020年又多加入了一種&gt;&lt;”）</p>
-<h1 id="number"><a href="#number" class="headerlink" title="number"></a><strong>number</strong></h1><p>在JavaScript中，不管是帶整數或是有小數點，所有數字都是單純的數字類型。</p>
-<p>在number 可以用的 methods(方法)</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">//toString() 把數字變成字串</span><br><span class="line">let x = 123</span><br><span class="line">console.log(x.toString() + 45) //expected output: 12345</span><br><span class="line">//toFixed() 取小數點，()輸入要取到幾位數</span><br><span class="line">let x = 1.142353</span><br><span class="line">console.log(x.toFixed(3)) //expected output: 1.142</span><br></pre></td></tr></table></figure>
-
-<h1 id="string"><a href="#string" class="headerlink" title="string"></a><strong>string</strong></h1><p>JavaScript並沒有字元(char)的概念，只有字串。字串會用一組單引號(’ ’)或是雙引號(” “)包夾住，兩者不可混用。</p>
-<p>在string可以用的 methods(方法)</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">//length 找出字串的長度</span><br><span class="line">let x = &quot;apple&quot;</span><br><span class="line">console.log(x.length) // 5</span><br><span class="line">//retrieve character（取得特定字元） 也就是 index</span><br><span class="line">let x = &quot;apple&quot;</span><br><span class="line">console.log(x[0]) // a</span><br><span class="line">//slice() 擷取， slice 接受兩個參數，第一個是起始位置，第二個是結束位置(不包含)</span><br><span class="line">let x = &#x27;apple&#x27;</span><br><span class="line">console.log(x.slice(2,4)) //pl</span><br><span class="line">//indexOf() 第一個被找到的索引</span><br><span class="line">let x = &#x27;apple&#x27;</span><br><span class="line">console.log(x.indexOf(p)) // 1</span><br><span class="line">// toLowerCase()全部變小寫 、toUpperCase()全部變大寫</span><br><span class="line">let x = &#x27;apple&#x27;</span><br><span class="line">x = x.toUpperCase()//APPLE</span><br><span class="line">console.log(x.toLowerCase()) //apple</span><br><span class="line">//split 分割</span><br><span class="line">let x = &#x27;apple is good&#x27;</span><br><span class="line">console.log(x.split(&quot; &quot;)) // [apple, is, good]</span><br></pre></td></tr></table></figure>
-
-<h1 id="boolean"><a href="#boolean" class="headerlink" title="boolean"></a><strong>boolean</strong></h1><p>只有兩種值：<code>True</code> 或 <code>False</code>，大量運用在邏輯判斷中</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">判斷類型：typeof</span><br><span class="line">let x = &quot;true&quot;</span><br><span class="line">lex y = true</span><br><span class="line">console.log(typeof x) // string</span><br><span class="line">console.log(typeof y) // boolean</span><br></pre></td></tr></table></figure>
-
-<h1 id="undefined"><a href="#undefined" class="headerlink" title="undefined"></a><strong>undefined</strong></h1><p>你定義了一個新的變數，卻沒有指派內容給它，它的值會是 <code>undefined</code></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">let x</span><br><span class="line">console.log(x) // undefined</span><br></pre></td></tr></table></figure>
-
-<h1 id="null"><a href="#null" class="headerlink" title="null"></a><strong>null</strong></h1><p>空值，只會有一個值 <code>null</code>，表示參照不存在</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">let x = null</span><br><span class="line">console.log(x) // null</span><br></pre></td></tr></table></figure>
-
-<h1 id="symbol"><a href="#symbol" class="headerlink" title="symbol"></a><strong>symbol</strong></h1><p>表示獨一無二的值，因此可以作為獨特不重複的物件屬性名稱。</p>
-<p><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects&#x2F;Symbol</a></p>
-<h1 id="bigint"><a href="#bigint" class="headerlink" title="bigint"></a><strong>bigint</strong></h1><p>從ES2020開始被引入，對數學、金融、科學來說是很重要的，因為當number因為當number大於某範圍會有精確度問題，故會將值當作string處理，但BigInt是可以表示為numeric values。</p>
-<p><img src="https://miro.medium.com/max/1400/1*K1mStSpLF0p_1HX7UipLwQ.png" alt="https://miro.medium.com/max/1400/1*K1mStSpLF0p_1HX7UipLwQ.png"></p>
-<p><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects&#x2F;BigInt</a></p>
-<p>💡 <strong>null與undefined的差異：undefined： 我設定了一個變數，但我正在等待賦予它值。null：我設定了一個變數，他的值是null。因為我不打算在這個變數放任何東西</strong></p>
-<blockquote>
-<p>object</p>
-</blockquote>
-<p><strong>在 JavaScript 裡，所有不屬於基本型別的類型，都屬於物件，包括 array 和 function。</strong></p>
-<p>物件是多個資料的結構，並且用 key-value pair 的結構來組合多個資料。</p>
-<h2 id="有次序的結構：陣列-array"><a href="#有次序的結構：陣列-array" class="headerlink" title="有次序的結構：陣列(array)"></a><strong>有次序的結構：陣列(array)</strong></h2><p><img src="https://miro.medium.com/max/1400/1*DFlhtMChf9mRyqQNjYvN9g.png" alt="https://miro.medium.com/max/1400/1*DFlhtMChf9mRyqQNjYvN9g.png"></p>
-<p>當我們用判斷類型：typeof時，會得到object的回傳值，因此Array屬於object</p>
-<p><img src="https://miro.medium.com/max/1400/1*luRVB-966T1siKsfdc9ZeA.png" alt="https://miro.medium.com/max/1400/1*luRVB-966T1siKsfdc9ZeA.png"></p>
-<h2 id="Create-an-Array（宣告陣列）"><a href="#Create-an-Array（宣告陣列）" class="headerlink" title="Create an Array（宣告陣列）"></a><strong>Create an Array（宣告陣列）</strong></h2><p>我們可以透過array literal (陣列實字)來宣告一個空陣列：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">const arrayName = [item1, item2, ...];</span><br></pre></td></tr></table></figure>
-
-<h2 id="Access-the-Elements-of-an-Array（存取陣列）"><a href="#Access-the-Elements-of-an-Array（存取陣列）" class="headerlink" title="Access the Elements of an Array（存取陣列）"></a><strong>Access the Elements of an Array（存取陣列）</strong></h2><p>陣列中的每一個值我們稱做一個元素，每一個元素儲存在陣列中固定的位置，我們稱做索引 (index)，索引值從 0 開始，表示陣列中的第一個元素，第二個之後的元素索引值則依序加 1</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">const myFriends = [&#x27;派大星&#x27;, &#x27;章魚哥&#x27;, &#x27;小蝸&#x27;, &#x27;蟹老闆&#x27;, &#x27;珊迪&#x27;]</span><br><span class="line">console.log(myFriends[0]) // &#x27;派大星&#x27;</span><br></pre></td></tr></table></figure>
-
-<p>要知道一個陣列有多少資料，可以使用 length，例如：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">const myFriends = [&#x27;派大星&#x27;, &#x27;章魚哥&#x27;, &#x27;小蝸&#x27;, &#x27;蟹老闆&#x27;, &#x27;珊迪&#x27;]</span><br><span class="line">console.log(myFriends.length) // 5</span><br></pre></td></tr></table></figure>
-
-<h2 id="讀取或更改陣列中某個元素的值"><a href="#讀取或更改陣列中某個元素的值" class="headerlink" title="讀取或更改陣列中某個元素的值"></a><strong>讀取或更改陣列中某個元素的值</strong></h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">const myFriends = [&#x27;派大星&#x27;, &#x27;章魚哥&#x27;, &#x27;小蝸&#x27;, &#x27;蟹老闆&#x27;, &#x27;珊迪&#x27;]</span><br><span class="line">const first = myFriends[0] // 派大星</span><br><span class="line">const last = myFriends[myFriends.length - 1] // 珊迪</span><br><span class="line">myFriends[0] = &#x27;海綿寶寶&#x27;</span><br><span class="line">console.log(myFriends) // [&quot;海綿寶寶&quot;, &quot;章魚哥&quot;, &quot;小蝸&quot;, &quot;蟹老闆&quot;, &quot;珊迪&quot;]</span><br></pre></td></tr></table></figure>
-
-<h2 id="for-loop-Array-Elements-迴圈呼叫陣列"><a href="#for-loop-Array-Elements-迴圈呼叫陣列" class="headerlink" title="for loop Array Elements(迴圈呼叫陣列)"></a><strong>for loop Array Elements(迴圈呼叫陣列)</strong></h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">const nums = [0, 1, 2, 3, 4]</span><br><span class="line">for (let i = 0; i &lt; nums.length; i++) &#123;</span><br><span class="line">  console.log(nums[i])</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="按順序操作資料"><a href="#按順序操作資料" class="headerlink" title="按順序操作資料"></a><strong>按順序操作資料</strong></h2><p>JavaScript 提供了一些現成的方法讓我們可以操作陣列資料，例如以下方法可以從陣列的頭&#x2F;尾部插入&#x2F;移除資料。</p>
-<p><img src="https://miro.medium.com/max/1400/1*NIwm2J1dbYZNlDKJPeLG1g.png" alt="https://miro.medium.com/max/1400/1*NIwm2J1dbYZNlDKJPeLG1g.png"></p>
-<h2 id="Methods"><a href="#Methods" class="headerlink" title="Methods"></a><strong>Methods</strong></h2><p>下列是可以在array 使用的：</p>
-<p><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array#instance_methods">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects&#x2F;Array#instance_methods</a></p>
-<h2 id="Key-value-結構：物件-object"><a href="#Key-value-結構：物件-object" class="headerlink" title="Key-value 結構：物件(object)"></a><strong>Key-value 結構：物件(object)</strong></h2><p>在 JavaScript 裡提供了一種 key-value pairs 的資料結構，叫做<strong>物件 (object)</strong></p>
-<p>一組key-value pairs我們稱做物件的一個屬性 (property)。一個屬性的值 (value) 可以是任何資料型態 (也可以是函數)；而屬性的名稱 (key &#x2F; name) 是一個字串型態。</p>
-<p><img src="https://miro.medium.com/max/1396/1*rSLATl6tnOdi5rTuwQcCIA.png" alt="https://miro.medium.com/max/1396/1*rSLATl6tnOdi5rTuwQcCIA.png"></p>
-<h2 id="Creating-Objects-物件宣告"><a href="#Creating-Objects-物件宣告" class="headerlink" title="Creating Objects(物件宣告)"></a><strong>Creating Objects(物件宣告)</strong></h2><p>你可以透過object literal (物件實字)來宣告一個空物件：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">const user = &#123;&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="儲存不同格式的資料"><a href="#儲存不同格式的資料" class="headerlink" title="儲存不同格式的資料"></a><strong>儲存不同格式的資料</strong></h2><p>範例：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">const myPhone = &#123;</span><br><span class="line">  name: &#x27;myPhone&#x27;, // String</span><br><span class="line">  price: 14999, // Number</span><br><span class="line">  features: [&#x27;long battery life&#x27;, &#x27;AI camera&#x27;], // Array</span><br><span class="line">  hardware: &#123;</span><br><span class="line">    // Object</span><br><span class="line">    ram: &#x27;8GB&#x27;,</span><br><span class="line">    storage: &#x27;64GB&#x27;,</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="存取物件屬性：點記法與括號記法"><a href="#存取物件屬性：點記法與括號記法" class="headerlink" title="存取物件屬性：點記法與括號記法"></a><strong>存取物件屬性：點記法與括號記法</strong></h2><p>可以使用點記法 (dot notation) 或括號記法 (bracket notation) 來存取物件的值，以下兩種寫法的結果是一樣的：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// dot notation</span><br><span class="line">myPhone.name // &#x27;myPhone&#x27;</span><br><span class="line">// bracket notation</span><br><span class="line">myPhone[&#x27;name&#x27;] // &#x27;myPhone&#x27;</span><br></pre></td></tr></table></figure>
-
-<h2 id="寫入新的屬性"><a href="#寫入新的屬性" class="headerlink" title="寫入新的屬性"></a><strong>寫入新的屬性</strong></h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// dot notation</span><br><span class="line">myPhone.owner = &#x27;Tim&#x27;</span><br><span class="line">// bracket notation</span><br><span class="line">myPhone[&#x27;owner&#x27;] = &#x27;Tim&#x27;</span><br></pre></td></tr></table></figure>
-
-<h2 id="列舉出所有的值：for-in-迴圈"><a href="#列舉出所有的值：for-in-迴圈" class="headerlink" title="列舉出所有的值：for-in 迴圈"></a><strong>列舉出所有的值：for-in 迴圈</strong></h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">for (let key in myPhone) &#123;</span><br><span class="line">  console.log(myPhone[key])</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://miro.medium.com/max/1400/1*TNnu7PfwMw4k6eiCxg1dZg.png" alt="https://miro.medium.com/max/1400/1*TNnu7PfwMw4k6eiCxg1dZg.png"></p>
-<blockquote>
-<p>結尾</p>
-</blockquote>
-<p>太多東西想記導致寫的有點太長，抱歉！！！</p>
-<p>在讀的時候才發現這東西當初ＡＣ有說過啊，但只能說這些理論的東西真的是讀過就忘記了，但這也是我這次花這麼多時間回來複習的主要原因。JavaScript是一個除了理論也需要實作的，接下來應該會調整一下學習方式，可能改成半天讀理論、半天實作吧但還在規劃中～這幾天先嘗試一下！！！</p>
-
+          <h1 id="『新手日記』Day-7-JavaScript-變數的資料型別"><a href="#『新手日記』Day-7-JavaScript-變數的資料型別" class="headerlink" title="『新手日記』Day-7 JavaScript 變數的資料型別"></a><strong>『新手日記』Day-7 JavaScript 變數的資料型別</strong></h1>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/12/30/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97-2022-12-30-day7/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -334,7 +258,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2022-12-30 15:17:42 / Modified: 15:44:24" itemprop="dateCreated datePublished" datetime="2022-12-30T15:17:42+08:00">2022-12-30</time>
+              <time title="Created: 2022-12-30 15:17:42 / Modified: 16:49:10" itemprop="dateCreated datePublished" datetime="2022-12-30T15:17:42+08:00">2022-12-30</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -357,63 +281,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="『新手日記』Day-6-CSS的優先權"><a href="#『新手日記』Day-6-CSS的優先權" class="headerlink" title="『新手日記』Day-6 CSS的優先權"></a><strong>『新手日記』Day-6 CSS的優先權</strong></h1><p><img src="https://miro.medium.com/max/1400/1*jwvlK7OcJ42g3Fsa41VzzA.jpeg" alt="https://miro.medium.com/max/1400/1*jwvlK7OcJ42g3Fsa41VzzA.jpeg"></p>
-<p>因為在等費爸的最後一舞，想想還是先把這篇打出來看完球賽就可以睡到自然醒了！！！</p>
-<p>在寫學期2–2的Ａ13的作業時因為CSS的效果沒有出來在，在交作業的時候順便在Lighthouse上詢問，Gino同學非常熱心的幫我解答外還給我一篇<a target="_blank" rel="noopener" href="https://medium.com/ui-ux%E7%B7%B4%E5%8A%9F%E5%9D%8A/css%E7%9A%84%E5%84%AA%E5%85%88%E9%A0%86%E4%BD%8D-cfb859e988bd">文章</a>，讓我認識了優先權這個概念。</p>
-<blockquote>
-<p>優先權</p>
-</blockquote>
-<p>我們在使用的CSS其實是有順序的，當我們的CSS語法有重複的狀況，瀏覽器就會依照這個順序去執行。這個順序我們稱為優先權，或是權重。</p>
-<p>css優先權排列：!important &gt; inline style &gt; ID &gt; Class &gt; Element &gt; *</p>
-<p>可以用這個<a target="_blank" rel="noopener" href="https://polypane.app/css-specificity-calculator/">網址</a>來看你的優先權分數</p>
-<p>我們分別來介紹：</p>
-<h1 id="important"><a href="#important" class="headerlink" title="!important"></a><strong>!important</strong></h1><p>CSS優先權裡面最高級別，規則破壞者，所以“<strong>沒事別亂用！！！！！</strong>”</p>
-<h1 id="inline-style"><a href="#inline-style" class="headerlink" title="inline style"></a><strong>inline style</strong></h1><p>直接在HTML標籤裡使用style 屬性指定 CSS 樣式。但由於我們在撰寫 CSS 時使用的樣式繁多，為了保持 HTML 的結構乾淨清楚，原則上不會採用這種方法。</p>
-<p><img src="https://miro.medium.com/max/1400/1*Irq2IP_ZUn2raUd-EItaTw.png" alt="https://miro.medium.com/max/1400/1*Irq2IP_ZUn2raUd-EItaTw.png"></p>
-<p>其他類似的做法還有：</p>
-<p><strong>HTML 內部載入</strong></p>
-<ul>
-<li>在 HTML 文件的 head 元素中，使用 style 元素將 CSS 撰寫其內。</li>
-</ul>
-<p><img src="https://miro.medium.com/max/1010/1*hGX_QhduG7Td-4ZL_0kRLA.png" alt="https://miro.medium.com/max/1010/1*hGX_QhduG7Td-4ZL_0kRLA.png"></p>
-<p><strong>外部載入CSS</strong></p>
-<ul>
-<li>使用 link 元素或是 ＠import 這兩種方法來載入一個外部檔案(檔名.css)。</li>
-</ul>
-<p><img src="https://miro.medium.com/max/1400/1*nZf4Lpw-wi8tBljXqgTpxQ.png" alt="https://miro.medium.com/max/1400/1*nZf4Lpw-wi8tBljXqgTpxQ.png"></p>
-<p>那這3個的優先權順序是：</p>
-<p><strong>inline style ＞ HTML內部載入CSS ＞ 外部載入CSS</strong></p>
-<h1 id="ID"><a href="#ID" class="headerlink" title="ID"></a><strong>ID</strong></h1><p>利用 ID 在CSS唯一性的特性，因此優先權高於其他選擇器</p>
-<h1 id="Class"><a href="#Class" class="headerlink" title="Class"></a><strong>Class</strong></h1><p>除了我們時常使用的class外，另外包括屬性選擇器、偽類選擇器，例如 <code>.container</code> 、<code>[type=&quot;radio&quot;]</code>、<code>:hover</code>。</p>
-<h1 id="Element"><a href="#Element" class="headerlink" title="Element"></a><strong>Element</strong></h1><p>以 Element 選擇器為代表，另外包括偽元素選擇器，例如 <code>div</code>、<code>::before</code>。</p>
-<h1 id=""><a href="#" class="headerlink" title="****"></a>****</h1><p>全域選擇器以及+、~、&gt;這三個符號的階級位於最後一階，優先權最低。但還是有贏的時候，就是當對上繼承而來的樣式時，全域選擇器會把繼承的樣式覆蓋掉(只是我還沒有看過繼承的樣式&gt;&lt;”)。</p>
-<p>簡單整理一下：</p>
-<p><img src="https://miro.medium.com/max/1400/1*uDPmD0VksmZwD9HzqaqmtA.png" alt="https://miro.medium.com/max/1400/1*uDPmD0VksmZwD9HzqaqmtA.png"></p>
-<blockquote>
-<p>新語法</p>
-</blockquote>
-<p>這次在重新複習優先權的時候發現了一個優先權的語法＠layer，以下是＠layer的簡單介紹：</p>
-<h1 id="layer"><a href="#layer" class="headerlink" title="@layer"></a><strong>@layer</strong></h1><h1 id="以優先級來講，永遠先考慮-layer，再考慮-Specificity-權重-。"><a href="#以優先級來講，永遠先考慮-layer，再考慮-Specificity-權重-。" class="headerlink" title="以優先級來講，永遠先考慮 @layer，再考慮 Specificity (權重)。"></a>以優先級來講，永遠先考慮 @layer，再考慮 Specificity (權重)。</h1><p>這是最新的語法@layer最直觀的一句話，他大幅度改變了優先權這件事。</p>
-<p>有幾個重點：</p>
-<p>只要有宣告@laye，後面宣告的一定大於前方宣告的，但可以在一開始定義誰大於誰(!important 另外解釋)</p>
-<p><img src="https://miro.medium.com/max/1380/1*tLFWk5HsYKP7hlLO04-w3A.png" alt="https://miro.medium.com/max/1380/1*tLFWk5HsYKP7hlLO04-w3A.png"></p>
-<p>如果有沒有宣告@layer的 沒宣告的優先權會變第一</p>
-<p><img src="https://miro.medium.com/max/1400/1*rfU0BI0Tf4xARMWGvgyfVQ.png" alt="https://miro.medium.com/max/1400/1*rfU0BI0Tf4xARMWGvgyfVQ.png"></p>
-<p>如果在前面先宣告＠layer的順序 優先權就會從後面往前推</p>
-<p><img src="https://miro.medium.com/max/1396/1*BQw7YLFzfTgAwMAdU6KfMg.png" alt="https://miro.medium.com/max/1396/1*BQw7YLFzfTgAwMAdU6KfMg.png"></p>
-<p>雖然有些規定但大致上都還是可以理解的，看到這裡是不是覺得這是一劑良藥啊！但客官請你繼續往下看，看完再決定：</p>
-<h1 id="大魔王-important"><a href="#大魔王-important" class="headerlink" title="大魔王 !important"></a><strong>大魔王 !important</strong></h1><p><img src="https://miro.medium.com/max/1370/1*d9v_SzOjW5OQWsOuHWfHjg.png" alt="https://miro.medium.com/max/1370/1*d9v_SzOjW5OQWsOuHWfHjg.png"></p>
-<p>什麼是反轉優先權，簡單來說就是只要有加!important的，優先權順序會變成 <strong>inline-style</strong> &gt; * &gt; Element &gt; Class &gt; ID</p>
-<p>有沒有覺得一個頭兩個大呢？所以啊誰在給我亂用 !important 直接亂棒轟出去！！！</p>
-<blockquote>
-<p>結語</p>
-</blockquote>
-<p>沒有想到這次複習居然學到了一個新的語法，學習下來我是覺得還蠻理解的(不要用!important)，但我實務經驗是0所以還不曉得到底好不好用、能不能用，但網路上很多篇文章都說這是未來的趨勢，至於是不是我們就交由時間來判斷了吧！！！</p>
-<p>參考資料有放＠layer的youtube的影片，大家有興趣可以看一下</p>
-<p>參考資料：</p>
-<p>AC教案</p>
-<p><strong><a target="_blank" rel="noopener" href="https://medium.com/ui-ux%E7%B7%B4%E5%8A%9F%E5%9D%8A/css%E7%9A%84%E5%84%AA%E5%85%88%E9%A0%86%E4%BD%8D-cfb859e988bd">CSS的優先順位載入位置＆撰寫順序＆選擇器類型都會影響 css 的優先順位</a></strong><br><a target="_blank" rel="noopener" href="https://selflearningsuccess.com/css-specificity/">selflearningsuccess.com</a></p>
-
+          <h1 id="『新手日記』Day-6-CSS的優先權"><a href="#『新手日記』Day-6-CSS的優先權" class="headerlink" title="『新手日記』Day-6 CSS的優先權"></a><strong>『新手日記』Day-6 CSS的優先權</strong></h1>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/12/30/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97-2022-12-30-day6/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -457,7 +333,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2022-12-30 15:16:42 / Modified: 15:44:19" itemprop="dateCreated datePublished" datetime="2022-12-30T15:16:42+08:00">2022-12-30</time>
+              <time title="Created: 2022-12-30 15:16:42 / Modified: 16:47:37" itemprop="dateCreated datePublished" datetime="2022-12-30T15:16:42+08:00">2022-12-30</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -480,61 +356,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="『新手日記』Day-5-CSS-transition-與-transform"><a href="#『新手日記』Day-5-CSS-transition-與-transform" class="headerlink" title="『新手日記』Day-5 CSS transition 與 transform"></a><strong>『新手日記』Day-5 CSS transition 與 transform</strong></h1><p><img src="https://miro.medium.com/max/1400/1*5isuI6oBLVUqrz7DiNdMig.png" alt="https://miro.medium.com/max/1400/1*5isuI6oBLVUqrz7DiNdMig.png"></p>
-<p>第一次接觸到transition 與 transform 是在ＡＣ的毛小孩星球這個課件，印象很深刻是在刻漢堡排來開關導覽項目以及滑鼠滑過狗狗圖片會出現的線條動畫，這時才知道原來只要用CSS也可以做出這些簡單的過場動畫。</p>
-<blockquote>
-<p>認識 transition、transform</p>
-</blockquote>
-<p>這兩個屬性可以說是少數我在查找資料非常快速的，因為在google打上這兩個字非常多的中文文章啊(英文不好真的沒人權啊&gt;&lt;”)，這邊我自己就結合ＡＣ跟網路上的文章簡單做了一個方便自己查閱的筆記：</p>
-<h1 id="transition"><a href="#transition" class="headerlink" title="transition"></a><strong>transition</strong></h1><h1 id="The-transition-CSS-property-is-a-shorthand-簡寫-property-for-transition-property-transition-duration-transition-timing-function-and-transition-delay"><a href="#The-transition-CSS-property-is-a-shorthand-簡寫-property-for-transition-property-transition-duration-transition-timing-function-and-transition-delay" class="headerlink" title="The transition CSS property is a shorthand(簡寫) property for transition-property, transition-duration, transition-timing-function, and transition-delay."></a>The transition CSS property is a shorthand(簡寫) property for transition-property, transition-duration, transition-timing-function, and transition-delay.</h1><p>他跟background一樣，是一組縮寫。底下共有4個屬性，分別是：</p>
-<p><strong><code>transition-property</code>指定要轉換的CSS屬性<code>transition-duration</code>轉換需要的時間，預設0，單位為s或ms<code>transition-timing-function</code>轉換時的速度曲線<code>transition-delay</code>延遲多久轉換，預設0，單位為s或ms</strong></p>
-<p>範例： transition: all 0.1s linear;</p>
-<p>其中：</p>
-<p><strong><code>transition-property的value有：</code>none ：沒有</strong> property 會有 transition的效果<strong>All ：所有</strong>property 會有 transition的效果<strong>property：可以單一 property 或 多 property 一起，只需要用逗號分開就可以了</strong></p>
-<p><strong><code>transition-timing-function的value太多，因此用一張圖表表示幾個比較常用的：</code></strong></p>
-<p><img src="https://miro.medium.com/max/1400/1*m2Ca0K1BKIsq12RcGT7J3w.png" alt="https://miro.medium.com/max/1400/1*m2Ca0K1BKIsq12RcGT7J3w.png"></p>
-<p>這時候我們就已經完成了簡單的動畫了。</p>
-<p>疑？既然這樣就可以了，那要transform幹嘛啊？</p>
-<p>transform當然還是有用的(不然我幹麻做筆記)，老樣子我們先來看一下MDN的說明：</p>
-<h1 id="The-transform-CSS-property-lets-you-rotate-scale-skew-or-translate-an-element-It-modifies-the-coordinate-space-of-the-CSS-visual-formatting-model"><a href="#The-transform-CSS-property-lets-you-rotate-scale-skew-or-translate-an-element-It-modifies-the-coordinate-space-of-the-CSS-visual-formatting-model" class="headerlink" title="The transform CSS property lets you rotate, scale, skew, or translate an element. It modifies the coordinate space of the CSS visual formatting model."></a>The transform CSS property lets you rotate, scale, skew, or translate an element. It modifies the coordinate space of the CSS visual formatting model.</h1><p>我的不負責任翻譯：他改變了css的空間座標，讓我們可以執行旋轉、縮放、傾斜或平移元素。看到這行解釋時不知道為什麼想到小時侯學flash時學到的關鍵影格&gt;&lt;”</p>
-<p>有了transform 我們就可以做更複雜的動畫了，以毛小孩星球為例我們甚至可以使用transform來代替display: none;</p>
-<p>以下簡單介紹一下transform的value:</p>
-<p><strong>translate()</strong></p>
-<ul>
-<li>說明：位移，元素以參考點為中心進行2D位移</li>
-<li>單位：尺寸值或百分比</li>
-<li>單個參數：如果只寫一個參數，省略的第2個參數會視為0，也就是只有X軸的移動距離</li>
-<li>可細分為X軸與Y軸的位移，屬性如下：<code>translateX()</code> 、<code>translateY()</code></li>
-</ul>
-<p><strong>scale()</strong></p>
-<ul>
-<li>說明：縮放，元素以參考點為中心進行2D縮放</li>
-<li>單位：無，為純數值倍率</li>
-<li>單個參數：如果只寫一個參數，就是X、Y軸以同樣倍率縮放</li>
-<li>可細分為X軸與Y軸的縮放，屬性如下：<code>scaleX()</code>、<code>scaleY()</code></li>
-</ul>
-<p><strong>rotate()</strong></p>
-<ul>
-<li>說明：旋轉，元素以參考點為中心進行旋轉</li>
-<li>單位：deg，正值&#x3D;順時針旋轉，負值&#x3D;逆時針旋轉</li>
-</ul>
-<p><strong>skew()</strong></p>
-<ul>
-<li>說明：傾斜，元素以參考點為中心進行傾斜</li>
-<li>單位：deg</li>
-<li>單個參數：如只寫一個，就只有X軸的傾斜</li>
-<li>可細分為X軸與Y軸的傾斜，屬性如下：<code>skewX()</code>、<code>skewY()</code></li>
-</ul>
-<p><strong>matrix()</strong></p>
-<ul>
-<li>元素以參考點為中心，依變形矩陣的6個參數值產生2D變形，<code>matrix(scaleX(),skewY(),skewX(),scaleY(),translateX(),translateY())</code></li>
-</ul>
-<blockquote>
-<p>結語</p>
-</blockquote>
-<p>嚴格說起來應該也要介紹偽類(Pseudo-classes)，因為這個可以跟他們非常完美的搭配，但真的時間有限只好先暫時跳過了。</p>
-<p>其實這兩個屬性還有很多東西可以介紹，在查資料的時候發現還有很多地方可以深入研究，但這並不是我這次學習的目標，只好先把資料丟到未讀資料夾(完了他越來越多了)。</p>
-
+          <h1 id="『新手日記』Day-5-CSS-transition-與-transform"><a href="#『新手日記』Day-5-CSS-transition-與-transform" class="headerlink" title="『新手日記』Day-5 CSS transition 與 transform"></a><strong>『新手日記』Day-5 CSS transition 與 transform</strong></h1>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/12/30/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97-2022-12-30-day5/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -578,7 +408,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2022-12-30 15:15:42 / Modified: 15:44:16" itemprop="dateCreated datePublished" datetime="2022-12-30T15:15:42+08:00">2022-12-30</time>
+              <time title="Created: 2022-12-30 15:15:42 / Modified: 16:47:27" itemprop="dateCreated datePublished" datetime="2022-12-30T15:15:42+08:00">2022-12-30</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -601,52 +431,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="『新手日記』Day-4-CSS-Box-Model"><a href="#『新手日記』Day-4-CSS-Box-Model" class="headerlink" title="『新手日記』Day-4 CSS Box-Model"></a><strong>『新手日記』Day-4 CSS Box-Model</strong></h1><p><img src="https://miro.medium.com/max/1000/1*FdDo7Z0Vjl79k-ax0iF1_Q.jpeg" alt="https://miro.medium.com/max/1000/1*FdDo7Z0Vjl79k-ax0iF1_Q.jpeg"></p>
-<blockquote>
-<p>前言</p>
-</blockquote>
-<p>CSS複習快結束了，是時候來說說 Box-Model。</p>
-<p>嚴格說起來其實我到2–2還不知道Box-Model到底是在說什麼，雖然在學期一有稍微講到但誰會記得學期一的東西，跟完教案一次就再也沒回去看過了。第一次主動去了解這個詞還是因為有一次作業在Debug時，看到CSS寫的超亂，找不到我要的地方，然後自己再發脾氣那次。</p>
-<blockquote>
-<p>再一次的相遇</p>
-</blockquote>
-<p>發現自己的ＣＳＳ寫得很亂就要想辦法改，除了問助教外我還回去翻ＡＣ的課程，還真的讓我翻出了一份資料：</p>
-<p><img src="https://miro.medium.com/max/1400/1*GfIxtlLn6yuGMr9b3C7SXg.png" alt="https://miro.medium.com/max/1400/1*GfIxtlLn6yuGMr9b3C7SXg.png"></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">/*good example*/</span><br><span class="line">/* Basic comment */</span><br><span class="line">.target-classname,</span><br><span class="line">.other-target &#123;</span><br><span class="line">    /* Positioning */</span><br><span class="line">    position: relative;</span><br><span class="line">    top: 100px;</span><br><span class="line">    left: 100px;</span><br><span class="line"></span><br><span class="line">    /* Display */</span><br><span class="line">    display: flex;</span><br><span class="line">    justify-content: center;</span><br><span class="line"></span><br><span class="line">    /* Box Model */</span><br><span class="line">    width: 100px;</span><br><span class="line">    height: 20px;</span><br><span class="line">    border-radius: 3px solid #ccc;</span><br><span class="line"></span><br><span class="line">    /* Font or other */</span><br><span class="line">    font-size: 18px;</span><br><span class="line">    line-height: 20px;</span><br><span class="line">    color: #333;</span><br><span class="line">    background: #fff;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>真的讓我如獲至寶啊(話說當時的我為什麼沒注意到這個&gt;&lt;”)，從那次開始，只要某個class太長我都會用這個方式去做分類。</p>
-<p>既然找到分類的方式就要去了解怎麼分類，裏面除了 Box-Model 外直接看名字都可以知道是放什麼，那什麼是Box-Model？</p>
-<blockquote>
-<p>Box-Model</p>
-</blockquote>
-<p>什麼是Box-Model，以下是MDN的解釋</p>
-<h1 id="Everything-in-CSS-has-a-box-around-it-and-understanding-these-boxes-is-key-to-being-able-to-create-more-complex-layouts-with-CSS-or-to-align-items-with-other-items"><a href="#Everything-in-CSS-has-a-box-around-it-and-understanding-these-boxes-is-key-to-being-able-to-create-more-complex-layouts-with-CSS-or-to-align-items-with-other-items" class="headerlink" title="Everything in CSS has a box around it, and understanding these boxes is key to being able to create more complex layouts with CSS, or to align items with other items."></a>Everything in CSS has a box around it, and understanding these boxes is key to being able to create more complex layouts with CSS, or to align items with other items.</h1><p>簡單來說就是：把每個html 的元素視作為一個盒子，我們可以針對這個盒子去做調整。</p>
-<p>你可以在開發者工具的 Styles 區最底部找到 box model 的示意：</p>
-<p><img src="https://miro.medium.com/max/442/1*Mr7ZKu99uvz4n8st0Pggbg.png" alt="https://miro.medium.com/max/442/1*Mr7ZKu99uvz4n8st0Pggbg.png"></p>
-<p>Box Model 主要由四個部分主成，由內而外分別是 藍色區域的<strong>Content ( 內容)<strong>、綠色區域的</strong>Padding ( 內邊距 )<strong>、暗黃色區域的</strong>Border ( 邊框 )</strong> 和 膚色區域的**Margin ( 外邊距 )**。</p>
-<p>除了<strong>Content外，其他3個</strong>都有相同的撰寫語法，單位可以是『絕對單位』或『相對單位』：(下面都用padding示範)</p>
-<p>4個值都寫：padding: 上 右 下 左;</p>
-<p><img src="https://miro.medium.com/max/1400/1*SCNtrqqDhfdkxuC2hAdGjA.png" alt="https://miro.medium.com/max/1400/1*SCNtrqqDhfdkxuC2hAdGjA.png"></p>
-<p>只寫2個值：padding: (上跟下) (左跟右)</p>
-<p><img src="https://miro.medium.com/max/1400/1*rY_yUu7Dl20ZRh1mWJ_lDQ.png" alt="https://miro.medium.com/max/1400/1*rY_yUu7Dl20ZRh1mWJ_lDQ.png"></p>
-<p>當然也可以只寫一個值代表4邊。</p>
-<p>p.s那可以只打3個嗎？當然可以，只要記得他的順序是：上右下左，當我們只寫3個時，電腦會因為找不到第4個值而往回找。</p>
-<blockquote>
-<p>四個主要部份</p>
-</blockquote>
-<p>content：</p>
-<p>內容（任何 HTML 元素）。</p>
-<p>padding：</p>
-<p>從元件內部內容到元件邊界間的距離。通常用來加寬框線內的距離，作為留白使用。(⚠️ 不能為負值）</p>
-<p>border：</p>
-<p>邊框。預設是看不見邊框的，但可以添加 <code>border</code> 讓邊框出現(⚠️記得border有「占據空間」的特性喔)</p>
-<p>margin：</p>
-<p>從一整個元件(外圍邊線算起)到另一個元件邊界間的距離。通常用來調整元件間的距離，作為畫面的留白使用。(⚠️ 可以為負值，但會與其它元素重疊）</p>
-<blockquote>
-<p>結語</p>
-</blockquote>
-<p>Box Model裏面的padding、border、margin 應該是我目前學習生涯最長碰觸到的CSS語法，所以到2–2才知道他是什麼還真的蠻丟臉的，只能說誰叫我前期不努力現在只好來補坑了&gt;&lt;”</p>
-
+          <h1 id="『新手日記』Day-4-CSS-Box-Model"><a href="#『新手日記』Day-4-CSS-Box-Model" class="headerlink" title="『新手日記』Day-4 CSS Box-Model"></a><strong>『新手日記』Day-4 CSS Box-Model</strong></h1>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/12/30/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97-2022-12-30-day4/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -690,7 +483,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2022-12-30 15:14:42 / Modified: 15:44:12" itemprop="dateCreated datePublished" datetime="2022-12-30T15:14:42+08:00">2022-12-30</time>
+              <time title="Created: 2022-12-30 15:14:42 / Modified: 16:46:57" itemprop="dateCreated datePublished" datetime="2022-12-30T15:14:42+08:00">2022-12-30</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -713,31 +506,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="『新手日記』Day-3-CSS-用direction做交錯式版面"><a href="#『新手日記』Day-3-CSS-用direction做交錯式版面" class="headerlink" title="『新手日記』Day-3 CSS 用direction做交錯式版面"></a><strong>『新手日記』Day-3 CSS 用direction做交錯式版面</strong></h1><p><img src="https://miro.medium.com/max/1400/1*EyhNcvymuFp93kEaOT1h8g.png" alt="https://miro.medium.com/max/1400/1*EyhNcvymuFp93kEaOT1h8g.png"></p>
-<blockquote>
-<p>前言</p>
-</blockquote>
-<p>今天複習了一些的HTML標籤 跟 CSS的文字相關的語法時，看到了一個很陌生詞：direction 。本來想說跳過因為沒看過，但想想還是把他點開了。還好有點開不然我今天不知道要打什麼^U^</p>
-<blockquote>
-<p>介紹</p>
-</blockquote>
-<p>根據W3Schools的資料：</p>
-<h1 id="The-property-specifies-the-text-direction-x2F-writing-direction-within-a-block-level-element-Tip-unicode-bidi"><a href="#The-property-specifies-the-text-direction-x2F-writing-direction-within-a-block-level-element-Tip-unicode-bidi" class="headerlink" title="The property specifies the text direction&#x2F;writing direction within a block-level element.Tip:unicode-bidi"></a>The property specifies the text direction&#x2F;writing direction within a block-level element.<strong>Tip:</strong><a target="_blank" rel="noopener" href="https://www.w3schools.com/cssref/pr_text_unicode-bidi.asp">unicode-bidi</a></h1><p>根據我的英文老師-google的說法：他是指定塊級元素內的文本方向&#x2F;書寫方向。本來看到這裡我也要準備離開繼續往下走，但在其中一篇<a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10245374">Direction- 金魚都能懂的CSS必學屬性</a> 有提到一個名詞：交錯版面。</p>
-<p>好奇去了解一下什麼是交錯版面，才發現原來這麼多網站都有用這個排版，印象中Apple官網之前也有這樣的排版方式。既然沒用過這個語法就來實作一次吧！！！</p>
-<blockquote>
-<p>實做</p>
-</blockquote>
-<p>既然只是練習所以整個畫面都是非常陽春的，內容是放今天剛打出60轟的『法官大人』的新聞內容。</p>
-<p>在練習過程中剛好有運用到前幾天學到的新語法</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:nth-child(even)//用來選取特定順序項目 ()可以填odd(基數)或是even(偶數)</span><br></pre></td></tr></table></figure>
-
-<p>會想到他是因為不太想用flex的下去做，想試試看其他方法。</p>
-<p>整體來說算是一個很簡單的實作，語法的使用上也沒有太大問題，但感覺這個語法用到的頻率真的會不多啊！！！</p>
-<blockquote>
-<p>結尾</p>
-</blockquote>
-<p>複習到現在已經過了3天，進度稍微有點落後，才復習到與文字相關的ＣＳＳ，感覺要再更加把勁了！！！</p>
-
+          <h1 id="『新手日記』Day-3-CSS-用direction做交錯式版面"><a href="#『新手日記』Day-3-CSS-用direction做交錯式版面" class="headerlink" title="『新手日記』Day-3 CSS 用direction做交錯式版面"></a><strong>『新手日記』Day-3 CSS 用direction做交錯式版面</strong></h1>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/12/30/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97-2022-12-30-day3/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -781,7 +558,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2022-12-30 15:13:42 / Modified: 15:44:06" itemprop="dateCreated datePublished" datetime="2022-12-30T15:13:42+08:00">2022-12-30</time>
+              <time title="Created: 2022-12-30 15:13:42 / Modified: 16:47:05" itemprop="dateCreated datePublished" datetime="2022-12-30T15:13:42+08:00">2022-12-30</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -804,36 +581,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="『新手日記』Day-2-HTML-src和href的區別"><a href="#『新手日記』Day-2-HTML-src和href的區別" class="headerlink" title="『新手日記』Day-2 HTML src和href的區別"></a><strong>『新手日記』Day-2 HTML src和href的區別</strong></h1><p><img src="https://miro.medium.com/max/1000/1*3T2IBR_RZJ-P7s8tJWSYGA.jpeg" alt="https://miro.medium.com/max/1000/1*3T2IBR_RZJ-P7s8tJWSYGA.jpeg"></p>
-<blockquote>
-<p>前言</p>
-</blockquote>
-<p>在學習<code>&lt;a&gt;、&lt;link&gt;</code>這兩個標籤時突然發現他們連接外部資料是用href這個屬性，跟之前學到<code>&lt;img&gt;</code>所使用到的src不一樣，當下就覺得幹嘛不用同樣的這樣還要多學一個屬性&gt;&lt;”，因為這個起因讓我稍微研究了一下</p>
-<blockquote>
-<p>名詞解釋</p>
-</blockquote>
-<p>href-是hypertext reference的縮寫，此屬性指定 Web 資源的位置，從而定義當前元素或當前文檔與由該屬性定義的目標錨點或資源之間的鏈接或關係。例如：<code>&lt;a&gt;、&lt;link&gt;</code></p>
-<p><strong>src — 是</strong>Source的縮寫，此屬性只是將資源嵌入到當前文檔中元素定義的位置。例如：<code>&lt;img&gt;、&lt;script&gt;、&lt;iframe&gt;</code></p>
-<blockquote>
-<p>兩者差別</p>
-</blockquote>
-<p>在Stack Overflow有這樣一段解釋：</p>
-<h3 id="H-Is-a-erence-to-information-for-the-current-page-Page-Parsing-is-not-stopped-SRCSOURCE"><a href="#H-Is-a-erence-to-information-for-the-current-page-Page-Parsing-is-not-stopped-SRCSOURCE" class="headerlink" title="H:Is a erence to information for the current page Page Parsing is not stopped.SRCSOURCE"></a>H:Is a erence to information for the current page Page Parsing is not stopped.<strong>SRCSOURCE</strong></h3><p>所以當我們要跳轉頁面或與某文件關聯，我們會使用 href ;但如果我們要的是載入 “資源”，我們就會使用 src。根據以上的結論來解釋下面的4個問題我就覺得會非常容易：</p>
-<ul>
-<li>To refer a CSS file: <code>href=&quot;cssfile.css&quot;</code> inside the link tag.</li>
-<li>To refer a JS file: <code>src=&quot;myscript.js&quot;</code> inside the script tag.</li>
-<li>To refer an image file: <code>src=&quot;mypic.jpg&quot;</code> inside an image tag.</li>
-<li>To refer another webpage: <code>href=&quot;http://www.webpage.com&quot;</code> inside an anchor tag.</li>
-</ul>
-<blockquote>
-<p>結語</p>
-</blockquote>
-<p>說實在的我也不知道自己的解讀是否正確，理論的東西真的太過複雜，我只好把它變成自己的想法來解讀，中文的資料確實不多英文我又只能靠google翻譯，如有不正確的地方再麻煩指教</p>
-<blockquote>
-<p>參考資料</p>
-</blockquote>
-<p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/3395359/difference-between-src-and-href">stackoverflow.com</a></p>
-
+          <h1 id="『新手日記』Day-2-HTML-src和href的區別"><a href="#『新手日記』Day-2-HTML-src和href的區別" class="headerlink" title="『新手日記』Day-2 HTML src和href的區別"></a><strong>『新手日記』Day-2 HTML src和href的區別</strong></h1>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/12/30/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97-2022-12-30-day2/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -877,7 +633,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2022-12-30 15:12:42 / Modified: 15:39:27" itemprop="dateCreated datePublished" datetime="2022-12-30T15:12:42+08:00">2022-12-30</time>
+              <time title="Created: 2022-12-30 15:12:42 / Modified: 16:47:12" itemprop="dateCreated datePublished" datetime="2022-12-30T15:12:42+08:00">2022-12-30</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -900,47 +656,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="『新手日記』Day-1-HTML語意化標籤"><a href="#『新手日記』Day-1-HTML語意化標籤" class="headerlink" title="『新手日記』Day-1 HTML語意化標籤"></a><strong>『新手日記』Day-1 HTML語意化標籤</strong></h1><p><img src="https://miro.medium.com/max/1400/1*0vJBFN1qP_6VD0mwYKVD6g.png" alt="https://miro.medium.com/max/1400/1*0vJBFN1qP_6VD0mwYKVD6g.png"></p>
-<blockquote>
-<p>前言</p>
-</blockquote>
-<p>距離ＡＣ學期3開課大約有1個多月的時間，我之前就在想這一個月我能幹什麼，除了先簡單了解一下前端框架React(居然是課程改版的第一批學生)，好像就只能複習，剛好近期鐵人賽又開始了當然我還沒有那個本事去那邊，但自己私底下練習應該可以吧，所以我會把這30天所複習的筆記都放在這邊紀錄自己學習的過程。</p>
-<p>目前計畫先從HTML、CSS、JavaScript開始，每天一個主題。</p>
-<p>為了給自己更好的前端基礎，加油！！！</p>
-<blockquote>
-<p>semantic element</p>
-</blockquote>
-<p><strong>semantic element 又稱</strong><code>語意化標籤，其目的是為了讓標籤(Tag)更具意義，以加強文件的結構化，讓搜尋引擎更清楚了解。舉例來說，一個網頁通常會有最基本的區塊像是頁首、內容和頁尾等。在HTML5之前只能通通用&lt;div&gt;標籤表示，但HTML新增了語意化標籤像是&lt;header&gt;、&lt;main&gt;、&lt;footer&gt;等，可以更清楚表現網頁中每個區塊的設計目的。</code></p>
-<p>使用HTML5語意化標籤的優點如下：</p>
-<ol>
-<li>可以快速抓到網頁架構和每個區塊的位置</li>
-<li>對於SEO優化有幫助</li>
-</ol>
-<blockquote>
-<p>常見的用法</p>
-</blockquote>
-<p><img src="https://miro.medium.com/max/1400/1*TsWfhadboeB6t4hd2gsLEQ.png" alt="https://miro.medium.com/max/1400/1*TsWfhadboeB6t4hd2gsLEQ.png"></p>
-<h1 id="1-頁首標籤-lt-header-gt"><a href="#1-頁首標籤-lt-header-gt" class="headerlink" title="1.頁首標籤&lt;header&gt;"></a><strong>1.<code>頁首標籤&lt;header&gt;</code></strong></h1><p>💡 The <strong><code>&lt;header&gt;</code></strong> <a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/HTML">HTML</a> element represents introductory content, typically a group of introductory or navigational aids. It may contain some heading elements but also a logo, a search form, an author name, and other elements.</p>
-<p>&lt; header &gt;標籤用來定義一個標題區塊，裡面可以放標題、介紹文字或網站名稱、logo、導覽連結、搜尋表單等內容。也可以放在&lt; article &gt;或&lt; section &gt;內，表示為文章或區塊內的首要區塊。</p>
-<h1 id="2-導覽列-lt-nav-gt"><a href="#2-導覽列-lt-nav-gt" class="headerlink" title="2.導覽列&lt;nav&gt;"></a><strong>2.<code>導覽列&lt;nav&gt;</code></strong></h1><p>💡 The <strong><code>&lt;nav&gt;</code></strong> <a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/HTML">HTML</a> element represents a section of a page whose purpose is to provide navigation links, either within the current document or to other documents. Common examples of navigation sections are menus, tables of contents, and indexes.</p>
-<p>只要是在網站內的導覽區塊，都適合使用&lt; nav &gt;標籤(navigation 導航之意)，像是主選單、頁尾選單等。</p>
-<p>一個 HTML 頁面可以有很多個 <nav> 元素</p>
-<h1 id="3-主要區塊-lt-main-gt"><a href="#3-主要區塊-lt-main-gt" class="headerlink" title="3.主要區塊&lt;main&gt;"></a><strong>3.<code>主要區塊&lt;main&gt;</code></strong></h1><p>💡 The <code>&lt;main&gt;</code> HTML element represents the dominant content of the body of a document. The main content area consists of content that is directly related to or expands upon the central topic of a document, or the central functionality of an application.</p>
-<p>是用來放頁面主要資訊的區塊 (main content of the <a target="_blank" rel="noopener" href="https://www.fooish.com/html/body-tag.html">body</a>)，展現網頁內容的獨特性。每個頁面<code>只能有一個</code>&lt; main &gt;標籤，且理想狀態下，不能被放在<code>&lt;nav&gt;</code>、<code>&lt;article&gt;</code>、<code>&lt;aside&gt;</code>、<code>&lt;footer&gt;</code>和<code>&lt;header&gt;</code>內。</p>
-<h1 id="4-區塊或文章區塊-lt-section-gt-lt-article-gt"><a href="#4-區塊或文章區塊-lt-section-gt-lt-article-gt" class="headerlink" title="4.區塊或文章區塊&lt;section&gt;&lt;article&gt;"></a><strong>4.<code>區塊或文章區塊&lt;section&gt;&lt;article&gt;</code></strong></h1><p>💡 The <strong><code>&lt;section&gt;</code></strong> <a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/HTML">HTML</a> element represents a generic standalone section of a document, which doesn’t have a more specific semantic element to represent it. Sections should always have a heading, with very few exceptions.</p>
-<p>💡 The <strong><code>&lt;article&gt;</code></strong> <a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/HTML">HTML</a> element represents a self-contained composition in a document, page, application, or site, which is intended to be independently distributable or reusable (e.g., in syndication). Examples include: a forum post, a magazine or newspaper article, or a blog entry, a product card, a user-submitted comment, an interactive widget or gadget, or any other independent item of content.</p>
-<p>在HTML5之前，都需要建立一個區塊通常會使用&lt; div &gt;，而當HTML5語意化標籤出現後，可以使用&lt; section &gt;搭配&lt; h1~h6 &gt;的標題來呈現內容，而&lt; section &gt;內一些無明顯含義的區塊或為了排版目的的區塊則使用&lt; div &gt;來包，&lt; div &gt;這時可以視作一個無意義的容器。</p>
-<p>&lt; article &gt;標籤用來描述這一區塊的內容本身是獨立且完整的近似&lt; section &gt;標籤，但&lt; article &gt;主要用於包覆文章。要注意的是，一個頁面可以有一個或多個 <article> 只要他們是獨立且完整的內容，例如一個文章列表頁面，每篇文章都可以用一個 <article> 包起來。</p>
-<h1 id="5-側欄-lt-aside-gt"><a href="#5-側欄-lt-aside-gt" class="headerlink" title="5.側欄&lt;aside&gt;"></a><strong>5.<code>側欄&lt;aside&gt;</code></strong></h1><p>💡 The <strong><code>&lt;aside&gt;</code></strong> <a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/HTML">HTML</a> element represents a portion of a document whose content is only indirectly related to the document’s main content. Asides are frequently presented as sidebars or call-out boxes.</p>
-<p>語意算是跟主要區塊內容無關的區塊，也就是額外資訊，像是側邊欄、廣告、其他連結、推薦文章等都蠻適合使用的，不一定是側邊位置才能使用。</p>
-<h1 id="6-頁尾-lt-footer-gt"><a href="#6-頁尾-lt-footer-gt" class="headerlink" title="6.頁尾&lt;footer&gt;"></a><strong>6.<code>頁尾&lt;footer&gt;</code></strong></h1><p>💡 The <strong><code>&lt;footer&gt;</code></strong> <a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/HTML">HTML</a> element represents a footer for its nearest ancestor <a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Content_categories#sectioning_content">sectioning content</a> or <a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/Heading_Elements#sectioning_root">sectioning root</a> element. A <code>&lt;footer&gt;</code> typically contains information about the author of the section, copyright data or links to related documents.</p>
-<p>用來定義一個頁尾或結尾區塊，常見的 footer 是網頁最下面的頁尾區塊會包含作者、版權、聯絡方式等資訊。</p>
-<p>一個網頁中除了可以有主要的網頁頁尾 (page footer) 區塊外，<a target="_blank" rel="noopener" href="https://www.fooish.com/html/article-tag.html"><code>&lt;article&gt;</code></a>, <a target="_blank" rel="noopener" href="https://www.fooish.com/html/section-tag.html"><code>&lt;section&gt;</code></a>, <a target="_blank" rel="noopener" href="https://www.fooish.com/html/aside-tag.html"><code>&lt;aside&gt;</code></a>, <a target="_blank" rel="noopener" href="https://www.fooish.com/html/nav-tag.html"><code>&lt;nav&gt;</code></a> 這些 HTML 語意區塊中都可以有自己的 <code>&lt;footer&gt;</code>。</p>
-<blockquote>
-<p>資料來源</p>
-</blockquote>
-<p>AC課件<br><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/plus">developer.mozilla.org</a><br><a target="_blank" rel="noopener" href="https://www.fooish.com/">www.fooish.com</a></p>
-
+          <h1 id="『新手日記』Day-1-HTML語意化標籤"><a href="#『新手日記』Day-1-HTML語意化標籤" class="headerlink" title="『新手日記』Day-1 HTML語意化標籤"></a><strong>『新手日記』Day-1 HTML語意化標籤</strong></h1>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/12/30/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97-2022-12-30-day1/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -982,10 +706,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2022-12-28 20:12:23 / Modified: 20:16:29" itemprop="dateCreated datePublished" datetime="2022-12-28T20:12:23+08:00">2022-12-28</time>
+              <time title="Created: 2022-12-28 20:12:23" itemprop="dateCreated datePublished" datetime="2022-12-28T20:12:23+08:00">2022-12-28</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-12-30 16:54:13" itemprop="dateModified" datetime="2022-12-30T16:54:13+08:00">2022-12-30</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -1007,53 +737,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="『學習心得』-自學經驗補充"><a href="#『學習心得』-自學經驗補充" class="headerlink" title="『學習心得』-自學經驗補充"></a><strong>『學習心得』-自學經驗補充</strong></h1><p><img src="https://miro.medium.com/max/700/1*lcIQFQ_U4tT5KXchnlmhDQ.jpeg" alt="https://miro.medium.com/max/700/1*lcIQFQ_U4tT5KXchnlmhDQ.jpeg"></p>
-<p>這篇是對這篇文章的補充<a target="_blank" rel="noopener" href="https://medium.com/@cycivs07/%E5%AD%B8%E7%BF%92%E5%BF%83%E5%BE%97-%EF%BD%81%EF%BD%83%E5%89%8D%E7%AB%AF%E8%87%AA%E5%AD%B8%E7%B6%93%E9%A9%97-69f346d1aa30">https:&#x2F;&#x2F;medium.com&#x2F;@cycivs07&#x2F;%E5%AD%B8%E7%BF%92%E5%BF%83%E5%BE%97-%EF%BD%81%EF%BD%83%E5%89%8D%E7%AB%AF%E8%87%AA%E5%AD%B8%E7%B6%93%E9%A9%97-69f346d1aa30</a></p>
-<p>上一篇主要是在講心路歷程，這篇打算介紹一下工具</p>
-<blockquote>
-<p>執行力與時間規劃</p>
-</blockquote>
-<p>自學到現在這4個月的經歷讓我覺得好的執行力與時間規劃是最重要的開始，不管你是全職學習還是兼職定要規劃好。</p>
-<p>我自己是使用 notion 來規劃自己的時間，主要都是設計週計畫：</p>
-<p><img src="https://miro.medium.com/max/700/1*WF-jtncAT75pOFB6l3r0zA.png" alt="https://miro.medium.com/max/700/1*WF-jtncAT75pOFB6l3r0zA.png"></p>
-<p>線上方主要是規劃每天學習的進度，線下方的則是學習完後要做的事情(如果沒達到會移到隔天，類似子彈筆記的概念)</p>
-<p><img src="https://miro.medium.com/max/700/1*iE8WTRTB9UsAA8327F6wHg.png" alt="https://miro.medium.com/max/700/1*iE8WTRTB9UsAA8327F6wHg.png"></p>
-<p>這個就會是我提前為之後的安排，但因為不是這週的任務所以先放下面。</p>
-<p>最右邊則是還沒有安排什麼時候要完成的，但如果當天進度都完成我也會來這邊找事情做。</p>
-<blockquote>
-<p>筆記與刻意練習</p>
-</blockquote>
-<h2 id="使用工具：notion、Xmind"><a href="#使用工具：notion、Xmind" class="headerlink" title="使用工具：notion、Xmind"></a><strong>使用工具：notion、Xmind</strong></h2><p>筆記與刻意練習我會列入第二重要的事情。</p>
-<p>筆記的話就看個人習慣跟學習的方式，但記得：</p>
-<h1 id="你使用這項工具的『目的』到底是什麼"><a href="#你使用這項工具的『目的』到底是什麼" class="headerlink" title="你使用這項工具的『目的』到底是什麼"></a>你使用這項工具的『目的』到底是什麼</h1><p>以我自己來說，我最主要的目的是為了之後可以快速翻閱筆記查找到我要的資料，所以我的筆記設計就會照著目的去製作：</p>
-<p><img src="https://miro.medium.com/max/700/1*H7JxHRGnoKVHQ5ZCUnZlsQ.png" alt="https://miro.medium.com/max/700/1*H7JxHRGnoKVHQ5ZCUnZlsQ.png"></p>
-<p>上方是使用Xmind、下方是notion，我是搭配使用，因為像HTML跟CSS就很適合用心智圖來做筆記，JS對我來說就比較適合用notion。</p>
-<p>至於教案的學習我自己分成三階段：第一階段先讀完一遍內容跟影片(不動手)、然後跟著做一遍第二階段自己不看內容再做一遍，並且準備筆記本把自己卡關停頓的地方做紀錄。第三階段就是看筆記本然後把這些問題整理成筆記，讓之後的自己複習。</p>
-<p>延伸資料要不要看這個就看自己的時間安排，我當時是沒有看啊</p>
-<blockquote>
-<p>優化作業以及簡述自己的邏輯想法</p>
-</blockquote>
-<p>再來就是作業繳交的部分，我會建議只要能優化的作業都要想辦法去嘗試優化，並且在繳交作業的同時把自己做這份作業的流程簡單敘述一下。一來可以讓助教知道你的狀況，二來可以內化自己的想法。</p>
-<p>但注意優化作業一定要設停損點，時間到就必須要停止不然反而會拖累進度</p>
-<blockquote>
-<p>心態</p>
-</blockquote>
-<p>學期過程一定會有心情起伏，可以多上飛航學習跟大家聊聊天分享自己近況，以及抓到自己學習與放鬆的平衡點。</p>
-<p>休息是為了走更長遠的路雖然是一句幹話，但還是有一定的道理存在的！</p>
-<blockquote>
-<p>實用的網站</p>
-</blockquote>
-<p><strong>(<a target="_blank" rel="noopener" href="https://stackoverflow.com/">https://stackoverflow.com/</a>)</strong></p>
-<p>國外論壇，英文不強的可以學我用google翻譯</p>
-<p><strong>(<a target="_blank" rel="noopener" href="https://courses.wesbos.com/account">https://courses.wesbos.com/account</a>)</strong></p>
-<p>JS30 一些簡單的side Project 建議學到ＤＯＭ後就可以去玩了</p>
-<p><strong>(<a target="_blank" rel="noopener" href="https://www.keybr.com/">https://www.keybr.com/</a>)</strong></p>
-<p>英打不強的可以一起來練習</p>
-<blockquote>
-<p>結論</p>
-</blockquote>
-<p>會打這篇主要還是希望自己走錯的路大家可以避開，希望大家都可以早一點找到自己的學習方式才是最重要的！！！</p>
-
+          <h1 id="『學習心得』-自學經驗補充"><a href="#『學習心得』-自學經驗補充" class="headerlink" title="『學習心得』-自學經驗補充"></a><strong>『學習心得』-自學經驗補充</strong></h1>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/12/28/%E5%BF%83%E5%BE%97-2022-12-28-%E5%AD%B8%E6%9C%9F%E4%B8%89%E5%89%8D%E7%9A%84%E7%B6%93%E9%A9%97%E5%88%86%E4%BA%AB-%E8%A3%9C%E5%85%85-2022-12-28-%E5%AD%B8%E6%9C%9F%E4%B8%89%E5%89%8D%E7%9A%84%E7%B6%93%E9%A9%97%E5%88%86%E4%BA%AB-%E8%A3%9C%E5%85%85/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1095,10 +787,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2022-12-28 20:00:32 / Modified: 20:10:20" itemprop="dateCreated datePublished" datetime="2022-12-28T20:00:32+08:00">2022-12-28</time>
+              <time title="Created: 2022-12-28 20:00:32" itemprop="dateCreated datePublished" datetime="2022-12-28T20:00:32+08:00">2022-12-28</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-12-30 16:54:08" itemprop="dateModified" datetime="2022-12-30T16:54:08+08:00">2022-12-30</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -1120,86 +818,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="『學習心得』-AC前端自學經驗"><a href="#『學習心得』-AC前端自學經驗" class="headerlink" title="『學習心得』- ＡＣ前端自學經驗"></a><strong>『學習心得』- ＡＣ前端自學經驗</strong></h1><p><img src="https://miro.medium.com/max/700/1*GwDQfvuYoMBAoHMTcbXjsg.jpeg" alt="https://miro.medium.com/max/700/1*GwDQfvuYoMBAoHMTcbXjsg.jpeg"></p>
-<blockquote>
-<p><em><strong>前言</strong></em></p>
-</blockquote>
-<p>時間真的過得好快，在AC學習一轉眼已經過了4個多月了，我想是時候來稍微總結一下這段時間的心得了。</p>
-<blockquote>
-<p><em><strong>轉職的決定</strong></em></p>
-</blockquote>
-<p>在2022年的5月我離開待了5年公司，其實在離開前的半年裡就已經有考慮要換工作或轉職的念頭，但當事情真的發生時我卻還沒想好要做什麼，在迷茫之際弟弟介紹了ＡＣ給我並推薦我參加學期一試試看有沒有興趣，就一腳踏入了這段旅程。</p>
-<p>因為大學曾經接觸過C++，所以學期一的學習對我來說是蠻好上手的，對於程式也慢慢的燃起了興趣。在結束了學期一的旅程後，我思考了一個禮拜要不要繼續(畢竟學費也不便宜啊&gt;&lt;”)。</p>
-<p>這段時間真的想了很多，考慮到自己的年紀、疫情下餐飲業的脆弱、自己對於餐飲業的熱誠等等，最後還是年齡的考量讓我決定踏出這一步，我也知道我這個年紀(34歲)要踏入一個新的領域是一個很尷尬的年紀，但如果再不踏出留在餐飲業，到了40歲我如果又因為類似的原因沒了工作我還能做什麼？因此我心裡給了自己8個月的時間(到農曆年)的全職學習時間，好好的衝刺一波，看看自己的能力可以到哪裡。</p>
-<p>但很快我就遇到了2大問題：</p>
-<blockquote>
-<p><em><strong>問題1-時間安排</strong></em></p>
-</blockquote>
-<p>線上學習對於現在的人來說應該是稀鬆平常的事情吧，但對於已經離開學校10幾年的我來說卻是第一次的體驗，所以我碰到了我第一個難關：<strong>我要怎麼安排時間。</strong></p>
-<p>從小到大我一直知道我自己是一個自制力很差的人，時常是3分鐘熱度，第一次接觸到連學習時間都是自己安排的課程，感覺自己走一走又會偏掉。果不其然，在我自己設立的時間表很大一部分都是沒有完成，像之前我是用子彈筆記來安排，就會看到我一直把前一天未完成的事項往後拉。但還好ＡＣ是有每週進度的，這讓我雖然沒有按照自己的時間走，但還是有條死線在那邊逼著我。</p>
-<p>在這樣迷糊的過了一個月完成了2–1的課程，覺得這樣下去不行，因此好好的利用了課程空擋的一個禮拜從新規劃學習計畫，並利用學習2–2這一個月來測試及修改，完成了目前的學習計畫。</p>
-<p>我是使用notion來製作我的計畫跟筆記的，大家可以去youtube上搜索notion，會有很多內容。我是用週計畫表來規劃自己這週的學習目標</p>
-<p><img src="https://miro.medium.com/max/700/1*xD9-ijPDimhIYAXikVXbWA.png" alt="https://miro.medium.com/max/700/1*xD9-ijPDimhIYAXikVXbWA.png"></p>
-<p>我通常禮拜天會安排當週的週計畫，主體是ＡＣ的課程表(我是用參考時間來安排)，然後再搭配自己的私事或是在學習中發現什麼需要再加強或是想更深入學習的內容就會加在下方，然後下方就會是還沒安排代辦，如果當進度超前時，就會在下面找可以先做的事情上來做。另外還有製作了進度表：</p>
-<p><img src="https://miro.medium.com/max/700/1*TUoIXS2kZV0oqvRYwb4Rcg.png" alt="https://miro.medium.com/max/700/1*TUoIXS2kZV0oqvRYwb4Rcg.png"></p>
-<p>這個目前還在測試，目的是為了讓自己可以一目瞭然知道自己還有什麼還沒完成。在完成這個後，我在2–3的學習確實比之前都還要來的效率及自制，但還是有很多要改進，會利用接下來的旅程繼續完善他。</p>
-<blockquote>
-<p><em><strong>問題2-學習吸收與筆記</strong></em></p>
-</blockquote>
-<p>在學習過程中發現了第二個問題：我時常會忘記學習過的內容以及回去翻筆記卻翻不到自己想要的內容。</p>
-<p>當下發現學習時常記不住時，其實有些沮喪，想說自己是不是不適合走這條路為什麼忘東忘西的，這邊真的要感謝ＡＣ的粉粉助教在有一次ORID學習週記時我有提到這個問題，她除了鼓勵我之外還提到了一個對我接下來學習很重要的一個名詞：『刻意練習』(我還真的去買這本書來看)。</p>
-<p><em><strong>什麼是刻意練習？簡單來說刻意練習具有下列特色：</strong></em></p>
-<blockquote>
-<p>刻意練習培養的技能已經有其他人知道該怎麼做，也已建立成效頗佳的訓練技巧。</p>
-</blockquote>
-<blockquote>
-<p>刻意練習只在跨出舒適圈後才能奏效，需要學生不斷嘗試去突破現階段的技能水準。</p>
-</blockquote>
-<blockquote>
-<p>刻意練習必須有定義清楚明確的目標，且往往涉及改進想要達到的表現的某個面向，而不能只設定模糊的整體改善目標。</p>
-</blockquote>
-<blockquote>
-<p>刻意練習是『刻意』進行的，也就是必須全神貫注，有意識地行動。</p>
-</blockquote>
-<blockquote>
-<p>刻意練習包含意見回饋，並根據該回饋調整努力方向。</p>
-</blockquote>
-<blockquote>
-<p>刻意練習既能產生有效的心智表徵，也仰賴心智表徵運作。</p>
-</blockquote>
-<blockquote>
-<p>刻意練習等於加強或調整先前習得的技能，必須著重該技能的特定面向，努力改善，而隨著時間過去，這一步一步的改善最終會打造出專家級表現。</p>
-</blockquote>
-<blockquote>
-<p>(轉載Anders Ericsson所著『刻意練習』一書)</p>
-</blockquote>
-<p>原來不是我不適合，而是我根本用對方法，至此我開始對自己的學習方式做改變，每一個章節我都會盡量讀3次，第一次先讀完一遍內容跟影片(不動手)、第二次跟著做一遍、第三次自己不看內容再做一遍。透過這個方法自己感覺確實越來越熟悉，就算真的有點忘記回去看一下教案或筆記也能很快速地回想起來。</p>
-<p>至於之前提到的“回去翻筆記卻翻不到自己想要的內容”這部分，在網路上找了一些資料也嘗試照他們的方式來做但還是感覺不對勁，直到有一次在ＡＣ的講座裡(我真的沒有業配ＡＣ啊&gt;&lt;”)我聽到了一句話：</p>
-<aside>
-💡 你必須去了解你的工具，你使用這項工具的『目的』到底是什麼
-
-</aside>
-
-<p>天阿！我必須老實說，我的感受就像是：</p>
-<p><img src="https://miro.medium.com/max/600/1*wMjx_Jja_WP2heC2fqGnvw.jpeg" alt="https://miro.medium.com/max/600/1*wMjx_Jja_WP2heC2fqGnvw.jpeg"></p>
-<p>對！！！我要寫筆記的目的不是為了給人家檢查、或是讓大家知道我有在做筆記，而是為了我未來複習跟查找資料時使用。因此我從按課程進度寫的方式(目前是在閱讀時會開一個頁面把重點打上去，方便未來整理)，改成主題的方式，整個筆記設立一個主題例如css的display、overflow等等，這樣的改動確實幫助我在2–3的學習發揮了很棒的好處。</p>
-<h1 id="方法沒有好與壞，只有適不適合的問題"><a href="#方法沒有好與壞，只有適不適合的問題" class="headerlink" title="方法沒有好與壞，只有適不適合的問題"></a>方法沒有好與壞，只有適不適合的問題</h1><blockquote>
-<p><em><strong>目前的反思</strong></em></p>
-</blockquote>
-<p>學習到這邊時間已經過了4個月，離我給自己的時間已經過了一半，在這段時間我確實學習到了很多東西，但也確實很多地方沒有準備好。以下是我自己覺得可以做得更好的地方：</p>
-<ol>
-<li>沒有預先找尋資料：</li>
-</ol>
-<p>在進入ＡＣ前其實我並沒有特別做過功課，所以學習的安排其實並沒有一個完整的規劃，直到2–1快結束才注意到這個問題，如果在學期1時就有去網路上看其他人的自學心得我會更早去製作屬於我自己的學習方式才不至於浪費時間。</p>
-<p>2.自制力與執行力</p>
-<p>前一段有說過我這塊表現得很差，在這接近4個月的學習如果我把這些壞習慣改善，我相信我的成績會比現在更好。目前是靠著飛航學習模式跟番茄鐘來強迫自己，希望在接下來的日子我可以改善這個狀況。</p>
-<p>3.心態：</p>
-<p>我自己是很容易受到情緒引響的一個人，這段時間畢竟是全職學習沒有多少收入，常常會因為對未來的不確定性以及經濟的壓力(好啦我承認就是股票漲跌)進而影響學習的效率。要抓到學習與放鬆的平衡點是我接下來的目標，避免再一次因為心態問題影響了自己的學習目標。</p>
-<blockquote>
-<p><em><strong>總結</strong></em></p>
-</blockquote>
-<p>我很開心6月的自己願意跨出這一步，而不是選擇待在自己的舒適圈。也很謝謝幫助過我的助教與同學，如果沒有你們的幫忙說不定ＡＣ就會在退費名單裡看到我的名字了(喂～～)，也期許我們未來都能完成自己的目標，大家一起加油！！！</p>
-
+          <h1 id="『學習心得』-AC前端自學經驗"><a href="#『學習心得』-AC前端自學經驗" class="headerlink" title="『學習心得』- ＡＣ前端自學經驗"></a><strong>『學習心得』- ＡＣ前端自學經驗</strong></h1>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/12/28/%E5%BF%83%E5%BE%97-2022-12-28-%E5%AD%B8%E6%9C%9F%E4%B8%89%E5%89%8D%E7%9A%84%E7%B6%93%E9%A9%97%E5%88%86%E4%BA%AB-2022-12-28-%E5%AD%B8%E6%9C%9F%E4%B8%89%E5%89%8D%E7%9A%84%E7%B6%93%E9%A9%97%E5%88%86%E4%BA%AB/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1241,10 +868,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2022-12-28 19:54:09 / Modified: 19:58:32" itemprop="dateCreated datePublished" datetime="2022-12-28T19:54:09+08:00">2022-12-28</time>
+              <time title="Created: 2022-12-28 19:54:09" itemprop="dateCreated datePublished" datetime="2022-12-28T19:54:09+08:00">2022-12-28</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-12-30 16:53:33" itemprop="dateModified" datetime="2022-12-30T16:53:33+08:00">2022-12-30</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -1267,28 +900,14 @@
 
       
           <p><em><strong>這個月的學習，獲得了大量的知識、技能、觀念，另外心態上也有很大的改變 — 我想在展開下一段旅程前，紀錄下我的心得與反思。</strong></em></p>
-<blockquote>
-<p>學習的改變</p>
-</blockquote>
-<p>經過了2–2的洗禮，我覺得我自己跟2–2之前的自己進步很大，不管是邏輯思考、判斷怎麼寫，都有顯著的提升。對JavaScript更認識，寫code的時後不再是碰運氣完成，而是真的照我的規劃去實現，但要說改變最多得應該是心理層面吧！</p>
-<p>在之前我還在摸索的學習，包含學習時間的安排、筆記、詢問、查找資料等等，自己感覺都還沒步上正軌，內心其實非常慌張。對自己的否定以及不安，其實都讓我自己感覺到了很大的無形壓力。但在進入2–2後這些想法慢慢的在改變。</p>
-<p>讓我改變最大的是A13作業，這是我第一次不是只有交作業而已，想盡辦法的加功能、讓畫面好看、Debug然後不斷的優化。當成品出來的那一刻真的是滿滿的成就感，雖然慢了一點但原來我是做得到的啊。</p>
-<blockquote>
-<p>改變的動機</p>
-</blockquote>
-<p>我覺得會有這麼大的改變真的是一起學習的同學，雖然不是那種聊天然後豁然開朗的那種(但還蠻期待有線下活動的)，主要是看到同學在每個章節的提問、工作坊的活躍、以及作業的優化等等，突然發現自己有一個目標跟榜樣就在前方。想到之前在代訓新員工時常對他們說的話『先從模仿開始』，怎麼到自己身上就忘記了呢。</p>
-<p>先從自己的學習開始改變，不再只是上完課程而已，做好複習。在做作業時，遇到有一知半解的地方一定要弄懂。作業只要有能優化的地方一定要嘗試優化，不懂就問在ＡＣ上問或是到Discord ，慢慢的在寫作業時越來越順利，一點一點慢慢的進步，尤其是到A13時真的讓我看到了改變後的成果，讓我知道改變的方向可以繼續走下去。</p>
-<blockquote>
-<p>總結</p>
-</blockquote>
-<p>在經歷了這一個月的學習，讓我真的知道學習就像是：逆水行舟 不進則退。真的不能有還有時間先休息幾天的想法，這樣真的最後快到死線時，整個學習效果是非常差的。</p>
-<p>現在就是持之以恆的下去，讓自己更熟悉JavaScript，讓自己的思考更靈活、邏輯更清晰。</p>
-<p>但另外一方面真的要抽出時間來好好運動，有在運動（勞碌）時精神狀況真的比現在好很多，以及容易分心的狀況也要趕緊改善。</p>
-<blockquote>
-<p>給自己的一段話</p>
-</blockquote>
-<p>即將邁入2–3了，這學期不只有必修的課程要學習，也有選修的課程要學。課業壓力會變比較大，要規劃好學習時間不要分心。為自己設下停損點，不要鑽牛角尖，有時候真的是需要人點自己一下。</p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/12/28/%E5%BF%83%E5%BE%97-2022-12-28-%E5%AD%B8%E6%9C%9F2%E2%80%932%E5%BF%83%E5%BE%97-2022-12-28-%E5%AD%B8%E6%9C%9F2%E2%80%932%E5%BF%83%E5%BE%97/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 

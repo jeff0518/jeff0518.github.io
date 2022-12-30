@@ -38,7 +38,7 @@
 <meta property="og:image" content="https://miro.medium.com/max/1400/0*ZBkFYwv8WSZvDmVE.png">
 <meta property="og:image" content="https://miro.medium.com/max/1400/0*ZP5aNyvd4YaOLES7.png">
 <meta property="article:published_time" content="2022-12-30T07:37:42.000Z">
-<meta property="article:modified_time" content="2022-12-30T08:00:38.198Z">
+<meta property="article:modified_time" content="2022-12-30T08:39:53.145Z">
 <meta property="article:author" content="Jeff">
 <meta property="article:tag" content="新手日記">
 <meta property="article:tag" content="JavaScript">
@@ -198,7 +198,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2022-12-30 15:37:42 / Modified: 16:00:38" itemprop="dateCreated datePublished" datetime="2022-12-30T15:37:42+08:00">2022-12-30</time>
+              <time title="Created: 2022-12-30 15:37:42 / Modified: 16:39:53" itemprop="dateCreated datePublished" datetime="2022-12-30T15:37:42+08:00">2022-12-30</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -226,6 +226,9 @@
 <p>最早在ＡＣ有一堂課是要我們學習分析什麼是 event loop。 在那邊第一次對同步跟非同步有了一絲的印象，那時候的文章：</p>
 <p><a target="_blank" rel="noopener" href="https://www.notion.so/168538cd537243a18f89ba1dcca8b16d">https://www.notion.so/168538cd537243a18f89ba1dcca8b16d#49f4a62c06c7401084b31fb0f07df83e</a></p>
 <p>之後陸陸續續在課堂或文章內容裡都有提到這個概念，但好像真的沒有認真的統整過一次，剛好在最新的課程裡講了Callback、Promises、Async&#x2F;Await，又加上我第一次沒有聽懂決定再看一次，順便統整一次內容。</p>
+<span id="more"></span>
+
+
 <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a><strong>前言</strong></h1><p>我們都知道『JavaScript 是一種單線程(single threaded runtime)的程式語言』，因為作為瀏覽器的腳本(程式語言)，他負責處理頁面的互動以及Dom的操作，讓你可以在網頁中實現出複雜的功能。但JavaScript 只是程式語言，因此我們需要一個『執行環境（runtime）』所提供的東西，例如說 setTiemout、document 等等，而這個 runtime可以是瀏覽器或是我們最近在學的Node.js。</p>
 <h1 id="blocking（阻塞）與non-blocking（非阻塞）"><a href="#blocking（阻塞）與non-blocking（非阻塞）" class="headerlink" title="blocking（阻塞）與non-blocking（非阻塞）"></a><strong>blocking（阻塞）與non-blocking（非阻塞）</strong></h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">let queue = []</span><br><span class="line">for (let i = 0; i &lt; 9999; i++) &#123;</span><br><span class="line">  queue.push(&#123; key: i &#125;)</span><br><span class="line">&#125;</span><br><span class="line">setTimeout(() =&gt; &#123;</span><br><span class="line">  console.log(&#x27;hello world&#x27;)</span><br><span class="line">&#125;, 0)</span><br><span class="line">queue.forEach((item) =&gt; &#123;</span><br><span class="line">  console.log(item)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 

@@ -20,19 +20,19 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="『新手日記』Day-25 Promise的初次見面 最近…真的會完蛋，早上ＭＬＢ晚上ＣＰＢＬ等到了11月還有世界杯…..該不該把電視砸了… Promise 本身是用來改善 JavaScript 非同步的語法結構。JavaScript 是屬於同步的程式語言，因此『一次僅能做一件事情』，但遇到非同步的事件時，就會將非同步的事件移動到程式碼的最後方，等到所有的原始碼運行完以後才會執行非同步的事件。 12">
+  <meta name="description" content="『新手日記』Day-25 Promise的初次見面 最近…真的會完蛋，早上ＭＬＢ晚上ＣＰＢＬ等到了11月還有世界杯…..該不該把電視砸了…">
 <meta property="og:type" content="article">
 <meta property="og:title" content="『新手日記』Day-25 Promise的初次見面">
 <meta property="og:url" content="http://example.com/2022/12/30/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97-2022-12-30-day25/index.html">
 <meta property="og:site_name" content="Jeff的隨手筆記">
-<meta property="og:description" content="『新手日記』Day-25 Promise的初次見面 最近…真的會完蛋，早上ＭＬＢ晚上ＣＰＢＬ等到了11月還有世界杯…..該不該把電視砸了… Promise 本身是用來改善 JavaScript 非同步的語法結構。JavaScript 是屬於同步的程式語言，因此『一次僅能做一件事情』，但遇到非同步的事件時，就會將非同步的事件移動到程式碼的最後方，等到所有的原始碼運行完以後才會執行非同步的事件。 12">
+<meta property="og:description" content="『新手日記』Day-25 Promise的初次見面 最近…真的會完蛋，早上ＭＬＢ晚上ＣＰＢＬ等到了11月還有世界杯…..該不該把電視砸了…">
 <meta property="og:locale" content="zh_TW">
 <meta property="og:image" content="https://miro.medium.com/max/1400/1*Zq8YHXBcuEmkAkPVZeCU0Q.jpeg">
 <meta property="og:image" content="https://miro.medium.com/max/1400/1*NTvMSUDVkQNL_n6lSH30yA.png">
 <meta property="og:image" content="https://miro.medium.com/max/1400/0*mlt4DyzgcZRzy6Jh.png">
 <meta property="og:image" content="https://miro.medium.com/max/1400/1*YOOs9t4N__o4r3gY_Nl8tw.png">
 <meta property="article:published_time" content="2022-12-30T07:36:42.000Z">
-<meta property="article:modified_time" content="2022-12-30T07:59:59.325Z">
+<meta property="article:modified_time" content="2022-12-30T08:40:15.208Z">
 <meta property="article:author" content="Jeff">
 <meta property="article:tag" content="新手日記">
 <meta property="article:tag" content="JavaScript">
@@ -192,7 +192,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2022-12-30 15:36:42 / Modified: 15:59:59" itemprop="dateCreated datePublished" datetime="2022-12-30T15:36:42+08:00">2022-12-30</time>
+              <time title="Created: 2022-12-30 15:36:42 / Modified: 16:40:15" itemprop="dateCreated datePublished" datetime="2022-12-30T15:36:42+08:00">2022-12-30</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -217,6 +217,8 @@
       
         <h1 id="『新手日記』Day-25-Promise的初次見面"><a href="#『新手日記』Day-25-Promise的初次見面" class="headerlink" title="『新手日記』Day-25 Promise的初次見面"></a><strong>『新手日記』Day-25 Promise的初次見面</strong></h1><p><img src="https://miro.medium.com/max/1400/1*Zq8YHXBcuEmkAkPVZeCU0Q.jpeg" alt="https://miro.medium.com/max/1400/1*Zq8YHXBcuEmkAkPVZeCU0Q.jpeg"></p>
 <p>最近…真的會完蛋，早上ＭＬＢ晚上ＣＰＢＬ等到了11月還有世界杯…..該不該把電視砸了…</p>
+<span id="more"></span>
+
 <p>Promise 本身是用來改善 JavaScript 非同步的語法結構。JavaScript 是屬於同步的程式語言，因此『一次僅能做一件事情』，但遇到非同步的事件時，就會將非同步的事件移動到程式碼的最後方，等到所有的原始碼運行完以後才會執行非同步的事件。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">console.log(&#x27;開始&#x27;);</span><br><span class="line">setTimeout(() =&gt; &#123;</span><br><span class="line">  console.log(&#x27;非同步事件&#x27;);</span><br><span class="line">&#125;, 0);</span><br><span class="line">console.log(&#x27;程式碼結束&#x27;);</span><br></pre></td></tr></table></figure>
 
