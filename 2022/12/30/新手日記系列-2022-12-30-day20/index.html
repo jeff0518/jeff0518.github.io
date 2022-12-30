@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="『新手日記』Day-20 CRUD是什麼？ 在還沒開始學習後端時就有看過這個詞，在進入正式學習前先來預習一下吧 昨天我們有提到：『RESTful 的設計以「資源」為中心，再搭配 HTTP method 的動詞，以及 CRUD 等資料操作』，昨天認識了RESTful跟HTTP method，今天來認識CRUD CRUDCRUD 是設計資料系統時很重要的基本技巧，在維基百科翻譯為「增刪改查」，分表代表">
+<meta property="og:type" content="article">
+<meta property="og:title" content="『新手日記』Day-20 CRUD是什麼？">
+<meta property="og:url" content="http://example.com/2022/12/30/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97-2022-12-30-day20/index.html">
+<meta property="og:site_name" content="Jeff的隨手筆記">
+<meta property="og:description" content="『新手日記』Day-20 CRUD是什麼？ 在還沒開始學習後端時就有看過這個詞，在進入正式學習前先來預習一下吧 昨天我們有提到：『RESTful 的設計以「資源」為中心，再搭配 HTTP method 的動詞，以及 CRUD 等資料操作』，昨天認識了RESTful跟HTTP method，今天來認識CRUD CRUDCRUD 是設計資料系統時很重要的基本技巧，在維基百科翻譯為「增刪改查」，分表代表">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://miro.medium.com/max/1400/1*zSh5v9qABH8qSl-CKYqOJw.jpeg">
+<meta property="og:image" content="https://miro.medium.com/max/1328/1*-ZKdeOpGSINCpKJOuC-SAQ.png">
+<meta property="article:published_time" content="2022-12-30T07:31:42.000Z">
+<meta property="article:modified_time" content="2022-12-30T07:54:31.434Z">
+<meta property="article:author" content="Jeff">
+<meta property="article:tag" content="新手日記">
+<meta property="article:tag" content="網路概論">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://miro.medium.com/max/1400/1*zSh5v9qABH8qSl-CKYqOJw.jpeg">
+
+<link rel="canonical" href="http://example.com/2022/12/30/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97-2022-12-30-day20/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-tw'
+  };
+</script>
+
+  <title>『新手日記』Day-20 CRUD是什麼？ | Jeff的隨手筆記</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Jeff的隨手筆記</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">學習當一個前端工程師</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/30/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97-2022-12-30-day20/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpeg">
+      <meta itemprop="name" content="Jeff">
+      <meta itemprop="description" content="這是一個紀錄自己成長的地方">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jeff的隨手筆記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          『新手日記』Day-20 CRUD是什麼？
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2022-12-30 15:31:42 / Modified: 15:54:31" itemprop="dateCreated datePublished" datetime="2022-12-30T15:31:42+08:00">2022-12-30</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97/" itemprop="url" rel="index"><span itemprop="name">新手日記系列</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="『新手日記』Day-20-CRUD是什麼？"><a href="#『新手日記』Day-20-CRUD是什麼？" class="headerlink" title="『新手日記』Day-20 CRUD是什麼？"></a><strong>『新手日記』Day-20 CRUD是什麼？</strong></h1><p><img src="https://miro.medium.com/max/1400/1*zSh5v9qABH8qSl-CKYqOJw.jpeg" alt="https://miro.medium.com/max/1400/1*zSh5v9qABH8qSl-CKYqOJw.jpeg"></p>
+<p>在還沒開始學習後端時就有看過這個詞，在進入正式學習前先來預習一下吧</p>
+<p>昨天我們有提到：『<strong>RESTful 的設計以「資源」為中心</strong>，再搭配 HTTP method 的動詞，以及 CRUD 等資料操作』，昨天認識了<strong>RESTful跟</strong>HTTP method，今天來認識CRUD</p>
+<h1 id="CRUD"><a href="#CRUD" class="headerlink" title="CRUD"></a><strong>CRUD</strong></h1><p><em><strong>CRUD</strong></em> 是設計資料系統時很重要的基本技巧，在維基百科翻譯為「增刪改查」，分表代表了：</p>
+<ul>
+<li>Create (C)新增，建立資料，將定義好的欄位寫入對應的值</li>
+<li>Read (R) 讀取，讀取資料，查詢資料的相關內容</li>
+<li>Update (U) 更新，更新特定欄位的資料</li>
+<li>Delete (D) 刪除，刪除資料</li>
+</ul>
+<p>四個動作合併稱之為 CRUD，通常在 SQL資料庫或API，做某一資源存取的時候會遇到。</p>
+<p><img src="https://miro.medium.com/max/1328/1*-ZKdeOpGSINCpKJOuC-SAQ.png" alt="https://miro.medium.com/max/1328/1*-ZKdeOpGSINCpKJOuC-SAQ.png"></p>
+<p>來自維基百科<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E5%A2%9E%E5%88%AA%E6%9F%A5%E6%94%B9#cite_note-1">https://zh.wikipedia.org/wiki/%E5%A2%9E%E5%88%AA%E6%9F%A5%E6%94%B9#cite_note-1</a></p>
+<h1 id="CRUD應用"><a href="#CRUD應用" class="headerlink" title="CRUD應用"></a><strong>CRUD應用</strong></h1><p>SQL(Structured Query Language)，一種資料庫查詢和程式設計語言，用於存取數據以及查詢、更新和管理關係資料庫系統。</p>
+<p>但在實務上，當我們用 Express.js 開發應用程式時，會希望能直接用 JavaScript 操作資料庫，而不需要另外撰寫 SQL。因此開發出了『物件映射 (object mapping)』 的技術，用程式語言裡的『物件』來包裝資料庫的 SQL (structured query language)，讓開發者可以直接使用物件導向的方式操作資料庫。</p>
+<p>依不同的資料庫類型，會分別使用不同的映射技術：</p>
+<blockquote>
+<p>針對文件資料庫 (document database) 的：ODM (Object Document Mapper)</p>
+<p><em>針對關聯式資料庫 (relational database)的：ORM (Object Relational Mapping)</em></p>
+</blockquote>
+<p><strong>ODM 與 ORM 都是讓開發者可以使用物件導向語法來操作資料庫</strong>，同時也增加程式碼的易讀性與維護性，只是對應的類型不同。</p>
+<p>透過ＡＣ的例子，我們在資料庫尋找一筆名為『買蘋果』的TodoList透過 ORM 的語法：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Todo.find (&#123; name: &#x27;買蘋果&#x27;, done: &#123; false &#125;&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>若使用 SQL 的指令的話，會是：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM Todos WHERE name=&#x27;買蘋果&#x27; AND done=FALSE;</span><br></pre></td></tr></table></figure>
+
+<p>身為懶人的我當然選擇第一個啊XD</p>
+<p>這是一篇比較偏向預習的文章，除了看ＡＣ的教案外還有鐵人賽的資料，但幾乎所有的文章主要的部分還是要靠實作來練習，基於本人生了一場名字叫懶惰的病，實作的部分就不放上來，連假第一天就得了病，希望明天可以痊癒XDD</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98/" rel="tag"># 新手日記</a>
+              <a href="/tags/%E7%B6%B2%E8%B7%AF%E6%A6%82%E8%AB%96/" rel="tag"># 網路概論</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/12/30/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97-2022-12-30-day19/" rel="prev" title="『新手日記』Day-19 HTTP request">
+      <i class="fa fa-chevron-left"></i> 『新手日記』Day-19 HTTP request
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/12/30/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97-2022-12-30-day21/" rel="next" title="『新手日記』Day-21 Handlebars是什麼？">
+      『新手日記』Day-21 Handlebars是什麼？ <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E3%80%8E%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E3%80%8FDay-20-CRUD%E6%98%AF%E4%BB%80%E9%BA%BC%EF%BC%9F"><span class="nav-number">1.</span> <span class="nav-text">『新手日記』Day-20 CRUD是什麼？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CRUD"><span class="nav-number">2.</span> <span class="nav-text">CRUD</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CRUD%E6%87%89%E7%94%A8"><span class="nav-number">3.</span> <span class="nav-text">CRUD應用</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Jeff"
+      src="/uploads/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Jeff</p>
+  <div class="site-description" itemprop="description">這是一個紀錄自己成長的地方</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">34</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jeff0518" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jeff0518" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:cycivs07@icloud.com" title="E-Mail → mailto:cycivs07@icloud.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jeff</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

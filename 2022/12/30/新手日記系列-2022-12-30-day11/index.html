@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="『新手日記』Day-11 JavaScript DOM的簡單介紹 DOM對我來說是一個非常常用但卻也不是非常了解的一個地方(請問哪一個不是這樣&gt;&lt;”)，預計會花幾天的時間再去認識他。今天先簡單介紹明天重點學習DOM Event(事件處理)。 想去日本了  相信大家都看過這張圖，今天就是要來學習可以讓網頁動起來的關鍵！ BOM與DOMBOM-Browser Object Model（瀏覽">
+<meta property="og:type" content="article">
+<meta property="og:title" content="『新手日記』Day-11 JavaScript DOM的簡單介紹">
+<meta property="og:url" content="http://example.com/2022/12/30/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97-2022-12-30-day11/index.html">
+<meta property="og:site_name" content="Jeff的隨手筆記">
+<meta property="og:description" content="『新手日記』Day-11 JavaScript DOM的簡單介紹 DOM對我來說是一個非常常用但卻也不是非常了解的一個地方(請問哪一個不是這樣&gt;&lt;”)，預計會花幾天的時間再去認識他。今天先簡單介紹明天重點學習DOM Event(事件處理)。 想去日本了  相信大家都看過這張圖，今天就是要來學習可以讓網頁動起來的關鍵！ BOM與DOMBOM-Browser Object Model（瀏覽">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://miro.medium.com/max/1000/1*SOHAQH3TI75nS0tKMHN42g.jpeg">
+<meta property="og:image" content="https://miro.medium.com/max/1270/1*62Rwi9MTddekFyGWVZAE-Q.png">
+<meta property="og:image" content="https://miro.medium.com/max/1180/1*fQCPTDv--1SSBtydR29YMw.png">
+<meta property="og:image" content="https://miro.medium.com/max/1180/1*3yUX_O1f0oVST9fG6tMh_Q.png">
+<meta property="og:image" content="https://miro.medium.com/max/1006/1*aGTw2JtNT5rC4hTE-1fjiQ.png">
+<meta property="og:image" content="https://miro.medium.com/max/1204/1*sfuTXyQia9CsDW7euozBHA.png">
+<meta property="og:image" content="https://miro.medium.com/max/636/1*ir-LwlTXrnoazyY0Zatt7w.png">
+<meta property="og:image" content="https://miro.medium.com/max/1206/1*MyyOL8MLaCIoKVcKbce2KQ.png">
+<meta property="article:published_time" content="2022-12-30T07:22:42.000Z">
+<meta property="article:modified_time" content="2022-12-30T07:44:53.869Z">
+<meta property="article:author" content="Jeff">
+<meta property="article:tag" content="新手日記">
+<meta property="article:tag" content="JavaScript">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://miro.medium.com/max/1000/1*SOHAQH3TI75nS0tKMHN42g.jpeg">
+
+<link rel="canonical" href="http://example.com/2022/12/30/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97-2022-12-30-day11/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-tw'
+  };
+</script>
+
+  <title>『新手日記』Day-11 JavaScript DOM的簡單介紹 | Jeff的隨手筆記</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Jeff的隨手筆記</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">學習當一個前端工程師</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/30/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97-2022-12-30-day11/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpeg">
+      <meta itemprop="name" content="Jeff">
+      <meta itemprop="description" content="這是一個紀錄自己成長的地方">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jeff的隨手筆記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          『新手日記』Day-11 JavaScript DOM的簡單介紹
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2022-12-30 15:22:42 / Modified: 15:44:53" itemprop="dateCreated datePublished" datetime="2022-12-30T15:22:42+08:00">2022-12-30</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97/" itemprop="url" rel="index"><span itemprop="name">新手日記系列</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="『新手日記』Day-11-JavaScript-DOM的簡單介紹"><a href="#『新手日記』Day-11-JavaScript-DOM的簡單介紹" class="headerlink" title="『新手日記』Day-11 JavaScript DOM的簡單介紹"></a><strong>『新手日記』Day-11 JavaScript DOM的簡單介紹</strong></h1><p><img src="https://miro.medium.com/max/1000/1*SOHAQH3TI75nS0tKMHN42g.jpeg" alt="https://miro.medium.com/max/1000/1*SOHAQH3TI75nS0tKMHN42g.jpeg"></p>
+<p>DOM對我來說是一個非常常用但卻也不是非常了解的一個地方(請問哪一個不是這樣&gt;&lt;”)，預計會花幾天的時間再去認識他。今天先簡單介紹明天重點學習DOM Event(事件處理)。</p>
+<p>想去日本了</p>
+<p><img src="https://miro.medium.com/max/1270/1*62Rwi9MTddekFyGWVZAE-Q.png" alt="https://miro.medium.com/max/1270/1*62Rwi9MTddekFyGWVZAE-Q.png"></p>
+<p>相信大家都看過這張圖，今天就是要來學習可以讓網頁動起來的關鍵！</p>
+<h1 id="BOM與DOM"><a href="#BOM與DOM" class="headerlink" title="BOM與DOM"></a><strong>BOM與DOM</strong></h1><h1 id="BOM-Browser-Object-Model（瀏覽器物件模行）"><a href="#BOM-Browser-Object-Model（瀏覽器物件模行）" class="headerlink" title="BOM-Browser Object Model（瀏覽器物件模行）"></a><strong>BOM-Browser Object Model（瀏覽器物件模行）</strong></h1><blockquote>
+<p>瀏覽器所有功能的核心，與網頁內容無關。</p>
+</blockquote>
+<p><img src="https://miro.medium.com/max/1180/1*fQCPTDv--1SSBtydR29YMw.png" alt="https://miro.medium.com/max/1180/1*fQCPTDv--1SSBtydR29YMw.png"></p>
+<p><strong>BOM的核心是 window 物件</strong></p>
+<p>在瀏覽器裡的 window 物件扮演兩個角色：</p>
+<ul>
+<li>ECMAScript 標準裡的『Global Object（全域物件）』</li>
+<li>JavaScript 用來與瀏覽器溝通的窗口</li>
+</ul>
+<h1 id="DOM-Document-Object-Model-（文件物件模型）"><a href="#DOM-Document-Object-Model-（文件物件模型）" class="headerlink" title="DOM-Document Object Model （文件物件模型）"></a><strong>DOM-Document Object Model （文件物件模型）</strong></h1><h1 id="💡-WDocument-is-an-object-Document-means-the-HTML-documentThis-model-means-all-HTMl-elements-are-objects"><a href="#💡-WDocument-is-an-object-Document-means-the-HTML-documentThis-model-means-all-HTMl-elements-are-objects" class="headerlink" title="💡 ＷDocument is an object.Document means the HTML documentThis model means all HTMl elements are objects"></a>💡 ＷDocument is an object.Document means the HTML documentThis model means all HTMl elements are objects</h1><blockquote>
+<p>將HTML文件以樹狀結構來表示的模型。</p>
+</blockquote>
+<p><img src="https://miro.medium.com/max/1180/1*3yUX_O1f0oVST9fG6tMh_Q.png" alt="https://miro.medium.com/max/1180/1*3yUX_O1f0oVST9fG6tMh_Q.png"></p>
+<p>💡 BOM與DOM兩者區別：<em><strong>BOM:JavaScript 用來與瀏覽器溝通的窗口，不涉及網頁內容DOM:JavaScript 用來控制『網頁』的節點與內容</strong></em></p>
+<p>在真正進入DOM之前，我們需要先了解一個名詞:window object</p>
+<h1 id="window-object"><a href="#window-object" class="headerlink" title="window object"></a><strong>window object</strong></h1><blockquote>
+<p>它是 global variable，只要開啟瀏覽器的瞬間，window object 就會出現。它擁有自己的 Methods 跟 Properties。</p>
+</blockquote>
+<h1 id="Methods"><a href="#Methods" class="headerlink" title="Methods:"></a><strong>Methods:</strong></h1><p>💡 標準語法：<code>window.alert()</code> <strong>Tips:</strong> window可以不用寫</p>
+<p><strong>alert():</strong></p>
+<p>執行後會跳出一個帶有 button 的視窗</p>
+<p><strong>prompt():</strong></p>
+<p>執行後會跳出一個對話視窗，可讓使用者輸入內容。（輸入的內容，最後都會是 String）</p>
+<p>**setInterval()**：</p>
+<p>設定每隔幾秒的時間要執行一個 function</p>
+<p>（1000 為 1 秒，1500 為 1.5 秒，2000 為 2 秒…依此類推）</p>
+<p><strong>clearInterval()：</strong></p>
+<p>停止setInterval()的執行</p>
+<p><strong>addEventListener()：</strong></p>
+<p>DOM Event(事件處理)時會再說明！！！</p>
+<h1 id="Properties"><a href="#Properties" class="headerlink" title="Properties:"></a><strong>Properties:</strong></h1><p>💡 OOP 物件導向： 一個<em><strong>object</strong></em>可以是另一個 <em><strong>object</strong></em> 的 <em><strong>Properties</strong></em></p>
+<h1 id="console"><a href="#console" class="headerlink" title="console"></a><strong>console</strong></h1><p><code>console.log()</code>檢查程式碼是否正確被執行時常使用的功能</p>
+<p>由於 properties 並不常拿來做使用，因此這裡只介紹 methods。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">let map = [&quot;台中&quot;, &quot;台北&quot;, &quot;新北&quot;, &quot;桃園&quot;, &quot;高雄&quot;]</span><br><span class="line">console.log(map)// 結果如下圖</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://miro.medium.com/max/1006/1*aGTw2JtNT5rC4hTE-1fjiQ.png" alt="https://miro.medium.com/max/1006/1*aGTw2JtNT5rC4hTE-1fjiQ.png"></p>
+<p><code>console.error()</code>定義如果錯誤時會出現什麼</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">let map = [&quot;台中&quot;, &quot;台北&quot;, &quot;新北&quot;, &quot;桃園&quot;, &quot;高雄&quot;]</span><br><span class="line">console.error(&#x27;喔喔 錯了喔&#x27;)// 結果如下圖</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://miro.medium.com/max/1204/1*sfuTXyQia9CsDW7euozBHA.png" alt="https://miro.medium.com/max/1204/1*sfuTXyQia9CsDW7euozBHA.png"></p>
+<p><code>console.table()</code>將資料整理成表格來顯示</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">let map = [&quot;台中&quot;, &quot;台北&quot;, &quot;新北&quot;, &quot;桃園&quot;, &quot;高雄&quot;];</span><br><span class="line">console.table(map);// 結果如下圖</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://miro.medium.com/max/636/1*ir-LwlTXrnoazyY0Zatt7w.png" alt="https://miro.medium.com/max/636/1*ir-LwlTXrnoazyY0Zatt7w.png"></p>
+<p><code>console.warn()</code>會出現黃色驚嘆號</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">let map = [&quot;台中&quot;, &quot;台北&quot;, &quot;新北&quot;, &quot;桃園&quot;, &quot;高雄&quot;]</span><br><span class="line">console.warn(&#x27;小心&#x27;)// 結果如下圖</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://miro.medium.com/max/1206/1*MyyOL8MLaCIoKVcKbce2KQ.png" alt="https://miro.medium.com/max/1206/1*MyyOL8MLaCIoKVcKbce2KQ.png"></p>
+<h1 id="Document"><a href="#Document" class="headerlink" title="Document"></a><strong>Document</strong></h1><p><strong>Document is an object. 所以他擁有自己的 methods 和 properties</strong></p>
+<blockquote>
+<p>property:</p>
+</blockquote>
+<p>有 body、doctype、charset、head…等。</p>
+<blockquote>
+<p>methods:</p>
+</blockquote>
+<h1 id="💡-is-not-array-但可以使用forEach-、"><a href="#💡-is-not-array-但可以使用forEach-、" class="headerlink" title="💡 is not array 但可以使用forEach()、"></a>💡 is not array 但可以使用forEach()、</h1><p>以下把他分成3個等級：需要認識、很重要、非常重要</p>
+<p>需要認識：</p>
+<p>getElementsByld()</p>
+<ul>
+<li>用 id 取得 Element，存在一個 <strong>HTMLCollection</strong> 裡面</li>
+</ul>
+<p>getElementsByClassName()</p>
+<ul>
+<li>用 class 取得 Element，存在一個 <strong>HTMLCollection</strong> 裡面</li>
+</ul>
+<p>很重要：</p>
+<p>addEventListener()</p>
+<ul>
+<li>DOM Event(事件處理)時會在再說明！！！</li>
+</ul>
+<p>createElement()</p>
+<ul>
+<li>依指定的標籤名稱（<code>tagName</code>）建立 HTML 元素</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">let element = document.createElement(tagName);</span><br><span class="line">//tagName:A string that specifies(指定) the type of element to be created(創建).</span><br></pre></td></tr></table></figure>
+
+<p>非常重要：</p>
+<p>querySelector()</p>
+<ul>
+<li>只會return 滿足第一個css selector 的 HTML element</li>
+</ul>
+<p>querySelectorAll()</p>
+<ul>
+<li>所有滿足條件的都會 return 回來，存在一個 NodeList 裡面</li>
+</ul>
+<p>💡 <strong>在html裡查詢，是用css的selector</strong></p>
+<blockquote>
+<p>想法</p>
+</blockquote>
+<p>DOM的內容真的很多，所以避免複習效果不佳我自己把他切分幾個段落複習。今天的內容都是從</p>
+<p>0 陷阱！0 誤解！8 天重新認識 JavaScript！</p>
+<p>Wilson Ren的2022網頁開發全攻略：</p>
+<p>這兩個教材來的，如果有打錯的地方再請大家多多指教！！！</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98/" rel="tag"># 新手日記</a>
+              <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/12/30/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97-2022-12-30-day10/" rel="prev" title="『新手日記』Day-10 JavaScript Function">
+      <i class="fa fa-chevron-left"></i> 『新手日記』Day-10 JavaScript Function
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/12/30/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97-2022-12-30-day12/" rel="next" title="『新手日記』Day-12 JavaScript DOM Tree">
+      『新手日記』Day-12 JavaScript DOM Tree <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E3%80%8E%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E3%80%8FDay-11-JavaScript-DOM%E7%9A%84%E7%B0%A1%E5%96%AE%E4%BB%8B%E7%B4%B9"><span class="nav-number">1.</span> <span class="nav-text">『新手日記』Day-11 JavaScript DOM的簡單介紹</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#BOM%E8%88%87DOM"><span class="nav-number">2.</span> <span class="nav-text">BOM與DOM</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#BOM-Browser-Object-Model%EF%BC%88%E7%80%8F%E8%A6%BD%E5%99%A8%E7%89%A9%E4%BB%B6%E6%A8%A1%E8%A1%8C%EF%BC%89"><span class="nav-number">3.</span> <span class="nav-text">BOM-Browser Object Model（瀏覽器物件模行）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DOM-Document-Object-Model-%EF%BC%88%E6%96%87%E4%BB%B6%E7%89%A9%E4%BB%B6%E6%A8%A1%E5%9E%8B%EF%BC%89"><span class="nav-number">4.</span> <span class="nav-text">DOM-Document Object Model （文件物件模型）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%F0%9F%92%A1-WDocument-is-an-object-Document-means-the-HTML-documentThis-model-means-all-HTMl-elements-are-objects"><span class="nav-number">5.</span> <span class="nav-text">💡 ＷDocument is an object.Document means the HTML documentThis model means all HTMl elements are objects</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#window-object"><span class="nav-number">6.</span> <span class="nav-text">window object</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Methods"><span class="nav-number">7.</span> <span class="nav-text">Methods:</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Properties"><span class="nav-number">8.</span> <span class="nav-text">Properties:</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#console"><span class="nav-number">9.</span> <span class="nav-text">console</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Document"><span class="nav-number">10.</span> <span class="nav-text">Document</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%F0%9F%92%A1-is-not-array-%E4%BD%86%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8forEach-%E3%80%81"><span class="nav-number">11.</span> <span class="nav-text">💡 is not array 但可以使用forEach()、</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Jeff"
+      src="/uploads/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Jeff</p>
+  <div class="site-description" itemprop="description">這是一個紀錄自己成長的地方</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">34</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jeff0518" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jeff0518" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:cycivs07@icloud.com" title="E-Mail → mailto:cycivs07@icloud.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jeff</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

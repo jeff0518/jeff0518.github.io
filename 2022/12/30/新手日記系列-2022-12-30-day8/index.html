@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="『新手日記』Day-8 JavaScript 運算式與運算子 運算子在我剛學到時，我以為只是在迴圈裡面會使用到東西。但當我在學期2的電影網站碰到**const list &#x3D; JSON.parse(localStorage.getItem(“favoriteMovies”)) || [];**我整個大傻眼，原來運算子還能這樣用喔！！！ 今天這一篇算是補坑吧(請問一下，哪一篇不是補坑啊???">
+<meta property="og:type" content="article">
+<meta property="og:title" content="『新手日記』Day-8 JavaScript 運算式與運算子">
+<meta property="og:url" content="http://example.com/2022/12/30/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97-2022-12-30-day8/index.html">
+<meta property="og:site_name" content="Jeff的隨手筆記">
+<meta property="og:description" content="『新手日記』Day-8 JavaScript 運算式與運算子 運算子在我剛學到時，我以為只是在迴圈裡面會使用到東西。但當我在學期2的電影網站碰到**const list &#x3D; JSON.parse(localStorage.getItem(“favoriteMovies”)) || [];**我整個大傻眼，原來運算子還能這樣用喔！！！ 今天這一篇算是補坑吧(請問一下，哪一篇不是補坑啊???">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://miro.medium.com/max/1400/1*fJAbNl_qwqdl1uDz7VfaPA.jpeg">
+<meta property="article:published_time" content="2022-12-30T07:19:42.000Z">
+<meta property="article:modified_time" content="2022-12-30T07:44:37.607Z">
+<meta property="article:author" content="Jeff">
+<meta property="article:tag" content="新手日記">
+<meta property="article:tag" content="JavaScript">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://miro.medium.com/max/1400/1*fJAbNl_qwqdl1uDz7VfaPA.jpeg">
+
+<link rel="canonical" href="http://example.com/2022/12/30/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97-2022-12-30-day8/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-tw'
+  };
+</script>
+
+  <title>『新手日記』Day-8 JavaScript 運算式與運算子 | Jeff的隨手筆記</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Jeff的隨手筆記</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">學習當一個前端工程師</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/30/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97-2022-12-30-day8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpeg">
+      <meta itemprop="name" content="Jeff">
+      <meta itemprop="description" content="這是一個紀錄自己成長的地方">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jeff的隨手筆記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          『新手日記』Day-8 JavaScript 運算式與運算子
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2022-12-30 15:19:42 / Modified: 15:44:37" itemprop="dateCreated datePublished" datetime="2022-12-30T15:19:42+08:00">2022-12-30</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97/" itemprop="url" rel="index"><span itemprop="name">新手日記系列</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="『新手日記』Day-8-JavaScript-運算式與運算子"><a href="#『新手日記』Day-8-JavaScript-運算式與運算子" class="headerlink" title="『新手日記』Day-8 JavaScript 運算式與運算子"></a><strong>『新手日記』Day-8 JavaScript 運算式與運算子</strong></h1><p><img src="https://miro.medium.com/max/1400/1*fJAbNl_qwqdl1uDz7VfaPA.jpeg" alt="https://miro.medium.com/max/1400/1*fJAbNl_qwqdl1uDz7VfaPA.jpeg"></p>
+<p>運算子在我剛學到時，我以為只是在迴圈裡面會使用到東西。但當我在學期2的電影網站碰到**const list &#x3D; JSON.parse(localStorage.getItem(“favoriteMovies”)) || [];**我整個大傻眼，原來運算子還能這樣用喔！！！</p>
+<p>今天這一篇算是補坑吧(請問一下，哪一篇不是補坑啊???)</p>
+<blockquote>
+<p>基礎先來</p>
+</blockquote>
+<p>JavaScript 的語法可以分為兩大類：</p>
+<p><em><strong>1.Statement（敘述句）</strong></em></p>
+<p>執行某個動作，例如：變數的宣告、賦值，迴圈和if的判斷式</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">let foo;</span><br></pre></td></tr></table></figure>
+
+<p><em><strong>2.Expression（運算式）</strong></em></p>
+<p>他會產生一個值。例如：呼叫function時的參數，或是賦值時，在&#x3D;右側的部分。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">let a = 10 * 10;</span><br></pre></td></tr></table></figure>
+
+<p>在運算式中，會透過提供一些數值給『運算子』進行運算，運算子依照性質分類可以分為以下幾種：</p>
+<h2 id="算術運算子（Arithmetic-Operators）"><a href="#算術運算子（Arithmetic-Operators）" class="headerlink" title="算術運算子（Arithmetic Operators）"></a><strong>算術運算子（Arithmetic Operators）</strong></h2><p>算數運算子包含了最基本的數學四則運算的符號，讓你可以對兩組（value）進行加（+）、減（-）、乘（＊）、除（&#x2F;），此外，還有比較特別的：</p>
+<p>Remainder（%)</p>
+<p><code>//取餘數12 % 5//回傳2</code></p>
+<p>Increment（＋＋）&#x2F; Decrement（- -）</p>
+<p><code>//增加x = 3x++ //回傳3，但回傳後會自動加1變成4++x //會先＋1然後回傳4</code></p>
+<p>Exponentiation （也可以寫成＾）</p>
+<p><code>//次方x = 3 x ** 2 //回傳9</code></p>
+<h2 id="賦值運算子（Assignment-Operators"><a href="#賦值運算子（Assignment-Operators" class="headerlink" title="賦值運算子（Assignment Operators)"></a><strong>賦值運算子（Assignment Operators)</strong></h2><p>我們一直使用的 <code>=</code> 符號，就是一種賦值運算子。除此之外，還有搭配算數運算的 <code>+=</code>、<code>-=</code>、<code>*=</code>⋯⋯等運算子</p>
+<p><code>x += y //等同 x = x + yx -= y //等同 x = x - y以此類推</code></p>
+<h2 id="比較運算子（Comparison-Operators）"><a href="#比較運算子（Comparison-Operators）" class="headerlink" title="比較運算子（Comparison Operators）"></a><strong>比較運算子（Comparison Operators）</strong></h2><p>比較運算子陳述的是邏輯關係，他會對前後的 value 進行比較，然後回傳 boolean 值，也就是 <code>true</code> 或是 <code>false</code>。（有&#x3D;&#x3D;&#x3D;、！&#x3D;&#x3D;、大於、小於、大於等於、小於等於）</p>
+<h3 id="💡-因為兩個等於（-x3D-x3D-）會對被判別的變數做轉換型別的動作（coercion又稱為implicit-type-conversion）。-所以在JavaScript我們都會使用-x3D-x3D-x3D-來代替-x3D-x3D-！-x3D-x3D-來代替-！-x3D"><a href="#💡-因為兩個等於（-x3D-x3D-）會對被判別的變數做轉換型別的動作（coercion又稱為implicit-type-conversion）。-所以在JavaScript我們都會使用-x3D-x3D-x3D-來代替-x3D-x3D-！-x3D-x3D-來代替-！-x3D" class="headerlink" title="💡 因為兩個等於（&#x3D;&#x3D;）會對被判別的變數做轉換型別的動作（coercion又稱為implicit type conversion）。 所以在JavaScript我們都會使用 &#x3D;&#x3D;&#x3D; 來代替 &#x3D;&#x3D;; ！&#x3D;&#x3D; 來代替 ！&#x3D;"></a>💡 因為兩個等於（&#x3D;&#x3D;）會對被判別的變數做轉換型別的動作（coercion又稱為implicit type conversion）。 所以在JavaScript我們都會使用 &#x3D;&#x3D;&#x3D; 來代替 &#x3D;&#x3D;; ！&#x3D;&#x3D; 來代替 ！&#x3D;</h3><h2 id="邏輯運算子（Logical-Operators）"><a href="#邏輯運算子（Logical-Operators）" class="headerlink" title="邏輯運算子（Logical Operators）"></a><strong>邏輯運算子（Logical Operators）</strong></h2><p>&amp;&amp; 而且的意思，如果前後的 value 都是 true，則回傳 true</p>
+<p>|| 「或者」；只要有一邊為 true，則為 true</p>
+<p>! 「非」，將後面接的 boolean 轉成相反的值</p>
+<h3 id="💡-在很多code-我們都會看到類似-if-class-…-之類的程式語言，之所以可以這樣打是因為-，其實他的概念很簡單，只要記-會是-其餘的都是-。"><a href="#💡-在很多code-我們都會看到類似-if-class-…-之類的程式語言，之所以可以這樣打是因為-，其實他的概念很簡單，只要記-會是-其餘的都是-。" class="headerlink" title="💡 在很多code 我們都會看到類似 if (!class) {…}之類的程式語言，之所以可以這樣打是因為 ，其實他的概念很簡單，只要記* 會是 , 其餘的都是 。"></a>💡 在很多code 我們都會看到類似 if (!class) {…}之類的程式語言，之所以可以這樣打是因為 ，其實他的概念很簡單，只要記* 會是 , 其餘的都是 。</h3><h2 id="字串運算子（String-Operators"><a href="#字串運算子（String-Operators" class="headerlink" title="字串運算子（String Operators)"></a><strong>字串運算子（String Operators)</strong></h2><p>運算子 (+) 也能用於字串，將兩字串接在一起，並回傳接在一起後的結果。</p>
+<p>簡化的設定運算子 +&#x3D; 也能用於串接字串。</p>
+<p><code>console.log(&#39;我的 &#39; + &#39;字串&#39;); // 會印出 字串 &quot;我的字串&quot;。let mystring = &#39;字&#39;; mystring += &#39;母&#39;; // 得到 &quot;字母&quot; 並賦與給變數 mystring.</code></p>
+<h2 id="特殊運算子（Special-Operators"><a href="#特殊運算子（Special-Operators" class="headerlink" title="特殊運算子（Special Operators)"></a><strong>特殊運算子（Special Operators)</strong></h2><p>其他沒列入的都可以算在裡面。</p>
+<blockquote>
+<p>短路求值(Short-circuit evaluation)</p>
+</blockquote>
+<p>進入今天重點，短路求值(Short-circuit evaluation)也有人翻譯為<strong>最小化求值</strong></p>
+<p>先講結論好了，我認為使用Short-circuit evaluation 可以幫助 code 變得更符合邏輯外也減少了code</p>
+<p>為什麼這麼說？請聽我娓娓道來：</p>
+<h1 id="Logical-OR-Operator"><a href="#Logical-OR-Operator" class="headerlink" title="Logical OR Operator"></a><strong>Logical OR Operator</strong></h1><h2 id="The-logical-OR-operator-logical-disjunction-for-a-set-of-operands-is-true-if-and-only-if-one-or-more-of-its-operands-is-true-It-is-typically-used-with-boolean-logical-values-When-it-is-it-returns-a-Boolean-value"><a href="#The-logical-OR-operator-logical-disjunction-for-a-set-of-operands-is-true-if-and-only-if-one-or-more-of-its-operands-is-true-It-is-typically-used-with-boolean-logical-values-When-it-is-it-returns-a-Boolean-value" class="headerlink" title="The logical OR (||) operator (logical disjunction) for a set of operands is true if and only if one or more of its operands is true.It is typically used with boolean (logical) values. When it is, it returns a Boolean value."></a>The logical OR (||) operator (logical disjunction) for a set of operands is true if and only if one or more of its operands is true.It is typically used with boolean (logical) values. When it is, it returns a Boolean value.</h2><p>語法：anything || anything</p>
+<p>OR 表達式是從左計算到右，符號是 <code>||</code> ，如果在符號左邊的值為 true，那麼符號右邊的值將不會被考慮或是被執行。</p>
+<h1 id="Logical-AND-Operator"><a href="#Logical-AND-Operator" class="headerlink" title="Logical AND Operator"></a><strong>Logical AND Operator</strong></h1><h2 id="The-logical-AND-amp-amp-expression-is-a-short-circuit-operator-As-each-operand-is-converted-to-a-boolean-if-the-result-of-one-conversion-is-found-to-be-false-the-AND-operator-stops-and-returns-the-original-value-of-that-falsy-operand"><a href="#The-logical-AND-amp-amp-expression-is-a-short-circuit-operator-As-each-operand-is-converted-to-a-boolean-if-the-result-of-one-conversion-is-found-to-be-false-the-AND-operator-stops-and-returns-the-original-value-of-that-falsy-operand" class="headerlink" title="The logical AND(&amp;&amp;) expression is a short-circuit operator. As each operand is converted to a boolean, if the result of one conversion is found to be false, the AND operator stops and returns the original value of that falsy operand;"></a>The logical AND(&amp;&amp;) expression is a short-circuit operator. As each operand is converted to a boolean, if the result of one conversion is found to be false, the AND operator stops and returns the original value of that falsy operand;</h2><p>語法：anything &amp;&amp; anything</p>
+<p>AND 表達式是從左計算到右，符號是 <code>&amp;&amp;</code>，只要有false 就回傳false的值，如果都是true就會返回最後一個值。</p>
+<h1 id="另外，如果-AND-跟-OR-混著用的話就會先做AND"><a href="#另外，如果-AND-跟-OR-混著用的話就會先做AND" class="headerlink" title="另外，如果 AND 跟 OR 混著用的話就會先做AND"></a>另外，如果 AND 跟 OR 混著用的話就會先做AND</h1><h1 id="Nil-Coalescing-Operator"><a href="#Nil-Coalescing-Operator" class="headerlink" title="Nil-Coalescing Operator"></a><strong>Nil-Coalescing Operator</strong></h1><p>老實說這個語法我完全沒碰過，只能到網路上找尋資料。</p>
+<h2 id="The-nullish-coalescing-operator-is-a-logical-operator-that-returns-its-right-hand-side-operand-when-its-left-hand-side-operand-is-null-or-undefined-and-otherwise-returns-its-left-hand-side-operand-This-can-be-seen-as-a-special-case-of-the-logical-OR-operator-which-returns-the-right-hand-side-operand-if-the-left-operand-is-any-falsy-value-not-only-null-or-undefined"><a href="#The-nullish-coalescing-operator-is-a-logical-operator-that-returns-its-right-hand-side-operand-when-its-left-hand-side-operand-is-null-or-undefined-and-otherwise-returns-its-left-hand-side-operand-This-can-be-seen-as-a-special-case-of-the-logical-OR-operator-which-returns-the-right-hand-side-operand-if-the-left-operand-is-any-falsy-value-not-only-null-or-undefined" class="headerlink" title="The nullish coalescing operator (??) is a logical operator that returns its right-hand side operand when its left-hand side operand is null or undefined, and otherwise returns its left-hand side operand.This can be seen as a special case of the logical OR (||) operator, which returns the right-hand side operand if the left operand is any falsy value, not only null or undefined."></a>The nullish coalescing operator (??) is a logical operator that returns its right-hand side operand when its left-hand side operand is null or undefined, and otherwise returns its left-hand side operand.This can be seen as a special case of the logical OR (||) operator, which returns the right-hand side operand if the left operand is any falsy value, not only null or undefined.</h2><p>語法：<code>leftExpr ?? rightExpr</code></p>
+<p><code>??</code>的用法與<code>||</code>的用法非常相似，都能用作預設值，差異之處是：</p>
+<ul>
+<li><code>??</code>會返回第一個<code>defined</code>的值</li>
+<li><code>||</code>會返回第一個<code>truthy</code>的值</li>
+</ul>
+<p>**何為<code>defined</code>? 除了<code>undefined</code>和<code>null</code>**，其他都屬於<code>defined</code>。以下例子一目了然：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">let price = 0;</span><br><span class="line">console.log(price || 100);//100</span><br><span class="line">console.log(price ?? 100);//0</span><br></pre></td></tr></table></figure>
+
+<p>在<code>??</code>的世界中，只要不是<code>null</code>或<code>undefined</code>，條件就能成立。</p>
+<p>轉載至：<a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10243261">https://ithelp.ithome.com.tw/articles/10243261</a></p>
+<blockquote>
+<p>三元運算子(條件運算子)</p>
+</blockquote>
+<p>這個也是我特別想拉出來說的，他在部分時候真的很好用。</p>
+<p>條件運算子是 JavaScript 中唯一需要三個運算元的運算子，因此被稱為三元運算子。</p>
+<p>語法：<code>條件？值1：值2</code></p>
+<p>解釋：<em>條件</em>為 true，運算子回傳 <em>值 1，</em> 否則回傳 <em>值 2。</em></p>
+<p>解釋：<em>條件</em>為 true，運算子回傳 <em>值 1，</em> 否則回傳 <em>值 2。</em></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">let status = &#123;</span><br><span class="line">	name: &#x27;Jeff&#x27;,</span><br><span class="line">	age: 20,</span><br><span class="line">	adult: null</span><br><span class="line">&#125;</span><br><span class="line">status.adult = status.age &gt;= 18 ? &#x27;成人&#x27; : &#x27;小孩&#x27;;</span><br><span class="line">// 如果是用if迴圈</span><br><span class="line">let status = &#123;</span><br><span class="line">	name: &#x27;Jeff&#x27;,</span><br><span class="line">	age: 20,</span><br><span class="line">	adult: null</span><br><span class="line">&#125;</span><br><span class="line">if(status.age &gt;= 18)&#123;</span><br><span class="line">    status.adult = &#x27;成人&#x27;</span><br><span class="line">&#125;else&#123;</span><br><span class="line">    status.adult = &#x27;小孩&#x27;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>是不是非常快速可以打完^U^</p>
+<blockquote>
+<p>結語</p>
+</blockquote>
+<p>複習到這邊剛好滿一個禮拜(剛剛發現今天是第8天 哈哈)，其實在過程中確實有想過我這樣做是不是在浪費時間，為什麼不用練習代替這些複習過程，看到同學都開始預讀學期三的內容我卻還在用這些。</p>
+<p>但堅持到現在，我慢慢看到堅持這樣想發的優點，看到了很多之前沒讀到或是已經沒印象的地方，也了解了一些之前不太清楚的地方，重點還整理好了之後可以重複閱讀的筆記。因此我想我又可以繼續堅持下去，只是速度真的要加快一點就是了～～～</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98/" rel="tag"># 新手日記</a>
+              <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/12/30/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97-2022-12-30-day7/" rel="prev" title="『新手日記』Day-7 JavaScript 變數的資料型別">
+      <i class="fa fa-chevron-left"></i> 『新手日記』Day-7 JavaScript 變數的資料型別
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/12/30/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97-2022-12-30-day9/" rel="next" title="『新手日記』Day-9 JavaScript 部分Array Methods 介紹">
+      『新手日記』Day-9 JavaScript 部分Array Methods 介紹 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E3%80%8E%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E3%80%8FDay-8-JavaScript-%E9%81%8B%E7%AE%97%E5%BC%8F%E8%88%87%E9%81%8B%E7%AE%97%E5%AD%90"><span class="nav-number">1.</span> <span class="nav-text">『新手日記』Day-8 JavaScript 運算式與運算子</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%97%E8%A1%93%E9%81%8B%E7%AE%97%E5%AD%90%EF%BC%88Arithmetic-Operators%EF%BC%89"><span class="nav-number">1.1.</span> <span class="nav-text">算術運算子（Arithmetic Operators）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B3%A6%E5%80%BC%E9%81%8B%E7%AE%97%E5%AD%90%EF%BC%88Assignment-Operators"><span class="nav-number">1.2.</span> <span class="nav-text">賦值運算子（Assignment Operators)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AF%94%E8%BC%83%E9%81%8B%E7%AE%97%E5%AD%90%EF%BC%88Comparison-Operators%EF%BC%89"><span class="nav-number">1.3.</span> <span class="nav-text">比較運算子（Comparison Operators）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%92%A1-%E5%9B%A0%E7%82%BA%E5%85%A9%E5%80%8B%E7%AD%89%E6%96%BC%EF%BC%88-x3D-x3D-%EF%BC%89%E6%9C%83%E5%B0%8D%E8%A2%AB%E5%88%A4%E5%88%A5%E7%9A%84%E8%AE%8A%E6%95%B8%E5%81%9A%E8%BD%89%E6%8F%9B%E5%9E%8B%E5%88%A5%E7%9A%84%E5%8B%95%E4%BD%9C%EF%BC%88coercion%E5%8F%88%E7%A8%B1%E7%82%BAimplicit-type-conversion%EF%BC%89%E3%80%82-%E6%89%80%E4%BB%A5%E5%9C%A8JavaScript%E6%88%91%E5%80%91%E9%83%BD%E6%9C%83%E4%BD%BF%E7%94%A8-x3D-x3D-x3D-%E4%BE%86%E4%BB%A3%E6%9B%BF-x3D-x3D-%EF%BC%81-x3D-x3D-%E4%BE%86%E4%BB%A3%E6%9B%BF-%EF%BC%81-x3D"><span class="nav-number">1.3.1.</span> <span class="nav-text">💡 因為兩個等於（&#x3D;&#x3D;）會對被判別的變數做轉換型別的動作（coercion又稱為implicit type conversion）。 所以在JavaScript我們都會使用 &#x3D;&#x3D;&#x3D; 來代替 &#x3D;&#x3D;; ！&#x3D;&#x3D; 來代替 ！&#x3D;</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%82%8F%E8%BC%AF%E9%81%8B%E7%AE%97%E5%AD%90%EF%BC%88Logical-Operators%EF%BC%89"><span class="nav-number">1.4.</span> <span class="nav-text">邏輯運算子（Logical Operators）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%92%A1-%E5%9C%A8%E5%BE%88%E5%A4%9Acode-%E6%88%91%E5%80%91%E9%83%BD%E6%9C%83%E7%9C%8B%E5%88%B0%E9%A1%9E%E4%BC%BC-if-class-%E2%80%A6-%E4%B9%8B%E9%A1%9E%E7%9A%84%E7%A8%8B%E5%BC%8F%E8%AA%9E%E8%A8%80%EF%BC%8C%E4%B9%8B%E6%89%80%E4%BB%A5%E5%8F%AF%E4%BB%A5%E9%80%99%E6%A8%A3%E6%89%93%E6%98%AF%E5%9B%A0%E7%82%BA-%EF%BC%8C%E5%85%B6%E5%AF%A6%E4%BB%96%E7%9A%84%E6%A6%82%E5%BF%B5%E5%BE%88%E7%B0%A1%E5%96%AE%EF%BC%8C%E5%8F%AA%E8%A6%81%E8%A8%98-%E6%9C%83%E6%98%AF-%E5%85%B6%E9%A4%98%E7%9A%84%E9%83%BD%E6%98%AF-%E3%80%82"><span class="nav-number">1.4.1.</span> <span class="nav-text">💡 在很多code 我們都會看到類似 if (!class) {…}之類的程式語言，之所以可以這樣打是因為 ，其實他的概念很簡單，只要記* 會是 , 其餘的都是 。</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%97%E4%B8%B2%E9%81%8B%E7%AE%97%E5%AD%90%EF%BC%88String-Operators"><span class="nav-number">1.5.</span> <span class="nav-text">字串運算子（String Operators)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%89%B9%E6%AE%8A%E9%81%8B%E7%AE%97%E5%AD%90%EF%BC%88Special-Operators"><span class="nav-number">1.6.</span> <span class="nav-text">特殊運算子（Special Operators)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Logical-OR-Operator"><span class="nav-number">2.</span> <span class="nav-text">Logical OR Operator</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#The-logical-OR-operator-logical-disjunction-for-a-set-of-operands-is-true-if-and-only-if-one-or-more-of-its-operands-is-true-It-is-typically-used-with-boolean-logical-values-When-it-is-it-returns-a-Boolean-value"><span class="nav-number">2.1.</span> <span class="nav-text">The logical OR (||) operator (logical disjunction) for a set of operands is true if and only if one or more of its operands is true.It is typically used with boolean (logical) values. When it is, it returns a Boolean value.</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Logical-AND-Operator"><span class="nav-number">3.</span> <span class="nav-text">Logical AND Operator</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#The-logical-AND-amp-amp-expression-is-a-short-circuit-operator-As-each-operand-is-converted-to-a-boolean-if-the-result-of-one-conversion-is-found-to-be-false-the-AND-operator-stops-and-returns-the-original-value-of-that-falsy-operand"><span class="nav-number">3.1.</span> <span class="nav-text">The logical AND(&amp;&amp;) expression is a short-circuit operator. As each operand is converted to a boolean, if the result of one conversion is found to be false, the AND operator stops and returns the original value of that falsy operand;</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%A6%E5%A4%96%EF%BC%8C%E5%A6%82%E6%9E%9C-AND-%E8%B7%9F-OR-%E6%B7%B7%E8%91%97%E7%94%A8%E7%9A%84%E8%A9%B1%E5%B0%B1%E6%9C%83%E5%85%88%E5%81%9AAND"><span class="nav-number">4.</span> <span class="nav-text">另外，如果 AND 跟 OR 混著用的話就會先做AND</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Nil-Coalescing-Operator"><span class="nav-number">5.</span> <span class="nav-text">Nil-Coalescing Operator</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#The-nullish-coalescing-operator-is-a-logical-operator-that-returns-its-right-hand-side-operand-when-its-left-hand-side-operand-is-null-or-undefined-and-otherwise-returns-its-left-hand-side-operand-This-can-be-seen-as-a-special-case-of-the-logical-OR-operator-which-returns-the-right-hand-side-operand-if-the-left-operand-is-any-falsy-value-not-only-null-or-undefined"><span class="nav-number">5.1.</span> <span class="nav-text">The nullish coalescing operator (??) is a logical operator that returns its right-hand side operand when its left-hand side operand is null or undefined, and otherwise returns its left-hand side operand.This can be seen as a special case of the logical OR (||) operator, which returns the right-hand side operand if the left operand is any falsy value, not only null or undefined.</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Jeff"
+      src="/uploads/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Jeff</p>
+  <div class="site-description" itemprop="description">這是一個紀錄自己成長的地方</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">34</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jeff0518" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jeff0518" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:cycivs07@icloud.com" title="E-Mail → mailto:cycivs07@icloud.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jeff</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

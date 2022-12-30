@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="『新手日記』Day-19 HTTP request 疑~既然都404了那我是不是可以不用打了XDD 進入到後端的世界了，一進來就來一個熟悉又陌生的名詞『路由(route)』。 路由是在網路傳輸裡的一種技術，後來轉移到 web application 的領域。 在網路應用程式開發的領域，路由是指 URL 的處理程序，這組處理程序會把 HTTP 動詞、URL、和相關的程式碼連接起來(不要跟路由器搞錯喔">
+<meta property="og:type" content="article">
+<meta property="og:title" content="『新手日記』Day-19 HTTP request">
+<meta property="og:url" content="http://example.com/2022/12/30/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97-2022-12-30-day19/index.html">
+<meta property="og:site_name" content="Jeff的隨手筆記">
+<meta property="og:description" content="『新手日記』Day-19 HTTP request 疑~既然都404了那我是不是可以不用打了XDD 進入到後端的世界了，一進來就來一個熟悉又陌生的名詞『路由(route)』。 路由是在網路傳輸裡的一種技術，後來轉移到 web application 的領域。 在網路應用程式開發的領域，路由是指 URL 的處理程序，這組處理程序會把 HTTP 動詞、URL、和相關的程式碼連接起來(不要跟路由器搞錯喔">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://miro.medium.com/max/1280/1*FWo4FgVFK2o9EyrPyIaxBQ.jpeg">
+<meta property="og:image" content="https://miro.medium.com/max/1384/1*-11QF9ytiajrYC0RJxu7Tg.png">
+<meta property="og:image" content="https://miro.medium.com/max/1400/1*kK5BLD3jYOSkGylLJtiXZA.png">
+<meta property="og:image" content="https://miro.medium.com/max/1396/1*Bi0Mej9LoOjS5SkZwAW02g.png">
+<meta property="og:image" content="https://miro.medium.com/max/426/0*6jID-64m9PfN8yJI.png">
+<meta property="article:published_time" content="2022-12-30T07:30:42.000Z">
+<meta property="article:modified_time" content="2022-12-30T07:51:35.908Z">
+<meta property="article:author" content="Jeff">
+<meta property="article:tag" content="新手日記">
+<meta property="article:tag" content="網路概論">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://miro.medium.com/max/1280/1*FWo4FgVFK2o9EyrPyIaxBQ.jpeg">
+
+<link rel="canonical" href="http://example.com/2022/12/30/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97-2022-12-30-day19/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-tw'
+  };
+</script>
+
+  <title>『新手日記』Day-19 HTTP request | Jeff的隨手筆記</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Jeff的隨手筆記</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">學習當一個前端工程師</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/30/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97-2022-12-30-day19/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpeg">
+      <meta itemprop="name" content="Jeff">
+      <meta itemprop="description" content="這是一個紀錄自己成長的地方">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jeff的隨手筆記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          『新手日記』Day-19 HTTP request
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2022-12-30 15:30:42 / Modified: 15:51:35" itemprop="dateCreated datePublished" datetime="2022-12-30T15:30:42+08:00">2022-12-30</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97/" itemprop="url" rel="index"><span itemprop="name">新手日記系列</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="『新手日記』Day-19-HTTP-request"><a href="#『新手日記』Day-19-HTTP-request" class="headerlink" title="『新手日記』Day-19 HTTP request"></a><strong>『新手日記』Day-19 HTTP request</strong></h1><p><img src="https://miro.medium.com/max/1280/1*FWo4FgVFK2o9EyrPyIaxBQ.jpeg" alt="https://miro.medium.com/max/1280/1*FWo4FgVFK2o9EyrPyIaxBQ.jpeg"></p>
+<p>疑~既然都404了那我是不是可以不用打了XDD</p>
+<p>進入到後端的世界了，一進來就來一個熟悉又陌生的名詞『路由(route)』。</p>
+<p>路由是在網路傳輸裡的一種技術，後來轉移到 web application 的領域。</p>
+<p>在網路應用程式開發的領域，路由是指 URL 的處理程序，這組處理程序會把 HTTP 動詞、URL、和相關的程式碼連接起來(不要跟路由器搞錯喔！)。</p>
+<p>我們會在路由系統裡，定義「收到什麼 HTTP request，就執行什麼動作」。</p>
+<h1 id="HTTP-request"><a href="#HTTP-request" class="headerlink" title="HTTP request"></a><strong>HTTP request</strong></h1><p>老樣子ＭＤＮ先來：</p>
+<h1 id="HTTP-defines-a-set-of-request-methods-to-indicate-the-desired-action-to-be-performed-for-a-given-resource"><a href="#HTTP-defines-a-set-of-request-methods-to-indicate-the-desired-action-to-be-performed-for-a-given-resource" class="headerlink" title="HTTP defines a set of request methods to indicate the desired action to be performed for a given resource."></a>HTTP defines a set of request methods to indicate the desired action to be performed for a given resource.</h1><p>當Web service使用Web API進行介面介接時，每一串我們設計的URL，就會是一個專屬的服務『窗口』，<strong>不同的Method就是對同一件事情做不同的操作</strong>。</p>
+<p><img src="https://miro.medium.com/max/1384/1*-11QF9ytiajrYC0RJxu7Tg.png" alt="https://miro.medium.com/max/1384/1*-11QF9ytiajrYC0RJxu7Tg.png"></p>
+<p>在HTTP協定中，定義了多種不同的method做為服務的請求方法，最常見的method 有五種：GET｜POST｜PUT｜PATCH｜DELETE。</p>
+<p>GET：取得(想要的服務)的資料或是狀態。（safe &amp; idempotent）</p>
+<p>POST：將數據發送到指定的端點以創建或更新資源</p>
+<p>PUT：用於更新資源</p>
+<p>PATCH：用於修改資源</p>
+<p>DELETE：刪除由 URI 標識的資源</p>
+<p>了解這些後，我們要來運用他們，在使用前我們需要在學習2個名詞API &amp; RESTful</p>
+<h1 id="API"><a href="#API" class="headerlink" title="API"></a><strong>API</strong></h1><p>API ：Application Programming Interface，譯為「應用程式介面」，也就是「應用程式對外開放的介面」。主要用途是讓開發者可以透過 API 去使用其他人撰寫的應用程式。</p>
+<p>這邊有一段簡單解釋API的小影片</p>
+<p>應該很淺顯易懂吧！就如同上所說API是一種介面，使用者可以透過 API 使用應用程式的功能，但不需要碰觸到程式的內部運作。舉一個現實的例子：Google Map API</p>
+<p><img src="https://miro.medium.com/max/1400/1*kK5BLD3jYOSkGylLJtiXZA.png" alt="https://miro.medium.com/max/1400/1*kK5BLD3jYOSkGylLJtiXZA.png"></p>
+<p>只要用指定的方式發出請求 (request)，將餐廳地址成功發送給 Google Map API，Google Map 就會回應 (response) 地圖資訊：</p>
+<p><img src="https://miro.medium.com/max/1396/1*Bi0Mej9LoOjS5SkZwAW02g.png" alt="https://miro.medium.com/max/1396/1*Bi0Mej9LoOjS5SkZwAW02g.png"></p>
+<h1 id="RESTful"><a href="#RESTful" class="headerlink" title="RESTful"></a><strong>RESTful</strong></h1><p>REST，全名 Representational State Transfer( 表現層狀態轉移)，他是<strong>一種軟體架構的設計風格，不是一種標準或是規格</strong>，只有提供原則概念。</p>
+<p>符合 REST 的設計風格的軟體架構就可以稱做是 RESTful，符合此規範設計的 API，稱為 RESTful API。</p>
+<p>以剛剛 API 影片中的餐廳服務生為例，如果使用一般的 API 點菜，我要<strong>加點</strong>、<strong>查看已點菜色</strong>、<strong>修改已點菜色</strong>、<strong>取消已點菜色</strong>，都需要不同的服務生替我服務，RESTful API，就是讓這些動作，都可以由同一位服務生完成。</p>
+<p>RESTful API 主要由三種元件組成：</p>
+<p><img src="https://miro.medium.com/max/426/0*6jID-64m9PfN8yJI.png" alt="https://miro.medium.com/max/426/0*6jID-64m9PfN8yJI.png"></p>
+<ol>
+<li>Nouns 名詞：定義資源位置的 URL，每個資源在網路上都會有唯一的位置，就如每戶人家都有唯一的地址一樣。</li>
+<li>Verbs 動詞：對資源要做的動作。</li>
+<li>Content Types 資源呈現方式：API 資源可以以多種方式表現，最常用的是 JSON，較輕，也較好處理。</li>
+</ol>
+<p>一般的 API，可能會是這樣：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">獲得資料GET    /getData</span><br><span class="line">新增資料POST   /createData</span><br><span class="line">刪除資料DELETE /deleteData/1</span><br></pre></td></tr></table></figure>
+
+<p>在引用各家 API 時，都需要詳讀 API 文件，理解所有設計命名規則後，才可使用。</p>
+<p>若以 RESTful API 風格開發的話：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">獲得資料GET     /data</span><br><span class="line">新增資料POST    /data</span><br><span class="line">刪除資料DELETE  /data/1</span><br></pre></td></tr></table></figure>
+
+<p>就是用一個唯一的 URL 定位資源，將動作藏在 HTTP 的 method 裡面。</p>
+<p>簡單介紹了一下，大概還有80％還沒搞懂吧&gt;&lt;”程式語言真的是一個坑越讀越大洞永遠補不滿，難怪常會聽到學不動這個詞。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98/" rel="tag"># 新手日記</a>
+              <a href="/tags/%E7%B6%B2%E8%B7%AF%E6%A6%82%E8%AB%96/" rel="tag"># 網路概論</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/12/30/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97-2022-12-30-day18/" rel="prev" title="『新手日記』Day-18 Closures（閉包）">
+      <i class="fa fa-chevron-left"></i> 『新手日記』Day-18 Closures（閉包）
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/12/30/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97-2022-12-30-day20/" rel="next" title="『新手日記』Day-20 CRUD是什麼？">
+      『新手日記』Day-20 CRUD是什麼？ <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E3%80%8E%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E3%80%8FDay-19-HTTP-request"><span class="nav-number">1.</span> <span class="nav-text">『新手日記』Day-19 HTTP request</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#HTTP-request"><span class="nav-number">2.</span> <span class="nav-text">HTTP request</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#HTTP-defines-a-set-of-request-methods-to-indicate-the-desired-action-to-be-performed-for-a-given-resource"><span class="nav-number">3.</span> <span class="nav-text">HTTP defines a set of request methods to indicate the desired action to be performed for a given resource.</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#API"><span class="nav-number">4.</span> <span class="nav-text">API</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#RESTful"><span class="nav-number">5.</span> <span class="nav-text">RESTful</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Jeff"
+      src="/uploads/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Jeff</p>
+  <div class="site-description" itemprop="description">這是一個紀錄自己成長的地方</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">34</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jeff0518" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jeff0518" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:cycivs07@icloud.com" title="E-Mail → mailto:cycivs07@icloud.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jeff</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

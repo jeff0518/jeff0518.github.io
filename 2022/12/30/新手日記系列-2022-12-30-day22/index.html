@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="『新手日記』Day-22 SASS以及BEM 命名規範 這幾天突然看到一篇命名的文章，自己心裡想來解釋一下自己所了解的但突然發現自己說不出來，因此想說找個時間來複習一下，剛好ＡＣ講到命名是跟著SASS那就一起複習吧！ CSS 的先天限制CSS 的開發方式是「由上而下把所有的樣式設定逐條追加在 .css 文件裡」，而這種作法導致以下的問題：  語法重複 (poor reusability)  違反了">
+<meta property="og:type" content="article">
+<meta property="og:title" content="『新手日記』Day-22 SASS以及BEM 命名規範">
+<meta property="og:url" content="http://example.com/2022/12/30/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97-2022-12-30-day22/index.html">
+<meta property="og:site_name" content="Jeff的隨手筆記">
+<meta property="og:description" content="『新手日記』Day-22 SASS以及BEM 命名規範 這幾天突然看到一篇命名的文章，自己心裡想來解釋一下自己所了解的但突然發現自己說不出來，因此想說找個時間來複習一下，剛好ＡＣ講到命名是跟著SASS那就一起複習吧！ CSS 的先天限制CSS 的開發方式是「由上而下把所有的樣式設定逐條追加在 .css 文件裡」，而這種作法導致以下的問題：  語法重複 (poor reusability)  違反了">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://miro.medium.com/max/1400/1*K6h1onQgngZ67uDMWeL7Dg.jpeg">
+<meta property="og:image" content="https://miro.medium.com/max/1400/1*kGiGCUiIoXXtOHoLvXqRJQ.png">
+<meta property="og:image" content="https://miro.medium.com/max/1400/1*VrV86frUCBeV5Ia1QQLUFg.png">
+<meta property="og:image" content="https://miro.medium.com/max/1400/1*w2iYCqJvDXKYkE1Z1fl5UQ.png">
+<meta property="og:image" content="https://miro.medium.com/max/1400/1*lspko4SwkdcPYMtzr_mFVw.png">
+<meta property="og:image" content="https://miro.medium.com/max/1400/1*HJD_K7wmNuaYbGJl-4_W3Q.png">
+<meta property="og:image" content="https://miro.medium.com/max/1400/1*bE_jIwS5MKId123ww7P0lQ.png">
+<meta property="og:image" content="https://miro.medium.com/max/1310/1*Ua8o7LxN6Gnqy7HaKqeFfQ.png">
+<meta property="og:image" content="https://miro.medium.com/max/1400/1*nm0jRv64oCreUMVQKaiSag.png">
+<meta property="article:published_time" content="2022-12-30T07:33:42.000Z">
+<meta property="article:modified_time" content="2022-12-30T07:56:48.280Z">
+<meta property="article:author" content="Jeff">
+<meta property="article:tag" content="新手日記">
+<meta property="article:tag" content="CSS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://miro.medium.com/max/1400/1*K6h1onQgngZ67uDMWeL7Dg.jpeg">
+
+<link rel="canonical" href="http://example.com/2022/12/30/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97-2022-12-30-day22/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-tw'
+  };
+</script>
+
+  <title>『新手日記』Day-22 SASS以及BEM 命名規範 | Jeff的隨手筆記</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Jeff的隨手筆記</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">學習當一個前端工程師</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/30/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97-2022-12-30-day22/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpeg">
+      <meta itemprop="name" content="Jeff">
+      <meta itemprop="description" content="這是一個紀錄自己成長的地方">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jeff的隨手筆記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          『新手日記』Day-22 SASS以及BEM 命名規範
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2022-12-30 15:33:42 / Modified: 15:56:48" itemprop="dateCreated datePublished" datetime="2022-12-30T15:33:42+08:00">2022-12-30</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97/" itemprop="url" rel="index"><span itemprop="name">新手日記系列</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="『新手日記』Day-22-SASS以及BEM-命名規範"><a href="#『新手日記』Day-22-SASS以及BEM-命名規範" class="headerlink" title="『新手日記』Day-22 SASS以及BEM 命名規範"></a><strong>『新手日記』Day-22 SASS以及BEM 命名規範</strong></h1><p><img src="https://miro.medium.com/max/1400/1*K6h1onQgngZ67uDMWeL7Dg.jpeg" alt="https://miro.medium.com/max/1400/1*K6h1onQgngZ67uDMWeL7Dg.jpeg"></p>
+<p>這幾天突然看到一篇命名的文章，自己心裡想來解釋一下自己所了解的但突然發現自己說不出來，因此想說找個時間來複習一下，剛好ＡＣ講到命名是跟著SASS那就一起複習吧！</p>
+<h1 id="CSS-的先天限制"><a href="#CSS-的先天限制" class="headerlink" title="CSS 的先天限制"></a><strong>CSS 的先天限制</strong></h1><p>CSS 的開發方式是「由上而下把所有的樣式設定逐條追加在 .css 文件裡」，而這種作法導致以下的問題：</p>
+<blockquote>
+<p>語法重複 (poor reusability)</p>
+</blockquote>
+<p>違反了程式設計裡著名的 DRY 原則 (Do not Repeat Yourself)。</p>
+<blockquote>
+<p>可維護性不佳</p>
+</blockquote>
+<p>重複的語法除了降低了開發速度，也降低了系統的可維護性。</p>
+<blockquote>
+<p>可讀性不佳 (poor readability)</p>
+</blockquote>
+<p>CSS 的本質是「樣式階層表 (stylesheet)」，而不是程式語言。</p>
+<p>因此，它先天欠缺程式語言要素，你無法用 CSS 既有語法傳遞資訊。</p>
+<h1 id="CSS-預處理器"><a href="#CSS-預處理器" class="headerlink" title="CSS 預處理器"></a><strong>CSS 預處理器</strong></h1><p>CSS 的先天限制的解決方案 — 『<strong>CSS 預處理器 (CSS Preprocessor)</strong> 』。</p>
+<p>它本身是 CSS 語法的擴充，讓開發者能夠處理抽象邏輯，例如變數、模組、與繼承等等。目前流行的 CSS 預處理器有：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="http://sass-lang.com/">Sass</a>：最早誕生的預處理器 (2007~)，源於 Ruby 社群，發展成熟，普及度高，與 Less 相互影響，持續演進中。</li>
+<li><a target="_blank" rel="noopener" href="http://lesscss.org/">Less</a>：稍晚於 Sass，強調兼容性並且更容易上手，也擁有自己的支持社群，例如著名的 Twitter Bootstrap 採用了 Less。</li>
+<li><a target="_blank" rel="noopener" href="http://stylus-lang.com/">Stylus</a>：本質上和 Less&#x2F;Sass 類似，只是更為 Node.js 社群量身打造。</li>
+</ul>
+<p>在ＡＣ我學習到得是SCSS，疑這又是什麼？Sass在演變的歷史中分成了兩個分支：</p>
+<ul>
+<li>舊版語法稱之為 Sass indented syntax ，副檔名為 .sass 。</li>
+<li>較新版的 Sass&#x2F;SCSS 是目前業界主流，SCSS 的全文是 Sassy CSS，副檔名為 .scss</li>
+</ul>
+<p>對於這段歷史可以參考<a target="_blank" rel="noopener" href="https://medium.com/@onepiece0328/%E5%95%8F%E9%81%8E%E4%B8%80%E7%99%BE%E6%AC%A1%E7%9A%84%E5%95%8F%E9%A1%8C%E4%B9%8B-sass-%E5%92%8C-scss-%E7%9A%84%E5%B7%AE%E5%88%A5-5bd7fd78942a">這篇文章</a></p>
+<h1 id="SCSS基本語法"><a href="#SCSS基本語法" class="headerlink" title="SCSS基本語法"></a><strong>SCSS基本語法</strong></h1><blockquote>
+<p>巢狀(Nesting)</p>
+</blockquote>
+<p>在 Sass 中，我們可以使用巢狀語法來編寫組合選擇符 (nested combinator) ，例如空白以及 &gt; + ~ ，以達到更好的可讀性。</p>
+<p><img src="https://miro.medium.com/max/1400/1*kGiGCUiIoXXtOHoLvXqRJQ.png" alt="https://miro.medium.com/max/1400/1*kGiGCUiIoXXtOHoLvXqRJQ.png"></p>
+<p>還有一個方便的功能是使用 &amp; 符號來代替父層</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">.box&#123;</span><br><span class="line">  color: rgba(0, 0, 0, 1);</span><br><span class="line">  &amp;:hover&#123;</span><br><span class="line">      color: red;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;編譯後</span><br><span class="line">=====&gt;.box&#123;</span><br><span class="line">  color: rgba(0, 0, 0, 1);</span><br><span class="line">&#125;</span><br><span class="line">.box:hover&#123;</span><br><span class="line">  color: rgba(255, 0, 0, 1);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>變數 (variable) 與運算子 (operator) (關鍵字：$)</p>
+</blockquote>
+<p>變數可以使我們的 css 代碼具備更佳的可維護性與可讀性 — — Sass 使用冒號 : 進行變數的指派，並以分號 ; 作為結尾。此外，我們還可以針對數值進行各種常見的計算。</p>
+<p><img src="https://miro.medium.com/max/1400/1*VrV86frUCBeV5Ia1QQLUFg.png" alt="https://miro.medium.com/max/1400/1*VrV86frUCBeV5Ia1QQLUFg.png"></p>
+<p>$代表著宣告變數，變數可以用來儲存值，方便重複利用。(使用變數必須連同＄一起用)</p>
+<blockquote>
+<p>繼承與覆寫（關鍵字：％ @exten）</p>
+</blockquote>
+<p>繼承可以使多個類別都享有共同的屬性 — — Sass 使用 % 來宣告類別，並使用 @extend 來執行繼承。如果要覆寫屬性，則直接宣告即可。</p>
+<p><img src="https://miro.medium.com/max/1400/1*w2iYCqJvDXKYkE1Z1fl5UQ.png" alt="https://miro.medium.com/max/1400/1*w2iYCqJvDXKYkE1Z1fl5UQ.png"></p>
+<blockquote>
+<p>混入(Mixins)（關鍵字：＠mixin ＠include）</p>
+</blockquote>
+<p>你可以將它視作一種更彈性的繼承 (inherit) 的實作方式。在 Sass 裡，我們使用 @mixin 進行宣告，並使用 @include 使用 mixin。</p>
+<p><img src="https://miro.medium.com/max/1400/1*lspko4SwkdcPYMtzr_mFVw.png" alt="https://miro.medium.com/max/1400/1*lspko4SwkdcPYMtzr_mFVw.png"></p>
+<blockquote>
+<p>檔案模組化(關鍵字：@use)</p>
+</blockquote>
+<p>在 Sass 中，我們可以將檔案拆成多個，配合上妥善的命名，讓專案變得更容易管理。</p>
+<p><img src="https://miro.medium.com/max/1400/1*HJD_K7wmNuaYbGJl-4_W3Q.png" alt="https://miro.medium.com/max/1400/1*HJD_K7wmNuaYbGJl-4_W3Q.png"></p>
+<ul>
+<li>開頭為底線 _ 的檔名在 Sass 中稱之為 partial，也就是一個低階的模組。</li>
+<li>我們使用 @use 來引用 partial。請注意引用名稱不包含底線，也不包含副檔名。</li>
+<li>模組有自己的命名空間 (namespace) ，使用模組中的變數時，必須給命名空間加上前綴，例如 base.$primary-color 。</li>
+</ul>
+<blockquote>
+<p>引入、匯入(關鍵字：@Import)</p>
+</blockquote>
+<p>在檔案中加入其他SCSS或CSS檔案，最後編譯時會一併編譯。</p>
+<p>假如我想在某個SCSS檔案裡面匯入head、main、footer等scss的檔案就可以使用下面這段程式碼</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@import &quot;head.scss&quot;;</span><br><span class="line">@import &quot;main.scss&quot;;</span><br><span class="line">@import &quot;footer.scss&quot;;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>函式(Functions)</p>
+</blockquote>
+<p>使用 @function 的方式其實跟 JavaScript 沒甚麼兩樣，一樣會宣告 @function 並於需要時調用，可以帶入參數，需要使用@return才收的到產生的值。</p>
+<p>但有個不同的觀念是，在 Sass 中使用 function 其最終目的會是產生一個經過計算的值，它無法動態的去改變任何結構，因為最終都會轉成 CSS 啊~~</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$grid-width: 60px;</span><br><span class="line">$gutter-width: 10px;@function grid-width($n) &#123;</span><br><span class="line">  @return $n * $grid-width + ($n - 1) * $gutter-width;</span><br><span class="line">&#125;#sidebar &#123; width: grid-width(4);&#125;#main &#123;width: grid-width(8);&#125;// 轉成 CSS</span><br><span class="line">#sidebar &#123;</span><br><span class="line">  width: 270px;</span><br><span class="line">&#125;#main &#123;</span><br><span class="line">  width: 550px;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://sass-lang.com/documentation/modules">Built-In Modules</a></p>
+<blockquote>
+<p>@each</p>
+</blockquote>
+<p>Sass 有兩種資料格式儲存: list 和 map。一般可以藉由預設 function 來取得單一值，例如: <code>nth($list，2)</code> 取得 $list 第二個索引的值。但如果今天是要跑全部的 list 或是全部的 map，就會需要 @each 這個指令</p>
+<p><em><strong>遍歷 list</strong></em></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@each $item in $list &#123;</span><br><span class="line">  //some rules or conditions</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上述語法的 $list 為要帶入的 list 資料，可以預先存成變數使用，也可以直接塞入一組 list。而 $item 則是遍歷整個 list 時每筆 item 的變數名，此名稱可以自己定義。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">$list: (orange, purple, teal);</span><br><span class="line">@each $item in $list &#123;</span><br><span class="line">  .#&#123;$item&#125; &#123;</span><br><span class="line">    background: $item;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;// 也可以直接在 @each 中直接寫 list，兩者結果相同</span><br><span class="line">@each $item in orange, purple, teal &#123;</span><br><span class="line">  .#&#123;$item&#125; &#123;</span><br><span class="line">    background: $item;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;// 轉成 CSS</span><br><span class="line">.orange &#123;</span><br><span class="line">  background: orange;</span><br><span class="line">&#125;.purple &#123;</span><br><span class="line">  background: purple;</span><br><span class="line">&#125;.teal &#123;</span><br><span class="line">  background: teal;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>既然可以遍歷整個 list 的資料，當然也可以搞定更複雜一點的二維 list，二維 list 的格式會像這樣:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$list: (puma, black, default), (sea-slug, blue, pointer), (egret, white, move)</span><br></pre></td></tr></table></figure>
+
+<p>假設有三組 list，而每筆 list 本身又包含數個值，這樣二維 list 就會成立，因此我們可以想像成是 @each 總共會遍歷三次，而且每次的遍歷都會需要三個變數來塞值，因此就會寫成這樣:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">// 這邊以直接寫入 list 示範，變數會依序對應每組 list 的值</span><br><span class="line">@each $animal, $color, $cursor in (puma, black, default),</span><br><span class="line">                                  (sea-slug, blue, pointer),</span><br><span class="line">                                  (egret, white, move) &#123;</span><br><span class="line">  .#&#123;$animal&#125;-icon &#123;</span><br><span class="line">    background-image: url(&#x27;/images/#&#123;$animal&#125;.png&#x27;);</span><br><span class="line">    border: 2px solid $color;</span><br><span class="line">    cursor: $cursor;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;// 轉成 CSS</span><br><span class="line">.puma-icon &#123;</span><br><span class="line">  background-image: url(&quot;/images/puma.png&quot;);</span><br><span class="line">  border: 2px solid black;</span><br><span class="line">  cursor: default;</span><br><span class="line">&#125;.sea-slug-icon &#123;</span><br><span class="line">  background-image: url(&quot;/images/sea-slug.png&quot;);</span><br><span class="line">  border: 2px solid blue;</span><br><span class="line">  cursor: pointer;</span><br><span class="line">&#125;.egret-icon &#123;</span><br><span class="line">  background-image: url(&quot;/images/egret.png&quot;);</span><br><span class="line">  border: 2px solid white;</span><br><span class="line">  cursor: move;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><em><strong>遍歷 map</strong></em></p>
+<p>遍歷 map 的方式會跟 list 有一點點不同，畢竟 list 是多個單一值組在一起，但 map 會是多個含有 key 跟 value 的集合。使用 @each 在 map 身上的話，等於是依序遍歷 key 與 value，因此 @each 的變數會有兩個，分別在遍歷時帶入 key 與 value。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">@each $header, $size in (h1: 2em, h2: 1.5em, h3: 1.2em) &#123;</span><br><span class="line">  #&#123;$header&#125; &#123;</span><br><span class="line">    font-size: $size;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;// 轉成 CSS</span><br><span class="line">h1 &#123;</span><br><span class="line">  font-size: 2em;</span><br><span class="line">&#125;h2 &#123;</span><br><span class="line">  font-size: 1.5em;</span><br><span class="line">&#125;h3 &#123;</span><br><span class="line">  font-size: 1.2em;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="BEM-命名規範"><a href="#BEM-命名規範" class="headerlink" title="BEM 命名規範"></a><strong>BEM 命名規範</strong></h1><p>BEM由Yandex團隊提出來的一種創新命名Class名稱的設計模式。</p>
+<p>BEM的意思是區塊（Block）、元素（Element）、修飾符（Modifier），它們最大的優勢就是可以光瀏覽class名稱就能夠告訴開發者它們彼此間的依賴關係。</p>
+<ul>
+<li>：僅作為連字符使用，表示某個塊或者某個子元素的多單詞之間的連接記號。</li>
+<li>__ ：雙底線用來連接塊和塊的子元素</li>
+<li>_ ：單底線用來描述一個塊或者塊的子元素的一種狀態</li>
+</ul>
+<h2 id="區塊-Block"><a href="#區塊-Block" class="headerlink" title="區塊 (Block)"></a><strong>區塊 (Block)</strong></h2><p>我們在設計網站時，一定會設計幾個區塊(Block)出來，如下圖裡面有Logo block、search block、menu block等等，這時候我們就會用class命名他們區塊對應的語意</p>
+<p><img src="https://miro.medium.com/max/1400/1*bE_jIwS5MKId123ww7P0lQ.png" alt="https://miro.medium.com/max/1400/1*bE_jIwS5MKId123ww7P0lQ.png"></p>
+<h2 id="元素-Element"><a href="#元素-Element" class="headerlink" title="元素 (Element)"></a><strong>元素 (Element)</strong></h2><p>我們由menu block來舉例，看到下圖選單內有四個元素，如果這些元素設定是會綁定在這個區塊上時，就可以在區塊的class後面加上雙底線__來辨識他是該區塊底下的元素，Class就會設計為.menu__item{}。PS：除了HTML tag外，如果是一個CSS組件也可把它視為元素 (Element) 。</p>
+<p><img src="https://miro.medium.com/max/1310/1*Ua8o7LxN6Gnqy7HaKqeFfQ.png" alt="https://miro.medium.com/max/1310/1*Ua8o7LxN6Gnqy7HaKqeFfQ.png"></p>
+<h2 id="修飾符（Modifier）"><a href="#修飾符（Modifier）" class="headerlink" title="修飾符（Modifier）"></a><strong>修飾符（Modifier）</strong></h2><p>用於定義 Block 或 Element 的外觀、狀態或類型，修飾符本質上類似於 HTML 屬性。</p>
+<p>以下圖舉例：</p>
+<p>修飾符可以在運行時更改（例如： DOM 事件的反應），因為javascript會動態加入class為.menu__item — active，因為這個原因，我們可以很容易判斷這個class是屬於元素還是修飾符的設定，只要看class最後面是雙中線 — 還是雙下底線__就知道他是屬於哪一種了。</p>
+<p><img src="https://miro.medium.com/max/1400/1*nm0jRv64oCreUMVQKaiSag.png" alt="https://miro.medium.com/max/1400/1*nm0jRv64oCreUMVQKaiSag.png"></p>
+<h1 id="BEM-命名法的好處"><a href="#BEM-命名法的好處" class="headerlink" title="BEM 命名法的好處"></a><strong>BEM 命名法的好處</strong></h1><p>BEM的關鍵是，可以獲得更多的描述和更加清晰的結構，從其名字可以知道某個標記的含義。於是，通過查看HTML 代碼中的class 屬性，就能知道元素之間的關聯。</p>
+<p>常規的命名法：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;article&quot;&gt;</span><br><span class="line">    &lt;div class=&quot;body&quot;&gt;</span><br><span class="line">        &lt;button class=&quot;button-primary&quot;&gt;&lt;/button&gt;</span><br><span class="line">        &lt;button class=&quot;button-success&quot;&gt;&lt;/button&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>這種寫法從DOM 結構和類命名上可以了解每個元素的意義，但無法明確其真實的層級關係。在css 定義時，也必須依靠層級選擇器來限定約束作用域，以避免跨組件的樣式污染。</li>
+</ul>
+<p>使用了BEM 命名方法的示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;article&quot;&gt;</span><br><span class="line">    &lt;div class=&quot;article__body&quot;&gt;</span><br><span class="line">        &lt;div class=&quot;tag&quot;&gt;&lt;/div&gt;</span><br><span class="line">        &lt;button class=&quot;article__button--primary&quot;&gt;&lt;/button&gt;</span><br><span class="line">        &lt;button class=&quot;article__button--success&quot;&gt;&lt;/button&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>通過BEM 命名方式，模塊層級關係簡單清晰，而且css 書寫上也不必作過多的層級選擇。</li>
+</ul>
+<p>又加上SCSS的巢狀特性以及＆可以連接之前父層的class後，非常適合我們使用。</p>
+<p>在還沒接觸SCSS時，每次看自己的CSS總是覺得非常的凌亂，當自己想修改什麼東西時只能依靠註解來找到，命名更是我這個英文很差的人一個痛苦，會的單字已經不多了，還要想這些相近意思的名字。但學習到這個之後真的解決了很多的麻煩，雖然新寫法還需要熟悉，但我相信他會是我的最佳幫手！</p>
+<p>參考資料：</p>
+<p><a target="_blank" rel="noopener" href="https://en.bem.info/methodology/key-concepts/">https://en.bem.info/methodology/key-concepts/</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98/" rel="tag"># 新手日記</a>
+              <a href="/tags/CSS/" rel="tag"># CSS</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/12/30/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97-2022-12-30-day21/" rel="prev" title="『新手日記』Day-21 Handlebars是什麼？">
+      <i class="fa fa-chevron-left"></i> 『新手日記』Day-21 Handlebars是什麼？
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/12/30/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97-2022-12-30-day23/" rel="next" title="『新手日記』Day-23 OOP物件導向程式設計">
+      『新手日記』Day-23 OOP物件導向程式設計 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E3%80%8E%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E3%80%8FDay-22-SASS%E4%BB%A5%E5%8F%8ABEM-%E5%91%BD%E5%90%8D%E8%A6%8F%E7%AF%84"><span class="nav-number">1.</span> <span class="nav-text">『新手日記』Day-22 SASS以及BEM 命名規範</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CSS-%E7%9A%84%E5%85%88%E5%A4%A9%E9%99%90%E5%88%B6"><span class="nav-number">2.</span> <span class="nav-text">CSS 的先天限制</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CSS-%E9%A0%90%E8%99%95%E7%90%86%E5%99%A8"><span class="nav-number">3.</span> <span class="nav-text">CSS 預處理器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SCSS%E5%9F%BA%E6%9C%AC%E8%AA%9E%E6%B3%95"><span class="nav-number">4.</span> <span class="nav-text">SCSS基本語法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#BEM-%E5%91%BD%E5%90%8D%E8%A6%8F%E7%AF%84"><span class="nav-number">5.</span> <span class="nav-text">BEM 命名規範</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%80%E5%A1%8A-Block"><span class="nav-number">5.1.</span> <span class="nav-text">區塊 (Block)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%83%E7%B4%A0-Element"><span class="nav-number">5.2.</span> <span class="nav-text">元素 (Element)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E9%A3%BE%E7%AC%A6%EF%BC%88Modifier%EF%BC%89"><span class="nav-number">5.3.</span> <span class="nav-text">修飾符（Modifier）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#BEM-%E5%91%BD%E5%90%8D%E6%B3%95%E7%9A%84%E5%A5%BD%E8%99%95"><span class="nav-number">6.</span> <span class="nav-text">BEM 命名法的好處</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Jeff"
+      src="/uploads/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Jeff</p>
+  <div class="site-description" itemprop="description">這是一個紀錄自己成長的地方</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">34</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jeff0518" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jeff0518" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:cycivs07@icloud.com" title="E-Mail → mailto:cycivs07@icloud.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jeff</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

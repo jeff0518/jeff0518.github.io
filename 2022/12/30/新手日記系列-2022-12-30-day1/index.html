@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="『新手日記』Day-1 HTML語意化標籤  前言  距離ＡＣ學期3開課大約有1個多月的時間，我之前就在想這一個月我能幹什麼，除了先簡單了解一下前端框架React(居然是課程改版的第一批學生)，好像就只能複習，剛好近期鐵人賽又開始了當然我還沒有那個本事去那邊，但自己私底下練習應該可以吧，所以我會把這30天所複習的筆記都放在這邊紀錄自己學習的過程。 目前計畫先從HTML、CSS、JavaScript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="『新手日記』Day-1 HTML語意化標籤">
+<meta property="og:url" content="http://example.com/2022/12/30/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97-2022-12-30-day1/index.html">
+<meta property="og:site_name" content="Jeff的隨手筆記">
+<meta property="og:description" content="『新手日記』Day-1 HTML語意化標籤  前言  距離ＡＣ學期3開課大約有1個多月的時間，我之前就在想這一個月我能幹什麼，除了先簡單了解一下前端框架React(居然是課程改版的第一批學生)，好像就只能複習，剛好近期鐵人賽又開始了當然我還沒有那個本事去那邊，但自己私底下練習應該可以吧，所以我會把這30天所複習的筆記都放在這邊紀錄自己學習的過程。 目前計畫先從HTML、CSS、JavaScript">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://miro.medium.com/max/1400/1*0vJBFN1qP_6VD0mwYKVD6g.png">
+<meta property="og:image" content="https://miro.medium.com/max/1400/1*TsWfhadboeB6t4hd2gsLEQ.png">
+<meta property="article:published_time" content="2022-12-30T07:12:42.000Z">
+<meta property="article:modified_time" content="2022-12-30T07:39:27.951Z">
+<meta property="article:author" content="Jeff">
+<meta property="article:tag" content="新手日記">
+<meta property="article:tag" content="HTML">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://miro.medium.com/max/1400/1*0vJBFN1qP_6VD0mwYKVD6g.png">
+
+<link rel="canonical" href="http://example.com/2022/12/30/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97-2022-12-30-day1/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-tw'
+  };
+</script>
+
+  <title>『新手日記』Day-1 HTML語意化標籤 | Jeff的隨手筆記</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Jeff的隨手筆記</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">學習當一個前端工程師</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/30/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97-2022-12-30-day1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpeg">
+      <meta itemprop="name" content="Jeff">
+      <meta itemprop="description" content="這是一個紀錄自己成長的地方">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jeff的隨手筆記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          『新手日記』Day-1 HTML語意化標籤
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2022-12-30 15:12:42 / Modified: 15:39:27" itemprop="dateCreated datePublished" datetime="2022-12-30T15:12:42+08:00">2022-12-30</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97/" itemprop="url" rel="index"><span itemprop="name">新手日記系列</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="『新手日記』Day-1-HTML語意化標籤"><a href="#『新手日記』Day-1-HTML語意化標籤" class="headerlink" title="『新手日記』Day-1 HTML語意化標籤"></a><strong>『新手日記』Day-1 HTML語意化標籤</strong></h1><p><img src="https://miro.medium.com/max/1400/1*0vJBFN1qP_6VD0mwYKVD6g.png" alt="https://miro.medium.com/max/1400/1*0vJBFN1qP_6VD0mwYKVD6g.png"></p>
+<blockquote>
+<p>前言</p>
+</blockquote>
+<p>距離ＡＣ學期3開課大約有1個多月的時間，我之前就在想這一個月我能幹什麼，除了先簡單了解一下前端框架React(居然是課程改版的第一批學生)，好像就只能複習，剛好近期鐵人賽又開始了當然我還沒有那個本事去那邊，但自己私底下練習應該可以吧，所以我會把這30天所複習的筆記都放在這邊紀錄自己學習的過程。</p>
+<p>目前計畫先從HTML、CSS、JavaScript開始，每天一個主題。</p>
+<p>為了給自己更好的前端基礎，加油！！！</p>
+<blockquote>
+<p>semantic element</p>
+</blockquote>
+<p><strong>semantic element 又稱</strong><code>語意化標籤，其目的是為了讓標籤(Tag)更具意義，以加強文件的結構化，讓搜尋引擎更清楚了解。舉例來說，一個網頁通常會有最基本的區塊像是頁首、內容和頁尾等。在HTML5之前只能通通用&lt;div&gt;標籤表示，但HTML新增了語意化標籤像是&lt;header&gt;、&lt;main&gt;、&lt;footer&gt;等，可以更清楚表現網頁中每個區塊的設計目的。</code></p>
+<p>使用HTML5語意化標籤的優點如下：</p>
+<ol>
+<li>可以快速抓到網頁架構和每個區塊的位置</li>
+<li>對於SEO優化有幫助</li>
+</ol>
+<blockquote>
+<p>常見的用法</p>
+</blockquote>
+<p><img src="https://miro.medium.com/max/1400/1*TsWfhadboeB6t4hd2gsLEQ.png" alt="https://miro.medium.com/max/1400/1*TsWfhadboeB6t4hd2gsLEQ.png"></p>
+<h1 id="1-頁首標籤-lt-header-gt"><a href="#1-頁首標籤-lt-header-gt" class="headerlink" title="1.頁首標籤&lt;header&gt;"></a><strong>1.<code>頁首標籤&lt;header&gt;</code></strong></h1><p>💡 The <strong><code>&lt;header&gt;</code></strong> <a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/HTML">HTML</a> element represents introductory content, typically a group of introductory or navigational aids. It may contain some heading elements but also a logo, a search form, an author name, and other elements.</p>
+<p>&lt; header &gt;標籤用來定義一個標題區塊，裡面可以放標題、介紹文字或網站名稱、logo、導覽連結、搜尋表單等內容。也可以放在&lt; article &gt;或&lt; section &gt;內，表示為文章或區塊內的首要區塊。</p>
+<h1 id="2-導覽列-lt-nav-gt"><a href="#2-導覽列-lt-nav-gt" class="headerlink" title="2.導覽列&lt;nav&gt;"></a><strong>2.<code>導覽列&lt;nav&gt;</code></strong></h1><p>💡 The <strong><code>&lt;nav&gt;</code></strong> <a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/HTML">HTML</a> element represents a section of a page whose purpose is to provide navigation links, either within the current document or to other documents. Common examples of navigation sections are menus, tables of contents, and indexes.</p>
+<p>只要是在網站內的導覽區塊，都適合使用&lt; nav &gt;標籤(navigation 導航之意)，像是主選單、頁尾選單等。</p>
+<p>一個 HTML 頁面可以有很多個 <nav> 元素</p>
+<h1 id="3-主要區塊-lt-main-gt"><a href="#3-主要區塊-lt-main-gt" class="headerlink" title="3.主要區塊&lt;main&gt;"></a><strong>3.<code>主要區塊&lt;main&gt;</code></strong></h1><p>💡 The <code>&lt;main&gt;</code> HTML element represents the dominant content of the body of a document. The main content area consists of content that is directly related to or expands upon the central topic of a document, or the central functionality of an application.</p>
+<p>是用來放頁面主要資訊的區塊 (main content of the <a target="_blank" rel="noopener" href="https://www.fooish.com/html/body-tag.html">body</a>)，展現網頁內容的獨特性。每個頁面<code>只能有一個</code>&lt; main &gt;標籤，且理想狀態下，不能被放在<code>&lt;nav&gt;</code>、<code>&lt;article&gt;</code>、<code>&lt;aside&gt;</code>、<code>&lt;footer&gt;</code>和<code>&lt;header&gt;</code>內。</p>
+<h1 id="4-區塊或文章區塊-lt-section-gt-lt-article-gt"><a href="#4-區塊或文章區塊-lt-section-gt-lt-article-gt" class="headerlink" title="4.區塊或文章區塊&lt;section&gt;&lt;article&gt;"></a><strong>4.<code>區塊或文章區塊&lt;section&gt;&lt;article&gt;</code></strong></h1><p>💡 The <strong><code>&lt;section&gt;</code></strong> <a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/HTML">HTML</a> element represents a generic standalone section of a document, which doesn’t have a more specific semantic element to represent it. Sections should always have a heading, with very few exceptions.</p>
+<p>💡 The <strong><code>&lt;article&gt;</code></strong> <a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/HTML">HTML</a> element represents a self-contained composition in a document, page, application, or site, which is intended to be independently distributable or reusable (e.g., in syndication). Examples include: a forum post, a magazine or newspaper article, or a blog entry, a product card, a user-submitted comment, an interactive widget or gadget, or any other independent item of content.</p>
+<p>在HTML5之前，都需要建立一個區塊通常會使用&lt; div &gt;，而當HTML5語意化標籤出現後，可以使用&lt; section &gt;搭配&lt; h1~h6 &gt;的標題來呈現內容，而&lt; section &gt;內一些無明顯含義的區塊或為了排版目的的區塊則使用&lt; div &gt;來包，&lt; div &gt;這時可以視作一個無意義的容器。</p>
+<p>&lt; article &gt;標籤用來描述這一區塊的內容本身是獨立且完整的近似&lt; section &gt;標籤，但&lt; article &gt;主要用於包覆文章。要注意的是，一個頁面可以有一個或多個 <article> 只要他們是獨立且完整的內容，例如一個文章列表頁面，每篇文章都可以用一個 <article> 包起來。</p>
+<h1 id="5-側欄-lt-aside-gt"><a href="#5-側欄-lt-aside-gt" class="headerlink" title="5.側欄&lt;aside&gt;"></a><strong>5.<code>側欄&lt;aside&gt;</code></strong></h1><p>💡 The <strong><code>&lt;aside&gt;</code></strong> <a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/HTML">HTML</a> element represents a portion of a document whose content is only indirectly related to the document’s main content. Asides are frequently presented as sidebars or call-out boxes.</p>
+<p>語意算是跟主要區塊內容無關的區塊，也就是額外資訊，像是側邊欄、廣告、其他連結、推薦文章等都蠻適合使用的，不一定是側邊位置才能使用。</p>
+<h1 id="6-頁尾-lt-footer-gt"><a href="#6-頁尾-lt-footer-gt" class="headerlink" title="6.頁尾&lt;footer&gt;"></a><strong>6.<code>頁尾&lt;footer&gt;</code></strong></h1><p>💡 The <strong><code>&lt;footer&gt;</code></strong> <a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/HTML">HTML</a> element represents a footer for its nearest ancestor <a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Content_categories#sectioning_content">sectioning content</a> or <a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/Heading_Elements#sectioning_root">sectioning root</a> element. A <code>&lt;footer&gt;</code> typically contains information about the author of the section, copyright data or links to related documents.</p>
+<p>用來定義一個頁尾或結尾區塊，常見的 footer 是網頁最下面的頁尾區塊會包含作者、版權、聯絡方式等資訊。</p>
+<p>一個網頁中除了可以有主要的網頁頁尾 (page footer) 區塊外，<a target="_blank" rel="noopener" href="https://www.fooish.com/html/article-tag.html"><code>&lt;article&gt;</code></a>, <a target="_blank" rel="noopener" href="https://www.fooish.com/html/section-tag.html"><code>&lt;section&gt;</code></a>, <a target="_blank" rel="noopener" href="https://www.fooish.com/html/aside-tag.html"><code>&lt;aside&gt;</code></a>, <a target="_blank" rel="noopener" href="https://www.fooish.com/html/nav-tag.html"><code>&lt;nav&gt;</code></a> 這些 HTML 語意區塊中都可以有自己的 <code>&lt;footer&gt;</code>。</p>
+<blockquote>
+<p>資料來源</p>
+</blockquote>
+<p>AC課件<br><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/plus">developer.mozilla.org</a><br><a target="_blank" rel="noopener" href="https://www.fooish.com/">www.fooish.com</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98/" rel="tag"># 新手日記</a>
+              <a href="/tags/HTML/" rel="tag"># HTML</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/12/28/%E5%BF%83%E5%BE%97-2022-12-28-%E5%AD%B8%E6%9C%9F%E4%B8%89%E5%89%8D%E7%9A%84%E7%B6%93%E9%A9%97%E5%88%86%E4%BA%AB-%E8%A3%9C%E5%85%85-2022-12-28-%E5%AD%B8%E6%9C%9F%E4%B8%89%E5%89%8D%E7%9A%84%E7%B6%93%E9%A9%97%E5%88%86%E4%BA%AB-%E8%A3%9C%E5%85%85/" rel="prev" title="學期三前的經驗分享-補充">
+      <i class="fa fa-chevron-left"></i> 學期三前的經驗分享-補充
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/12/30/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97-2022-12-30-day2/" rel="next" title="『新手日記』Day-2 HTML src和href的區別">
+      『新手日記』Day-2 HTML src和href的區別 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E3%80%8E%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E3%80%8FDay-1-HTML%E8%AA%9E%E6%84%8F%E5%8C%96%E6%A8%99%E7%B1%A4"><span class="nav-number">1.</span> <span class="nav-text">『新手日記』Day-1 HTML語意化標籤</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E9%A0%81%E9%A6%96%E6%A8%99%E7%B1%A4-lt-header-gt"><span class="nav-number">2.</span> <span class="nav-text">1.頁首標籤&lt;header&gt;</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-%E5%B0%8E%E8%A6%BD%E5%88%97-lt-nav-gt"><span class="nav-number">3.</span> <span class="nav-text">2.導覽列&lt;nav&gt;</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-%E4%B8%BB%E8%A6%81%E5%8D%80%E5%A1%8A-lt-main-gt"><span class="nav-number">4.</span> <span class="nav-text">3.主要區塊&lt;main&gt;</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-%E5%8D%80%E5%A1%8A%E6%88%96%E6%96%87%E7%AB%A0%E5%8D%80%E5%A1%8A-lt-section-gt-lt-article-gt"><span class="nav-number">5.</span> <span class="nav-text">4.區塊或文章區塊&lt;section&gt;&lt;article&gt;</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-%E5%81%B4%E6%AC%84-lt-aside-gt"><span class="nav-number">6.</span> <span class="nav-text">5.側欄&lt;aside&gt;</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-%E9%A0%81%E5%B0%BE-lt-footer-gt"><span class="nav-number">7.</span> <span class="nav-text">6.頁尾&lt;footer&gt;</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Jeff"
+      src="/uploads/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Jeff</p>
+  <div class="site-description" itemprop="description">這是一個紀錄自己成長的地方</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">34</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jeff0518" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jeff0518" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:cycivs07@icloud.com" title="E-Mail → mailto:cycivs07@icloud.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jeff</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

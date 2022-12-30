@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="『新手日記』Day-26 同步非同步 居然是因為生病中斷連載，難過！！！ 最早在ＡＣ有一堂課是要我們學習分析什麼是 event loop。 在那邊第一次對同步跟非同步有了一絲的印象，那時候的文章： https:&#x2F;&#x2F;www.notion.so&#x2F;168538cd537243a18f89ba1dcca8b16d#49f4a62c06c7401084b31fb0f07df83e 之後陸陸續續在課堂或文章內">
+<meta property="og:type" content="article">
+<meta property="og:title" content="『新手日記』Day-26 同步非同步">
+<meta property="og:url" content="http://example.com/2022/12/30/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97-2022-12-30-day26/index.html">
+<meta property="og:site_name" content="Jeff的隨手筆記">
+<meta property="og:description" content="『新手日記』Day-26 同步非同步 居然是因為生病中斷連載，難過！！！ 最早在ＡＣ有一堂課是要我們學習分析什麼是 event loop。 在那邊第一次對同步跟非同步有了一絲的印象，那時候的文章： https:&#x2F;&#x2F;www.notion.so&#x2F;168538cd537243a18f89ba1dcca8b16d#49f4a62c06c7401084b31fb0f07df83e 之後陸陸續續在課堂或文章內">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://miro.medium.com/max/1400/1*crk2WP5jfhZmh1JJQEA2Ow.jpeg">
+<meta property="og:image" content="https://miro.medium.com/max/1400/1*sqbXQ54bn1nJdR2Kn2BhhQ.png">
+<meta property="og:image" content="https://miro.medium.com/max/1400/1*-6eUIGF8QthDjcEBQuWxVQ.png">
+<meta property="og:image" content="https://miro.medium.com/max/1400/1*1UFWMlbdZqNzmZXqSi8mjw.png">
+<meta property="og:image" content="https://miro.medium.com/max/1400/1*2ZVcVNQNDxHw6RcaM20aMA.png">
+<meta property="og:image" content="https://miro.medium.com/max/1394/1*xZPXXJdhY1Zc6vEPNGzAPg.png">
+<meta property="og:image" content="https://miro.medium.com/max/1400/1*XLnZDvUhrFsBAenzltm2aw.png">
+<meta property="og:image" content="https://miro.medium.com/max/1400/1*t9vJZA-tDQ-tXrXF6pUh4A.png">
+<meta property="og:image" content="https://miro.medium.com/max/1400/0*ZBkFYwv8WSZvDmVE.png">
+<meta property="og:image" content="https://miro.medium.com/max/1400/0*ZP5aNyvd4YaOLES7.png">
+<meta property="article:published_time" content="2022-12-30T07:37:42.000Z">
+<meta property="article:modified_time" content="2022-12-30T08:00:38.198Z">
+<meta property="article:author" content="Jeff">
+<meta property="article:tag" content="新手日記">
+<meta property="article:tag" content="JavaScript">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://miro.medium.com/max/1400/1*crk2WP5jfhZmh1JJQEA2Ow.jpeg">
+
+<link rel="canonical" href="http://example.com/2022/12/30/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97-2022-12-30-day26/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-tw'
+  };
+</script>
+
+  <title>『新手日記』Day-26 同步非同步 | Jeff的隨手筆記</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Jeff的隨手筆記</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">學習當一個前端工程師</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/30/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97-2022-12-30-day26/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpeg">
+      <meta itemprop="name" content="Jeff">
+      <meta itemprop="description" content="這是一個紀錄自己成長的地方">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jeff的隨手筆記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          『新手日記』Day-26 同步非同步
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2022-12-30 15:37:42 / Modified: 16:00:38" itemprop="dateCreated datePublished" datetime="2022-12-30T15:37:42+08:00">2022-12-30</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97/" itemprop="url" rel="index"><span itemprop="name">新手日記系列</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="『新手日記』Day-26-同步非同步"><a href="#『新手日記』Day-26-同步非同步" class="headerlink" title="『新手日記』Day-26 同步非同步"></a><strong>『新手日記』Day-26 同步非同步</strong></h1><p><img src="https://miro.medium.com/max/1400/1*crk2WP5jfhZmh1JJQEA2Ow.jpeg" alt="https://miro.medium.com/max/1400/1*crk2WP5jfhZmh1JJQEA2Ow.jpeg"></p>
+<p>居然是因為生病中斷連載，難過！！！</p>
+<p>最早在ＡＣ有一堂課是要我們學習分析什麼是 event loop。 在那邊第一次對同步跟非同步有了一絲的印象，那時候的文章：</p>
+<p><a target="_blank" rel="noopener" href="https://www.notion.so/168538cd537243a18f89ba1dcca8b16d">https://www.notion.so/168538cd537243a18f89ba1dcca8b16d#49f4a62c06c7401084b31fb0f07df83e</a></p>
+<p>之後陸陸續續在課堂或文章內容裡都有提到這個概念，但好像真的沒有認真的統整過一次，剛好在最新的課程裡講了Callback、Promises、Async&#x2F;Await，又加上我第一次沒有聽懂決定再看一次，順便統整一次內容。</p>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a><strong>前言</strong></h1><p>我們都知道『JavaScript 是一種單線程(single threaded runtime)的程式語言』，因為作為瀏覽器的腳本(程式語言)，他負責處理頁面的互動以及Dom的操作，讓你可以在網頁中實現出複雜的功能。但JavaScript 只是程式語言，因此我們需要一個『執行環境（runtime）』所提供的東西，例如說 setTiemout、document 等等，而這個 runtime可以是瀏覽器或是我們最近在學的Node.js。</p>
+<h1 id="blocking（阻塞）與non-blocking（非阻塞）"><a href="#blocking（阻塞）與non-blocking（非阻塞）" class="headerlink" title="blocking（阻塞）與non-blocking（非阻塞）"></a><strong>blocking（阻塞）與non-blocking（非阻塞）</strong></h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">let queue = []</span><br><span class="line">for (let i = 0; i &lt; 9999; i++) &#123;</span><br><span class="line">  queue.push(&#123; key: i &#125;)</span><br><span class="line">&#125;</span><br><span class="line">setTimeout(() =&gt; &#123;</span><br><span class="line">  console.log(&#x27;hello world&#x27;)</span><br><span class="line">&#125;, 0)</span><br><span class="line">queue.forEach((item) =&gt; &#123;</span><br><span class="line">  console.log(item)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>我們用這段程式碼來解釋什麼是 blocking，大家可以順便猜一下會consloe.log出來什麼。</p>
+<p>雖然<code>setTimeout</code> 的時間間距設定為 0，乍看之下是「馬上執行」的意思。但因為<code>setTimeout</code> 是屬於非同步事件，因此還是會在其他原始碼運行完以後才執行。</p>
+<p>執行流程如下圖：</p>
+<p><img src="https://miro.medium.com/max/1400/1*sqbXQ54bn1nJdR2Kn2BhhQ.png" alt="https://miro.medium.com/max/1400/1*sqbXQ54bn1nJdR2Kn2BhhQ.png"></p>
+<p>在執行<code>queue.forEach</code> 由於資料過於龐大程式就會停在<code>queue.forEach</code>，要等執行完畢以後，才會去執行<code>setTimeout</code>。換句話說，<code>queue.forEach</code>「阻擋」了後續指令的執行，這時候我們就說這是一個 blocking（<strong>阻塞</strong>），因為程式的執行會一直 block 在這裡，直到執行完畢值為止。</p>
+<p>如果後續指令跟現在在執行的程式有關那就只好認了，但如果現在執行的事情跟後續執行的事情一點關係都沒時，那把時間都浪費在這真的會奢侈。要解決這個狀況那我們就會運用到 <strong>non-blocking（非阻塞）。</strong></p>
+<p>用一個生活化的方式來解釋：去百貨公司美食街點餐，點完以後店家會給我一個呼叫器，等到餐點準備好的時候，呼叫器就會響，我就可以去店家領取餐點，而不用在原地傻傻地等。<strong>所以要解決這個問題我們就必須拿到那個『呼叫器』，而在 JavaScript 裡面，function 就很適合當作呼叫器！</strong>意思就是「當這個程序執行完畢時，請來執行這個 function，並且把結果傳進來」，而這個 <strong>function 又被稱作 callback function（回呼函式）</strong></p>
+<p>這樣我們就可以“看似”一次執行多個程式碼了，但請記住他只是“看似”而已，JavaScript 只是擅長用非同步的方式在不同事情間「切換」，它的本質仍然是一次執行一件事 (single thread)。</p>
+<h1 id="synchronous-x2F-asynchronous"><a href="#synchronous-x2F-asynchronous" class="headerlink" title="synchronous&#x2F;asynchronous"></a><strong>synchronous&#x2F;asynchronous</strong></h1><p>了解了什麼是blocking（阻塞）與non-blocking（非阻塞）後，其實你已經懂了synchronous(同步) 與 asynchronous(非同步)，為什麼這麼說呢？因為在<a target="_blank" rel="noopener" href="https://nodejs.org/en/docs/guides/blocking-vs-non-blocking/">Node.js 的官方文件</a>是這麼說的：</p>
+<blockquote>
+<p>Blocking methods execute synchronously and non-blocking methods execute asynchronously.</p>
+<p><em>阻塞的方法會同步地（synchronously）執行，而非阻塞的方法會非同步地（asynchronously）執行</em></p>
+</blockquote>
+<p>但我相信還是會有很多人跟我一樣，同步不就是同時進行嗎？為什麼我卻只能一次執行一件事。</p>
+<p>這就要提到中文翻譯的問題了，但我英文很差這邊就用另一個方式跟大家解釋：</p>
+<h1 id="synchronous-同步"><a href="#synchronous-同步" class="headerlink" title="synchronous(同步)"></a><strong>synchronous(同步)</strong></h1><p>Synchronous：餐廳老闆自己從帶位、點餐、煮菜等，一條龍完成所有作業，在完成一組客人後，才能接待下一位客人。</p>
+<p><img src="https://miro.medium.com/max/1400/1*-6eUIGF8QthDjcEBQuWxVQ.png" alt="https://miro.medium.com/max/1400/1*-6eUIGF8QthDjcEBQuWxVQ.png"></p>
+<p>在JavaScript大部分功能都是同步的，而同步的定義是指：程式碼的執行順序，依照由上而下執行，最後才輸出。</p>
+<p>優點當然是很好閱讀，但缺點就是效率變很差</p>
+<h1 id="asynchronous-非同步"><a href="#asynchronous-非同步" class="headerlink" title="asynchronous(非同步)"></a><strong>asynchronous(非同步)</strong></h1><p>Asynchronous：餐廳老闆請了不同的人負責各自專門的事情，服務生負責點餐、廚師負責煮飯。在固定的時間內，可以藉由大家的合作，處理多組客人。</p>
+<p><img src="https://miro.medium.com/max/1400/1*1UFWMlbdZqNzmZXqSi8mjw.png" alt="https://miro.medium.com/max/1400/1*1UFWMlbdZqNzmZXqSi8mjw.png"></p>
+<p>在這案例我們可以得知：</p>
+<ul>
+<li>非同步機制能加速餐廳運作，更高效率的處理事情！</li>
+<li>但非同步的狀況下，不同客人在不同階段需要的服務是不同的，因此員工間可能會產生「等待」的過程。</li>
+</ul>
+<p>我們可以總結：所謂的「非同步處理」，可以說就是釐清各式各樣的「等待」流程，並且在因「等待」而複雜化的程式流程中，確保程式能正確運作。。</p>
+<h1 id="非同步處理的演進"><a href="#非同步處理的演進" class="headerlink" title="非同步處理的演進"></a><strong>非同步處理的演進</strong></h1><p><img src="https://miro.medium.com/max/1400/1*2ZVcVNQNDxHw6RcaM20aMA.png" alt="https://miro.medium.com/max/1400/1*2ZVcVNQNDxHw6RcaM20aMA.png"></p>
+<p>接下來我會用同一個案例來練習同步處理：</p>
+<h1 id="虛擬碼"><a href="#虛擬碼" class="headerlink" title="虛擬碼"></a><strong>虛擬碼</strong></h1><p>實際開發過程裡，收到專案規格後不會馬上開始撰寫程式碼，而是會用虛擬碼(pseudocode) 來釐清程式的邏輯。</p>
+<p><img src="https://miro.medium.com/max/1394/1*xZPXXJdhY1Zc6vEPNGzAPg.png" alt="https://miro.medium.com/max/1394/1*xZPXXJdhY1Zc6vEPNGzAPg.png"></p>
+<p>專案目的：你需要為 2 位重要的客人安排一趟台北美食探索之旅，現在你手邊精選出 6 家優質餐廳，需要安排他們各自嘗試其中的 3 間餐廳，2 位客人分配到的餐廳沒有重覆。</p>
+<p>先簡單拆解程式必要做的事情：</p>
+<blockquote>
+<p>設定資料並連線資料庫：</p>
+</blockquote>
+<ul>
+<li>從資料庫取得資料</li>
+<li>將資料放進資料庫裡</li>
+</ul>
+<blockquote>
+<p>推薦餐廳的邏輯：</p>
+</blockquote>
+<ul>
+<li>先建立使用者資料、找到使用者與餐廳的關聯，並生成結果。</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">// 資料描述</span><br><span class="line">users =  [ user1, user2 ]</span><br><span class="line">restaurants = [ rest1, rest2, rest3, rest4, rest5, rest6 ]</span><br><span class="line">// 資料庫連線設定</span><br><span class="line">連接資料庫(&#x27;資料庫名稱&#x27;)</span><br><span class="line">等待資料庫連接成功(100)// Step 1.建立使用者資料</span><br><span class="line">function 對每一個user進行處理 (user) &#123;</span><br><span class="line">  創建使用者資料(user)</span><br><span class="line">  等待創建使用者資料完成(100)	// Step 2.建立使用者與餐廳關聯</span><br><span class="line">	function 對每個user與restaurant進行處理 (rest)&#123;</span><br><span class="line">	  對每個user建立相對應餐廳資料(rest, user)</span><br><span class="line">	  等待創建餐廳資料完成(100)</span><br><span class="line">	&#125;(rest of restaurants)</span><br><span class="line">&#125; (user of users)// Step 3. 程式終止</span><br><span class="line">等待所有使用者的餐廳資料創建都完成(100)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>由於資料庫對這支 JavaScript 程式來說，是一個外部的 server，我們不確定是否資料庫會連接成功，因此必須<strong>等待</strong>資料庫回傳「連接成功」的確認信號後，才能繼續往下執行程式。</li>
+<li>若忽略了這個「等待」就匆匆執行「塞資料」的程序的話，就會出現資料消失等不能理解的狀況。</li>
+</ul>
+<h1 id="callback"><a href="#callback" class="headerlink" title="callback"></a><strong>callback</strong></h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">db.once(&#x27;open&#x27;, () =&gt; &#123;</span><br><span class="line">  console.log(&quot;openData connected&quot;)</span><br><span class="line">  for (const [user_index, user] of users.entries()) &#123;</span><br><span class="line">    // 創建使用者資料(user): model.create</span><br><span class="line">    UserModel.create(user, (err, user) =&gt; &#123;</span><br><span class="line">      console.log(&quot;user created&quot;)</span><br><span class="line">      const userRestaurant = []</span><br><span class="line">      restaurants.forEach((restaurants, rest_index) =&gt; &#123;</span><br><span class="line">        if (rest_index &gt;= 3 * user_index &amp;&amp; rest_index &lt; 3 * (user_index + 1)) &#123;</span><br><span class="line">          restaurants.userId = user._id</span><br><span class="line">          userRestaurant.push(restaurants)</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;);</span><br><span class="line">      // 對每個user建立相對應餐廳資料</span><br><span class="line">      RestaurantModel.create(restaurants, (err, user) =&gt; &#123;</span><br><span class="line">        // 等待所有使用者的餐廳資料創建完成</span><br><span class="line">        console.log(&#x27;所有使用者與餐廳資料創建完成&#x27;)</span><br><span class="line">        UserModel.find().count((err, count) =&gt; &#123;</span><br><span class="line">          if (count &gt;= users.length) &#123;</span><br><span class="line">            print.exit()</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h1 id="for-const-user-index-user-of-users-entries"><a href="#for-const-user-index-user-of-users-entries" class="headerlink" title="for (const [user_index, user] of users.entries())"></a><strong><code>for (const [user_index, user] of users.entries())</code></strong></h1><p>首先，使用 <code>for</code>拿出使用者的資料，並對每個使用者進行處理。因為要拿到資料庫裡的key&#x2F;value pairs 我們使用<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Global_Objects/Array/entries">entries</a> 取出 <code>user_index。</code></p>
+<h1 id="UserModel-create-user-err-user-gt-…"><a href="#UserModel-create-user-err-user-gt-…" class="headerlink" title="UserModel.create(user, (err, user) =&gt; {…}"></a><strong><code>UserModel.create(user, (err, user) =&gt; &#123;…&#125;</code></strong></h1><p>接著，使用 mongoose 提供的 <a target="_blank" rel="noopener" href="https://mongoosejs.com/docs/api.html#model_Model.create">Model.create</a> 建立使用者資料，這裡是一個典型的非同步操作：</p>
+<ul>
+<li>若操作成功，資料庫就會回傳一個成功創建的 <code>user</code> 物件，也就是我們設定給 UserModel.create 的第一個參數</li>
+<li>若成功取得 user 物件，就執行第二個參數中設定的 callback function，也就是 <code>(err, user)=&gt;&#123; &#125;)</code> 這段</li>
+</ul>
+<h1 id="restaurants-forEach-restaurants-rest-index-gt-…"><a href="#restaurants-forEach-restaurants-rest-index-gt-…" class="headerlink" title="restaurants.forEach((restaurants, rest_index) =&gt; {…}"></a><strong><code>restaurants.forEach((restaurants, rest_index) =&gt; &#123;…&#125;</code></strong></h1><p>用 <code>forEach</code> 取出 data 中 restaurants 資料（包含 restaurant, rest_index），下一步用條件式建立使用者與餐廳資料的關聯。</p>
+<p>條件式建立後，每個 restaurant 會有一個 <code>userId</code> 的參數，與創建使用者時自動生成的 user._id 做 mapping，可以用 <code>restaurant.userId = user._id</code> 表示，建立使用者跟餐廳資料的關聯。</p>
+<p><img src="https://miro.medium.com/max/1400/1*XLnZDvUhrFsBAenzltm2aw.png" alt="https://miro.medium.com/max/1400/1*XLnZDvUhrFsBAenzltm2aw.png"></p>
+<p>接下來想要用 <code>RestaurantModel.create</code> 將餐廳資料一次性的塞進資料庫裡，需要先建立 <code>userRestaurant = []</code> ，並用 <code>userRestaurant.push(restaurant)</code> ，將匹配好的資料暫存到陣列中。</p>
+<h1 id="RestaurantModel-create-restaurants-err-user-gt-…"><a href="#RestaurantModel-create-restaurants-err-user-gt-…" class="headerlink" title="RestaurantModel.create(restaurants, (err, user) =&gt; {…}"></a><strong><code>RestaurantModel.create(restaurants, (err, user) =&gt; &#123;…&#125;</code></strong></h1><p>程式終止的條件是：等待所有使用者的餐廳資料都建立完成。</p>
+<p>在邏輯設計上，我們可以用 count 函式確認所有 users 與 restaurants 都成功創建完畢，來判定資料建立完成並結束執行程式。</p>
+<p>此時可以用 node.js 提供的 <code>process.exit</code> 來終止程序。</p>
+<h1 id="Promises"><a href="#Promises" class="headerlink" title="Promises"></a><strong>Promises</strong></h1><p>Promise 是一個物件建構子 (constructor)，使用時需要先從 Promise 物件產生物件實例 (instance)，再使用繼承特性的 instance 去包裝程式碼的 callback 流程。</p>
+<h1 id="callback-hell"><a href="#callback-hell" class="headerlink" title="callback hell"></a><strong>callback hell</strong></h1><p><a target="_blank" rel="noopener" href="https://www.notion.so/168538cd537243a18f89ba1dcca8b16d">https://www.notion.so/168538cd537243a18f89ba1dcca8b16d#2dd5a20abbf743cbb92bbed9f103796e</a></p>
+<h1 id="從-Callback-到-Promise"><a href="#從-Callback-到-Promise" class="headerlink" title="從 Callback 到 Promise"></a><strong>從 Callback 到 Promise</strong></h1><p><img src="https://miro.medium.com/max/1400/1*t9vJZA-tDQ-tXrXF6pUh4A.png" alt="https://miro.medium.com/max/1400/1*t9vJZA-tDQ-tXrXF6pUh4A.png"></p>
+<p>從邏輯上來說，程式流程有 4 段：</p>
+<ol>
+<li>先創建 User 資料，也就是 for loop + UserModel.create 的段落</li>
+<li>UserModel.create 執行成功後，略為整理資料，進行 User x Restaurant 的配對</li>
+<li>再用 RestaurantModel.create 創建資料，</li>
+<li>兩個資料都創建好以後，就印個 console.log 然後終止程式</li>
+</ol>
+<p>在 callback 的版本中，流程 3 包含在 2 的 callback 裡，然後 4 又包在 3 的 callback 裡。</p>
+<p>至於在 Promise 版本裡，可以運用 then 的架構，把四段流程刻意拉出來，創造一種由上而下的閱讀體驗。</p>
+<h1 id="async-x2F-await"><a href="#async-x2F-await" class="headerlink" title="async&#x2F;await"></a><strong>async&#x2F;await</strong></h1><p>使用邏輯很簡單，如下圖示意：</p>
+<p><img src="https://miro.medium.com/max/1400/0*ZBkFYwv8WSZvDmVE.png" alt="https://miro.medium.com/max/1400/0*ZBkFYwv8WSZvDmVE.png"></p>
+<p>原本當同步與非同步邏輯混搭時，我們會需要用一堆 then 來控制先後順序，而在 async&#x2F;await 中，只要關鍵字放對了，就可以確保程式按照「視覺上由上而下的順序」來執行。例如上圖示意的 1～5。</p>
+<p>使用時要把握三個原則：</p>
+<p>1.要先確認有 Promise 物件實例，也就是已經定義好 resolve&#x2F;reject，才能使用 async&#x2F;await</p>
+<p>2.在流程中正確設定關鍵字：</p>
+<ul>
+<li>把後續流程用一個 <code>async function</code> 包裝起來</li>
+<li>設定好 <code>async function</code> 之後，在要運用非同步處理的地方加上 <code>await</code> 關鍵字</li>
+</ul>
+<p>3.注意 async&#x2F;await 和 then 不可以混搭使用</p>
+<h2 id="流程架構"><a href="#流程架構" class="headerlink" title="流程架構"></a><strong>流程架構</strong></h2><p><img src="https://miro.medium.com/max/1400/0*ZP5aNyvd4YaOLES7.png" alt="https://miro.medium.com/max/1400/0*ZP5aNyvd4YaOLES7.png"></p>
+<p>仍然會有雙層的結構，因此兩個層級各需要一個 <code>async</code> 關鍵字，而 <code>await</code> 後面接的都是 Promise 物件，也就是需要非同步處理的區塊。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98/" rel="tag"># 新手日記</a>
+              <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/12/30/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97-2022-12-30-day25/" rel="prev" title="『新手日記』Day-25 Promise的初次見面">
+      <i class="fa fa-chevron-left"></i> 『新手日記』Day-25 Promise的初次見面
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/12/30/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97-2022-12-30-day27/" rel="next" title="『新手日記』Day-27 用官方文件開始學習React">
+      『新手日記』Day-27 用官方文件開始學習React <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E3%80%8E%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E3%80%8FDay-26-%E5%90%8C%E6%AD%A5%E9%9D%9E%E5%90%8C%E6%AD%A5"><span class="nav-number">1.</span> <span class="nav-text">『新手日記』Day-26 同步非同步</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">2.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#blocking%EF%BC%88%E9%98%BB%E5%A1%9E%EF%BC%89%E8%88%87non-blocking%EF%BC%88%E9%9D%9E%E9%98%BB%E5%A1%9E%EF%BC%89"><span class="nav-number">3.</span> <span class="nav-text">blocking（阻塞）與non-blocking（非阻塞）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#synchronous-x2F-asynchronous"><span class="nav-number">4.</span> <span class="nav-text">synchronous&#x2F;asynchronous</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#synchronous-%E5%90%8C%E6%AD%A5"><span class="nav-number">5.</span> <span class="nav-text">synchronous(同步)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#asynchronous-%E9%9D%9E%E5%90%8C%E6%AD%A5"><span class="nav-number">6.</span> <span class="nav-text">asynchronous(非同步)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%9D%9E%E5%90%8C%E6%AD%A5%E8%99%95%E7%90%86%E7%9A%84%E6%BC%94%E9%80%B2"><span class="nav-number">7.</span> <span class="nav-text">非同步處理的演進</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%99%9B%E6%93%AC%E7%A2%BC"><span class="nav-number">8.</span> <span class="nav-text">虛擬碼</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#callback"><span class="nav-number">9.</span> <span class="nav-text">callback</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#for-const-user-index-user-of-users-entries"><span class="nav-number">10.</span> <span class="nav-text">for (const [user_index, user] of users.entries())</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#UserModel-create-user-err-user-gt-%E2%80%A6"><span class="nav-number">11.</span> <span class="nav-text">UserModel.create(user, (err, user) &#x3D;&gt; {…}</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#restaurants-forEach-restaurants-rest-index-gt-%E2%80%A6"><span class="nav-number">12.</span> <span class="nav-text">restaurants.forEach((restaurants, rest_index) &#x3D;&gt; {…}</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#RestaurantModel-create-restaurants-err-user-gt-%E2%80%A6"><span class="nav-number">13.</span> <span class="nav-text">RestaurantModel.create(restaurants, (err, user) &#x3D;&gt; {…}</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Promises"><span class="nav-number">14.</span> <span class="nav-text">Promises</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#callback-hell"><span class="nav-number">15.</span> <span class="nav-text">callback hell</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BE%9E-Callback-%E5%88%B0-Promise"><span class="nav-number">16.</span> <span class="nav-text">從 Callback 到 Promise</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#async-x2F-await"><span class="nav-number">17.</span> <span class="nav-text">async&#x2F;await</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%81%E7%A8%8B%E6%9E%B6%E6%A7%8B"><span class="nav-number">17.1.</span> <span class="nav-text">流程架構</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Jeff"
+      src="/uploads/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Jeff</p>
+  <div class="site-description" itemprop="description">這是一個紀錄自己成長的地方</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">34</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jeff0518" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jeff0518" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:cycivs07@icloud.com" title="E-Mail → mailto:cycivs07@icloud.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jeff</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

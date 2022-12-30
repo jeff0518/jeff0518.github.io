@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="『新手日記』Day-14 RWD 時間過得真快，多久沒去酒吧喝點小酒放鬆一下了！回歸正題，今天開始要來用練習來代替純理論學習了，昨天稍微排了一下到月底的學習進度安排(AC的自修2–3後端課程、自己在Udemy買的全端課程以及React課程)，保守估計我還需要3週左右才能完成而且每天要約10～12小時的讀書時間…但新教案預計月中會出來，等新教案一出來就要開始預習了，不然很怕跟不上進度。 所以…有阿姨">
+<meta property="og:type" content="article">
+<meta property="og:title" content="『新手日記』Day-14 RWD">
+<meta property="og:url" content="http://example.com/2022/12/30/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97-2022-12-30-day14/index.html">
+<meta property="og:site_name" content="Jeff的隨手筆記">
+<meta property="og:description" content="『新手日記』Day-14 RWD 時間過得真快，多久沒去酒吧喝點小酒放鬆一下了！回歸正題，今天開始要來用練習來代替純理論學習了，昨天稍微排了一下到月底的學習進度安排(AC的自修2–3後端課程、自己在Udemy買的全端課程以及React課程)，保守估計我還需要3週左右才能完成而且每天要約10～12小時的讀書時間…但新教案預計月中會出來，等新教案一出來就要開始預習了，不然很怕跟不上進度。 所以…有阿姨">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://miro.medium.com/max/1400/1*fYdANUx-Fu420wytrrvpHw.jpeg">
+<meta property="og:image" content="https://miro.medium.com/max/1400/1*IAqsukLDndXDySbvCAmA2g.png">
+<meta property="og:image" content="https://miro.medium.com/max/876/1*qgic1MeoudxonnAZ5ROHKg.png">
+<meta property="og:image" content="https://miro.medium.com/max/1400/1*nLHJu59YlwOX06wD_jwhRw.png">
+<meta property="og:image" content="https://miro.medium.com/max/1400/1*FmPoZAMqKGyqwEV71Wl2Iw.png">
+<meta property="og:image" content="https://miro.medium.com/max/1400/1*goZ4RaF2QtCTc9i5F-iOwg.png">
+<meta property="og:image" content="https://miro.medium.com/max/1400/1*pLT5EAsOzpQwL6J1ATAlDA.png">
+<meta property="og:image" content="https://miro.medium.com/max/1400/1*oLlgM4AnxQ8jJ00GOSyArw.png">
+<meta property="og:image" content="https://miro.medium.com/max/1400/1*F6VhOs3MhqD7mF4__wL3Sg.png">
+<meta property="article:published_time" content="2022-12-30T07:25:42.000Z">
+<meta property="article:modified_time" content="2022-12-30T07:47:08.328Z">
+<meta property="article:author" content="Jeff">
+<meta property="article:tag" content="新手日記">
+<meta property="article:tag" content="CSS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://miro.medium.com/max/1400/1*fYdANUx-Fu420wytrrvpHw.jpeg">
+
+<link rel="canonical" href="http://example.com/2022/12/30/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97-2022-12-30-day14/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-tw'
+  };
+</script>
+
+  <title>『新手日記』Day-14 RWD | Jeff的隨手筆記</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Jeff的隨手筆記</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">學習當一個前端工程師</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/30/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97-2022-12-30-day14/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpeg">
+      <meta itemprop="name" content="Jeff">
+      <meta itemprop="description" content="這是一個紀錄自己成長的地方">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jeff的隨手筆記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          『新手日記』Day-14 RWD
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2022-12-30 15:25:42 / Modified: 15:47:08" itemprop="dateCreated datePublished" datetime="2022-12-30T15:25:42+08:00">2022-12-30</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97/" itemprop="url" rel="index"><span itemprop="name">新手日記系列</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="『新手日記』Day-14-RWD"><a href="#『新手日記』Day-14-RWD" class="headerlink" title="『新手日記』Day-14 RWD"></a><strong>『新手日記』Day-14 RWD</strong></h1><p><img src="https://miro.medium.com/max/1400/1*fYdANUx-Fu420wytrrvpHw.jpeg" alt="https://miro.medium.com/max/1400/1*fYdANUx-Fu420wytrrvpHw.jpeg"></p>
+<p>時間過得真快，多久沒去酒吧喝點小酒放鬆一下了！回歸正題，今天開始要來用練習來代替純理論學習了，昨天稍微排了一下到月底的學習進度安排(AC的自修2–3後端課程、自己在Udemy買的全端課程以及React課程)，保守估計我還需要3週左右才能完成而且每天要約10～12小時的讀書時間…但新教案預計月中會出來，等新教案一出來就要開始預習了，不然很怕跟不上進度。</p>
+<p>所以…有阿姨嗎？我不想努力了</p>
+<p>今天早上是複習 RWD 理論，下午針對他做練習。下面是我自己依照ＡＣ課程做的筆記</p>
+<h1 id="響應式網站設計-Responsive-Web-Design"><a href="#響應式網站設計-Responsive-Web-Design" class="headerlink" title="響應式網站設計 (Responsive Web Design)"></a><strong>響應式網站設計 (Responsive Web Design)</strong></h1><p>不同的裝置意謂著不同的螢幕尺寸，在不同的尺寸上，同一組網頁內容必須有不同的呈現方式</p>
+<p>RWD 是一種「設計原則」，底下又可以分成不同的流動模式。</p>
+<p><a target="_blank" rel="noopener" href="https://web.dev/learn/design/">Learn Responsive Design</a></p>
+<h1 id="viewport-控制面板"><a href="#viewport-控制面板" class="headerlink" title="viewport 控制面板"></a><strong>viewport 控制面板</strong></h1><p><strong>viewport</strong>：網頁的<strong>可視範圍</strong>，也就是瀏覽器裡顯示網頁的區域</p>
+<p>Viewport controls 讓你可以模擬網站在特定裝置上呈現的樣子；也可透過直接調整 viewport 大小來測試 RWD。包括以下兩種模式：</p>
+<blockquote>
+<p>Responsive</p>
+</blockquote>
+<p>Google 建議在網站或應用程式開發期間使用 responsive 模式為預設模式。透過位於右方的的尺寸調整把手或在頂部的工具欄，直接調整 viewport 大小去觀察網站的行為。</p>
+<blockquote>
+<p>特定裝置：Galaxy S5、Pixel 2、iPhoneX、iPad 等</p>
+</blockquote>
+<p>接近開發末期，想要進一步改善網站在特定裝置的呈現時，才需要使用特定裝置模式。下拉選單裡提供了最熱門的裝置清單。</p>
+<h2 id="實體像素與-PPls"><a href="#實體像素與-PPls" class="headerlink" title="實體像素與 PPls"></a><strong>實體像素與 PPls</strong></h2><p>實體像素（或稱硬體像素）：是指螢幕會發光的最小硬度單元。</p>
+<p><strong>PPls :</strong> 每寸像素（pixels per inch），也就是像素密度，密度越高，肉眼就會感受到更鮮明、更清晰的畫面</p>
+<h2 id="螢幕解析度"><a href="#螢幕解析度" class="headerlink" title="螢幕解析度"></a><strong>螢幕解析度</strong></h2><p>一個螢幕能容納的實體像素面積。</p>
+<h2 id="CSS像素"><a href="#CSS像素" class="headerlink" title="CSS像素"></a><strong>CSS像素</strong></h2><p>由全球資訊網 (World Wide Web, 也就是 W3C) 創立的抽象名詞，它是一個無視裝置差別而且等長的測量單位，專門用在網頁開發使用。</p>
+<p>曾經實體像素跟CSS素是1:1 ，但隨著時代發展，如今已經失去關聯</p>
+<h1 id="設定Viewport"><a href="#設定Viewport" class="headerlink" title="設定Viewport"></a><strong>設定Viewport</strong></h1><p>設定 viewport 的目的是告訴瀏覽器 viewport 的寬度以什麼為基準，以及這個寬度和 CSS 之間的比例關係。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">//在HTML 的 &lt;head&gt; 加入</span><br><span class="line">&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;</span><br></pre></td></tr></table></figure>
+
+<p>使用 <code>&lt;meta name=&quot;viewport&quot;&gt;</code>標籤並帶入以下兩個屬性：</p>
+<blockquote>
+<p>width&#x3D;device-width 調整內容寬度為裝置寬度；</p>
+</blockquote>
+<p>如果寫 <code>width=320px</code>，那麼當螢幕尺寸改變時，viewport 的寬度都仍然是 320px，如下圖：</p>
+<p><img src="https://miro.medium.com/max/1400/1*IAqsukLDndXDySbvCAmA2g.png" alt="https://miro.medium.com/max/1400/1*IAqsukLDndXDySbvCAmA2g.png"></p>
+<p>當螢幕寬度變大時，為了維持寬度為 320px，內容就被拉大了，這是我們不想要看到的結果。</p>
+<p>為了達成 RWD 與好的用戶體驗，建議把 viewport 寬度設定為 <code>width=device-width</code>，這樣會讓網頁內容與裝置螢幕寬度一致。</p>
+<blockquote>
+<p>initial-scale&#x3D;1 設定「CSS 像素」和「裝置像素」的比例為 1:1。</p>
+</blockquote>
+<h1 id="MDN解釋：Controls-the-zoom-level-when-the-page-is-first-loaded-Minimum-Maximum-Default-Negative-values-ignored"><a href="#MDN解釋：Controls-the-zoom-level-when-the-page-is-first-loaded-Minimum-Maximum-Default-Negative-values-ignored" class="headerlink" title="ＭＤＮ解釋：Controls the zoom level when the page is first loaded. Minimum: . Maximum: . Default:. Negative values: ignored."></a>ＭＤＮ解釋：Controls the zoom level when the page is first loaded. Minimum: . Maximum: . Default:. Negative values: ignored.</h1><p>設定畫面的初始縮放比例</p>
+<blockquote>
+<p>Viewport 屬性說明</p>
+</blockquote>
+<p>當然Viewport 還有其他屬性，以下是其他會用到的屬性：</p>
+<p><img src="https://miro.medium.com/max/876/1*qgic1MeoudxonnAZ5ROHKg.png" alt="https://miro.medium.com/max/876/1*qgic1MeoudxonnAZ5ROHKg.png"></p>
+<h1 id="製作-RWD-的基本動作"><a href="#製作-RWD-的基本動作" class="headerlink" title="製作 RWD 的基本動作"></a><strong>製作 RWD 的基本動作</strong></h1><ul>
+<li>定義預設的 viewport 尺寸</li>
+<li>使用 CSS 媒體查詢 (media queries)ㄥ</li>
+<li>設定分界點 (breakpoint)</li>
+</ul>
+<p><strong>Mobile First</strong></p>
+<p>首先強調，在<strong>思考 RWD 設計時，應該先從最小螢幕尺寸開始考慮</strong>，也就是手機。</p>
+<p>小螢幕能顯示的內容比較少，而且在較小的螢幕上能運用的佈局有限，因此它應該優先被考慮。先做出迎合最小螢幕的網站內容，再慢慢思考當螢幕變大時，可以追加什麼網站內容。</p>
+<p><img src="https://miro.medium.com/max/1400/1*nLHJu59YlwOX06wD_jwhRw.png" alt="https://miro.medium.com/max/1400/1*nLHJu59YlwOX06wD_jwhRw.png"></p>
+<p>💡 <em>Mobile First 的焦點是「網站內容如何逐漸變多」，而不是單純把同一套內容塞進不同尺寸</em></p>
+<p><strong>Breakpoint</strong></p>
+<p>當尺寸改變時，網頁佈局發生了顯著的變化，這些尺寸的界線叫做 breakpoint，也就是 CSS 樣式轉換的發生點。</p>
+<p><img src="https://miro.medium.com/max/1400/1*FmPoZAMqKGyqwEV71Wl2Iw.png" alt="https://miro.medium.com/max/1400/1*FmPoZAMqKGyqwEV71Wl2Iw.png"></p>
+<p>每設一個 breakpoint 意味需要準備多一份 CSS 樣式，要抓得多細是看設計的需求，稍後會介紹對應的語法。</p>
+<p>除了上述幾個在設備間切換的主要分界點 (major breakpoint)，也會設定次要分界點 (minor breakpoint) 來調整比較細微的 CSS 變化，像是元素的邊距、避免文字超過頁面寬度，或是調整圖片尺寸。</p>
+<h1 id="Media-Queries"><a href="#Media-Queries" class="headerlink" title="Media Queries"></a><strong>Media Queries</strong></h1><p>💡 媒體查詢使用<code>@media</code>關鍵字（CSS 規則）啟動，可用於各種用例。</p>
+<p>要瞭解 media queries，需要先從 CSS 的 media 屬性開始。</p>
+<p>CSS2 推出 <code>media</code> 屬性時，還沒有進入行動優先的時代，只是單純想把在螢幕上看網頁的情境，和列印的情境區隔開來，在前者顯示較小的字體，而在列印時顯示較大的字體。</p>
+<p>例如以下引入了三支樣式表，並透過 <code>media</code> 指派給不同的裝置，依序為所有裝置 (all)、螢幕 (screen)、印表機 (print)：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;link href=&quot;css/style.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot; media=&quot;all&quot; /&gt;</span><br><span class="line">&lt;link href=&quot;css/screen.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot; media=&quot;screen&quot; /&gt;</span><br><span class="line">&lt;link href=&quot;css/print.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot; media=&quot;print&quot; /&gt;@media (max-width: 600px) &#123;...//styles&#125;</span><br><span class="line">@media screen and (max-width: 600px) &#123;...//styles&#125;</span><br><span class="line">@media screen and (min-width: 600px) and (max-width: 1000px) &#123;...//styles&#125;</span><br></pre></td></tr></table></figure>
+
+<p>第一組設定沒有公布 media type，所以會預設成 <code>all</code>，但有設定 media feature 為「最大寬度為 600px」，也就是寫在 <code>&#123;&#125;</code> 內的設定只有在寬度小於 600px 時才會生效。</p>
+<p>在開發網頁時，通常會直接把 media type 被設為 <code>screen</code>。</p>
+<p>使用條件查詢的作法比較有彈性，因為我們可以設定不同的 breakpoint，根據不同的狀況來載入 CSS 設定，因此能達成「回應不同的寬度」。</p>
+<p><img src="https://miro.medium.com/max/1400/1*goZ4RaF2QtCTc9i5F-iOwg.png" alt="https://miro.medium.com/max/1400/1*goZ4RaF2QtCTc9i5F-iOwg.png"></p>
+<p>你可以在 media feature 裡使用 <code>and</code>、<code>or</code>或 <code>not</code>等運算子，使用方法和程式語言相同，只要條件為 true，就會繼續執行。</p>
+<p>💡 剛剛我們談到了「行動優先」的原則，在此原則指導下，當你要開始分流時，應該先針對較小的尺寸來設定</p>
+<h1 id="｜單位"><a href="#｜單位" class="headerlink" title="｜單位"></a><strong>｜單位</strong></h1><h1 id="百分比"><a href="#百分比" class="headerlink" title="百分比"></a><strong>百分比</strong></h1><p>最常用的相對單位就是百分比 (%) 了，使用百分比，這樣在 viewport 尺寸改變時，元素才能與 viewport 同時動態縮放。</p>
+<p><img src="https://miro.medium.com/max/1400/1*pLT5EAsOzpQwL6J1ATAlDA.png" alt="https://miro.medium.com/max/1400/1*pLT5EAsOzpQwL6J1ATAlDA.png"></p>
+<h1 id="絕對單位"><a href="#絕對單位" class="headerlink" title="絕對單位"></a><strong>絕對單位</strong></h1><p>你會常常需要換算絕對單位與相對單位，換算公式為：<code>target ÷ context = result</code></p>
+<ul>
+<li>target — 原本的絕對單位</li>
+<li>context — 父元素的單位</li>
+<li>result — 百分比</li>
+</ul>
+<p><img src="https://miro.medium.com/max/1400/1*oLlgM4AnxQ8jJ00GOSyArw.png" alt="https://miro.medium.com/max/1400/1*oLlgM4AnxQ8jJ00GOSyArw.png"></p>
+<h1 id="viewport-相對單位"><a href="#viewport-相對單位" class="headerlink" title="viewport 相對單位"></a><strong>viewport 相對單位</strong></h1><ul>
+<li>*viewport 百分比長度 (viewport percentage lengths)**是很方便的單位，這些單位會隨著 viewport 尺寸一同縮放：</li>
+<li><code>vw</code> - 對應到 width of viewport 的比例</li>
+<li><code>vh</code> - 對應到 height of viewport 的比例</li>
+<li><code>vmin</code> - 等於 <code>vw</code> 或 <code>vh</code> 較小的值</li>
+<li><code>vmax</code> - 等於 <code>vw</code> 或 <code>vh</code> 較大的值，</li>
+</ul>
+<p>若 viewport 的寬是 1200 像素，且 viewport 的高是 900 像素時：</p>
+<p>1vw 會等於 viewport 寬度的 1%，也就是 12 像素。</p>
+<p>這裡寬比高的值大，也就是說 vw 比 vh 大，所以 1vmax ＝ 1vw 的大小，。</p>
+<h1 id="字體相對單位"><a href="#字體相對單位" class="headerlink" title="字體相對單位"></a><strong>字體相對單位</strong></h1><p><code>em</code> 用於文字大小，以<strong>父元素</strong>的 font-size 為基準</p>
+<p>例如，父元素的字體大小為 16px，子元素設定 <code>1em</code>等同於設定成 16 像素；</p>
+<h1 id="限制彈性"><a href="#限制彈性" class="headerlink" title="限制彈性"></a><strong>限制彈性</strong></h1><p>當內容不適合變得太大或太小，因此你會使用 <code>min-width</code>、<code>max-width</code>、<code>min-height</code>和 <code>max-height</code>等屬性來控制邊界值。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">img &#123;</span><br><span class="line">  width: 100%;</span><br><span class="line">  max-width: 960px;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>通常我們會把網站內容整個包在 container (或稱 wrapper) 裡，以便讓內容置中，這個 container 通常會設定成 <code>width: 100%</code>（暫時可理解為與 <code>&lt;body&gt;</code>同寬），但當 container 延展開來時，一行文字就會被拉得超長，反而造成不好的閱讀體驗。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">.container &#123;</span><br><span class="line">  width: 90%;</span><br><span class="line">  max-width: 960px;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>至於 <code>min-width</code>，則有可能在表單裡使用，不管 width 的值設成多少，它們都不會小於 min-width 設定的值。</p>
+<h1 id="｜設計模式：局部流動-Mostly-Fluid"><a href="#｜設計模式：局部流動-Mostly-Fluid" class="headerlink" title="｜設計模式：局部流動 (Mostly Fluid)"></a><strong>｜設計模式：局部流動 (Mostly Fluid)</strong></h1><h1 id="定義-Flexbox-架構"><a href="#定義-Flexbox-架構" class="headerlink" title="定義 Flexbox 架構"></a><strong>定義 Flexbox 架構</strong></h1><p>根據目前的 HTML 結構，我們可以定義出一層 flexbox 的 container-item 架構：</p>
+<p><img src="https://miro.medium.com/max/1400/1*F6VhOs3MhqD7mF4__wL3Sg.png" alt="https://miro.medium.com/max/1400/1*F6VhOs3MhqD7mF4__wL3Sg.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">.wrapper &#123;</span><br><span class="line">  display: flex;</span><br><span class="line">  flex-flow: row wrap;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>flex-flow: row wrap;</code>會讓 flex item 與 flex container 同步調整大小，讓 item 與 container 之間不會有溢出邊界 (overflow) 的問題。</p>
+<h1 id="設置-breakpoint"><a href="#設置-breakpoint" class="headerlink" title="設置 breakpoint"></a><strong>設置 breakpoint</strong></h1><p>根據 Mobile First 的原則，從最小的 viewport 開始，逐漸設計較大的 viewport 佈局。</p>
+<p>💡 <code>line-height</code>顧名思義就是文字的單行高度，單行文字垂直置中的技巧</p>
+<p><a target="_blank" rel="noopener" href="http://csscoke.com/2018/08/21/css-vertical-align/">CSS垂直置中技巧，我只會23個，你會幾個</a></p>
+<h1 id="設計模式：細微調整-Tiny-Tweaks"><a href="#設計模式：細微調整-Tiny-Tweaks" class="headerlink" title="設計模式：細微調整 (Tiny Tweaks)"></a><strong>設計模式：細微調整 (Tiny Tweaks)</strong></h1><p>px&lt;&gt;em轉換器</p>
+<p><a target="_blank" rel="noopener" href="https://www.w3schools.com/tags/ref_pxtoemconversion.asp">PX to EM Conversion</a></p>
+<ol>
+<li>line-height(行高)，一般為1.5em，或字體大小1.5倍。</li>
+<li>paragraph(段落)，一般為2em。</li>
+<li>letter-spacing(文字間距)，一般為0.12em，所以實作在手機版(mobile-first) ，屬性.description內文先統一設定，行高和文字間距，讓網頁在各種RWD提升一點易讀性。字體大小依據個容器和寬度，自行用相對單位(rem)，用倍率逐步放大。</li>
+</ol>
+<p>快要不知道可以分享什麼了，我需要好好思考一下接下來的主題。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98/" rel="tag"># 新手日記</a>
+              <a href="/tags/CSS/" rel="tag"># CSS</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/12/30/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97-2022-12-30-day13/" rel="prev" title="『新手日記』Day-13 JavaScript DOM Event">
+      <i class="fa fa-chevron-left"></i> 『新手日記』Day-13 JavaScript DOM Event
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/12/30/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97-2022-12-30-day15/" rel="next" title="『新手日記』Day-15 Scope變數作用域">
+      『新手日記』Day-15 Scope變數作用域 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E3%80%8E%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E3%80%8FDay-14-RWD"><span class="nav-number">1.</span> <span class="nav-text">『新手日記』Day-14 RWD</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%9F%BF%E6%87%89%E5%BC%8F%E7%B6%B2%E7%AB%99%E8%A8%AD%E8%A8%88-Responsive-Web-Design"><span class="nav-number">2.</span> <span class="nav-text">響應式網站設計 (Responsive Web Design)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#viewport-%E6%8E%A7%E5%88%B6%E9%9D%A2%E6%9D%BF"><span class="nav-number">3.</span> <span class="nav-text">viewport 控制面板</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%A6%E9%AB%94%E5%83%8F%E7%B4%A0%E8%88%87-PPls"><span class="nav-number">3.1.</span> <span class="nav-text">實體像素與 PPls</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%9E%A2%E5%B9%95%E8%A7%A3%E6%9E%90%E5%BA%A6"><span class="nav-number">3.2.</span> <span class="nav-text">螢幕解析度</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CSS%E5%83%8F%E7%B4%A0"><span class="nav-number">3.3.</span> <span class="nav-text">CSS像素</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%A8%AD%E5%AE%9AViewport"><span class="nav-number">4.</span> <span class="nav-text">設定Viewport</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MDN%E8%A7%A3%E9%87%8B%EF%BC%9AControls-the-zoom-level-when-the-page-is-first-loaded-Minimum-Maximum-Default-Negative-values-ignored"><span class="nav-number">5.</span> <span class="nav-text">ＭＤＮ解釋：Controls the zoom level when the page is first loaded. Minimum: . Maximum: . Default:. Negative values: ignored.</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%A3%BD%E4%BD%9C-RWD-%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8B%95%E4%BD%9C"><span class="nav-number">6.</span> <span class="nav-text">製作 RWD 的基本動作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Media-Queries"><span class="nav-number">7.</span> <span class="nav-text">Media Queries</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%EF%BD%9C%E5%96%AE%E4%BD%8D"><span class="nav-number">8.</span> <span class="nav-text">｜單位</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%99%BE%E5%88%86%E6%AF%94"><span class="nav-number">9.</span> <span class="nav-text">百分比</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%B5%95%E5%B0%8D%E5%96%AE%E4%BD%8D"><span class="nav-number">10.</span> <span class="nav-text">絕對單位</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#viewport-%E7%9B%B8%E5%B0%8D%E5%96%AE%E4%BD%8D"><span class="nav-number">11.</span> <span class="nav-text">viewport 相對單位</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AD%97%E9%AB%94%E7%9B%B8%E5%B0%8D%E5%96%AE%E4%BD%8D"><span class="nav-number">12.</span> <span class="nav-text">字體相對單位</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%99%90%E5%88%B6%E5%BD%88%E6%80%A7"><span class="nav-number">13.</span> <span class="nav-text">限制彈性</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%EF%BD%9C%E8%A8%AD%E8%A8%88%E6%A8%A1%E5%BC%8F%EF%BC%9A%E5%B1%80%E9%83%A8%E6%B5%81%E5%8B%95-Mostly-Fluid"><span class="nav-number">14.</span> <span class="nav-text">｜設計模式：局部流動 (Mostly Fluid)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9A%E7%BE%A9-Flexbox-%E6%9E%B6%E6%A7%8B"><span class="nav-number">15.</span> <span class="nav-text">定義 Flexbox 架構</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%A8%AD%E7%BD%AE-breakpoint"><span class="nav-number">16.</span> <span class="nav-text">設置 breakpoint</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%A8%AD%E8%A8%88%E6%A8%A1%E5%BC%8F%EF%BC%9A%E7%B4%B0%E5%BE%AE%E8%AA%BF%E6%95%B4-Tiny-Tweaks"><span class="nav-number">17.</span> <span class="nav-text">設計模式：細微調整 (Tiny Tweaks)</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Jeff"
+      src="/uploads/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Jeff</p>
+  <div class="site-description" itemprop="description">這是一個紀錄自己成長的地方</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">34</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jeff0518" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jeff0518" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:cycivs07@icloud.com" title="E-Mail → mailto:cycivs07@icloud.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jeff</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

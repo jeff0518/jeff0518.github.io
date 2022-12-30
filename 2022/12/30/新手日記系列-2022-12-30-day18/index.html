@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="『新手日記』Day-18 Closures（閉包） 終於進路閉包了，第一次看到時的完全看不懂，經過了幾天的加強其他觀念，慢慢的了解了他的意思 MDN解釋A closure is the combination of a function bundled(綑綁) together (enclosed) with references to its surrounding(周圍) state (the">
+<meta property="og:type" content="article">
+<meta property="og:title" content="『新手日記』Day-18 Closures（閉包）">
+<meta property="og:url" content="http://example.com/2022/12/30/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97-2022-12-30-day18/index.html">
+<meta property="og:site_name" content="Jeff的隨手筆記">
+<meta property="og:description" content="『新手日記』Day-18 Closures（閉包） 終於進路閉包了，第一次看到時的完全看不懂，經過了幾天的加強其他觀念，慢慢的了解了他的意思 MDN解釋A closure is the combination of a function bundled(綑綁) together (enclosed) with references to its surrounding(周圍) state (the">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://miro.medium.com/max/1280/1*1meqNIGbPPX7C32ChWNSSQ.jpeg">
+<meta property="og:image" content="https://miro.medium.com/max/1400/1*AjFoTACJe2DAbqRut0TVHA.png">
+<meta property="og:image" content="https://miro.medium.com/max/1400/1*hCdA6pysBjd0wrDrU8B8MQ.png">
+<meta property="og:image" content="https://miro.medium.com/max/1400/1*Zb7bg4CUXnJVoOHa2U4Rxg.png">
+<meta property="og:image" content="https://miro.medium.com/max/1400/1*7UigTkxAXpGob_9TAqtSkQ.png">
+<meta property="article:published_time" content="2022-12-30T07:29:42.000Z">
+<meta property="article:modified_time" content="2022-12-30T07:49:50.699Z">
+<meta property="article:author" content="Jeff">
+<meta property="article:tag" content="新手日記">
+<meta property="article:tag" content="JavaScript">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://miro.medium.com/max/1280/1*1meqNIGbPPX7C32ChWNSSQ.jpeg">
+
+<link rel="canonical" href="http://example.com/2022/12/30/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97-2022-12-30-day18/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-tw'
+  };
+</script>
+
+  <title>『新手日記』Day-18 Closures（閉包） | Jeff的隨手筆記</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Jeff的隨手筆記</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">學習當一個前端工程師</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/30/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97-2022-12-30-day18/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpeg">
+      <meta itemprop="name" content="Jeff">
+      <meta itemprop="description" content="這是一個紀錄自己成長的地方">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jeff的隨手筆記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          『新手日記』Day-18 Closures（閉包）
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2022-12-30 15:29:42 / Modified: 15:49:50" itemprop="dateCreated datePublished" datetime="2022-12-30T15:29:42+08:00">2022-12-30</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97/" itemprop="url" rel="index"><span itemprop="name">新手日記系列</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="『新手日記』Day-18-Closures（閉包）"><a href="#『新手日記』Day-18-Closures（閉包）" class="headerlink" title="『新手日記』Day-18 Closures（閉包）"></a><strong>『新手日記』Day-18 Closures（閉包）</strong></h1><p><img src="https://miro.medium.com/max/1280/1*1meqNIGbPPX7C32ChWNSSQ.jpeg" alt="https://miro.medium.com/max/1280/1*1meqNIGbPPX7C32ChWNSSQ.jpeg"></p>
+<p>終於進路閉包了，第一次看到時的完全看不懂，經過了幾天的加強其他觀念，慢慢的了解了他的意思</p>
+<h1 id="MDN解釋"><a href="#MDN解釋" class="headerlink" title="MDN解釋"></a><strong>MDN解釋</strong></h1><h1 id="A-closure-is-the-combination-of-a-function-bundled-綑綁-together-enclosed-with-references-to-its-surrounding-周圍-state-the-lexical-environment-詞法環境-In-other-words-a-closure-gives-you-access-to-an-outer-function’s-scope-from-an-inner-function-In-JavaScript-closures-are-created-創建-every-time-a-function-is-created-at-function-creation-time-閉包（Closure）是函式以及該函式被宣告時所在的作用域環境（lexical-environment）的組合。"><a href="#A-closure-is-the-combination-of-a-function-bundled-綑綁-together-enclosed-with-references-to-its-surrounding-周圍-state-the-lexical-environment-詞法環境-In-other-words-a-closure-gives-you-access-to-an-outer-function’s-scope-from-an-inner-function-In-JavaScript-closures-are-created-創建-every-time-a-function-is-created-at-function-creation-time-閉包（Closure）是函式以及該函式被宣告時所在的作用域環境（lexical-environment）的組合。" class="headerlink" title="A closure is the combination of a function bundled(綑綁) together (enclosed) with references to its surrounding(周圍) state (the lexical environment(詞法環境)).In other words, a closure gives you access to an outer function’s scope from an inner function.In JavaScript, closures are created(創建) every time a function is created, at function creation time.閉包（Closure）是函式以及該函式被宣告時所在的作用域環境（lexical environment）的組合。"></a>A closure is the combination of a function bundled(綑綁) together (enclosed) with references to its surrounding(周圍) state (the lexical environment(詞法環境)).In other words, a closure gives you access to an outer function’s scope from an inner function.In JavaScript, closures are created(創建) every time a function is created, at function creation time.閉包（Closure）是函式以及該函式被宣告時所在的作用域環境（lexical environment）的組合。</h1><p>大家是否跟我一樣是懂非懂？我們看一下範例：</p>
+<h1 id="閉包的目的"><a href="#閉包的目的" class="headerlink" title="閉包的目的"></a><strong>閉包的目的</strong></h1><p><img src="https://miro.medium.com/max/1400/1*AjFoTACJe2DAbqRut0TVHA.png" alt="https://miro.medium.com/max/1400/1*AjFoTACJe2DAbqRut0TVHA.png"></p>
+<p>這個寫有一個缺點，任何人都可以去更改 counter這個變數，為了他不被污染我想到把他放進function裏面。</p>
+<p><img src="https://miro.medium.com/max/1400/1*hCdA6pysBjd0wrDrU8B8MQ.png" alt="https://miro.medium.com/max/1400/1*hCdA6pysBjd0wrDrU8B8MQ.png"></p>
+<p>很棒，程式一樣可以執行，但這樣卻變成我的counter永遠都是1，這並不是我想要的，那要怎麼改呢？我的想法是，一樣放在外面但最外面用function包起來</p>
+<p><img src="https://miro.medium.com/max/1400/1*Zb7bg4CUXnJVoOHa2U4Rxg.png" alt="https://miro.medium.com/max/1400/1*Zb7bg4CUXnJVoOHa2U4Rxg.png"></p>
+<p>這樣就完成了我的需求。這就是一個簡單的閉包設定，因此我們可以歸類一下閉包想解決的問題：</p>
+<blockquote>
+<p>1.變數資料存在於的 Local Scope 裡，讓外部環境無法直接存取，以確保動作安全。</p>
+</blockquote>
+<p>我們希望操控的變數宣告於一個 Local Scope 內，限制它的存取權。因此<strong>閉包的第一個要素：函數。</strong></p>
+<blockquote>
+<p>2.即使 Local 的執行環境結束，Local 環境內建立的資料還是能持續存活</p>
+</blockquote>
+<p><strong>先破題-閉包的第二個要素：Reference。到這邊時我有一個苦惱很久的問題：</strong></p>
+<p><em><strong>let sellTicket &#x3D; getSellTicketClosure();sellTicket(‘OneJar’)</strong></em></p>
+<p>為什麼可以執行?我原本的想法：<em><strong>getSellTicketClosure(sellTicket(‘OneJar’))</strong></em></p>
+<p>這就要牽扯到了『Pass by value 還是 Pass by reference』</p>
+<p>****<a target="_blank" rel="noopener" href="https://medium.com/@cycivs07/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98-day-17-pass-by-value-%E5%92%8C-pass-by-reference-cbce5ff90d04">『新手日記』Day-17 Pass by value 和 Pass by reference每天到網路上找一張適合的照片或是當天的心情的過程居然可以變得如此開心！**<br>medium.com</a></p>
+<p>由於他是一個Object，從這篇文章我們可以知道，要從「行為」上面來判別到底是屬於哪一種。</p>
+<p>因為我們並沒有對變數重新賦值，因此他是屬於<strong>Reference</strong></p>
+<p>所以他在傳遞的是一個『位子』，我們換一個寫法相信大家就更好理解：</p>
+<p><img src="https://miro.medium.com/max/1400/1*7UigTkxAXpGob_9TAqtSkQ.png" alt="https://miro.medium.com/max/1400/1*7UigTkxAXpGob_9TAqtSkQ.png"></p>
+<p>這樣是不是更好理解了…吧</p>
+<h2 id="這邊簡單總結一下："><a href="#這邊簡單總結一下：" class="headerlink" title="這邊簡單總結一下："></a><strong>這邊簡單總結一下：</strong></h2><h1 id="閉包-Closures-是一個能存取父作用域的函數，即使父作用域已經結束"><a href="#閉包-Closures-是一個能存取父作用域的函數，即使父作用域已經結束" class="headerlink" title="閉包 (Closures) 是一個能存取父作用域的函數，即使父作用域已經結束"></a><strong>閉包 (Closures) 是一個能存取父作用域的函數，即使父作用域已經結束</strong></h1><h1 id="Closures重點整理："><a href="#Closures重點整理：" class="headerlink" title="Closures重點整理："></a><strong>Closures重點整理：</strong></h1><h1 id="Closures"><a href="#Closures" class="headerlink" title="Closures"></a>Closures</h1><p><em><strong>Closures運用的技巧：</strong></em></p>
+<p>1.函數對變數的 Local Scope 封裝。</p>
+<p>2.內部函數對外層函數變數的引用。</p>
+<p>3.回傳內部函數的物件，形成Closures。</p>
+<p><em><strong>Closures實際上儲存的是對外層函數變數的引用 (References)。</strong></em></p>
+<p><em><strong>每一個Closures中保存的都是一個獨立的環境，不同閉包間不互相干擾。</strong></em></p>
+<p><em><strong>可以用立即函數的寫法來簡化語法。</strong></em></p>
+<p>理解Closures時才發現，為什麼參考資料的作者要我先去讀Pass by value 和Pass by reference，這個沒先讀熟還真的沒辦法瞭解其運作原理，我自己在***let sellTicket &#x3D; getSellTicketClosure();sellTicket(‘OneJar’)***真的卡住不懂為什麼我可以用這個方式呼叫函式，在重新看完作者的文章跟自己的筆記後大概瞭解為什麼了，但應該是自己真的還沒有全盤瞭解吧，寫出來的文字並沒有辦法完整表達出原本的意思，有興趣了解的可以參考下面這篇文章，如果有寫錯的地方在請大家指正！！！</p>
+<h1 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a><strong>參考資料</strong></h1><p><a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10209465">ithelp.ithome.com.tw</a><br><a target="_blank" rel="noopener" href="https://www.fooish.com/javascript/function-closure.html">www.fooish.com</a><br><a target="_blank" rel="noopener" href="https://blog.techbridge.cc/2018/06/23/javascript-call-by-value-or-reference/">blog.techbridge.cc</a></p>
+<p>書籍：0 陷阱！0 誤解！8 天重新認識 JavaScript！</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98/" rel="tag"># 新手日記</a>
+              <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/12/30/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97-2022-12-30-day17/" rel="prev" title="『新手日記』Day-17 Pass by value 和 Pass by reference">
+      <i class="fa fa-chevron-left"></i> 『新手日記』Day-17 Pass by value 和 Pass by reference
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/12/30/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97-2022-12-30-day19/" rel="next" title="『新手日記』Day-19 HTTP request">
+      『新手日記』Day-19 HTTP request <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E3%80%8E%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E3%80%8FDay-18-Closures%EF%BC%88%E9%96%89%E5%8C%85%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">『新手日記』Day-18 Closures（閉包）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MDN%E8%A7%A3%E9%87%8B"><span class="nav-number">2.</span> <span class="nav-text">MDN解釋</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#A-closure-is-the-combination-of-a-function-bundled-%E7%B6%91%E7%B6%81-together-enclosed-with-references-to-its-surrounding-%E5%91%A8%E5%9C%8D-state-the-lexical-environment-%E8%A9%9E%E6%B3%95%E7%92%B0%E5%A2%83-In-other-words-a-closure-gives-you-access-to-an-outer-function%E2%80%99s-scope-from-an-inner-function-In-JavaScript-closures-are-created-%E5%89%B5%E5%BB%BA-every-time-a-function-is-created-at-function-creation-time-%E9%96%89%E5%8C%85%EF%BC%88Closure%EF%BC%89%E6%98%AF%E5%87%BD%E5%BC%8F%E4%BB%A5%E5%8F%8A%E8%A9%B2%E5%87%BD%E5%BC%8F%E8%A2%AB%E5%AE%A3%E5%91%8A%E6%99%82%E6%89%80%E5%9C%A8%E7%9A%84%E4%BD%9C%E7%94%A8%E5%9F%9F%E7%92%B0%E5%A2%83%EF%BC%88lexical-environment%EF%BC%89%E7%9A%84%E7%B5%84%E5%90%88%E3%80%82"><span class="nav-number">3.</span> <span class="nav-text">A closure is the combination of a function bundled(綑綁) together (enclosed) with references to its surrounding(周圍) state (the lexical environment(詞法環境)).In other words, a closure gives you access to an outer function’s scope from an inner function.In JavaScript, closures are created(創建) every time a function is created, at function creation time.閉包（Closure）是函式以及該函式被宣告時所在的作用域環境（lexical environment）的組合。</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%96%89%E5%8C%85%E7%9A%84%E7%9B%AE%E7%9A%84"><span class="nav-number">4.</span> <span class="nav-text">閉包的目的</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%99%E9%82%8A%E7%B0%A1%E5%96%AE%E7%B8%BD%E7%B5%90%E4%B8%80%E4%B8%8B%EF%BC%9A"><span class="nav-number">4.1.</span> <span class="nav-text">這邊簡單總結一下：</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%96%89%E5%8C%85-Closures-%E6%98%AF%E4%B8%80%E5%80%8B%E8%83%BD%E5%AD%98%E5%8F%96%E7%88%B6%E4%BD%9C%E7%94%A8%E5%9F%9F%E7%9A%84%E5%87%BD%E6%95%B8%EF%BC%8C%E5%8D%B3%E4%BD%BF%E7%88%B6%E4%BD%9C%E7%94%A8%E5%9F%9F%E5%B7%B2%E7%B6%93%E7%B5%90%E6%9D%9F"><span class="nav-number">5.</span> <span class="nav-text">閉包 (Closures) 是一個能存取父作用域的函數，即使父作用域已經結束</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Closures%E9%87%8D%E9%BB%9E%E6%95%B4%E7%90%86%EF%BC%9A"><span class="nav-number">6.</span> <span class="nav-text">Closures重點整理：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Closures"><span class="nav-number">7.</span> <span class="nav-text">Closures</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="nav-number">8.</span> <span class="nav-text">參考資料</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Jeff"
+      src="/uploads/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Jeff</p>
+  <div class="site-description" itemprop="description">這是一個紀錄自己成長的地方</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">34</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jeff0518" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jeff0518" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:cycivs07@icloud.com" title="E-Mail → mailto:cycivs07@icloud.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jeff</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

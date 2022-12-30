@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="『新手日記』Day-12 JavaScript DOM Tree 居然失眠，搞得我整個進度大亂，而且我完全忘記複習DOM Tree，只好食言而肥了(反正已經胖成這樣沒差了)。看來禮拜天的休息日離我而去了… 開頭不知道要打什麼，直接破題吧！ DOM Tree DOM 採用樹狀結構 (tree) 來儲存網頁元素，樹狀結構是資料結構的一種，特色是有明確的父子階層關係，也因為階層關係明確，按相對關係查找資">
+<meta property="og:type" content="article">
+<meta property="og:title" content="『新手日記』Day-12 JavaScript DOM Tree">
+<meta property="og:url" content="http://example.com/2022/12/30/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97-2022-12-30-day12/index.html">
+<meta property="og:site_name" content="Jeff的隨手筆記">
+<meta property="og:description" content="『新手日記』Day-12 JavaScript DOM Tree 居然失眠，搞得我整個進度大亂，而且我完全忘記複習DOM Tree，只好食言而肥了(反正已經胖成這樣沒差了)。看來禮拜天的休息日離我而去了… 開頭不知道要打什麼，直接破題吧！ DOM Tree DOM 採用樹狀結構 (tree) 來儲存網頁元素，樹狀結構是資料結構的一種，特色是有明確的父子階層關係，也因為階層關係明確，按相對關係查找資">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://miro.medium.com/max/1000/1*XXb4iQGMsMkP9J9QYu2cMw.jpeg">
+<meta property="og:image" content="https://miro.medium.com/max/1400/1*3799IPVq759tBveaOYs2uA.png">
+<meta property="og:image" content="https://miro.medium.com/max/1030/1*Rhur03uf7fRBV6hROJlkSA.png">
+<meta property="og:image" content="https://miro.medium.com/max/1208/1*CEtRWJd8ookkFDa3bHNkSA.png">
+<meta property="og:image" content="https://miro.medium.com/max/1400/1*3pfS7EgXXAFCuw17HVFvzA.png">
+<meta property="og:image" content="https://miro.medium.com/max/1400/1*WG7koAg45_PL2ZJjVWCcMw.png">
+<meta property="og:image" content="https://miro.medium.com/max/1400/1*92bEmqM0NA0vnC2Yqy0HYw.png">
+<meta property="og:image" content="https://miro.medium.com/max/1400/1*xA4QVfb42KtumNoxCY0-bw.png">
+<meta property="og:image" content="https://miro.medium.com/max/1400/1*CeCc1L-hwY84JeSJKUZqIA.png">
+<meta property="og:image" content="https://miro.medium.com/max/1160/1*UXgKFpoPZxjNvo51-gdYVw.png">
+<meta property="og:image" content="https://miro.medium.com/max/1400/1*z9JsPBYsIDhx949jZ-wrWA.png">
+<meta property="article:published_time" content="2022-12-30T07:23:42.000Z">
+<meta property="article:modified_time" content="2022-12-30T07:45:40.442Z">
+<meta property="article:author" content="Jeff">
+<meta property="article:tag" content="新手日記">
+<meta property="article:tag" content="JavaScript">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://miro.medium.com/max/1000/1*XXb4iQGMsMkP9J9QYu2cMw.jpeg">
+
+<link rel="canonical" href="http://example.com/2022/12/30/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97-2022-12-30-day12/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-tw'
+  };
+</script>
+
+  <title>『新手日記』Day-12 JavaScript DOM Tree | Jeff的隨手筆記</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Jeff的隨手筆記</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">學習當一個前端工程師</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/30/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97-2022-12-30-day12/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpeg">
+      <meta itemprop="name" content="Jeff">
+      <meta itemprop="description" content="這是一個紀錄自己成長的地方">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jeff的隨手筆記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          『新手日記』Day-12 JavaScript DOM Tree
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2022-12-30 15:23:42 / Modified: 15:45:40" itemprop="dateCreated datePublished" datetime="2022-12-30T15:23:42+08:00">2022-12-30</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97/" itemprop="url" rel="index"><span itemprop="name">新手日記系列</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="『新手日記』Day-12-JavaScript-DOM-Tree"><a href="#『新手日記』Day-12-JavaScript-DOM-Tree" class="headerlink" title="『新手日記』Day-12 JavaScript DOM Tree"></a><strong>『新手日記』Day-12 JavaScript DOM Tree</strong></h1><p><img src="https://miro.medium.com/max/1000/1*XXb4iQGMsMkP9J9QYu2cMw.jpeg" alt="https://miro.medium.com/max/1000/1*XXb4iQGMsMkP9J9QYu2cMw.jpeg"></p>
+<p>居然失眠，搞得我整個進度大亂，而且我完全忘記複習DOM Tree，只好食言而肥了(反正已經胖成這樣沒差了)。看來禮拜天的休息日離我而去了…</p>
+<p>開頭不知道要打什麼，直接破題吧！</p>
+<h1 id="DOM-Tree"><a href="#DOM-Tree" class="headerlink" title="DOM Tree"></a><strong>DOM Tree</strong></h1><blockquote>
+<p>DOM 採用樹狀結構 (tree) 來儲存網頁元素，樹狀結構是資料結構的一種，特色是有明確的父子階層關係，也因為階層關係明確，按相對關係查找資料特別方便。</p>
+</blockquote>
+<p><img src="https://miro.medium.com/max/1400/1*3799IPVq759tBveaOYs2uA.png" alt="https://miro.medium.com/max/1400/1*3799IPVq759tBveaOYs2uA.png"></p>
+<p>樹狀裡每一個部分叫做「節點 (node)」，節點有四種類型：</p>
+<ul>
+<li>元素節點 (element node)</li>
+<li>文字節點 (text node)</li>
+<li>屬性節點 (attribute node)</li>
+<li>註解節點 (comment node)</li>
+</ul>
+<h1 id="BOM-window-object-補充昨天沒打到的"><a href="#BOM-window-object-補充昨天沒打到的" class="headerlink" title="BOM:window object(補充昨天沒打到的)"></a><strong>BOM:window object(補充昨天沒打到的)</strong></h1><blockquote>
+<p>它是一個 global variable，開啟瀏覽器的瞬間，window object 就會出現。它擁有自己的 Methods 跟 Properties。根節點：window</p>
+</blockquote>
+<h1 id="Properties"><a href="#Properties" class="headerlink" title="Properties:"></a><strong>Properties:</strong></h1><p>💡 OOP 物件導向： 一個物件可以是另一個物件的屬性</p>
+<blockquote>
+<p>Document</p>
+</blockquote>
+<p><strong>Document is an object. 所以他擁有自己的 methods 和 properties</strong></p>
+<p><strong><code>property:</code></strong></p>
+<p>有 body、doctype、charset、head…等。</p>
+<p><em><strong><code>methods:</code></strong></em></p>
+<p>💡 <strong>DOM中取得的HTML element 集合有兩種型別: HTMLCollection:只能放置 element 節點。 NodeList:並不限制儲存的節點型別，</strong> is not array 但可以使用forEach()、<strong>Array.from()</strong></p>
+<h2 id="需要認識："><a href="#需要認識：" class="headerlink" title="需要認識："></a><strong>需要認識：</strong></h2><p>getElementsByld()</p>
+<ul>
+<li>用 id 取得 Element，存在一個 <strong>HTMLCollection</strong> 裡面</li>
+</ul>
+<p>getElementsByClassName()</p>
+<ul>
+<li>用 class 取得 Element，存在一個 <strong>HTMLCollection</strong> 裡面</li>
+</ul>
+<h2 id="很重要："><a href="#很重要：" class="headerlink" title="很重要："></a><strong>很重要：</strong></h2><p>addEventListener()</p>
+<ul>
+<li>DOM Event(事件處理)時會在記錄！！！</li>
+</ul>
+<p>createElement()</p>
+<ul>
+<li>依指定的標籤名稱（<code>tagName</code>）建立 HTML 元素</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">let element = document.createElement(tagName);</span><br><span class="line">//tagName:A string that specifies(指定) the type of element to be created(創建)</span><br></pre></td></tr></table></figure>
+
+<h2 id="非常重要："><a href="#非常重要：" class="headerlink" title="非常重要："></a><strong>非常重要：</strong></h2><p>💡 <strong>query查詢、selector 選擇器 在html裡查詢，是用css的selector</strong></p>
+<blockquote>
+<p>querySelector()</p>
+</blockquote>
+<ul>
+<li>只會return 滿足第一個css selector 的 HTML element</li>
+</ul>
+<blockquote>
+<p>querySelectorAll()</p>
+</blockquote>
+<ul>
+<li>所有滿足條件的都會 return 回來，存在一個 NodeList 裡面</li>
+</ul>
+<blockquote>
+<p>localStorage &amp; sessionStorage</p>
+</blockquote>
+<ul>
+<li>HTML5提供兩種在客戶端儲存資料的方法，彌補了cookie儲存量小、不適用於大量資料本地儲存的問題。有以下幾個特色：</li>
+<li>都是使用 key &#x2F; value pair 的方式 給值或取值</li>
+<li>大小預設有 5mb</li>
+<li>每次 request 不會帶上</li>
+<li>都只能儲存string (js會自動幫你強制轉換)</li>
+</ul>
+<p><strong>清除方式：</strong></p>
+<p>Local Storage（手動清除或是使用clear()）</p>
+<p>Session Storage(關掉瀏覽器 就會清除)</p>
+<p>methods:</p>
+<ul>
+<li>setItem(key, value)</li>
+<li>getItem(key)</li>
+<li>removeItem(key)</li>
+<li>clear() no parameter</li>
+</ul>
+<p>💡 key 不能重複（像class的 id）</p>
+<h1 id="DOM-Element-Object"><a href="#DOM-Element-Object" class="headerlink" title="DOM:Element Object"></a><strong>DOM:Element Object</strong></h1><blockquote>
+<p>所有的 HTML Elements 都有 Element Object 的 properties 和 methods。有些 element 有自己的 methods根節點：document，代表網頁的本身。</p>
+</blockquote>
+<h1 id="children-amp-childNode-Property"><a href="#children-amp-childNode-Property" class="headerlink" title="children &amp; childNode Property"></a><strong>children &amp; childNode Property</strong></h1><blockquote>
+<p>children</p>
+</blockquote>
+<p>return 的值屬於 HTMLCollection。return回來的每一個tag 都是 item，比較常用。雖然他有一些限制(沒辦法使用 forEach)，但他很準確的找到 html element</p>
+<blockquote>
+<p>childNode</p>
+</blockquote>
+<p>return 的值屬於 NodeList。return回來很多不需要的東西</p>
+<p><img src="https://miro.medium.com/max/1030/1*Rhur03uf7fRBV6hROJlkSA.png" alt="https://miro.medium.com/max/1030/1*Rhur03uf7fRBV6hROJlkSA.png"></p>
+<h1 id="💡-children數據HTMLCollection集合，它會返回所有HTML元素節點。childNodes包含children。"><a href="#💡-children數據HTMLCollection集合，它會返回所有HTML元素節點。childNodes包含children。" class="headerlink" title="💡 children數據HTMLCollection集合，它會返回所有HTML元素節點。childNodes包含children。"></a>💡 <strong>children數據HTMLCollection集合，它會返回所有HTML元素節點。childNodes包含children。</strong></h1><h1 id="innerHTML-amp-innerText"><a href="#innerHTML-amp-innerText" class="headerlink" title="innerHTML &amp; innerText"></a><strong>innerHTML &amp; innerText</strong></h1><blockquote>
+<p>innerText</p>
+</blockquote>
+<p>只會顯示我們能在瀏覽器上看到的標籤裡的內容。</p>
+<p>純文字，就算加入HTML tag 也只會被當成字串閱讀 。</p>
+<p>取得的內容是被 CSS 調整成渲染後的文字，效能上會比較差(除非很大一包否則不會感受到)。</p>
+<p>被歸類在 <code>HTMLElement</code></p>
+<blockquote>
+<p>innerHTML</p>
+</blockquote>
+<p>可以在網頁中插入文字或 tag，也可以渲染網頁原有的內容。在這邊打出來的字串會被當作HTML來閱讀</p>
+<blockquote>
+<p>textContent</p>
+</blockquote>
+<p>除了顯示我們能在瀏覽器上看到的標籤裡的內容外，也會拿到像是 script 和 style 之類在瀏覽器上看不見的標籤。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">//&lt;h1&gt;Hello world&lt;span style=&quot;display:none;&quot;&gt;!!!&lt;/span&gt;&lt;/h1&gt;</span><br><span class="line">console.log(h1.innerText)</span><br><span class="line">console.log(h1.textContent)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://miro.medium.com/max/1208/1*CEtRWJd8ookkFDa3bHNkSA.png" alt="https://miro.medium.com/max/1208/1*CEtRWJd8ookkFDa3bHNkSA.png"></p>
+<p>取得的內容是實際取得節點中的文字內容。</p>
+<p>被歸類在 <code>Node</code></p>
+<h1 id="traverse-遍歷"><a href="#traverse-遍歷" class="headerlink" title="traverse(遍歷)"></a><strong>traverse(遍歷)</strong></h1><p>選出一個元素後，就可以順著結構找出父元素、子元素 、甚至同一層的兄弟元素。</p>
+<p><img src="https://miro.medium.com/max/1400/1*3pfS7EgXXAFCuw17HVFvzA.png" alt="https://miro.medium.com/max/1400/1*3pfS7EgXXAFCuw17HVFvzA.png"></p>
+<p>就如同上面所說的：</p>
+<h1 id="childrenreturn-的值屬於-HTMLCollection。return回來的每一個tag-都是-item，比較常用。"><a href="#childrenreturn-的值屬於-HTMLCollection。return回來的每一個tag-都是-item，比較常用。" class="headerlink" title="childrenreturn 的值屬於 HTMLCollection。return回來的每一個tag 都是 item，比較常用。"></a><em><strong>children</strong></em>return 的值屬於 HTMLCollection。return回來的每一個tag 都是 item，比較常用。</h1><p><em><strong>新增節點：你可以使用 <code>document.createElement(tagName)</code> 來新增一個元素：</strong></em></p>
+<p><img src="https://miro.medium.com/max/1400/1*WG7koAg45_PL2ZJjVWCcMw.png" alt="https://miro.medium.com/max/1400/1*WG7koAg45_PL2ZJjVWCcMw.png"></p>
+<blockquote>
+<p>appendChild()</p>
+</blockquote>
+<p>最常使用，它會在 parentElement 的最下面新增一個 child</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">const container = document.querySelector(&#x27;.container&#x27;)</span><br><span class="line">const h1 = document.createElement(&#x27;h1&#x27;)</span><br><span class="line">h1.innerHTML = &#x27;This sentence is created by JavaScript&#x27;</span><br><span class="line">container.appendChild(h1)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://miro.medium.com/max/1400/1*92bEmqM0NA0vnC2Yqy0HYw.png" alt="https://miro.medium.com/max/1400/1*92bEmqM0NA0vnC2Yqy0HYw.png"></p>
+<blockquote>
+<p>classList</p>
+</blockquote>
+<p>ClassList是一個object，查看目前所有 class 名稱，會返回一個 DOMTokenList，裡面包含此元素的類名列表</p>
+<p><em><strong>methods:</strong></em></p>
+<ul>
+<li>add():增加</li>
+<li>remove()：刪除</li>
+<li>toggle():尋找class有的話就remove 沒有就add</li>
+<li>contains():有沒有包含特定的class， return a boolean value</li>
+</ul>
+<blockquote>
+<p>getAttribute()</p>
+</blockquote>
+<h1 id="💡-我們都知道一個-object-有-屬性-跟-方法，但在英文卻有兩種說法：-屬性：-properties：是指存在在DOM-objects中的屬性，像是。attributes：是指我們寫在HTML的屬性，像是。"><a href="#💡-我們都知道一個-object-有-屬性-跟-方法，但在英文卻有兩種說法：-屬性：-properties：是指存在在DOM-objects中的屬性，像是。attributes：是指我們寫在HTML的屬性，像是。" class="headerlink" title="💡 我們都知道一個 object 有 屬性 跟 方法，但在英文卻有兩種說法：***屬性：***properties：是指存在在DOM objects中的屬性，像是。attributes：是指我們寫在HTML的屬性，像是。"></a>💡 我們都知道一個 object 有 屬性 跟 方法，但在英文卻有兩種說法：***<a target="_blank" rel="noopener" href="https://teagan-hsu.coderbridge.io/2020/12/28/javascript-dom-attribute-property/">屬性：</a>***properties：是指存在在DOM objects中的屬性，像是。attributes：是指我們寫在HTML的屬性，像是。</h1><p><strong>getAttribute()</strong> 找到在html已經設定好的屬性</p>
+<p><img src="https://miro.medium.com/max/1400/1*xA4QVfb42KtumNoxCY0-bw.png" alt="https://miro.medium.com/max/1400/1*xA4QVfb42KtumNoxCY0-bw.png"></p>
+<blockquote>
+<p>querySelector() &amp; querySelectorAll()</p>
+</blockquote>
+<p>DOM 操作的起手式通常要先選出一個元素節點，用 <strong>CSS 選擇器</strong>來找元素，因此在括號裡下字串的方式，和你平常寫 CSS 選擇器的邏輯是一模一樣。</p>
+<p><img src="https://miro.medium.com/max/1400/1*CeCc1L-hwY84JeSJKUZqIA.png" alt="https://miro.medium.com/max/1400/1*CeCc1L-hwY84JeSJKUZqIA.png"></p>
+<p><img src="https://miro.medium.com/max/1160/1*UXgKFpoPZxjNvo51-gdYVw.png" alt="https://miro.medium.com/max/1160/1*UXgKFpoPZxjNvo51-gdYVw.png"></p>
+<blockquote>
+<p>remove()</p>
+</blockquote>
+<p>移除 HTML Element</p>
+<p><img src="https://miro.medium.com/max/1400/1*z9JsPBYsIDhx949jZ-wrWA.png" alt="https://miro.medium.com/max/1400/1*z9JsPBYsIDhx949jZ-wrWA.png"></p>
+<blockquote>
+<p>style</p>
+</blockquote>
+<p>控制 css 的 object，裡面有很多屬性，且用 JavaScript 改變的 css 會變成 inline style。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">let btn = document.querySelector(&#x27;button&#x27;)</span><br><span class="line">btn.style = &quot;background-color: black; color: white;&quot;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>結語</p>
+</blockquote>
+<p>我也沒有想到DOM Tree會讓我整理這麼久，而且中間還發現了原來object 的屬性跟方法有英文卻有兩種，因為methods跟functions 我還是搞不清楚他們的差別到底在哪裡，我在猜想可能跟properties跟attributes一樣差在一個是DOM objects，一個是是指我們寫在HTML的，但因為找不到相關資料所以就沒有打上去了，如果有知道的可以幫我解答一下，感恩</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98/" rel="tag"># 新手日記</a>
+              <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/12/30/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97-2022-12-30-day11/" rel="prev" title="『新手日記』Day-11 JavaScript DOM的簡單介紹">
+      <i class="fa fa-chevron-left"></i> 『新手日記』Day-11 JavaScript DOM的簡單介紹
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/12/30/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97-2022-12-30-day13/" rel="next" title="『新手日記』Day-13 JavaScript DOM Event">
+      『新手日記』Day-13 JavaScript DOM Event <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E3%80%8E%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E3%80%8FDay-12-JavaScript-DOM-Tree"><span class="nav-number">1.</span> <span class="nav-text">『新手日記』Day-12 JavaScript DOM Tree</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DOM-Tree"><span class="nav-number">2.</span> <span class="nav-text">DOM Tree</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#BOM-window-object-%E8%A3%9C%E5%85%85%E6%98%A8%E5%A4%A9%E6%B2%92%E6%89%93%E5%88%B0%E7%9A%84"><span class="nav-number">3.</span> <span class="nav-text">BOM:window object(補充昨天沒打到的)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Properties"><span class="nav-number">4.</span> <span class="nav-text">Properties:</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9C%80%E8%A6%81%E8%AA%8D%E8%AD%98%EF%BC%9A"><span class="nav-number">4.1.</span> <span class="nav-text">需要認識：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BE%88%E9%87%8D%E8%A6%81%EF%BC%9A"><span class="nav-number">4.2.</span> <span class="nav-text">很重要：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9D%9E%E5%B8%B8%E9%87%8D%E8%A6%81%EF%BC%9A"><span class="nav-number">4.3.</span> <span class="nav-text">非常重要：</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DOM-Element-Object"><span class="nav-number">5.</span> <span class="nav-text">DOM:Element Object</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#children-amp-childNode-Property"><span class="nav-number">6.</span> <span class="nav-text">children &amp; childNode Property</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%F0%9F%92%A1-children%E6%95%B8%E6%93%9AHTMLCollection%E9%9B%86%E5%90%88%EF%BC%8C%E5%AE%83%E6%9C%83%E8%BF%94%E5%9B%9E%E6%89%80%E6%9C%89HTML%E5%85%83%E7%B4%A0%E7%AF%80%E9%BB%9E%E3%80%82childNodes%E5%8C%85%E5%90%ABchildren%E3%80%82"><span class="nav-number">7.</span> <span class="nav-text">💡 children數據HTMLCollection集合，它會返回所有HTML元素節點。childNodes包含children。</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#innerHTML-amp-innerText"><span class="nav-number">8.</span> <span class="nav-text">innerHTML &amp; innerText</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#traverse-%E9%81%8D%E6%AD%B7"><span class="nav-number">9.</span> <span class="nav-text">traverse(遍歷)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#childrenreturn-%E7%9A%84%E5%80%BC%E5%B1%AC%E6%96%BC-HTMLCollection%E3%80%82return%E5%9B%9E%E4%BE%86%E7%9A%84%E6%AF%8F%E4%B8%80%E5%80%8Btag-%E9%83%BD%E6%98%AF-item%EF%BC%8C%E6%AF%94%E8%BC%83%E5%B8%B8%E7%94%A8%E3%80%82"><span class="nav-number">10.</span> <span class="nav-text">childrenreturn 的值屬於 HTMLCollection。return回來的每一個tag 都是 item，比較常用。</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%F0%9F%92%A1-%E6%88%91%E5%80%91%E9%83%BD%E7%9F%A5%E9%81%93%E4%B8%80%E5%80%8B-object-%E6%9C%89-%E5%B1%AC%E6%80%A7-%E8%B7%9F-%E6%96%B9%E6%B3%95%EF%BC%8C%E4%BD%86%E5%9C%A8%E8%8B%B1%E6%96%87%E5%8D%BB%E6%9C%89%E5%85%A9%E7%A8%AE%E8%AA%AA%E6%B3%95%EF%BC%9A-%E5%B1%AC%E6%80%A7%EF%BC%9A-properties%EF%BC%9A%E6%98%AF%E6%8C%87%E5%AD%98%E5%9C%A8%E5%9C%A8DOM-objects%E4%B8%AD%E7%9A%84%E5%B1%AC%E6%80%A7%EF%BC%8C%E5%83%8F%E6%98%AF%E3%80%82attributes%EF%BC%9A%E6%98%AF%E6%8C%87%E6%88%91%E5%80%91%E5%AF%AB%E5%9C%A8HTML%E7%9A%84%E5%B1%AC%E6%80%A7%EF%BC%8C%E5%83%8F%E6%98%AF%E3%80%82"><span class="nav-number">11.</span> <span class="nav-text">💡 我們都知道一個 object 有 屬性 跟 方法，但在英文卻有兩種說法：***屬性：***properties：是指存在在DOM objects中的屬性，像是。attributes：是指我們寫在HTML的屬性，像是。</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Jeff"
+      src="/uploads/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Jeff</p>
+  <div class="site-description" itemprop="description">這是一個紀錄自己成長的地方</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">34</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jeff0518" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jeff0518" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:cycivs07@icloud.com" title="E-Mail → mailto:cycivs07@icloud.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jeff</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="『新手日記』Day-24 JavaScript 的原型鍊 聽說我們的富奸又要開始連載了，庫拉皮卡終於可以下船了～～ 此篇文章是節錄這篇文章的內容所做的重點整理，如有興趣可以點進去閱讀原版資料。  JavaScript的前世今生  1994年，網景公司（Netscape）發布了Navigator瀏覽器0.9版。但是，這個版本的瀏覽器只能用來瀏覽，不具備與訪問者互動的能力。因此網景公司急需一種網頁腳本">
+<meta property="og:type" content="article">
+<meta property="og:title" content="『新手日記』Day-24 JavaScript 的原型鍊">
+<meta property="og:url" content="http://example.com/2022/12/30/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97-2022-12-30-day24/index.html">
+<meta property="og:site_name" content="Jeff的隨手筆記">
+<meta property="og:description" content="『新手日記』Day-24 JavaScript 的原型鍊 聽說我們的富奸又要開始連載了，庫拉皮卡終於可以下船了～～ 此篇文章是節錄這篇文章的內容所做的重點整理，如有興趣可以點進去閱讀原版資料。  JavaScript的前世今生  1994年，網景公司（Netscape）發布了Navigator瀏覽器0.9版。但是，這個版本的瀏覽器只能用來瀏覽，不具備與訪問者互動的能力。因此網景公司急需一種網頁腳本">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://miro.medium.com/max/1400/1*YG13dBl8LH3Ta47VeQ96yQ.png">
+<meta property="article:published_time" content="2022-12-30T07:35:42.000Z">
+<meta property="article:modified_time" content="2022-12-30T07:58:31.657Z">
+<meta property="article:author" content="Jeff">
+<meta property="article:tag" content="新手日記">
+<meta property="article:tag" content="JavaScript">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://miro.medium.com/max/1400/1*YG13dBl8LH3Ta47VeQ96yQ.png">
+
+<link rel="canonical" href="http://example.com/2022/12/30/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97-2022-12-30-day24/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-tw'
+  };
+</script>
+
+  <title>『新手日記』Day-24 JavaScript 的原型鍊 | Jeff的隨手筆記</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Jeff的隨手筆記</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">學習當一個前端工程師</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/30/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97-2022-12-30-day24/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpeg">
+      <meta itemprop="name" content="Jeff">
+      <meta itemprop="description" content="這是一個紀錄自己成長的地方">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jeff的隨手筆記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          『新手日記』Day-24 JavaScript 的原型鍊
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2022-12-30 15:35:42 / Modified: 15:58:31" itemprop="dateCreated datePublished" datetime="2022-12-30T15:35:42+08:00">2022-12-30</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97/" itemprop="url" rel="index"><span itemprop="name">新手日記系列</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="『新手日記』Day-24-JavaScript-的原型鍊"><a href="#『新手日記』Day-24-JavaScript-的原型鍊" class="headerlink" title="『新手日記』Day-24 JavaScript 的原型鍊"></a><strong>『新手日記』Day-24 JavaScript 的原型鍊</strong></h1><p><img src="https://miro.medium.com/max/1400/1*YG13dBl8LH3Ta47VeQ96yQ.png" alt="https://miro.medium.com/max/1400/1*YG13dBl8LH3Ta47VeQ96yQ.png"></p>
+<p>聽說我們的富奸又要開始連載了，庫拉皮卡終於可以下船了～～</p>
+<p>此篇文章是節錄<a target="_blank" rel="noopener" href="https://github.com/aszx87410/blog/issues/18">這篇文章</a>的內容所做的重點整理，如有興趣可以點進去閱讀原版資料。</p>
+<blockquote>
+<p>JavaScript的前世今生</p>
+</blockquote>
+<p>1994年，網景公司（Netscape）發布了Navigator瀏覽器0.9版。但是，這個版本的瀏覽器只能用來瀏覽，不具備與訪問者互動的能力。因此網景公司急需一種網頁腳本語言，使得瀏覽器可以與網頁互動而工程師<a target="_blank" rel="noopener" href="https://brendaneich.com/">Brendan Eich</a>負責開發這種新語言。</p>
+<p>當時C++是最流行的語言，Java語言的1.0版即將於第二年推出，Brendan Eich無疑受到了影響，Javascript裡面所有的數據類型都是object。這時他遇到了一個難題，到底要不要設計”繼承”機制呢？因為一種簡易的腳本語言，是不需要有”繼承”機制，而且一旦有了，Javascript就是一種<strong>物件導向程式設計（OOP）</strong>了，增加了初學者的入門難度。但是，Javascript裡面都是object，必須有一種機制，將所有對象聯繫起來。所以，Brendan Eich最後還是設計了”繼承”。</p>
+<blockquote>
+<p>JavaScript 中的 class</p>
+</blockquote>
+<p>但同時他卻不打算引入class的概念，他考慮到C++和Java語言都使用new命令，生成instance。因此，他就把new命令引入了Javascript，用來從原型對像生成一個instance object。但是，Javascript沒有”class”，怎麼來表示prototype object呢？</p>
+<p>這時，他想到C++和Java使用new命令時，都會調用”class”的構造函數（constructor）。他就做了一個簡化的設計，在Javascript語言中，new命令後面跟的不是class，而是構造函數。</p>
+<p>舉例來說，現在有一個叫做DOG的構造函數，表示狗對象的原型。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">function DOG(name)&#123;</span><br><span class="line">this.name = name;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>對這個構造函數使用new，就會生成一個狗對象的instance。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var dogA = new DOG(&#x27;大毛&#x27;);</span><br><span class="line">alert(dogA.name); // 大毛</span><br></pre></td></tr></table></figure>
+
+<p>注意構造函數中的<a target="_blank" rel="noopener" href="https://www.ruanyifeng.com/blog/2010/04/using_this_keyword_in_javascript.html">this關鍵字</a>，它就代表了新創建的prototype object。</p>
+<blockquote>
+<p>探究原理</p>
+</blockquote>
+<p>了解了JavaScript的前世今生後，我們來看看下面內容：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">function Person(name, age) &#123;</span><br><span class="line">  this.name = name;</span><br><span class="line">  this.age = age;</span><br><span class="line">  this.log = function () &#123;</span><br><span class="line">    console.log(this.name + &#x27;, age:&#x27; + this.age);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var nick = new Person(&#x27;nick&#x27;, 18);</span><br><span class="line">var peter = new Person(&#x27;peter&#x27;, 20);</span><br><span class="line"></span><br><span class="line">console.log(nick.log === peter.log) // false</span><br></pre></td></tr></table></figure>
+
+<p>name 跟 age 這兩個屬性，很明顯每一個 instance 都會不一樣的。但在 log 這個 method中其實每一個 instance 彼此之間可以共享的，雖然 nick 跟 peter 的 log 這個 function 是在做同一件事，但其實還是佔用了兩份空間，意思就是他們其實是兩個不同的 function。</p>
+<p>如果我要兩個都是一樣那怎麼辦呢？我們可以把這個 function 抽出來，變成所有 Person 都可以共享的方法。這邊我們要用一個東西叫做<code>prototype</code>。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">function Person(name, age) &#123;</span><br><span class="line">  this.name = name;</span><br><span class="line">  this.age = age;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Person.prototype.log = function () &#123;</span><br><span class="line">  console.log(this.name + &#x27;, age:&#x27; + this.age);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var nick = new Person(&#x27;nick&#x27;, 18);</span><br><span class="line">var peter = new Person(&#x27;peter&#x27;, 20);</span><br><span class="line"></span><br><span class="line">console.log(nick.log === peter.log) // true</span><br><span class="line"></span><br><span class="line">nick.log(); // nick, age:18</span><br><span class="line">peter.log(); // peter, age:20</span><br></pre></td></tr></table></figure>
+
+<p>看到這裡我就有一個疑問，呼叫<code>nick.log()</code>的時候，JavaScript 是怎麼找到這個 function 的？</p>
+<p>因為 nick 這個 instance 本身並沒有 log 這個 function。但根據 JavaScript 的機制，nick 是 Person 的 instance，所以如果在 nick 本身找不到，它會試著從<code>Person.prototype</code>去找。所以nick 跟<code>Person.prototype</code> 應該會透過某種方式連接起來，而這個連接的方式，就是<code>__proto__</code>。（附註：比較好的方式是用<code>Object.getPrototypeOf()</code>，但這邊為了方便起見，還是使用比較常見的<code>__proto__</code>，更詳細的說明可參考：<a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/proto">MDN: Object.prototype.proto</a>）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">function Person(name, age) &#123;</span><br><span class="line">  this.name = name;</span><br><span class="line">  this.age = age;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Person.prototype.log = function () &#123;</span><br><span class="line">  console.log(this.name + &#x27;, age:&#x27; + this.age);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var nick = new Person(&#x27;nick&#x27;, 18);</span><br><span class="line"></span><br><span class="line">console.log(nick.__proto__ === Person.prototype) // true</span><br></pre></td></tr></table></figure>
+
+<p>nick 的<code>__proto__</code>會指向<code>Person.prototype</code>，所以在發現 nick 沒有 log 這個 method 的時候，JavaScript 就會試著透過<code>__proto__</code>找到<code>Person.prototype</code>，去看<code>Person.prototype</code>裡面有沒有 log 這個 method。</p>
+<p>那假如<code>Person.prototype</code>還是沒有呢？那就繼續依照這個規則，去看<code>Person.prototype.__proto__</code>裡面有沒有 log 這個 method，就這樣一直不斷找下去。找到時候時候為止？找到某個東西的<code>__proto__</code>是 null 為止。意思就是這邊是最上層了。</p>
+<p>而上面這一條透過<code>__proto__</code>不斷串起來的鍊，就叫做『原型鍊』。透過這一條原型鍊，就可以達成類似繼承的功能，可以呼叫自己 parent 的 method。</p>
+<h2 id="名詞解釋："><a href="#名詞解釋：" class="headerlink" title="名詞解釋："></a><strong>名詞解釋：</strong></h2><blockquote>
+<p>instanceof</p>
+</blockquote>
+<p><code>A instanceof B</code> 就是拿來判斷 A 是不是 B 的 instance</p>
+<blockquote>
+<p>constructor</p>
+</blockquote>
+<p>每一個 prototype 都會有一個叫做<code>constructor</code>的屬性，例如說<code>Person.prototype.constructor。</code>而這個屬性就會指向構造函數。<code>Person.prototype</code>的構造函數是什麼？當然就是<code>Person</code>囉。</p>
+<blockquote>
+<p>new</p>
+</blockquote>
+<p>有了原型鍊的概念之後，就不難理解<code>new</code>這個關鍵字背後會做的事情是什麼。</p>
+<p>假設現在有一行程式碼是：<code>var nick = new Person(&#39;nick&#39;);</code>，那它有以下幾件事情要做：</p>
+<ol>
+<li>創出一個新的 object，我們叫它 O</li>
+<li>把 O 的 <code>__proto__</code> 指向 Person 的 prototype，才能繼承原型鍊</li>
+<li>拿 O 當作 context，呼叫 Person 這個建構函式</li>
+<li>回傳 O</li>
+</ol>
+<p>把所有的資料都看過一遍，但感覺還要再看一次還有些地方不是很了解，大家有興趣可以到看一下原作者所寫的，他還有附上超多參考資料。<br><a target="_blank" rel="noopener" href="https://github.com/aszx87410/blog/issues/18">github.com</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98/" rel="tag"># 新手日記</a>
+              <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/12/30/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97-2022-12-30-day23/" rel="prev" title="『新手日記』Day-23 OOP物件導向程式設計">
+      <i class="fa fa-chevron-left"></i> 『新手日記』Day-23 OOP物件導向程式設計
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/12/30/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97-2022-12-30-day25/" rel="next" title="『新手日記』Day-25 Promise的初次見面">
+      『新手日記』Day-25 Promise的初次見面 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E3%80%8E%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E3%80%8FDay-24-JavaScript-%E7%9A%84%E5%8E%9F%E5%9E%8B%E9%8D%8A"><span class="nav-number">1.</span> <span class="nav-text">『新手日記』Day-24 JavaScript 的原型鍊</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%8D%E8%A9%9E%E8%A7%A3%E9%87%8B%EF%BC%9A"><span class="nav-number">1.1.</span> <span class="nav-text">名詞解釋：</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Jeff"
+      src="/uploads/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Jeff</p>
+  <div class="site-description" itemprop="description">這是一個紀錄自己成長的地方</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">34</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jeff0518" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jeff0518" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:cycivs07@icloud.com" title="E-Mail → mailto:cycivs07@icloud.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jeff</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

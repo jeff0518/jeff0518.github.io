@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="『新手日記』Day-13 JavaScript DOM Event JavaScript 是一個事件驅動 (Event-driven) 的程式語言，當瀏覽器載入網頁開始讀取後，雖然馬上會讀取 JavaScript 事件相關的程式碼，但是必須等到「事件」被觸發(如使用者點擊、按下鍵盤等)後，才會再進行對應程式的執行。 Event Flow（事件流程）『網頁元素接收事件的順序』  事件流程可以分成兩種">
+<meta property="og:type" content="article">
+<meta property="og:title" content="『新手日記』Day-13 JavaScript DOM Event">
+<meta property="og:url" content="http://example.com/2022/12/30/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97-2022-12-30-day13/index.html">
+<meta property="og:site_name" content="Jeff的隨手筆記">
+<meta property="og:description" content="『新手日記』Day-13 JavaScript DOM Event JavaScript 是一個事件驅動 (Event-driven) 的程式語言，當瀏覽器載入網頁開始讀取後，雖然馬上會讀取 JavaScript 事件相關的程式碼，但是必須等到「事件」被觸發(如使用者點擊、按下鍵盤等)後，才會再進行對應程式的執行。 Event Flow（事件流程）『網頁元素接收事件的順序』  事件流程可以分成兩種">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://miro.medium.com/max/1000/1*6DQG1WCHsaePoc5iCUJusg.jpeg">
+<meta property="og:image" content="https://miro.medium.com/max/582/1*X-QnjXjrnauAeRhfu6N3CQ.png">
+<meta property="og:image" content="https://miro.medium.com/max/488/1*pFKhth-Clagpljlgs3r81A.png">
+<meta property="og:image" content="https://miro.medium.com/max/422/1*v9RCmhfU3ZNf4iQX4wc7YQ.png">
+<meta property="og:image" content="https://miro.medium.com/max/1400/0*YS6kw_mPrr3C6oMq.png">
+<meta property="og:image" content="https://miro.medium.com/max/1400/1*d6XgqVv1Gbidd50uZNq0OA.png">
+<meta property="og:image" content="https://miro.medium.com/max/1400/1*AWeF3ECxp_JTYJNj2B9rHQ.png">
+<meta property="og:image" content="https://miro.medium.com/max/1400/1*UrVshOC1nd3BRNrTY4CqtQ.png">
+<meta property="og:image" content="https://miro.medium.com/max/1400/1*d5ffSX1hROXkmjo8xR7ZSA.png">
+<meta property="article:published_time" content="2022-12-30T07:24:42.000Z">
+<meta property="article:modified_time" content="2022-12-30T07:46:18.292Z">
+<meta property="article:author" content="Jeff">
+<meta property="article:tag" content="新手日記">
+<meta property="article:tag" content="JavaScript">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://miro.medium.com/max/1000/1*6DQG1WCHsaePoc5iCUJusg.jpeg">
+
+<link rel="canonical" href="http://example.com/2022/12/30/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97-2022-12-30-day13/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-tw'
+  };
+</script>
+
+  <title>『新手日記』Day-13 JavaScript DOM Event | Jeff的隨手筆記</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Jeff的隨手筆記</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">學習當一個前端工程師</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/30/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97-2022-12-30-day13/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpeg">
+      <meta itemprop="name" content="Jeff">
+      <meta itemprop="description" content="這是一個紀錄自己成長的地方">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jeff的隨手筆記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          『新手日記』Day-13 JavaScript DOM Event
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2022-12-30 15:24:42 / Modified: 15:46:18" itemprop="dateCreated datePublished" datetime="2022-12-30T15:24:42+08:00">2022-12-30</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97/" itemprop="url" rel="index"><span itemprop="name">新手日記系列</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="『新手日記』Day-13-JavaScript-DOM-Event"><a href="#『新手日記』Day-13-JavaScript-DOM-Event" class="headerlink" title="『新手日記』Day-13 JavaScript DOM Event"></a><strong>『新手日記』Day-13 JavaScript DOM Event</strong></h1><p><img src="https://miro.medium.com/max/1000/1*6DQG1WCHsaePoc5iCUJusg.jpeg" alt="https://miro.medium.com/max/1000/1*6DQG1WCHsaePoc5iCUJusg.jpeg"></p>
+<p>JavaScript 是一個事件驅動 (Event-driven) 的程式語言，當瀏覽器載入網頁開始讀取後，雖然馬上會讀取 JavaScript 事件相關的程式碼，但是必須等到「事件」被觸發(如使用者點擊、按下鍵盤等)後，才會再進行對應程式的執行。</p>
+<h1 id="Event-Flow（事件流程）"><a href="#Event-Flow（事件流程）" class="headerlink" title="Event Flow（事件流程）"></a><strong>Event Flow（事件流程）</strong></h1><p>『<strong>網頁元素接收事件的順序』</strong></p>
+<p><img src="https://miro.medium.com/max/582/1*X-QnjXjrnauAeRhfu6N3CQ.png" alt="https://miro.medium.com/max/582/1*X-QnjXjrnauAeRhfu6N3CQ.png"></p>
+<p>事件流程可以分成兩種機制：</p>
+<ul>
+<li>Event Bubbling(事件冒泡)</li>
+<li>Event Capturing(事件捕獲)</li>
+</ul>
+<h1 id="Event-Bubbling-事件冒泡"><a href="#Event-Bubbling-事件冒泡" class="headerlink" title="Event Bubbling(事件冒泡)"></a><strong>Event Bubbling(事件冒泡)</strong></h1><p>事件冒泡指的是「從啟動事件的節點 (event.target) 開始，逐層往上傳遞」，直到整個網頁的根節點 <code>document</code>為止。（由下而上）</p>
+<p>例如在 Todo List 裡監聽刪除事件時，click 事件發生在刪除按鈕 <code>i.delete</code> 上，但由於事件為往上傳遞，因此 <code>ul</code> 也收到了 click 事件，因而啟動了監聽器裡的 handler。</p>
+<p>在「事件冒泡」的機制下，觸發事件的順序會是：</p>
+<p><img src="https://miro.medium.com/max/488/1*pFKhth-Clagpljlgs3r81A.png" alt="https://miro.medium.com/max/488/1*pFKhth-Clagpljlgs3r81A.png"></p>
+<p>如果到某一層你想阻擋事件繼續往下一層傳播，你可以在該層使用 <code>event.stopPropagation()</code>來阻止事件的傳播。</p>
+<h1 id="Event-Capturing-事件捕獲"><a href="#Event-Capturing-事件捕獲" class="headerlink" title="Event Capturing(事件捕獲)"></a><strong>Event Capturing(事件捕獲)</strong></h1><p>跟Event Bubbling 相反，由上而下的傳遞則稱為「事件捕獲」。Capture 機制很少在實作中被運用，因此他通常是隱藏起來的。</p>
+<p>依照 <a target="_blank" rel="noopener" href="https://www.w3.org/TR/DOM-Level-3-Events/">W3C DOM Events 標準</a>的說明，當你點擊某個元素時，瀏覽器會先從最高層開始 capturing，一路前往到事件 target，再向上 bubbling：</p>
+<p><img src="https://miro.medium.com/max/422/1*v9RCmhfU3ZNf4iQX4wc7YQ.png" alt="https://miro.medium.com/max/422/1*v9RCmhfU3ZNf4iQX4wc7YQ.png"></p>
+<p>由於元素之間有這樣的上下回報機制，我們的事件才能順利地動起來。</p>
+<p>但在實作上，幾乎不會遇到情境需要運用 capture，但刻意想打開時，可以運用事件監聽器的第三個參數。這個參數用來切換 capture，預設值為 <code>false</code>，刻意想打開時，可以設定為 <code>true</code>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">element.addEventListener(&quot;click&quot;, handler, useCapture)</span><br></pre></td></tr></table></figure>
+
+<h1 id="EventTarget-addEventListener-事件監聽"><a href="#EventTarget-addEventListener-事件監聽" class="headerlink" title="EventTarget.addEventListener()事件監聽"></a><strong>EventTarget.addEventListener()事件監聽</strong></h1><p>設置事件時，需要考慮到幾個基本要件：</p>
+<ul>
+<li>觸發事件的 HTML 元素</li>
+<li>事件類型，如 click、submit、keyup….</li>
+<li>想要觸發的程式，會是一個函式，該函式會稱為事件處理器 (event handler)</li>
+</ul>
+<p>而實務上，會多做一層「事件監聽器 (event listener)」，扮演 HTML 和 JavaScript 之間的接線生</p>
+<p><img src="https://miro.medium.com/max/1400/0*YS6kw_mPrr3C6oMq.png" alt="https://miro.medium.com/max/1400/0*YS6kw_mPrr3C6oMq.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// listener</span><br><span class="line">element.addEventListener(&#x27;click&#x27;, greeting)</span><br><span class="line">// handler</span><br><span class="line">function greeting() &#123;</span><br><span class="line">  alert(&#x27;handling event&#x27;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>addEventListener</code> 可以傳入三個參數：</p>
+<ul>
+<li><strong>event type</strong>，如 <code>&#39;click&#39;</code></li>
+<li><strong>handler</strong>，要啟動的 function，也可以直接使用匿名</li>
+<li>函式 (見下例)</li>
+</ul>
+<p><strong><code>element.addEventListener(&#39;click&#39;, function () &#123; alert(&#39;handling event&#39;) &#125;,useCapture)</code></strong></p>
+<ul>
+<li><strong>useCapture</strong>，切換 capturing 機制 ，預設值為 <code>false</code>，刻意想打開時，可以設定為 <code>true。</code>一般不會用到第三個參數。</li>
+</ul>
+<h1 id="Event-Type"><a href="#Event-Type" class="headerlink" title="Event Type"></a><strong>Event Type</strong></h1><p>事件的種類實在太多，以下就列出幾個常見的事件，剩下的就附上MDN網址：</p>
+<blockquote>
+<p>滑鼠事件</p>
+</blockquote>
+<p>鼠標在網頁上滑動時會跨越不同的元素邊界，它的事件設置有豐富的可能性，你可以點擊<a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent">這裡</a>查看完整的清單，但一般而言，最常見的有以下三種：</p>
+<ul>
+<li><code>click</code> - 鼠標點擊元素</li>
+<li><code>mousemove</code> - 鼠標滑過元素</li>
+<li><code>mouseout</code> - 鼠標離開元素</li>
+</ul>
+<blockquote>
+<p>鍵盤事件</p>
+</blockquote>
+<p>最常用常見的鍵盤事件有：</p>
+<ul>
+<li><code>keydown</code> - 點擊且長按一個鍵時</li>
+<li><code>keyup</code> - 放開按鍵時</li>
+</ul>
+<p>完整的清單可看<a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent">這裡</a>。</p>
+<blockquote>
+<p>表單事件</p>
+</blockquote>
+<p>表單是網頁上獲取使用者回饋的重要元件，當你在網站上使用表單時，你的行為會受到 DOM 物件<code>FormElementInterface</code> 監控。關於表單需要另開一個主題討論，常見事件有：</p>
+<ul>
+<li><code>submit</code> - 提交表單時</li>
+<li><code>focus</code> - 點擊某個輸入框時</li>
+<li><code>input</code> - 輸入框內容改變時</li>
+</ul>
+<blockquote>
+<p>document 事件</p>
+</blockquote>
+<ul>
+<li><code>DOMContentLoaded</code> - 當 HTML 下載完成並完整的建立 DOM 模型時觸發</li>
+</ul>
+<p>就和我們總是在 <code>&lt;/body&gt;</code> 前引入 JavaScript 檔案一樣，如果 HTML 還沒下載完就先進行 DOM 操作，勢必會遇到奇怪問題。在實務上除了注意檔案引入位置，在 JavaScript 時還會再包一層 <code>DOMContentLoaded</code>，確保萬無一失。</p>
+<blockquote>
+<p>其他事件</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/API/Event">Event — Web APIs | MDN</a></p>
+<h1 id="Event-Delegation-事件指派"><a href="#Event-Delegation-事件指派" class="headerlink" title="Event Delegation(事件指派)"></a><strong>Event Delegation(事件指派)</strong></h1><p>事件指派是利用前面介紹的「事件流程」以及「單一事件監聽器」來處理多個事件目標。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">// html:</span><br><span class="line">	&lt;div id=&quot;todo-title&quot;&gt;</span><br><span class="line">    &lt;h4&gt;Todo&lt;/h4&gt;</span><br><span class="line">    &lt;ul id=&quot;my-todo&quot; class=&quot;list-unstyled&quot;&gt;</span><br><span class="line">      &lt;!-- display todos here --&gt;</span><br><span class="line">    &lt;/ul&gt;</span><br><span class="line">    &lt;h4&gt;Done&lt;/h4&gt;</span><br><span class="line">    &lt;ul class=&quot;done-list list-unstyled&quot;&gt;&lt;/ul&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">// Delete and check</span><br><span class="line">todoTitle.addEventListener(&quot;click&quot;, function (event) &#123;</span><br><span class="line">  const target = event.target;</span><br><span class="line">  const parentElement = target.parentElement;</span><br><span class="line">  if (target.classList.contains(&quot;delete&quot;)) &#123;</span><br><span class="line">    ...</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>我們看到我們的監聽器放在最外層的<div>，這樣的好處是我們不用掛載很多<strong>監聽器</strong>，因為當我有100條todo時，這樣我要掛100個監聽器太讓費時間了</p>
+<p>這邊我們看到了<code>target = [event.target](&lt;http://event.target&gt;)</code>這是什麼意思？其實他是『event object』</p>
+<h1 id="Event-inheritance"><a href="#Event-inheritance" class="headerlink" title="Event inheritance"></a><strong>Event inheritance</strong></h1><p>在進入event object 時，要先提到inheritance</p>
+<h1 id="inheritance-繼承-指的是一個物件擁有另一個物件的和"><a href="#inheritance-繼承-指的是一個物件擁有另一個物件的和" class="headerlink" title="inheritance(繼承)指的是一個物件擁有另一個物件的和"></a>inheritance(繼承)指的是一個物件擁有另一個物件的和</h1><p>💡 JavaScript使用的是 <code>原型繼承 prototypal inheritance</code></p>
+<p><img src="https://miro.medium.com/max/1400/1*d6XgqVv1Gbidd50uZNq0OA.png" alt="https://miro.medium.com/max/1400/1*d6XgqVv1Gbidd50uZNq0OA.png"></p>
+<p>如上圖，我們可以知道所有的Event 都是inheritance 最上方的<strong>Event Object</strong>，在<a target="_blank" rel="noopener" href="https://www.w3schools.com/jsref/obj_event.asp">w3schools</a>裡也有提到：</p>
+<p><img src="https://miro.medium.com/max/1400/1*AWeF3ECxp_JTYJNj2B9rHQ.png" alt="https://miro.medium.com/max/1400/1*AWeF3ECxp_JTYJNj2B9rHQ.png"></p>
+<p>因此我們需要學習的就是<strong>Event Object的</strong><code>property(屬性)</code>和 <code>method(方法)</code></p>
+<h1 id="event-object"><a href="#event-object" class="headerlink" title="event object:"></a><strong>event object:</strong></h1><p>當監聽的事件發生時，瀏覽器會去執行我們透過 <code>addEventListener()</code> 註冊的 Event Handler (<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-TW/docs/Web/API/EventListener">EventListener</a>) ，也就是我們所指定的 <code>function</code>。</p>
+<p>這個時候，EventListener 會去建立一個「事件物件」 (Event Object)，裡面包含了所有與這個事件有關的屬性，並且以「參數」的形式傳給我們的 Event Handler</p>
+<p>其中有三個屬性要特別注意：</p>
+<blockquote>
+<p>target(目標)</p>
+</blockquote>
+<p>用途：需要知道到底我們觸發哪一個 DOM 元素時可以使用</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">const target = event.target</span><br></pre></td></tr></table></figure>
+
+<p>💡 <em><code>this</code> 跟 <code>event.target</code> 有點像，但是他們之間的區別是： 隨著 js 冒泡事件的發生，<code>this</code> 是會變化的，但 <code>event.target</code> 不會變化，它永遠是指觸發事件的 DOM 物件</em></p>
+<blockquote>
+<p>preventDefault</p>
+</blockquote>
+<p>用途：<strong>取消它們的預設行為，但並不會阻止事件向上傳遞 (事件冒泡) 。</strong></p>
+<p>有使用過的2個時機：</p>
+<ul>
+<li>按鈕用a標籤，因為a標籤必須要寫上連結，但點擊就是跳轉頁面。</li>
+<li>form的submit就會自動傳送資料。</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;form&gt;</span><br><span class="line">&lt;button type=&quot;submit&quot;&gt;送出&lt;/button&gt;</span><br><span class="line">&lt;/form&gt;let btn = document.querySelector(&#x27;button&#x27;);</span><br><span class="line">btn.addEventListener(&#x27;click&#x27;,e =&gt;&#123;</span><br><span class="line">    e.preventDefault();</span><br><span class="line">&#125;)//點按鈕時，表單不會被提交出去，頁面也不會重刷</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>stopPropagation()</p>
+</blockquote>
+<p>用途：阻擋事件向上冒泡傳遞</p>
+<p><img src="https://miro.medium.com/max/1400/1*UrVshOC1nd3BRNrTY4CqtQ.png" alt="https://miro.medium.com/max/1400/1*UrVshOC1nd3BRNrTY4CqtQ.png"></p>
+<p><img src="https://miro.medium.com/max/1400/1*d5ffSX1hROXkmjo8xR7ZSA.png" alt="https://miro.medium.com/max/1400/1*d5ffSX1hROXkmjo8xR7ZSA.png"></p>
+<h2 id="結語"><a href="#結語" class="headerlink" title="結語"></a><strong>結語</strong></h2><p>終於複習完一遍ＤＯM了，沒有想到會複習這麼久。如果只是單純看教案其實我感覺我一天左右就可以全部複習完，但因為要整理筆記，那整理過程中發現有些東西不了解又回去看教案或是網路上的資料才會導致比預期多花了一天。基礎理論的東西差不多都複習過了，接下來就是實作練習用大量的練習增加自己對這幾天複習內容的印象了。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98/" rel="tag"># 新手日記</a>
+              <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/12/30/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97-2022-12-30-day12/" rel="prev" title="『新手日記』Day-12 JavaScript DOM Tree">
+      <i class="fa fa-chevron-left"></i> 『新手日記』Day-12 JavaScript DOM Tree
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/12/30/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97-2022-12-30-day14/" rel="next" title="『新手日記』Day-14 RWD">
+      『新手日記』Day-14 RWD <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E3%80%8E%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E3%80%8FDay-13-JavaScript-DOM-Event"><span class="nav-number">1.</span> <span class="nav-text">『新手日記』Day-13 JavaScript DOM Event</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Event-Flow%EF%BC%88%E4%BA%8B%E4%BB%B6%E6%B5%81%E7%A8%8B%EF%BC%89"><span class="nav-number">2.</span> <span class="nav-text">Event Flow（事件流程）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Event-Bubbling-%E4%BA%8B%E4%BB%B6%E5%86%92%E6%B3%A1"><span class="nav-number">3.</span> <span class="nav-text">Event Bubbling(事件冒泡)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Event-Capturing-%E4%BA%8B%E4%BB%B6%E6%8D%95%E7%8D%B2"><span class="nav-number">4.</span> <span class="nav-text">Event Capturing(事件捕獲)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#EventTarget-addEventListener-%E4%BA%8B%E4%BB%B6%E7%9B%A3%E8%81%BD"><span class="nav-number">5.</span> <span class="nav-text">EventTarget.addEventListener()事件監聽</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Event-Type"><span class="nav-number">6.</span> <span class="nav-text">Event Type</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Event-Delegation-%E4%BA%8B%E4%BB%B6%E6%8C%87%E6%B4%BE"><span class="nav-number">7.</span> <span class="nav-text">Event Delegation(事件指派)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Event-inheritance"><span class="nav-number">8.</span> <span class="nav-text">Event inheritance</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#inheritance-%E7%B9%BC%E6%89%BF-%E6%8C%87%E7%9A%84%E6%98%AF%E4%B8%80%E5%80%8B%E7%89%A9%E4%BB%B6%E6%93%81%E6%9C%89%E5%8F%A6%E4%B8%80%E5%80%8B%E7%89%A9%E4%BB%B6%E7%9A%84%E5%92%8C"><span class="nav-number">9.</span> <span class="nav-text">inheritance(繼承)指的是一個物件擁有另一個物件的和</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#event-object"><span class="nav-number">10.</span> <span class="nav-text">event object:</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B5%90%E8%AA%9E"><span class="nav-number">10.1.</span> <span class="nav-text">結語</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Jeff"
+      src="/uploads/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Jeff</p>
+  <div class="site-description" itemprop="description">這是一個紀錄自己成長的地方</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">34</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jeff0518" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jeff0518" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:cycivs07@icloud.com" title="E-Mail → mailto:cycivs07@icloud.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jeff</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

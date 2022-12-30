@@ -1,0 +1,1824 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="這是一個紀錄自己成長的地方">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Jeff的隨手筆記">
+<meta property="og:url" content="http://example.com/page/2/index.html">
+<meta property="og:site_name" content="Jeff的隨手筆記">
+<meta property="og:description" content="這是一個紀錄自己成長的地方">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:author" content="Jeff">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/page/2/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : true,
+    isPost : false,
+    lang   : 'zh-tw'
+  };
+</script>
+
+  <title>Jeff的隨手筆記</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Jeff的隨手筆記</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">學習當一個前端工程師</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content index posts-expand">
+            
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/30/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97-2022-12-30-day17/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpeg">
+      <meta itemprop="name" content="Jeff">
+      <meta itemprop="description" content="這是一個紀錄自己成長的地方">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jeff的隨手筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/12/30/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97-2022-12-30-day17/" class="post-title-link" itemprop="url">『新手日記』Day-17 Pass by value 和 Pass by reference</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2022-12-30 15:28:42 / Modified: 15:49:14" itemprop="dateCreated datePublished" datetime="2022-12-30T15:28:42+08:00">2022-12-30</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97/" itemprop="url" rel="index"><span itemprop="name">新手日記系列</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="『新手日記』Day-17-Pass-by-value-和-Pass-by-reference"><a href="#『新手日記』Day-17-Pass-by-value-和-Pass-by-reference" class="headerlink" title="『新手日記』Day-17 Pass by value 和 Pass by reference"></a><strong>『新手日記』Day-17 Pass by value 和 Pass by reference</strong></h1><p><img src="https://miro.medium.com/max/1280/1*xrw-xCkHHoMHAzlrgHdvOw.jpeg" alt="https://miro.medium.com/max/1280/1*xrw-xCkHHoMHAzlrgHdvOw.jpeg"></p>
+<p>每天到網路上找一張適合的照片或是當天的心情的過程居然可以變得如此開心！</p>
+<p>今天這篇的誕生，只能用一個成語來形容：不求甚解。</p>
+<p>如果當初有認真來看『8 天重新認識 JavaScript！』，明明在第二天的內容就有提到，但一點印象都沒有…</p>
+<p><img src="https://miro.medium.com/max/1400/1*Bfvd639pbLxMmFvGizRR1A.png" alt="https://miro.medium.com/max/1400/1*Bfvd639pbLxMmFvGizRR1A.png"></p>
+<p>聽說這是個引戰題啊(誤！)．．．</p>
+<h2 id="先講結論："><a href="#先講結論：" class="headerlink" title="先講結論："></a><strong>先講結論：</strong></h2><h1 id="要從「行為」上面來判別到底是屬於哪一種。第一個條件用來區分到底是-pass-by-value-還是-pass-by-reference：「在函式裡對引數重新賦值，外面變數是否會改變？」第二個條件來區分這個-pass-by-value-是真・pass-by-value-還是一個叫做-pass-by-sharing-的分支：「能否透過引數，改變外部變數的值」"><a href="#要從「行為」上面來判別到底是屬於哪一種。第一個條件用來區分到底是-pass-by-value-還是-pass-by-reference：「在函式裡對引數重新賦值，外面變數是否會改變？」第二個條件來區分這個-pass-by-value-是真・pass-by-value-還是一個叫做-pass-by-sharing-的分支：「能否透過引數，改變外部變數的值」" class="headerlink" title="要從「行為」上面來判別到底是屬於哪一種。第一個條件用來區分到底是 pass by value 還是 pass by reference：「在函式裡對引數重新賦值，外面變數是否會改變？」第二個條件來區分這個 pass by value 是真・pass by value 還是一個叫做 pass by sharing 的分支：「能否透過引數，改變外部變數的值」"></a>要從「行為」上面來判別到底是屬於哪一種。第一個條件用來區分到底是 pass by value 還是 pass by reference：「在函式裡對引數重新賦值，外面變數是否會改變？」第二個條件來區分這個 pass by value 是真・pass by value 還是一個叫做 pass by sharing 的分支：「能否透過引數，改變外部變數的值」</h1><p><img src="https://miro.medium.com/max/1400/1*uhZf015rb2kH7X86Fubr7w.png" alt="https://miro.medium.com/max/1400/1*uhZf015rb2kH7X86Fubr7w.png"></p>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a><strong>前言</strong></h1><p><em><strong>在大多數的情況下，基本型別是「傳值」，而物件型別會是「傳址」的方式，但凡事都有例外。</strong></em></p>
+<p>當初就是看到這句話才沒有認真讀，意外通常不在我考慮裡面&gt;&lt;”</p>
+<p>如果基本型別還不知道是什麼的可以參考這篇：</p>
+<p>****<a target="_blank" rel="noopener" href="https://medium.com/@cycivs07/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98-day-7-javascript-%E8%AE%8A%E6%95%B8%E7%9A%84%E8%B3%87%E6%96%99%E5%9E%8B%E5%88%A5-759ce799dc0e">『新手日記』Day-7 JavaScript 變數的資料型別終於進入JavaScript了，撒花～～～～ 這次複習JavaScript主要會使用3份教材： ＡＣ課件：**<br>medium.com</a></p>
+<p>先來簡單說明一下什麼是Pass by value 和 Pass by reference</p>
+<h1 id="Pass-by-value-傳值"><a href="#Pass-by-value-傳值" class="headerlink" title="Pass by value (傳值)"></a><strong>Pass by value (傳值)</strong></h1><p>當我建立2個 primitive type 的變數時（x, y），x 會在記憶體中存在一個自己的位置（假設叫做0x001）。當我指定另一個變數 y，它的值等同於 x的時候，y 實際上會建立另一個獨立的記憶體位置（假設叫做0x002），接著再把 x的值存在這個獨立的記憶體位置。也就是說， x和 y其實是存在於兩個不同的記憶體位置，因此彼此並不會乎相干擾影響。</p>
+<p><img src="https://miro.medium.com/max/1400/1*7F9sRQd71_X6Yf0q09nueA.png" alt="https://miro.medium.com/max/1400/1*7F9sRQd71_X6Yf0q09nueA.png"></p>
+<blockquote>
+<p>在 JavaScript 中 primitive type（Boolean、String、 Number、 null、 undefined、symbol、bigint）都屬於 By Value。</p>
+</blockquote>
+<h1 id="Pass-by-reference"><a href="#Pass-by-reference" class="headerlink" title="Pass by reference"></a><strong>Pass by reference</strong></h1><p>當我將變數 x設立成一個Object（或function）時，一樣在記憶體中給它一個位置（假設叫做0x001）；但是當我建立一個變數 y，並且把變數 y的值等同於 x時，這時候並不會再給它一個新的位置，而是一樣指定到物件 x的位置（即0x001），因此，當 x的值改變的時候 y的值也會改變，因為它們實際上是指稱到相同的位置。</p>
+<p><img src="https://miro.medium.com/max/1400/1*v6INyJmRJJEFA3TArJv9FQ.png" alt="https://miro.medium.com/max/1400/1*v6INyJmRJJEFA3TArJv9FQ.png"></p>
+<p>看到目前為止都很好理解吧，我當時也是這麼想的，接下來我們來看下一個範例</p>
+<p><img src="https://miro.medium.com/max/1400/1*w15uhRRyo9tQ24qV2AD3WQ.png" alt="https://miro.medium.com/max/1400/1*w15uhRRyo9tQ24qV2AD3WQ.png"></p>
+<p>驚不驚喜！意不意外！</p>
+<p>why?如果我們是用 object literal 的方式去定義 x這個變數，在這種情況底下，因為它並不清楚 x的內容是已經存在的，所以它會建立一個新的記憶體位置來存放 x物件裡面的內容。</p>
+<blockquote>
+<p>若是使用 object literal 的方式來建立物件，則會變成 by Value，新增了一個記憶體的位置。</p>
+</blockquote>
+<h1 id="Pass-by-sharing"><a href="#Pass-by-sharing" class="headerlink" title="Pass by sharing"></a><strong>Pass by sharing</strong></h1><p>從前面例子發現到，雖然是Object的變數，如果是對物件變數作重新賦值，只會變更自己的值，不會連另一個變數一起變更。</p>
+<p>這和前面提到的 Pass by reference 行為似乎不太一樣，反而有點像 Pass by value。</p>
+<p>如此一來，稱為 Pass by reference 也不對，稱為 Pass by value 也不對，於是就出現了 <strong>Pass by sharing</strong> 的說法。</p>
+<p><strong>不少人將 JavaScript 的變數內容傳遞方式，稱為 Pass by sharing</strong>：</p>
+<ul>
+<li>碰到原生型別 (Primitive)，表現行為是 Pass by value。</li>
+<li>碰到物件型別 (Object)，如果只是對物件內容作操作(例如陣列元素或物件屬性)，表現行為是 Pass by reference。</li>
+<li>碰到物件型別 (Object)，如果對物件作重新賦值，表現行為是 Pass by value。</li>
+</ul>
+<p>在『<a target="_blank" rel="noopener" href="https://www.ithome.com.tw/voice/94877">技術名詞紛爭多</a>』有這麼一段話：</p>
+<h1 id="程式開發的世界中，名詞的創造經常是隨意的，曾經在Java中爭執不斷的考古題之一是：「Java中有沒有Pass-by-reference」，就現今來說，大家公認的答案是沒有，Java只有Pass-by-value，不過還是有人面對Java文件中經常出現reference，而搞不清楚。說穿了，這個名詞與C-中的reference定義不同，只不過Java最初不知道為什麼，也用了reference一詞，重點也不在搞清楚Pass-by-value，重點是搞清楚透過參數操作物件時，會有什麼樣的行為。"><a href="#程式開發的世界中，名詞的創造經常是隨意的，曾經在Java中爭執不斷的考古題之一是：「Java中有沒有Pass-by-reference」，就現今來說，大家公認的答案是沒有，Java只有Pass-by-value，不過還是有人面對Java文件中經常出現reference，而搞不清楚。說穿了，這個名詞與C-中的reference定義不同，只不過Java最初不知道為什麼，也用了reference一詞，重點也不在搞清楚Pass-by-value，重點是搞清楚透過參數操作物件時，會有什麼樣的行為。" class="headerlink" title="程式開發的世界中，名詞的創造經常是隨意的，曾經在Java中爭執不斷的考古題之一是：「Java中有沒有Pass by reference」，就現今來說，大家公認的答案是沒有，Java只有Pass by value，不過還是有人面對Java文件中經常出現reference，而搞不清楚。說穿了，這個名詞與C++中的reference定義不同，只不過Java最初不知道為什麼，也用了reference一詞，重點也不在搞清楚Pass by value，重點是搞清楚透過參數操作物件時，會有什麼樣的行為。"></a>程式開發的世界中，名詞的創造經常是隨意的，曾經在Java中爭執不斷的考古題之一是：「Java中有沒有Pass by reference」，就現今來說，大家公認的答案是沒有，Java只有Pass by value，不過還是有人面對Java文件中經常出現reference，而搞不清楚。說穿了，這個名詞與C++中的reference定義不同，只不過Java最初不知道為什麼，也用了reference一詞，重點也不在搞清楚Pass by value，重點是搞清楚透過參數操作物件時，會有什麼樣的行為。</h1><p>『重點其實不在這個，而是搞清楚到底參數在操作的時候會有怎樣的行為。』</p>
+<p>你要知道 JavaScript 傳 object 進去的時候，可以更改原本物件的值，但重新賦值並不會影響到外部的 object。只要知道這一點，其他的我覺得都沒那麼重要了。</p>
+<h1 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a><strong>參考資料</strong></h1><p><a target="_blank" rel="noopener" href="https://blog.techbridge.cc/2018/06/23/javascript-call-by-value-or-reference/">blog.techbridge.cc</a><br><a target="_blank" rel="noopener" href="https://pjchender.blogspot.com/2016/03/javascriptby-referenceby-value.html">pjchender.blogspot.com</a><br><a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10191057">ithelp.ithome.com.tw</a><br><a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10209104">ithelp.ithome.com.tw</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/30/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97-2022-12-30-day16/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpeg">
+      <meta itemprop="name" content="Jeff">
+      <meta itemprop="description" content="這是一個紀錄自己成長的地方">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jeff的隨手筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/12/30/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97-2022-12-30-day16/" class="post-title-link" itemprop="url">『新手日記』Day-16 Hoisting？TDZ？</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2022-12-30 15:27:42 / Modified: 15:48:38" itemprop="dateCreated datePublished" datetime="2022-12-30T15:27:42+08:00">2022-12-30</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97/" itemprop="url" rel="index"><span itemprop="name">新手日記系列</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="『新手日記』Day-16-Hoisting？TDZ？"><a href="#『新手日記』Day-16-Hoisting？TDZ？" class="headerlink" title="『新手日記』Day-16 Hoisting？TDZ？"></a><strong>『新手日記』Day-16 Hoisting？TDZ？</strong></h1><p><img src="https://miro.medium.com/max/1280/1*Gib5YCOzIyXzrM_Uijz9ZQ.jpeg" alt="https://miro.medium.com/max/1280/1*Gib5YCOzIyXzrM_Uijz9ZQ.jpeg"></p>
+<p>今天直接睡到12點，我整個白天的時間直接少一半，我今天的進度啊～</p>
+<h2 id="什麼是hotisting"><a href="#什麼是hotisting" class="headerlink" title="什麼是hotisting"></a><strong>什麼是hotisting</strong></h2><p>老樣子先來看一下ＭＤＮ</p>
+<h2 id="提升（Hoisting）是在-裡面找不到的專有名詞。它是一種釐清-JaveScript-在執行階段內文如何運行的思路（尤其是在創建和執行階段）。然而，提升一詞可能會引起誤解：例如，提升看起來是單純地將變數和函式宣告，移動到程式的區塊頂端，然而並非如此。變數和函數的宣告會在編譯階段就被放入記憶體，但實際位置和程式碼中完全一樣。"><a href="#提升（Hoisting）是在-裡面找不到的專有名詞。它是一種釐清-JaveScript-在執行階段內文如何運行的思路（尤其是在創建和執行階段）。然而，提升一詞可能會引起誤解：例如，提升看起來是單純地將變數和函式宣告，移動到程式的區塊頂端，然而並非如此。變數和函數的宣告會在編譯階段就被放入記憶體，但實際位置和程式碼中完全一樣。" class="headerlink" title="提升（Hoisting）是在 裡面找不到的專有名詞。它是一種釐清 JaveScript 在執行階段內文如何運行的思路（尤其是在創建和執行階段）。然而，提升一詞可能會引起誤解：例如，提升看起來是單純地將變數和函式宣告，移動到程式的區塊頂端，然而並非如此。變數和函數的宣告會在編譯階段就被放入記憶體，但實際位置和程式碼中完全一樣。"></a>提升（Hoisting）是在 裡面找不到的專有名詞。它是一種釐清 JaveScript 在執行階段內文如何運行的思路（尤其是在創建和執行階段）。然而，提升一詞可能會引起誤解：例如，提升看起來是單純地將變數和函式宣告，移動到程式的區塊頂端，然而並非如此。變數和函數的宣告會在編譯階段就被放入記憶體，但實際位置和程式碼中完全一樣。</h2><p>恩…這應該是中文吧，我怎麼有看沒有懂！</p>
+<p>只好問一下萬能的google老師了。</p>
+<h1 id="Hoisting-is-JavaScript’s-default-behavior-of-moving-declarations-to-the-top"><a href="#Hoisting-is-JavaScript’s-default-behavior-of-moving-declarations-to-the-top" class="headerlink" title="Hoisting is JavaScript’s default behavior of moving declarations to the top."></a>Hoisting is JavaScript’s default behavior of moving declarations to the top.</h1><p>為什麼是給我w3school啊！！！疑我怎麼突然看得懂了</p>
+<p>用現代人的說法不就是像置頂留言一樣嗎，所以他是一種把宣告置頂的一個過程吧…我還是看一下其他大神的解釋</p>
+<p>在 JavaScript 裡面，如果你試圖去對一個還沒宣告的變數取值，會發生以下錯誤：</p>
+<p><img src="https://miro.medium.com/max/1400/1*foXsLWjnjmUC160JJ4nUQw.png" alt="https://miro.medium.com/max/1400/1*foXsLWjnjmUC160JJ4nUQw.png"></p>
+<p>會回傳一個<code>a is not defined</code>的錯誤，因為你還沒宣告這個變數，所以 JavaScript 也找不到這變數在哪，自然就會拋出錯誤。</p>
+<p>可是如果你這樣子寫，神奇的事情發生了：</p>
+<p><img src="https://miro.medium.com/max/1400/1*KtXI-nRdTsQl4zozc6OzeQ.png" alt="https://miro.medium.com/max/1400/1*KtXI-nRdTsQl4zozc6OzeQ.png"></p>
+<p>從以前學程式的時候我們就學到了一個觀念，「程式是一行一行跑的」，那既然是一行一行跑的，執行到第一行的時候不是還沒有宣告變數 a 嗎？那為什麼不是拋出<code>a is not defined</code>的錯誤，而是輸出了<code>undefined</code>？</p>
+<p>在還在用var來宣告的年代（也就是ES6之前），hotisting可以幫助我們把變數提升到最頂端(但值不會)，所以照成了很多的混亂，因為我在任何地方都可以宣告。</p>
+<p>那進入ES6後呢？</p>
+<h1 id="TDZ"><a href="#TDZ" class="headerlink" title="TDZ"></a><strong>TDZ</strong></h1><p><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/let#temporal_dead_zone_tdz">ＭＮＤ解釋</a>：</p>
+<h3 id="從一個代碼塊的開始直到代碼執行到聲明變量的行之前，let-或-const-聲明的變量都處於“暫時性死區”（Temporal-dead-zone，TDZ）中。當變量處於暫時性死區之中時，其尚未被初始化，嘗試訪問變量將拋出-ReferenceError。當代碼執行到聲明變量所在的行時，變量被初始化為一個值。如果聲明中未指定初始值，則變量將被初始化為-undefined。與-var-聲明的變量不同，如果在聲明前訪問了變量，變量將會返回-undefined。"><a href="#從一個代碼塊的開始直到代碼執行到聲明變量的行之前，let-或-const-聲明的變量都處於“暫時性死區”（Temporal-dead-zone，TDZ）中。當變量處於暫時性死區之中時，其尚未被初始化，嘗試訪問變量將拋出-ReferenceError。當代碼執行到聲明變量所在的行時，變量被初始化為一個值。如果聲明中未指定初始值，則變量將被初始化為-undefined。與-var-聲明的變量不同，如果在聲明前訪問了變量，變量將會返回-undefined。" class="headerlink" title="從一個代碼塊的開始直到代碼執行到聲明變量的行之前，let 或 const 聲明的變量都處於“暫時性死區”（Temporal dead zone，TDZ）中。當變量處於暫時性死區之中時，其尚未被初始化，嘗試訪問變量將拋出 ReferenceError。當代碼執行到聲明變量所在的行時，變量被初始化為一個值。如果聲明中未指定初始值，則變量將被初始化為 undefined。與 var 聲明的變量不同，如果在聲明前訪問了變量，變量將會返回 undefined。"></a>從一個代碼塊的開始直到代碼執行到聲明變量的行之前，let 或 const 聲明的變量都處於“暫時性死區”（Temporal dead zone，TDZ）中。當變量處於暫時性死區之中時，其尚未被初始化，嘗試訪問變量將拋出 ReferenceError。當代碼執行到聲明變量所在的行時，變量被初始化為一個值。如果聲明中未指定初始值，則變量將被初始化為 undefined。與 var 聲明的變量不同，如果在聲明前訪問了變量，變量將會返回 undefined。</h3><p>一樣用上面範例</p>
+<p><img src="https://miro.medium.com/max/1400/1*BI3B_Dx4Db_Pf2hLZvYFXg.png" alt="https://miro.medium.com/max/1400/1*BI3B_Dx4Db_Pf2hLZvYFXg.png"></p>
+<p>疑 為什麼出現不一樣的錯誤？</p>
+<p>難不成<code>let</code> &amp; <code>const</code> 沒有 Hoisting？</p>
+<p>其實 <code>let</code> &amp; <code>const</code> 有 hoisting，並且會提升到<strong>Block Scope</strong>的頂部，但因為在<code>let</code> &amp; <code>const</code>有個特性稱作為Temporal Dead Zone（ＴＤＺ『暫時性死區』)，他會讓還沒宣告卻使用的變數進入暫時性死區，讓我們無法使用。</p>
+<p>也因為有這項特性，他可以幫助我們養成在變數還沒宣告之前不要使用他的好習慣，讓程式碼可讀性提高！</p>
+<p>今天因為睡過頭想說來點簡單的，但…原來這個坑比我想像的深。如果大家有興趣可以到下方連結去閱讀，會收穫滿滿啊！！！<br><a target="_blank" rel="noopener" href="https://blog.techbridge.cc/2018/11/10/javascript-hoisting/">blog.techbridge.cc</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/30/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97-2022-12-30-day15/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpeg">
+      <meta itemprop="name" content="Jeff">
+      <meta itemprop="description" content="這是一個紀錄自己成長的地方">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jeff的隨手筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/12/30/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97-2022-12-30-day15/" class="post-title-link" itemprop="url">『新手日記』Day-15 Scope變數作用域</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2022-12-30 15:26:42 / Modified: 15:47:54" itemprop="dateCreated datePublished" datetime="2022-12-30T15:26:42+08:00">2022-12-30</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97/" itemprop="url" rel="index"><span itemprop="name">新手日記系列</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="『新手日記』Day-15-Scope變數作用域"><a href="#『新手日記』Day-15-Scope變數作用域" class="headerlink" title="『新手日記』Day-15 Scope變數作用域"></a><strong>『新手日記』Day-15 Scope變數作用域</strong></h1><p><img src="https://miro.medium.com/max/1400/1*f-3e4xhqGcwsg0FjiXB20A.png" alt="https://miro.medium.com/max/1400/1*f-3e4xhqGcwsg0FjiXB20A.png"></p>
+<p>這也太跳痛了吧，這個題目不是應該一開始就要說，怎麼到現在才講。</p>
+<p>其實本來是想要來紀錄 Closure(閉包)的，但…我高估自己了，很多東西是懂非懂(麵非麵？？？)，只好到網路上找文章，突然發現了這篇文章，想說跟大家分享一下～</p>
+<p>根據此篇作者所說，想要了解Closure(閉包)，就要先了解一下4個面向：</p>
+<blockquote>
+<p>變數運作行為</p>
+<p><em><strong>變數作用域 (Scope)</strong></em></p>
+<p><em><strong>Hoisting (宣告的提升效果)</strong></em></p>
+<p><em><strong>立即函數</strong></em></p>
+</blockquote>
+<p>太棒了！！！又可以撐過4天了(喂～)，今天先來了解一下<strong>變數作用域 (Scope)。</strong></p>
+<h1 id="看專業術語就讓人害怕"><a href="#看專業術語就讓人害怕" class="headerlink" title="看專業術語就讓人害怕"></a><strong>看專業術語就讓人害怕</strong></h1><p>相信這對所有像我一樣的程式新手來說都是很令人頭痛的事情吧，但不搞懂又不行只好硬著頭皮硬上，所以用簡單好理解的講解方式真的是對新手很大的福利！</p>
+<p>**一個變數能生效的範圍有多廣，就稱為這個變數的作用域(Scope)**。</p>
+<p>但怎麼去區分它們的範圍呢？作者用很有趣的方式來解說：</p>
+<h1 id="範圍就是知名度變數就是明星"><a href="#範圍就是知名度變數就是明星" class="headerlink" title="範圍就是知名度變數就是明星"></a><strong>範圍就是知名度變數就是明星</strong></h1><p>知名度對明星來說既現實又殘酷，就像作用域之於變數。</p>
+<p>同樣是宣告一個變數，有的變數只有在他宣告的地盤才有作用；有的變數即使不是宣告在這個區塊，依然能跨界發揮影響力。</p>
+<p><strong>變數作用域的範圍，取決於這個變數宣告的地方與方式</strong>。</p>
+<h2 id="在-JavaScript-裡，有-3-種等級的作用域：香港喜劇天王星爺-—-—-Function-Level-Scope國際巨星阿湯哥-—-—-Global-Level-Scope住在隔壁號稱歌神的里長阿伯-—-—-Block-Level-Scope-ES6"><a href="#在-JavaScript-裡，有-3-種等級的作用域：香港喜劇天王星爺-—-—-Function-Level-Scope國際巨星阿湯哥-—-—-Global-Level-Scope住在隔壁號稱歌神的里長阿伯-—-—-Block-Level-Scope-ES6" class="headerlink" title="在 JavaScript 裡，有 3 種等級的作用域：香港喜劇天王星爺 — — Function Level Scope國際巨星阿湯哥 — — Global Level Scope住在隔壁號稱歌神的里長阿伯 — — Block Level Scope (ES6)"></a>在 JavaScript 裡，有 3 種等級的作用域：香港喜劇天王星爺 — — Function Level Scope國際巨星阿湯哥 — — Global Level Scope住在隔壁號稱歌神的里長阿伯 — — Block Level Scope (ES6)</h2><h2 id="Function-Level-Scope（香港喜劇天王星爺）"><a href="#Function-Level-Scope（香港喜劇天王星爺）" class="headerlink" title="Function Level Scope（香港喜劇天王星爺）"></a><strong>Function Level Scope（香港喜劇天王星爺）</strong></h2><p>離開了Function 就沒有人認識他，就好比星爺在台灣無人不知無人不曉，但到歐美認識他的反而是少數。</p>
+<p>這種變數我們常稱為<strong>區域變數(Local Variables)</strong></p>
+<h2 id="Global-Level-Scope-國際巨星阿湯哥"><a href="#Global-Level-Scope-國際巨星阿湯哥" class="headerlink" title="Global Level Scope(國際巨星阿湯哥)"></a><strong>Global Level Scope(國際巨星阿湯哥)</strong></h2><p>在每個執行 JavaScript 程式的環境，會有一個**全域物件 (Global Object)**：</p>
+<ul>
+<li>在 HTML 裡，全域物件是 <code>window</code> object。</li>
+<li>在 Node.js 裡，全域物件是 <code>global</code> object。</li>
+</ul>
+<p>存放在全域物件裡的變數，<strong>無論在哪裡宣告，效力都能遍及整個程式</strong>，我們稱為**全域變數 (Global Variables)**。</p>
+<p>就好比你現在去捍衛戰士2有上映的國家，問認不認識阿湯哥一樣，大家都知道他是誰。</p>
+<h3 id="注意！！！在-JavaScript-裡有一種狀況會自動產生全域變數，那就是賦值給未宣告的變數。"><a href="#注意！！！在-JavaScript-裡有一種狀況會自動產生全域變數，那就是賦值給未宣告的變數。" class="headerlink" title="注意！！！在 JavaScript 裡有一種狀況會自動產生全域變數，那就是賦值給未宣告的變數。"></a>注意！！！在 JavaScript 裡有一種狀況會自動產生全域變數，那就是賦值給未宣告的變數。</h3><h2 id="Block-Level-Scope-住在隔壁號稱歌神的里長阿伯"><a href="#Block-Level-Scope-住在隔壁號稱歌神的里長阿伯" class="headerlink" title="Block Level Scope(住在隔壁號稱歌神的里長阿伯)"></a><strong>Block Level Scope(住在隔壁號稱歌神的里長阿伯)</strong></h2><p>Block Level 的作用域範圍可能非常小，只是一個函數裡的某一段程式。程式裡 Block 指的是一段用大括號 (<code>&#123;</code> 和 <code>&#125;</code>) 包起來的區塊。</p>
+<p>雖然可能出了這一里就沒人認得他們，但在這一里的範圍內，他們就是婆婆媽媽們心中最強的情歌王子。</p>
+<p><strong>但在 ES5 之前，用 <code>var</code> 關鍵字去宣告的變數，只會有 Global Level 和 Function Level 兩種等級的作用域，因此沒有這個概念</strong>。<strong>但在ES6 導入了新的變數宣告關鍵字：<code>let</code> 和 <code>const</code>，不僅提高變數控管的嚴謹性，也增加了 Block Scope 的用途</strong>。</p>
+<h1 id="傳統-var-和-創新-let-amp-const"><a href="#傳統-var-和-創新-let-amp-const" class="headerlink" title="傳統 var 和 創新 let &amp; const"></a><strong>傳統 var 和 創新 let &amp; const</strong></h1><p>傳統 <code>var</code> 宣告變數的語法如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var gameName = &quot;IT Help 2019&quot;;</span><br><span class="line">var gamer = &quot;OneJar&quot;, topic = &quot;Something about JavaScript&quot;, progress = 7;</span><br><span class="line">var isFinished;</span><br><span class="line">// A variable declared without a value will have the value **undefined**.</span><br></pre></td></tr></table></figure>
+
+<p>要點懶人包：</p>
+<ul>
+<li>使用 <code>var</code> 關鍵字來宣告變數。</li>
+<li>可只用一次 <code>var</code> 一次宣告多個變數，用逗號 (<code>,</code>) 區隔。</li>
+<li>宣告的同時可進行初始化，也就是賦值。</li>
+<li>若沒有初始化，則預設值會是 <code>undefined</code>。</li>
+</ul>
+<p>傳統 <code>var</code> 宣告變數的 3 個缺點：</p>
+<ol>
+<li>語法允許重複宣告 (Re-Declaring)</li>
+<li>不支援區塊作用域 (Block Scope)</li>
+<li>不支援常數 (Constant) 特性</li>
+</ol>
+<p>針對上面的問題在ES6時做了一次改進，下面簡單介紹 let &amp; const</p>
+<h1 id="let"><a href="#let" class="headerlink" title="let"></a><strong>let</strong></h1><ul>
+<li>支援 Block Scope。</li>
+<li>禁止同一層 Block 重複宣告變數。</li>
+<li>不會產生 Global Scope 變數。</li>
+</ul>
+<h1 id="const"><a href="#const" class="headerlink" title="const"></a><strong>const</strong></h1><ul>
+<li>具備 <code>let</code> 的所有特性。</li>
+<li>定義時必須初始化 (Initialization)。</li>
+<li>後續不能更改值。</li>
+</ul>
+<h2 id="應避免使用-var，改用-let-和-const"><a href="#應避免使用-var，改用-let-和-const" class="headerlink" title="應避免使用 var，改用 let 和 const"></a><strong>應避免使用 <code>var</code>，改用 <code>let</code> 和 <code>const</code></strong></h2><p>ES6 導入 <code>let</code> 和 <code>const</code>，改善 <code>var</code> 在變數宣告和管制上的不足，讓程式的變數控管可以更加嚴謹，減少出錯的機率。</p>
+<p>因此未來撰寫 JavaScript 時，應該全面使用 <code>let</code> 和 <code>const</code> 來取代 <code>var</code>，讓程式碼更加嚴謹安全。</p>
+<p>這篇是簡單的把作者的幾篇文章剪輯起來，整理成一篇筆記。並沒有像之前一樣參考2~3份資料融合起來。</p>
+<p>學習程式真的是一件痛苦又好玩的事情，痛苦的事資料越讀越多，但好玩是指會在某一天你就突然看懂之前完全不了解的事情，像之前第一次碰到arrow function 我完全不知道這到底怎麼用，但這次在複習時就覺得之前的自己是笨蛋嗎？當初居然還要想這麼久！</p>
+<p>忘記是哪看來的：『先把書讀厚，然後要越讀越薄』我自己理解的是：在學習過程，在書上解釋不清楚的或是只有稍微點到沒深入講解的內容，我要多去找書本外的知識;然後要把知識理順內化成自己的想法！</p>
+<p>目前還在讀厚的階段！</p>
+<p>參考資料：</p>
+<p><a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10203387">https://ithelp.ithome.com.tw/articles/10203387</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/30/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97-2022-12-30-day14/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpeg">
+      <meta itemprop="name" content="Jeff">
+      <meta itemprop="description" content="這是一個紀錄自己成長的地方">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jeff的隨手筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/12/30/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97-2022-12-30-day14/" class="post-title-link" itemprop="url">『新手日記』Day-14 RWD</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2022-12-30 15:25:42 / Modified: 15:47:08" itemprop="dateCreated datePublished" datetime="2022-12-30T15:25:42+08:00">2022-12-30</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97/" itemprop="url" rel="index"><span itemprop="name">新手日記系列</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="『新手日記』Day-14-RWD"><a href="#『新手日記』Day-14-RWD" class="headerlink" title="『新手日記』Day-14 RWD"></a><strong>『新手日記』Day-14 RWD</strong></h1><p><img src="https://miro.medium.com/max/1400/1*fYdANUx-Fu420wytrrvpHw.jpeg" alt="https://miro.medium.com/max/1400/1*fYdANUx-Fu420wytrrvpHw.jpeg"></p>
+<p>時間過得真快，多久沒去酒吧喝點小酒放鬆一下了！回歸正題，今天開始要來用練習來代替純理論學習了，昨天稍微排了一下到月底的學習進度安排(AC的自修2–3後端課程、自己在Udemy買的全端課程以及React課程)，保守估計我還需要3週左右才能完成而且每天要約10～12小時的讀書時間…但新教案預計月中會出來，等新教案一出來就要開始預習了，不然很怕跟不上進度。</p>
+<p>所以…有阿姨嗎？我不想努力了</p>
+<p>今天早上是複習 RWD 理論，下午針對他做練習。下面是我自己依照ＡＣ課程做的筆記</p>
+<h1 id="響應式網站設計-Responsive-Web-Design"><a href="#響應式網站設計-Responsive-Web-Design" class="headerlink" title="響應式網站設計 (Responsive Web Design)"></a><strong>響應式網站設計 (Responsive Web Design)</strong></h1><p>不同的裝置意謂著不同的螢幕尺寸，在不同的尺寸上，同一組網頁內容必須有不同的呈現方式</p>
+<p>RWD 是一種「設計原則」，底下又可以分成不同的流動模式。</p>
+<p><a target="_blank" rel="noopener" href="https://web.dev/learn/design/">Learn Responsive Design</a></p>
+<h1 id="viewport-控制面板"><a href="#viewport-控制面板" class="headerlink" title="viewport 控制面板"></a><strong>viewport 控制面板</strong></h1><p><strong>viewport</strong>：網頁的<strong>可視範圍</strong>，也就是瀏覽器裡顯示網頁的區域</p>
+<p>Viewport controls 讓你可以模擬網站在特定裝置上呈現的樣子；也可透過直接調整 viewport 大小來測試 RWD。包括以下兩種模式：</p>
+<blockquote>
+<p>Responsive</p>
+</blockquote>
+<p>Google 建議在網站或應用程式開發期間使用 responsive 模式為預設模式。透過位於右方的的尺寸調整把手或在頂部的工具欄，直接調整 viewport 大小去觀察網站的行為。</p>
+<blockquote>
+<p>特定裝置：Galaxy S5、Pixel 2、iPhoneX、iPad 等</p>
+</blockquote>
+<p>接近開發末期，想要進一步改善網站在特定裝置的呈現時，才需要使用特定裝置模式。下拉選單裡提供了最熱門的裝置清單。</p>
+<h2 id="實體像素與-PPls"><a href="#實體像素與-PPls" class="headerlink" title="實體像素與 PPls"></a><strong>實體像素與 PPls</strong></h2><p>實體像素（或稱硬體像素）：是指螢幕會發光的最小硬度單元。</p>
+<p><strong>PPls :</strong> 每寸像素（pixels per inch），也就是像素密度，密度越高，肉眼就會感受到更鮮明、更清晰的畫面</p>
+<h2 id="螢幕解析度"><a href="#螢幕解析度" class="headerlink" title="螢幕解析度"></a><strong>螢幕解析度</strong></h2><p>一個螢幕能容納的實體像素面積。</p>
+<h2 id="CSS像素"><a href="#CSS像素" class="headerlink" title="CSS像素"></a><strong>CSS像素</strong></h2><p>由全球資訊網 (World Wide Web, 也就是 W3C) 創立的抽象名詞，它是一個無視裝置差別而且等長的測量單位，專門用在網頁開發使用。</p>
+<p>曾經實體像素跟CSS素是1:1 ，但隨著時代發展，如今已經失去關聯</p>
+<h1 id="設定Viewport"><a href="#設定Viewport" class="headerlink" title="設定Viewport"></a><strong>設定Viewport</strong></h1><p>設定 viewport 的目的是告訴瀏覽器 viewport 的寬度以什麼為基準，以及這個寬度和 CSS 之間的比例關係。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">//在HTML 的 &lt;head&gt; 加入</span><br><span class="line">&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;</span><br></pre></td></tr></table></figure>
+
+<p>使用 <code>&lt;meta name=&quot;viewport&quot;&gt;</code>標籤並帶入以下兩個屬性：</p>
+<blockquote>
+<p>width&#x3D;device-width 調整內容寬度為裝置寬度；</p>
+</blockquote>
+<p>如果寫 <code>width=320px</code>，那麼當螢幕尺寸改變時，viewport 的寬度都仍然是 320px，如下圖：</p>
+<p><img src="https://miro.medium.com/max/1400/1*IAqsukLDndXDySbvCAmA2g.png" alt="https://miro.medium.com/max/1400/1*IAqsukLDndXDySbvCAmA2g.png"></p>
+<p>當螢幕寬度變大時，為了維持寬度為 320px，內容就被拉大了，這是我們不想要看到的結果。</p>
+<p>為了達成 RWD 與好的用戶體驗，建議把 viewport 寬度設定為 <code>width=device-width</code>，這樣會讓網頁內容與裝置螢幕寬度一致。</p>
+<blockquote>
+<p>initial-scale&#x3D;1 設定「CSS 像素」和「裝置像素」的比例為 1:1。</p>
+</blockquote>
+<h1 id="MDN解釋：Controls-the-zoom-level-when-the-page-is-first-loaded-Minimum-Maximum-Default-Negative-values-ignored"><a href="#MDN解釋：Controls-the-zoom-level-when-the-page-is-first-loaded-Minimum-Maximum-Default-Negative-values-ignored" class="headerlink" title="ＭＤＮ解釋：Controls the zoom level when the page is first loaded. Minimum: . Maximum: . Default:. Negative values: ignored."></a>ＭＤＮ解釋：Controls the zoom level when the page is first loaded. Minimum: . Maximum: . Default:. Negative values: ignored.</h1><p>設定畫面的初始縮放比例</p>
+<blockquote>
+<p>Viewport 屬性說明</p>
+</blockquote>
+<p>當然Viewport 還有其他屬性，以下是其他會用到的屬性：</p>
+<p><img src="https://miro.medium.com/max/876/1*qgic1MeoudxonnAZ5ROHKg.png" alt="https://miro.medium.com/max/876/1*qgic1MeoudxonnAZ5ROHKg.png"></p>
+<h1 id="製作-RWD-的基本動作"><a href="#製作-RWD-的基本動作" class="headerlink" title="製作 RWD 的基本動作"></a><strong>製作 RWD 的基本動作</strong></h1><ul>
+<li>定義預設的 viewport 尺寸</li>
+<li>使用 CSS 媒體查詢 (media queries)ㄥ</li>
+<li>設定分界點 (breakpoint)</li>
+</ul>
+<p><strong>Mobile First</strong></p>
+<p>首先強調，在<strong>思考 RWD 設計時，應該先從最小螢幕尺寸開始考慮</strong>，也就是手機。</p>
+<p>小螢幕能顯示的內容比較少，而且在較小的螢幕上能運用的佈局有限，因此它應該優先被考慮。先做出迎合最小螢幕的網站內容，再慢慢思考當螢幕變大時，可以追加什麼網站內容。</p>
+<p><img src="https://miro.medium.com/max/1400/1*nLHJu59YlwOX06wD_jwhRw.png" alt="https://miro.medium.com/max/1400/1*nLHJu59YlwOX06wD_jwhRw.png"></p>
+<p>💡 <em>Mobile First 的焦點是「網站內容如何逐漸變多」，而不是單純把同一套內容塞進不同尺寸</em></p>
+<p><strong>Breakpoint</strong></p>
+<p>當尺寸改變時，網頁佈局發生了顯著的變化，這些尺寸的界線叫做 breakpoint，也就是 CSS 樣式轉換的發生點。</p>
+<p><img src="https://miro.medium.com/max/1400/1*FmPoZAMqKGyqwEV71Wl2Iw.png" alt="https://miro.medium.com/max/1400/1*FmPoZAMqKGyqwEV71Wl2Iw.png"></p>
+<p>每設一個 breakpoint 意味需要準備多一份 CSS 樣式，要抓得多細是看設計的需求，稍後會介紹對應的語法。</p>
+<p>除了上述幾個在設備間切換的主要分界點 (major breakpoint)，也會設定次要分界點 (minor breakpoint) 來調整比較細微的 CSS 變化，像是元素的邊距、避免文字超過頁面寬度，或是調整圖片尺寸。</p>
+<h1 id="Media-Queries"><a href="#Media-Queries" class="headerlink" title="Media Queries"></a><strong>Media Queries</strong></h1><p>💡 媒體查詢使用<code>@media</code>關鍵字（CSS 規則）啟動，可用於各種用例。</p>
+<p>要瞭解 media queries，需要先從 CSS 的 media 屬性開始。</p>
+<p>CSS2 推出 <code>media</code> 屬性時，還沒有進入行動優先的時代，只是單純想把在螢幕上看網頁的情境，和列印的情境區隔開來，在前者顯示較小的字體，而在列印時顯示較大的字體。</p>
+<p>例如以下引入了三支樣式表，並透過 <code>media</code> 指派給不同的裝置，依序為所有裝置 (all)、螢幕 (screen)、印表機 (print)：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;link href=&quot;css/style.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot; media=&quot;all&quot; /&gt;</span><br><span class="line">&lt;link href=&quot;css/screen.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot; media=&quot;screen&quot; /&gt;</span><br><span class="line">&lt;link href=&quot;css/print.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot; media=&quot;print&quot; /&gt;@media (max-width: 600px) &#123;...//styles&#125;</span><br><span class="line">@media screen and (max-width: 600px) &#123;...//styles&#125;</span><br><span class="line">@media screen and (min-width: 600px) and (max-width: 1000px) &#123;...//styles&#125;</span><br></pre></td></tr></table></figure>
+
+<p>第一組設定沒有公布 media type，所以會預設成 <code>all</code>，但有設定 media feature 為「最大寬度為 600px」，也就是寫在 <code>&#123;&#125;</code> 內的設定只有在寬度小於 600px 時才會生效。</p>
+<p>在開發網頁時，通常會直接把 media type 被設為 <code>screen</code>。</p>
+<p>使用條件查詢的作法比較有彈性，因為我們可以設定不同的 breakpoint，根據不同的狀況來載入 CSS 設定，因此能達成「回應不同的寬度」。</p>
+<p><img src="https://miro.medium.com/max/1400/1*goZ4RaF2QtCTc9i5F-iOwg.png" alt="https://miro.medium.com/max/1400/1*goZ4RaF2QtCTc9i5F-iOwg.png"></p>
+<p>你可以在 media feature 裡使用 <code>and</code>、<code>or</code>或 <code>not</code>等運算子，使用方法和程式語言相同，只要條件為 true，就會繼續執行。</p>
+<p>💡 剛剛我們談到了「行動優先」的原則，在此原則指導下，當你要開始分流時，應該先針對較小的尺寸來設定</p>
+<h1 id="｜單位"><a href="#｜單位" class="headerlink" title="｜單位"></a><strong>｜單位</strong></h1><h1 id="百分比"><a href="#百分比" class="headerlink" title="百分比"></a><strong>百分比</strong></h1><p>最常用的相對單位就是百分比 (%) 了，使用百分比，這樣在 viewport 尺寸改變時，元素才能與 viewport 同時動態縮放。</p>
+<p><img src="https://miro.medium.com/max/1400/1*pLT5EAsOzpQwL6J1ATAlDA.png" alt="https://miro.medium.com/max/1400/1*pLT5EAsOzpQwL6J1ATAlDA.png"></p>
+<h1 id="絕對單位"><a href="#絕對單位" class="headerlink" title="絕對單位"></a><strong>絕對單位</strong></h1><p>你會常常需要換算絕對單位與相對單位，換算公式為：<code>target ÷ context = result</code></p>
+<ul>
+<li>target — 原本的絕對單位</li>
+<li>context — 父元素的單位</li>
+<li>result — 百分比</li>
+</ul>
+<p><img src="https://miro.medium.com/max/1400/1*oLlgM4AnxQ8jJ00GOSyArw.png" alt="https://miro.medium.com/max/1400/1*oLlgM4AnxQ8jJ00GOSyArw.png"></p>
+<h1 id="viewport-相對單位"><a href="#viewport-相對單位" class="headerlink" title="viewport 相對單位"></a><strong>viewport 相對單位</strong></h1><ul>
+<li>*viewport 百分比長度 (viewport percentage lengths)**是很方便的單位，這些單位會隨著 viewport 尺寸一同縮放：</li>
+<li><code>vw</code> - 對應到 width of viewport 的比例</li>
+<li><code>vh</code> - 對應到 height of viewport 的比例</li>
+<li><code>vmin</code> - 等於 <code>vw</code> 或 <code>vh</code> 較小的值</li>
+<li><code>vmax</code> - 等於 <code>vw</code> 或 <code>vh</code> 較大的值，</li>
+</ul>
+<p>若 viewport 的寬是 1200 像素，且 viewport 的高是 900 像素時：</p>
+<p>1vw 會等於 viewport 寬度的 1%，也就是 12 像素。</p>
+<p>這裡寬比高的值大，也就是說 vw 比 vh 大，所以 1vmax ＝ 1vw 的大小，。</p>
+<h1 id="字體相對單位"><a href="#字體相對單位" class="headerlink" title="字體相對單位"></a><strong>字體相對單位</strong></h1><p><code>em</code> 用於文字大小，以<strong>父元素</strong>的 font-size 為基準</p>
+<p>例如，父元素的字體大小為 16px，子元素設定 <code>1em</code>等同於設定成 16 像素；</p>
+<h1 id="限制彈性"><a href="#限制彈性" class="headerlink" title="限制彈性"></a><strong>限制彈性</strong></h1><p>當內容不適合變得太大或太小，因此你會使用 <code>min-width</code>、<code>max-width</code>、<code>min-height</code>和 <code>max-height</code>等屬性來控制邊界值。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">img &#123;</span><br><span class="line">  width: 100%;</span><br><span class="line">  max-width: 960px;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>通常我們會把網站內容整個包在 container (或稱 wrapper) 裡，以便讓內容置中，這個 container 通常會設定成 <code>width: 100%</code>（暫時可理解為與 <code>&lt;body&gt;</code>同寬），但當 container 延展開來時，一行文字就會被拉得超長，反而造成不好的閱讀體驗。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">.container &#123;</span><br><span class="line">  width: 90%;</span><br><span class="line">  max-width: 960px;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>至於 <code>min-width</code>，則有可能在表單裡使用，不管 width 的值設成多少，它們都不會小於 min-width 設定的值。</p>
+<h1 id="｜設計模式：局部流動-Mostly-Fluid"><a href="#｜設計模式：局部流動-Mostly-Fluid" class="headerlink" title="｜設計模式：局部流動 (Mostly Fluid)"></a><strong>｜設計模式：局部流動 (Mostly Fluid)</strong></h1><h1 id="定義-Flexbox-架構"><a href="#定義-Flexbox-架構" class="headerlink" title="定義 Flexbox 架構"></a><strong>定義 Flexbox 架構</strong></h1><p>根據目前的 HTML 結構，我們可以定義出一層 flexbox 的 container-item 架構：</p>
+<p><img src="https://miro.medium.com/max/1400/1*F6VhOs3MhqD7mF4__wL3Sg.png" alt="https://miro.medium.com/max/1400/1*F6VhOs3MhqD7mF4__wL3Sg.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">.wrapper &#123;</span><br><span class="line">  display: flex;</span><br><span class="line">  flex-flow: row wrap;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>flex-flow: row wrap;</code>會讓 flex item 與 flex container 同步調整大小，讓 item 與 container 之間不會有溢出邊界 (overflow) 的問題。</p>
+<h1 id="設置-breakpoint"><a href="#設置-breakpoint" class="headerlink" title="設置 breakpoint"></a><strong>設置 breakpoint</strong></h1><p>根據 Mobile First 的原則，從最小的 viewport 開始，逐漸設計較大的 viewport 佈局。</p>
+<p>💡 <code>line-height</code>顧名思義就是文字的單行高度，單行文字垂直置中的技巧</p>
+<p><a target="_blank" rel="noopener" href="http://csscoke.com/2018/08/21/css-vertical-align/">CSS垂直置中技巧，我只會23個，你會幾個</a></p>
+<h1 id="設計模式：細微調整-Tiny-Tweaks"><a href="#設計模式：細微調整-Tiny-Tweaks" class="headerlink" title="設計模式：細微調整 (Tiny Tweaks)"></a><strong>設計模式：細微調整 (Tiny Tweaks)</strong></h1><p>px&lt;&gt;em轉換器</p>
+<p><a target="_blank" rel="noopener" href="https://www.w3schools.com/tags/ref_pxtoemconversion.asp">PX to EM Conversion</a></p>
+<ol>
+<li>line-height(行高)，一般為1.5em，或字體大小1.5倍。</li>
+<li>paragraph(段落)，一般為2em。</li>
+<li>letter-spacing(文字間距)，一般為0.12em，所以實作在手機版(mobile-first) ，屬性.description內文先統一設定，行高和文字間距，讓網頁在各種RWD提升一點易讀性。字體大小依據個容器和寬度，自行用相對單位(rem)，用倍率逐步放大。</li>
+</ol>
+<p>快要不知道可以分享什麼了，我需要好好思考一下接下來的主題。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/30/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97-2022-12-30-day13/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpeg">
+      <meta itemprop="name" content="Jeff">
+      <meta itemprop="description" content="這是一個紀錄自己成長的地方">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jeff的隨手筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/12/30/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97-2022-12-30-day13/" class="post-title-link" itemprop="url">『新手日記』Day-13 JavaScript DOM Event</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2022-12-30 15:24:42 / Modified: 15:46:18" itemprop="dateCreated datePublished" datetime="2022-12-30T15:24:42+08:00">2022-12-30</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97/" itemprop="url" rel="index"><span itemprop="name">新手日記系列</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="『新手日記』Day-13-JavaScript-DOM-Event"><a href="#『新手日記』Day-13-JavaScript-DOM-Event" class="headerlink" title="『新手日記』Day-13 JavaScript DOM Event"></a><strong>『新手日記』Day-13 JavaScript DOM Event</strong></h1><p><img src="https://miro.medium.com/max/1000/1*6DQG1WCHsaePoc5iCUJusg.jpeg" alt="https://miro.medium.com/max/1000/1*6DQG1WCHsaePoc5iCUJusg.jpeg"></p>
+<p>JavaScript 是一個事件驅動 (Event-driven) 的程式語言，當瀏覽器載入網頁開始讀取後，雖然馬上會讀取 JavaScript 事件相關的程式碼，但是必須等到「事件」被觸發(如使用者點擊、按下鍵盤等)後，才會再進行對應程式的執行。</p>
+<h1 id="Event-Flow（事件流程）"><a href="#Event-Flow（事件流程）" class="headerlink" title="Event Flow（事件流程）"></a><strong>Event Flow（事件流程）</strong></h1><p>『<strong>網頁元素接收事件的順序』</strong></p>
+<p><img src="https://miro.medium.com/max/582/1*X-QnjXjrnauAeRhfu6N3CQ.png" alt="https://miro.medium.com/max/582/1*X-QnjXjrnauAeRhfu6N3CQ.png"></p>
+<p>事件流程可以分成兩種機制：</p>
+<ul>
+<li>Event Bubbling(事件冒泡)</li>
+<li>Event Capturing(事件捕獲)</li>
+</ul>
+<h1 id="Event-Bubbling-事件冒泡"><a href="#Event-Bubbling-事件冒泡" class="headerlink" title="Event Bubbling(事件冒泡)"></a><strong>Event Bubbling(事件冒泡)</strong></h1><p>事件冒泡指的是「從啟動事件的節點 (event.target) 開始，逐層往上傳遞」，直到整個網頁的根節點 <code>document</code>為止。（由下而上）</p>
+<p>例如在 Todo List 裡監聽刪除事件時，click 事件發生在刪除按鈕 <code>i.delete</code> 上，但由於事件為往上傳遞，因此 <code>ul</code> 也收到了 click 事件，因而啟動了監聽器裡的 handler。</p>
+<p>在「事件冒泡」的機制下，觸發事件的順序會是：</p>
+<p><img src="https://miro.medium.com/max/488/1*pFKhth-Clagpljlgs3r81A.png" alt="https://miro.medium.com/max/488/1*pFKhth-Clagpljlgs3r81A.png"></p>
+<p>如果到某一層你想阻擋事件繼續往下一層傳播，你可以在該層使用 <code>event.stopPropagation()</code>來阻止事件的傳播。</p>
+<h1 id="Event-Capturing-事件捕獲"><a href="#Event-Capturing-事件捕獲" class="headerlink" title="Event Capturing(事件捕獲)"></a><strong>Event Capturing(事件捕獲)</strong></h1><p>跟Event Bubbling 相反，由上而下的傳遞則稱為「事件捕獲」。Capture 機制很少在實作中被運用，因此他通常是隱藏起來的。</p>
+<p>依照 <a target="_blank" rel="noopener" href="https://www.w3.org/TR/DOM-Level-3-Events/">W3C DOM Events 標準</a>的說明，當你點擊某個元素時，瀏覽器會先從最高層開始 capturing，一路前往到事件 target，再向上 bubbling：</p>
+<p><img src="https://miro.medium.com/max/422/1*v9RCmhfU3ZNf4iQX4wc7YQ.png" alt="https://miro.medium.com/max/422/1*v9RCmhfU3ZNf4iQX4wc7YQ.png"></p>
+<p>由於元素之間有這樣的上下回報機制，我們的事件才能順利地動起來。</p>
+<p>但在實作上，幾乎不會遇到情境需要運用 capture，但刻意想打開時，可以運用事件監聽器的第三個參數。這個參數用來切換 capture，預設值為 <code>false</code>，刻意想打開時，可以設定為 <code>true</code>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">element.addEventListener(&quot;click&quot;, handler, useCapture)</span><br></pre></td></tr></table></figure>
+
+<h1 id="EventTarget-addEventListener-事件監聽"><a href="#EventTarget-addEventListener-事件監聽" class="headerlink" title="EventTarget.addEventListener()事件監聽"></a><strong>EventTarget.addEventListener()事件監聽</strong></h1><p>設置事件時，需要考慮到幾個基本要件：</p>
+<ul>
+<li>觸發事件的 HTML 元素</li>
+<li>事件類型，如 click、submit、keyup….</li>
+<li>想要觸發的程式，會是一個函式，該函式會稱為事件處理器 (event handler)</li>
+</ul>
+<p>而實務上，會多做一層「事件監聽器 (event listener)」，扮演 HTML 和 JavaScript 之間的接線生</p>
+<p><img src="https://miro.medium.com/max/1400/0*YS6kw_mPrr3C6oMq.png" alt="https://miro.medium.com/max/1400/0*YS6kw_mPrr3C6oMq.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// listener</span><br><span class="line">element.addEventListener(&#x27;click&#x27;, greeting)</span><br><span class="line">// handler</span><br><span class="line">function greeting() &#123;</span><br><span class="line">  alert(&#x27;handling event&#x27;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>addEventListener</code> 可以傳入三個參數：</p>
+<ul>
+<li><strong>event type</strong>，如 <code>&#39;click&#39;</code></li>
+<li><strong>handler</strong>，要啟動的 function，也可以直接使用匿名</li>
+<li>函式 (見下例)</li>
+</ul>
+<p><strong><code>element.addEventListener(&#39;click&#39;, function () &#123; alert(&#39;handling event&#39;) &#125;,useCapture)</code></strong></p>
+<ul>
+<li><strong>useCapture</strong>，切換 capturing 機制 ，預設值為 <code>false</code>，刻意想打開時，可以設定為 <code>true。</code>一般不會用到第三個參數。</li>
+</ul>
+<h1 id="Event-Type"><a href="#Event-Type" class="headerlink" title="Event Type"></a><strong>Event Type</strong></h1><p>事件的種類實在太多，以下就列出幾個常見的事件，剩下的就附上MDN網址：</p>
+<blockquote>
+<p>滑鼠事件</p>
+</blockquote>
+<p>鼠標在網頁上滑動時會跨越不同的元素邊界，它的事件設置有豐富的可能性，你可以點擊<a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent">這裡</a>查看完整的清單，但一般而言，最常見的有以下三種：</p>
+<ul>
+<li><code>click</code> - 鼠標點擊元素</li>
+<li><code>mousemove</code> - 鼠標滑過元素</li>
+<li><code>mouseout</code> - 鼠標離開元素</li>
+</ul>
+<blockquote>
+<p>鍵盤事件</p>
+</blockquote>
+<p>最常用常見的鍵盤事件有：</p>
+<ul>
+<li><code>keydown</code> - 點擊且長按一個鍵時</li>
+<li><code>keyup</code> - 放開按鍵時</li>
+</ul>
+<p>完整的清單可看<a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent">這裡</a>。</p>
+<blockquote>
+<p>表單事件</p>
+</blockquote>
+<p>表單是網頁上獲取使用者回饋的重要元件，當你在網站上使用表單時，你的行為會受到 DOM 物件<code>FormElementInterface</code> 監控。關於表單需要另開一個主題討論，常見事件有：</p>
+<ul>
+<li><code>submit</code> - 提交表單時</li>
+<li><code>focus</code> - 點擊某個輸入框時</li>
+<li><code>input</code> - 輸入框內容改變時</li>
+</ul>
+<blockquote>
+<p>document 事件</p>
+</blockquote>
+<ul>
+<li><code>DOMContentLoaded</code> - 當 HTML 下載完成並完整的建立 DOM 模型時觸發</li>
+</ul>
+<p>就和我們總是在 <code>&lt;/body&gt;</code> 前引入 JavaScript 檔案一樣，如果 HTML 還沒下載完就先進行 DOM 操作，勢必會遇到奇怪問題。在實務上除了注意檔案引入位置，在 JavaScript 時還會再包一層 <code>DOMContentLoaded</code>，確保萬無一失。</p>
+<blockquote>
+<p>其他事件</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/API/Event">Event — Web APIs | MDN</a></p>
+<h1 id="Event-Delegation-事件指派"><a href="#Event-Delegation-事件指派" class="headerlink" title="Event Delegation(事件指派)"></a><strong>Event Delegation(事件指派)</strong></h1><p>事件指派是利用前面介紹的「事件流程」以及「單一事件監聽器」來處理多個事件目標。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">// html:</span><br><span class="line">	&lt;div id=&quot;todo-title&quot;&gt;</span><br><span class="line">    &lt;h4&gt;Todo&lt;/h4&gt;</span><br><span class="line">    &lt;ul id=&quot;my-todo&quot; class=&quot;list-unstyled&quot;&gt;</span><br><span class="line">      &lt;!-- display todos here --&gt;</span><br><span class="line">    &lt;/ul&gt;</span><br><span class="line">    &lt;h4&gt;Done&lt;/h4&gt;</span><br><span class="line">    &lt;ul class=&quot;done-list list-unstyled&quot;&gt;&lt;/ul&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">// Delete and check</span><br><span class="line">todoTitle.addEventListener(&quot;click&quot;, function (event) &#123;</span><br><span class="line">  const target = event.target;</span><br><span class="line">  const parentElement = target.parentElement;</span><br><span class="line">  if (target.classList.contains(&quot;delete&quot;)) &#123;</span><br><span class="line">    ...</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>我們看到我們的監聽器放在最外層的<div>，這樣的好處是我們不用掛載很多<strong>監聽器</strong>，因為當我有100條todo時，這樣我要掛100個監聽器太讓費時間了</p>
+<p>這邊我們看到了<code>target = [event.target](&lt;http://event.target&gt;)</code>這是什麼意思？其實他是『event object』</p>
+<h1 id="Event-inheritance"><a href="#Event-inheritance" class="headerlink" title="Event inheritance"></a><strong>Event inheritance</strong></h1><p>在進入event object 時，要先提到inheritance</p>
+<h1 id="inheritance-繼承-指的是一個物件擁有另一個物件的和"><a href="#inheritance-繼承-指的是一個物件擁有另一個物件的和" class="headerlink" title="inheritance(繼承)指的是一個物件擁有另一個物件的和"></a>inheritance(繼承)指的是一個物件擁有另一個物件的和</h1><p>💡 JavaScript使用的是 <code>原型繼承 prototypal inheritance</code></p>
+<p><img src="https://miro.medium.com/max/1400/1*d6XgqVv1Gbidd50uZNq0OA.png" alt="https://miro.medium.com/max/1400/1*d6XgqVv1Gbidd50uZNq0OA.png"></p>
+<p>如上圖，我們可以知道所有的Event 都是inheritance 最上方的<strong>Event Object</strong>，在<a target="_blank" rel="noopener" href="https://www.w3schools.com/jsref/obj_event.asp">w3schools</a>裡也有提到：</p>
+<p><img src="https://miro.medium.com/max/1400/1*AWeF3ECxp_JTYJNj2B9rHQ.png" alt="https://miro.medium.com/max/1400/1*AWeF3ECxp_JTYJNj2B9rHQ.png"></p>
+<p>因此我們需要學習的就是<strong>Event Object的</strong><code>property(屬性)</code>和 <code>method(方法)</code></p>
+<h1 id="event-object"><a href="#event-object" class="headerlink" title="event object:"></a><strong>event object:</strong></h1><p>當監聽的事件發生時，瀏覽器會去執行我們透過 <code>addEventListener()</code> 註冊的 Event Handler (<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-TW/docs/Web/API/EventListener">EventListener</a>) ，也就是我們所指定的 <code>function</code>。</p>
+<p>這個時候，EventListener 會去建立一個「事件物件」 (Event Object)，裡面包含了所有與這個事件有關的屬性，並且以「參數」的形式傳給我們的 Event Handler</p>
+<p>其中有三個屬性要特別注意：</p>
+<blockquote>
+<p>target(目標)</p>
+</blockquote>
+<p>用途：需要知道到底我們觸發哪一個 DOM 元素時可以使用</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">const target = event.target</span><br></pre></td></tr></table></figure>
+
+<p>💡 <em><code>this</code> 跟 <code>event.target</code> 有點像，但是他們之間的區別是： 隨著 js 冒泡事件的發生，<code>this</code> 是會變化的，但 <code>event.target</code> 不會變化，它永遠是指觸發事件的 DOM 物件</em></p>
+<blockquote>
+<p>preventDefault</p>
+</blockquote>
+<p>用途：<strong>取消它們的預設行為，但並不會阻止事件向上傳遞 (事件冒泡) 。</strong></p>
+<p>有使用過的2個時機：</p>
+<ul>
+<li>按鈕用a標籤，因為a標籤必須要寫上連結，但點擊就是跳轉頁面。</li>
+<li>form的submit就會自動傳送資料。</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;form&gt;</span><br><span class="line">&lt;button type=&quot;submit&quot;&gt;送出&lt;/button&gt;</span><br><span class="line">&lt;/form&gt;let btn = document.querySelector(&#x27;button&#x27;);</span><br><span class="line">btn.addEventListener(&#x27;click&#x27;,e =&gt;&#123;</span><br><span class="line">    e.preventDefault();</span><br><span class="line">&#125;)//點按鈕時，表單不會被提交出去，頁面也不會重刷</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>stopPropagation()</p>
+</blockquote>
+<p>用途：阻擋事件向上冒泡傳遞</p>
+<p><img src="https://miro.medium.com/max/1400/1*UrVshOC1nd3BRNrTY4CqtQ.png" alt="https://miro.medium.com/max/1400/1*UrVshOC1nd3BRNrTY4CqtQ.png"></p>
+<p><img src="https://miro.medium.com/max/1400/1*d5ffSX1hROXkmjo8xR7ZSA.png" alt="https://miro.medium.com/max/1400/1*d5ffSX1hROXkmjo8xR7ZSA.png"></p>
+<h2 id="結語"><a href="#結語" class="headerlink" title="結語"></a><strong>結語</strong></h2><p>終於複習完一遍ＤＯM了，沒有想到會複習這麼久。如果只是單純看教案其實我感覺我一天左右就可以全部複習完，但因為要整理筆記，那整理過程中發現有些東西不了解又回去看教案或是網路上的資料才會導致比預期多花了一天。基礎理論的東西差不多都複習過了，接下來就是實作練習用大量的練習增加自己對這幾天複習內容的印象了。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/30/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97-2022-12-30-day12/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpeg">
+      <meta itemprop="name" content="Jeff">
+      <meta itemprop="description" content="這是一個紀錄自己成長的地方">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jeff的隨手筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/12/30/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97-2022-12-30-day12/" class="post-title-link" itemprop="url">『新手日記』Day-12 JavaScript DOM Tree</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2022-12-30 15:23:42 / Modified: 15:45:40" itemprop="dateCreated datePublished" datetime="2022-12-30T15:23:42+08:00">2022-12-30</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97/" itemprop="url" rel="index"><span itemprop="name">新手日記系列</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="『新手日記』Day-12-JavaScript-DOM-Tree"><a href="#『新手日記』Day-12-JavaScript-DOM-Tree" class="headerlink" title="『新手日記』Day-12 JavaScript DOM Tree"></a><strong>『新手日記』Day-12 JavaScript DOM Tree</strong></h1><p><img src="https://miro.medium.com/max/1000/1*XXb4iQGMsMkP9J9QYu2cMw.jpeg" alt="https://miro.medium.com/max/1000/1*XXb4iQGMsMkP9J9QYu2cMw.jpeg"></p>
+<p>居然失眠，搞得我整個進度大亂，而且我完全忘記複習DOM Tree，只好食言而肥了(反正已經胖成這樣沒差了)。看來禮拜天的休息日離我而去了…</p>
+<p>開頭不知道要打什麼，直接破題吧！</p>
+<h1 id="DOM-Tree"><a href="#DOM-Tree" class="headerlink" title="DOM Tree"></a><strong>DOM Tree</strong></h1><blockquote>
+<p>DOM 採用樹狀結構 (tree) 來儲存網頁元素，樹狀結構是資料結構的一種，特色是有明確的父子階層關係，也因為階層關係明確，按相對關係查找資料特別方便。</p>
+</blockquote>
+<p><img src="https://miro.medium.com/max/1400/1*3799IPVq759tBveaOYs2uA.png" alt="https://miro.medium.com/max/1400/1*3799IPVq759tBveaOYs2uA.png"></p>
+<p>樹狀裡每一個部分叫做「節點 (node)」，節點有四種類型：</p>
+<ul>
+<li>元素節點 (element node)</li>
+<li>文字節點 (text node)</li>
+<li>屬性節點 (attribute node)</li>
+<li>註解節點 (comment node)</li>
+</ul>
+<h1 id="BOM-window-object-補充昨天沒打到的"><a href="#BOM-window-object-補充昨天沒打到的" class="headerlink" title="BOM:window object(補充昨天沒打到的)"></a><strong>BOM:window object(補充昨天沒打到的)</strong></h1><blockquote>
+<p>它是一個 global variable，開啟瀏覽器的瞬間，window object 就會出現。它擁有自己的 Methods 跟 Properties。根節點：window</p>
+</blockquote>
+<h1 id="Properties"><a href="#Properties" class="headerlink" title="Properties:"></a><strong>Properties:</strong></h1><p>💡 OOP 物件導向： 一個物件可以是另一個物件的屬性</p>
+<blockquote>
+<p>Document</p>
+</blockquote>
+<p><strong>Document is an object. 所以他擁有自己的 methods 和 properties</strong></p>
+<p><strong><code>property:</code></strong></p>
+<p>有 body、doctype、charset、head…等。</p>
+<p><em><strong><code>methods:</code></strong></em></p>
+<p>💡 <strong>DOM中取得的HTML element 集合有兩種型別: HTMLCollection:只能放置 element 節點。 NodeList:並不限制儲存的節點型別，</strong> is not array 但可以使用forEach()、<strong>Array.from()</strong></p>
+<h2 id="需要認識："><a href="#需要認識：" class="headerlink" title="需要認識："></a><strong>需要認識：</strong></h2><p>getElementsByld()</p>
+<ul>
+<li>用 id 取得 Element，存在一個 <strong>HTMLCollection</strong> 裡面</li>
+</ul>
+<p>getElementsByClassName()</p>
+<ul>
+<li>用 class 取得 Element，存在一個 <strong>HTMLCollection</strong> 裡面</li>
+</ul>
+<h2 id="很重要："><a href="#很重要：" class="headerlink" title="很重要："></a><strong>很重要：</strong></h2><p>addEventListener()</p>
+<ul>
+<li>DOM Event(事件處理)時會在記錄！！！</li>
+</ul>
+<p>createElement()</p>
+<ul>
+<li>依指定的標籤名稱（<code>tagName</code>）建立 HTML 元素</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">let element = document.createElement(tagName);</span><br><span class="line">//tagName:A string that specifies(指定) the type of element to be created(創建)</span><br></pre></td></tr></table></figure>
+
+<h2 id="非常重要："><a href="#非常重要：" class="headerlink" title="非常重要："></a><strong>非常重要：</strong></h2><p>💡 <strong>query查詢、selector 選擇器 在html裡查詢，是用css的selector</strong></p>
+<blockquote>
+<p>querySelector()</p>
+</blockquote>
+<ul>
+<li>只會return 滿足第一個css selector 的 HTML element</li>
+</ul>
+<blockquote>
+<p>querySelectorAll()</p>
+</blockquote>
+<ul>
+<li>所有滿足條件的都會 return 回來，存在一個 NodeList 裡面</li>
+</ul>
+<blockquote>
+<p>localStorage &amp; sessionStorage</p>
+</blockquote>
+<ul>
+<li>HTML5提供兩種在客戶端儲存資料的方法，彌補了cookie儲存量小、不適用於大量資料本地儲存的問題。有以下幾個特色：</li>
+<li>都是使用 key &#x2F; value pair 的方式 給值或取值</li>
+<li>大小預設有 5mb</li>
+<li>每次 request 不會帶上</li>
+<li>都只能儲存string (js會自動幫你強制轉換)</li>
+</ul>
+<p><strong>清除方式：</strong></p>
+<p>Local Storage（手動清除或是使用clear()）</p>
+<p>Session Storage(關掉瀏覽器 就會清除)</p>
+<p>methods:</p>
+<ul>
+<li>setItem(key, value)</li>
+<li>getItem(key)</li>
+<li>removeItem(key)</li>
+<li>clear() no parameter</li>
+</ul>
+<p>💡 key 不能重複（像class的 id）</p>
+<h1 id="DOM-Element-Object"><a href="#DOM-Element-Object" class="headerlink" title="DOM:Element Object"></a><strong>DOM:Element Object</strong></h1><blockquote>
+<p>所有的 HTML Elements 都有 Element Object 的 properties 和 methods。有些 element 有自己的 methods根節點：document，代表網頁的本身。</p>
+</blockquote>
+<h1 id="children-amp-childNode-Property"><a href="#children-amp-childNode-Property" class="headerlink" title="children &amp; childNode Property"></a><strong>children &amp; childNode Property</strong></h1><blockquote>
+<p>children</p>
+</blockquote>
+<p>return 的值屬於 HTMLCollection。return回來的每一個tag 都是 item，比較常用。雖然他有一些限制(沒辦法使用 forEach)，但他很準確的找到 html element</p>
+<blockquote>
+<p>childNode</p>
+</blockquote>
+<p>return 的值屬於 NodeList。return回來很多不需要的東西</p>
+<p><img src="https://miro.medium.com/max/1030/1*Rhur03uf7fRBV6hROJlkSA.png" alt="https://miro.medium.com/max/1030/1*Rhur03uf7fRBV6hROJlkSA.png"></p>
+<h1 id="💡-children數據HTMLCollection集合，它會返回所有HTML元素節點。childNodes包含children。"><a href="#💡-children數據HTMLCollection集合，它會返回所有HTML元素節點。childNodes包含children。" class="headerlink" title="💡 children數據HTMLCollection集合，它會返回所有HTML元素節點。childNodes包含children。"></a>💡 <strong>children數據HTMLCollection集合，它會返回所有HTML元素節點。childNodes包含children。</strong></h1><h1 id="innerHTML-amp-innerText"><a href="#innerHTML-amp-innerText" class="headerlink" title="innerHTML &amp; innerText"></a><strong>innerHTML &amp; innerText</strong></h1><blockquote>
+<p>innerText</p>
+</blockquote>
+<p>只會顯示我們能在瀏覽器上看到的標籤裡的內容。</p>
+<p>純文字，就算加入HTML tag 也只會被當成字串閱讀 。</p>
+<p>取得的內容是被 CSS 調整成渲染後的文字，效能上會比較差(除非很大一包否則不會感受到)。</p>
+<p>被歸類在 <code>HTMLElement</code></p>
+<blockquote>
+<p>innerHTML</p>
+</blockquote>
+<p>可以在網頁中插入文字或 tag，也可以渲染網頁原有的內容。在這邊打出來的字串會被當作HTML來閱讀</p>
+<blockquote>
+<p>textContent</p>
+</blockquote>
+<p>除了顯示我們能在瀏覽器上看到的標籤裡的內容外，也會拿到像是 script 和 style 之類在瀏覽器上看不見的標籤。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">//&lt;h1&gt;Hello world&lt;span style=&quot;display:none;&quot;&gt;!!!&lt;/span&gt;&lt;/h1&gt;</span><br><span class="line">console.log(h1.innerText)</span><br><span class="line">console.log(h1.textContent)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://miro.medium.com/max/1208/1*CEtRWJd8ookkFDa3bHNkSA.png" alt="https://miro.medium.com/max/1208/1*CEtRWJd8ookkFDa3bHNkSA.png"></p>
+<p>取得的內容是實際取得節點中的文字內容。</p>
+<p>被歸類在 <code>Node</code></p>
+<h1 id="traverse-遍歷"><a href="#traverse-遍歷" class="headerlink" title="traverse(遍歷)"></a><strong>traverse(遍歷)</strong></h1><p>選出一個元素後，就可以順著結構找出父元素、子元素 、甚至同一層的兄弟元素。</p>
+<p><img src="https://miro.medium.com/max/1400/1*3pfS7EgXXAFCuw17HVFvzA.png" alt="https://miro.medium.com/max/1400/1*3pfS7EgXXAFCuw17HVFvzA.png"></p>
+<p>就如同上面所說的：</p>
+<h1 id="childrenreturn-的值屬於-HTMLCollection。return回來的每一個tag-都是-item，比較常用。"><a href="#childrenreturn-的值屬於-HTMLCollection。return回來的每一個tag-都是-item，比較常用。" class="headerlink" title="childrenreturn 的值屬於 HTMLCollection。return回來的每一個tag 都是 item，比較常用。"></a><em><strong>children</strong></em>return 的值屬於 HTMLCollection。return回來的每一個tag 都是 item，比較常用。</h1><p><em><strong>新增節點：你可以使用 <code>document.createElement(tagName)</code> 來新增一個元素：</strong></em></p>
+<p><img src="https://miro.medium.com/max/1400/1*WG7koAg45_PL2ZJjVWCcMw.png" alt="https://miro.medium.com/max/1400/1*WG7koAg45_PL2ZJjVWCcMw.png"></p>
+<blockquote>
+<p>appendChild()</p>
+</blockquote>
+<p>最常使用，它會在 parentElement 的最下面新增一個 child</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">const container = document.querySelector(&#x27;.container&#x27;)</span><br><span class="line">const h1 = document.createElement(&#x27;h1&#x27;)</span><br><span class="line">h1.innerHTML = &#x27;This sentence is created by JavaScript&#x27;</span><br><span class="line">container.appendChild(h1)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://miro.medium.com/max/1400/1*92bEmqM0NA0vnC2Yqy0HYw.png" alt="https://miro.medium.com/max/1400/1*92bEmqM0NA0vnC2Yqy0HYw.png"></p>
+<blockquote>
+<p>classList</p>
+</blockquote>
+<p>ClassList是一個object，查看目前所有 class 名稱，會返回一個 DOMTokenList，裡面包含此元素的類名列表</p>
+<p><em><strong>methods:</strong></em></p>
+<ul>
+<li>add():增加</li>
+<li>remove()：刪除</li>
+<li>toggle():尋找class有的話就remove 沒有就add</li>
+<li>contains():有沒有包含特定的class， return a boolean value</li>
+</ul>
+<blockquote>
+<p>getAttribute()</p>
+</blockquote>
+<h1 id="💡-我們都知道一個-object-有-屬性-跟-方法，但在英文卻有兩種說法：-屬性：-properties：是指存在在DOM-objects中的屬性，像是。attributes：是指我們寫在HTML的屬性，像是。"><a href="#💡-我們都知道一個-object-有-屬性-跟-方法，但在英文卻有兩種說法：-屬性：-properties：是指存在在DOM-objects中的屬性，像是。attributes：是指我們寫在HTML的屬性，像是。" class="headerlink" title="💡 我們都知道一個 object 有 屬性 跟 方法，但在英文卻有兩種說法：***屬性：***properties：是指存在在DOM objects中的屬性，像是。attributes：是指我們寫在HTML的屬性，像是。"></a>💡 我們都知道一個 object 有 屬性 跟 方法，但在英文卻有兩種說法：***<a target="_blank" rel="noopener" href="https://teagan-hsu.coderbridge.io/2020/12/28/javascript-dom-attribute-property/">屬性：</a>***properties：是指存在在DOM objects中的屬性，像是。attributes：是指我們寫在HTML的屬性，像是。</h1><p><strong>getAttribute()</strong> 找到在html已經設定好的屬性</p>
+<p><img src="https://miro.medium.com/max/1400/1*xA4QVfb42KtumNoxCY0-bw.png" alt="https://miro.medium.com/max/1400/1*xA4QVfb42KtumNoxCY0-bw.png"></p>
+<blockquote>
+<p>querySelector() &amp; querySelectorAll()</p>
+</blockquote>
+<p>DOM 操作的起手式通常要先選出一個元素節點，用 <strong>CSS 選擇器</strong>來找元素，因此在括號裡下字串的方式，和你平常寫 CSS 選擇器的邏輯是一模一樣。</p>
+<p><img src="https://miro.medium.com/max/1400/1*CeCc1L-hwY84JeSJKUZqIA.png" alt="https://miro.medium.com/max/1400/1*CeCc1L-hwY84JeSJKUZqIA.png"></p>
+<p><img src="https://miro.medium.com/max/1160/1*UXgKFpoPZxjNvo51-gdYVw.png" alt="https://miro.medium.com/max/1160/1*UXgKFpoPZxjNvo51-gdYVw.png"></p>
+<blockquote>
+<p>remove()</p>
+</blockquote>
+<p>移除 HTML Element</p>
+<p><img src="https://miro.medium.com/max/1400/1*z9JsPBYsIDhx949jZ-wrWA.png" alt="https://miro.medium.com/max/1400/1*z9JsPBYsIDhx949jZ-wrWA.png"></p>
+<blockquote>
+<p>style</p>
+</blockquote>
+<p>控制 css 的 object，裡面有很多屬性，且用 JavaScript 改變的 css 會變成 inline style。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">let btn = document.querySelector(&#x27;button&#x27;)</span><br><span class="line">btn.style = &quot;background-color: black; color: white;&quot;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>結語</p>
+</blockquote>
+<p>我也沒有想到DOM Tree會讓我整理這麼久，而且中間還發現了原來object 的屬性跟方法有英文卻有兩種，因為methods跟functions 我還是搞不清楚他們的差別到底在哪裡，我在猜想可能跟properties跟attributes一樣差在一個是DOM objects，一個是是指我們寫在HTML的，但因為找不到相關資料所以就沒有打上去了，如果有知道的可以幫我解答一下，感恩</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/30/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97-2022-12-30-day11/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpeg">
+      <meta itemprop="name" content="Jeff">
+      <meta itemprop="description" content="這是一個紀錄自己成長的地方">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jeff的隨手筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/12/30/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97-2022-12-30-day11/" class="post-title-link" itemprop="url">『新手日記』Day-11 JavaScript DOM的簡單介紹</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2022-12-30 15:22:42 / Modified: 15:44:53" itemprop="dateCreated datePublished" datetime="2022-12-30T15:22:42+08:00">2022-12-30</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97/" itemprop="url" rel="index"><span itemprop="name">新手日記系列</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="『新手日記』Day-11-JavaScript-DOM的簡單介紹"><a href="#『新手日記』Day-11-JavaScript-DOM的簡單介紹" class="headerlink" title="『新手日記』Day-11 JavaScript DOM的簡單介紹"></a><strong>『新手日記』Day-11 JavaScript DOM的簡單介紹</strong></h1><p><img src="https://miro.medium.com/max/1000/1*SOHAQH3TI75nS0tKMHN42g.jpeg" alt="https://miro.medium.com/max/1000/1*SOHAQH3TI75nS0tKMHN42g.jpeg"></p>
+<p>DOM對我來說是一個非常常用但卻也不是非常了解的一個地方(請問哪一個不是這樣&gt;&lt;”)，預計會花幾天的時間再去認識他。今天先簡單介紹明天重點學習DOM Event(事件處理)。</p>
+<p>想去日本了</p>
+<p><img src="https://miro.medium.com/max/1270/1*62Rwi9MTddekFyGWVZAE-Q.png" alt="https://miro.medium.com/max/1270/1*62Rwi9MTddekFyGWVZAE-Q.png"></p>
+<p>相信大家都看過這張圖，今天就是要來學習可以讓網頁動起來的關鍵！</p>
+<h1 id="BOM與DOM"><a href="#BOM與DOM" class="headerlink" title="BOM與DOM"></a><strong>BOM與DOM</strong></h1><h1 id="BOM-Browser-Object-Model（瀏覽器物件模行）"><a href="#BOM-Browser-Object-Model（瀏覽器物件模行）" class="headerlink" title="BOM-Browser Object Model（瀏覽器物件模行）"></a><strong>BOM-Browser Object Model（瀏覽器物件模行）</strong></h1><blockquote>
+<p>瀏覽器所有功能的核心，與網頁內容無關。</p>
+</blockquote>
+<p><img src="https://miro.medium.com/max/1180/1*fQCPTDv--1SSBtydR29YMw.png" alt="https://miro.medium.com/max/1180/1*fQCPTDv--1SSBtydR29YMw.png"></p>
+<p><strong>BOM的核心是 window 物件</strong></p>
+<p>在瀏覽器裡的 window 物件扮演兩個角色：</p>
+<ul>
+<li>ECMAScript 標準裡的『Global Object（全域物件）』</li>
+<li>JavaScript 用來與瀏覽器溝通的窗口</li>
+</ul>
+<h1 id="DOM-Document-Object-Model-（文件物件模型）"><a href="#DOM-Document-Object-Model-（文件物件模型）" class="headerlink" title="DOM-Document Object Model （文件物件模型）"></a><strong>DOM-Document Object Model （文件物件模型）</strong></h1><h1 id="💡-WDocument-is-an-object-Document-means-the-HTML-documentThis-model-means-all-HTMl-elements-are-objects"><a href="#💡-WDocument-is-an-object-Document-means-the-HTML-documentThis-model-means-all-HTMl-elements-are-objects" class="headerlink" title="💡 ＷDocument is an object.Document means the HTML documentThis model means all HTMl elements are objects"></a>💡 ＷDocument is an object.Document means the HTML documentThis model means all HTMl elements are objects</h1><blockquote>
+<p>將HTML文件以樹狀結構來表示的模型。</p>
+</blockquote>
+<p><img src="https://miro.medium.com/max/1180/1*3yUX_O1f0oVST9fG6tMh_Q.png" alt="https://miro.medium.com/max/1180/1*3yUX_O1f0oVST9fG6tMh_Q.png"></p>
+<p>💡 BOM與DOM兩者區別：<em><strong>BOM:JavaScript 用來與瀏覽器溝通的窗口，不涉及網頁內容DOM:JavaScript 用來控制『網頁』的節點與內容</strong></em></p>
+<p>在真正進入DOM之前，我們需要先了解一個名詞:window object</p>
+<h1 id="window-object"><a href="#window-object" class="headerlink" title="window object"></a><strong>window object</strong></h1><blockquote>
+<p>它是 global variable，只要開啟瀏覽器的瞬間，window object 就會出現。它擁有自己的 Methods 跟 Properties。</p>
+</blockquote>
+<h1 id="Methods"><a href="#Methods" class="headerlink" title="Methods:"></a><strong>Methods:</strong></h1><p>💡 標準語法：<code>window.alert()</code> <strong>Tips:</strong> window可以不用寫</p>
+<p><strong>alert():</strong></p>
+<p>執行後會跳出一個帶有 button 的視窗</p>
+<p><strong>prompt():</strong></p>
+<p>執行後會跳出一個對話視窗，可讓使用者輸入內容。（輸入的內容，最後都會是 String）</p>
+<p>**setInterval()**：</p>
+<p>設定每隔幾秒的時間要執行一個 function</p>
+<p>（1000 為 1 秒，1500 為 1.5 秒，2000 為 2 秒…依此類推）</p>
+<p><strong>clearInterval()：</strong></p>
+<p>停止setInterval()的執行</p>
+<p><strong>addEventListener()：</strong></p>
+<p>DOM Event(事件處理)時會再說明！！！</p>
+<h1 id="Properties"><a href="#Properties" class="headerlink" title="Properties:"></a><strong>Properties:</strong></h1><p>💡 OOP 物件導向： 一個<em><strong>object</strong></em>可以是另一個 <em><strong>object</strong></em> 的 <em><strong>Properties</strong></em></p>
+<h1 id="console"><a href="#console" class="headerlink" title="console"></a><strong>console</strong></h1><p><code>console.log()</code>檢查程式碼是否正確被執行時常使用的功能</p>
+<p>由於 properties 並不常拿來做使用，因此這裡只介紹 methods。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">let map = [&quot;台中&quot;, &quot;台北&quot;, &quot;新北&quot;, &quot;桃園&quot;, &quot;高雄&quot;]</span><br><span class="line">console.log(map)// 結果如下圖</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://miro.medium.com/max/1006/1*aGTw2JtNT5rC4hTE-1fjiQ.png" alt="https://miro.medium.com/max/1006/1*aGTw2JtNT5rC4hTE-1fjiQ.png"></p>
+<p><code>console.error()</code>定義如果錯誤時會出現什麼</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">let map = [&quot;台中&quot;, &quot;台北&quot;, &quot;新北&quot;, &quot;桃園&quot;, &quot;高雄&quot;]</span><br><span class="line">console.error(&#x27;喔喔 錯了喔&#x27;)// 結果如下圖</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://miro.medium.com/max/1204/1*sfuTXyQia9CsDW7euozBHA.png" alt="https://miro.medium.com/max/1204/1*sfuTXyQia9CsDW7euozBHA.png"></p>
+<p><code>console.table()</code>將資料整理成表格來顯示</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">let map = [&quot;台中&quot;, &quot;台北&quot;, &quot;新北&quot;, &quot;桃園&quot;, &quot;高雄&quot;];</span><br><span class="line">console.table(map);// 結果如下圖</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://miro.medium.com/max/636/1*ir-LwlTXrnoazyY0Zatt7w.png" alt="https://miro.medium.com/max/636/1*ir-LwlTXrnoazyY0Zatt7w.png"></p>
+<p><code>console.warn()</code>會出現黃色驚嘆號</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">let map = [&quot;台中&quot;, &quot;台北&quot;, &quot;新北&quot;, &quot;桃園&quot;, &quot;高雄&quot;]</span><br><span class="line">console.warn(&#x27;小心&#x27;)// 結果如下圖</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://miro.medium.com/max/1206/1*MyyOL8MLaCIoKVcKbce2KQ.png" alt="https://miro.medium.com/max/1206/1*MyyOL8MLaCIoKVcKbce2KQ.png"></p>
+<h1 id="Document"><a href="#Document" class="headerlink" title="Document"></a><strong>Document</strong></h1><p><strong>Document is an object. 所以他擁有自己的 methods 和 properties</strong></p>
+<blockquote>
+<p>property:</p>
+</blockquote>
+<p>有 body、doctype、charset、head…等。</p>
+<blockquote>
+<p>methods:</p>
+</blockquote>
+<h1 id="💡-is-not-array-但可以使用forEach-、"><a href="#💡-is-not-array-但可以使用forEach-、" class="headerlink" title="💡 is not array 但可以使用forEach()、"></a>💡 is not array 但可以使用forEach()、</h1><p>以下把他分成3個等級：需要認識、很重要、非常重要</p>
+<p>需要認識：</p>
+<p>getElementsByld()</p>
+<ul>
+<li>用 id 取得 Element，存在一個 <strong>HTMLCollection</strong> 裡面</li>
+</ul>
+<p>getElementsByClassName()</p>
+<ul>
+<li>用 class 取得 Element，存在一個 <strong>HTMLCollection</strong> 裡面</li>
+</ul>
+<p>很重要：</p>
+<p>addEventListener()</p>
+<ul>
+<li>DOM Event(事件處理)時會在再說明！！！</li>
+</ul>
+<p>createElement()</p>
+<ul>
+<li>依指定的標籤名稱（<code>tagName</code>）建立 HTML 元素</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">let element = document.createElement(tagName);</span><br><span class="line">//tagName:A string that specifies(指定) the type of element to be created(創建).</span><br></pre></td></tr></table></figure>
+
+<p>非常重要：</p>
+<p>querySelector()</p>
+<ul>
+<li>只會return 滿足第一個css selector 的 HTML element</li>
+</ul>
+<p>querySelectorAll()</p>
+<ul>
+<li>所有滿足條件的都會 return 回來，存在一個 NodeList 裡面</li>
+</ul>
+<p>💡 <strong>在html裡查詢，是用css的selector</strong></p>
+<blockquote>
+<p>想法</p>
+</blockquote>
+<p>DOM的內容真的很多，所以避免複習效果不佳我自己把他切分幾個段落複習。今天的內容都是從</p>
+<p>0 陷阱！0 誤解！8 天重新認識 JavaScript！</p>
+<p>Wilson Ren的2022網頁開發全攻略：</p>
+<p>這兩個教材來的，如果有打錯的地方再請大家多多指教！！！</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/30/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97-2022-12-30-day10/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpeg">
+      <meta itemprop="name" content="Jeff">
+      <meta itemprop="description" content="這是一個紀錄自己成長的地方">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jeff的隨手筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/12/30/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97-2022-12-30-day10/" class="post-title-link" itemprop="url">『新手日記』Day-10 JavaScript Function</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2022-12-30 15:21:42 / Modified: 15:44:49" itemprop="dateCreated datePublished" datetime="2022-12-30T15:21:42+08:00">2022-12-30</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97/" itemprop="url" rel="index"><span itemprop="name">新手日記系列</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="『新手日記』Day-10-JavaScript-Function"><a href="#『新手日記』Day-10-JavaScript-Function" class="headerlink" title="『新手日記』Day-10 JavaScript Function"></a><strong>『新手日記』Day-10 JavaScript Function</strong></h1><p><img src="https://miro.medium.com/max/1400/1*62InELhyykzzrNlAQCcuuw.jpeg" alt="https://miro.medium.com/max/1400/1*62InELhyykzzrNlAQCcuuw.jpeg"></p>
+<p>function的用途在於需要執行重複性的code時，我們可以用function做『封裝』，以達到簡化code的作用，並且因為可以自己設計彈性非常大。</p>
+<p>學習到現在function 幾乎是無所不在啊，任何的地方都有使用到它，今天就簡單的介紹一下</p>
+<h1 id="基本架構："><a href="#基本架構：" class="headerlink" title="基本架構："></a><strong>基本架構：</strong></h1><p><img src="https://miro.medium.com/max/1400/1*dgc6nll_4Jkr18uqeMVyxg.png" alt="https://miro.medium.com/max/1400/1*dgc6nll_4Jkr18uqeMVyxg.png"></p>
+<ul>
+<li>用 <code>function</code> 這個關鍵字來宣告一個函式</li>
+<li>接著是設定這個 function的名稱</li>
+<li>小括號 <code>()</code> 裡面指定這個 function的參數，可以用逗點 <code>,</code> 分隔多個參數</li>
+<li>大括號 <code>&#123;&#125;</code> 裡面則是你想封裝在這個 function 的程式碼</li>
+<li>一個 function可以有返回值，使用 <code>return</code> 關鍵字來返回一個值</li>
+</ul>
+<blockquote>
+<p>一個 function 如果不需要參數，小括號還是不能省略，寫成 function functionName() {}</p>
+<p><em>一個 function 也可以沒有返回值，亦即省略 return 語句，預設會返回 <code>undefined</code></em></p>
+</blockquote>
+<h1 id="Calling-function"><a href="#Calling-function" class="headerlink" title="Calling function"></a><strong>Calling function</strong></h1><p>function 本身並不會執行，必須由我們呼叫他們才會動作</p>
+<p>呼叫的語法：function名稱(參數)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">function subtotal (price, quantity) &#123;</span><br><span class="line">// price, quantity 是參數，預設值 undefined</span><br><span class="line">  let discount = 0.8</span><br><span class="line">  return price * quantity * discount</span><br><span class="line">&#125;subtotal(100, 2)</span><br></pre></td></tr></table></figure>
+
+<h1 id="parameter（參數）"><a href="#parameter（參數）" class="headerlink" title="parameter（參數）"></a><strong>parameter（參數）</strong></h1><p>參數的預設值是 <code>undefined</code>。</p>
+<p>參數就是在設定 function時打在（ ）內的東西，例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">function subtotal (price, quantity) &#123;</span><br><span class="line">// price, quantity 是參數，預設值 undefined</span><br><span class="line">  let discount = 0.8</span><br><span class="line">  return price * quantity * discount</span><br><span class="line">&#125;subtotal(100, 2)</span><br></pre></td></tr></table></figure>
+
+<p>price, quantity 就是參數，當 function 主體裡的程式碼被調用時，原本的參數名稱會代換成引數的值。注意：參數不是一定要有的，也不設限數量</p>
+<h1 id="注意：參數和引數兩個名詞的不同-—-—你只會定義參數一次，但你會使用許多不同的引數調用你的函式。也就是說，參數-的值，會隨著每次呼叫函式的引數而變。"><a href="#注意：參數和引數兩個名詞的不同-—-—你只會定義參數一次，但你會使用許多不同的引數調用你的函式。也就是說，參數-的值，會隨著每次呼叫函式的引數而變。" class="headerlink" title="注意：參數和引數兩個名詞的不同 — —你只會定義參數一次，但你會使用許多不同的引數調用你的函式。也就是說，參數 的值，會隨著每次呼叫函式的引數而變。"></a>注意：參數和引數兩個名詞的不同 — —你只會定義參數一次，但你會使用許多不同的引數調用你的函式。也就是說，參數 的值，會隨著每次呼叫函式的引數而變。</h1><h1 id="return（丟出-回傳）"><a href="#return（丟出-回傳）" class="headerlink" title="return（丟出;回傳）"></a><strong>return（丟出;回傳）</strong></h1><p>我們如果要讓function外的地方使用當function執行完後的結果，我們必須使用return。</p>
+<p>return 必須在外面用一個變數接住。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">function convert(oc) &#123;</span><br><span class="line">	return oc * 1.8 + 32</span><br><span class="line">&#125;let of = convert(0)</span><br><span class="line">console.log(of)</span><br></pre></td></tr></table></figure>
+
+<p>若函式不回傳值，則可省略 return。 當 return 執行時，瀏覽器會跳出function，所以如果 return 後面還有程式碼，則不會被執行。因此，用 return 回傳空值也具有「中止」程式碼的功能。</p>
+<h1 id="Arrow-functions（箭頭函式）"><a href="#Arrow-functions（箭頭函式）" class="headerlink" title="Arrow functions（箭頭函式）"></a><strong>Arrow functions（箭頭函式）</strong></h1><p>ES6中出現的函式語法，它是一種匿名函式的縮短寫法。箭頭函式因為語法簡單，而且可以綁定<code>this</code>變數，漸漸取代了函式表達式。</p>
+<p>語法：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">const materials = [</span><br><span class="line">  &#x27;Hydrogen&#x27;,</span><br><span class="line">  &#x27;Helium&#x27;,</span><br><span class="line">  &#x27;Lithium&#x27;,</span><br><span class="line">  &#x27;Beryllium&#x27;</span><br><span class="line">];console.log(materials.map(material =&gt; material.length));</span><br><span class="line">// expected output: Array [8, 6, 7, 9]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>符號是肥箭頭(&#x3D;&gt;) (註: “-&gt;”是瘦箭頭)</li>
+<li>基本特性是”函式表達式(FE)的簡短寫法”</li>
+<li>花括號({})是有意義的，如果函式沒回傳東西就要花括號。例如 <code>()=&gt;&#123;&#125;</code></li>
+<li>只有單一個傳入參數時，括號(())可以不用，例如 <code>x=&gt;x*x</code></li>
+</ul>
+<p>用案例解釋一下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">const funcA = x =&gt; x + 1</span><br><span class="line">const funcB = x =&gt; &#123; x + 1 &#125;funcA(1) //2</span><br><span class="line">funcB(1) //undefined</span><br></pre></td></tr></table></figure>
+
+<p>當沒用花括號({})時，代表會自動加<code>return</code>，也只能在一行的語句的時候使用。使用花括號({})則是可以加入多行的語句，不過<code>return</code>不會自動加，有需要你要自己加上，沒加這個函式最後等於<code>return undefined</code>(註: 這是JavaScript語言中函式的設計)。</p>
+<h1 id="補充：this"><a href="#補充：this" class="headerlink" title="補充：this"></a><strong>補充：this</strong></h1><blockquote>
+<p>記住：要看 this，就看這個函式「怎麽」被呼叫 ; 一但脫離了物件導向，其實 this 就沒有什麼太大的意義</p>
+</blockquote>
+<h2 id="很沒意義的情況的this："><a href="#很沒意義的情況的this：" class="headerlink" title="很沒意義的情況的this："></a><strong>很沒意義的情況的this：</strong></h2><ol>
+<li>嚴格模式底下就都是<code>undefined</code></li>
+<li>非嚴格模式，瀏覽器底下是<code>window</code></li>
+<li>非嚴格模式，node.js 底下是<code>global</code></li>
+</ol>
+<h2 id="在物件中的this"><a href="#在物件中的this" class="headerlink" title="在物件中的this:"></a><strong>在物件中的this:</strong></h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">const obj = &#123;</span><br><span class="line">  value: 1,</span><br><span class="line">  hello: function() &#123;</span><br><span class="line">    console.log(this.value)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">obj.hello() // 1</span><br><span class="line">const hey = obj.hello</span><br><span class="line">hey() // undefined</span><br></pre></td></tr></table></figure>
+
+<p>明明就是同一個函式，怎麼第一次呼叫時 this.value 是 1，第二次呼叫時就變成 undefined 了？</p>
+<p>我們可以把所有的 function call，都轉成利用<code>call</code>的形式來看</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">obj.hello() // 1</span><br><span class="line">obj.hello.call(obj) // 轉成 call</span><br><span class="line">const hey = obj.hello</span><br><span class="line">hey() // undefined</span><br><span class="line">hey.call() // 轉成 call</span><br></pre></td></tr></table></figure>
+
+<p>而規則就是你在呼叫 function 的前面是什麼東西，你就把它放到後面去。所以<code>obj.hello()</code>就變成了<code>obj.hello.call(obj)</code>，<code>hey()</code>前面沒有東西，所以就變成了<code>hey.call()</code>。</p>
+<p>轉成這樣子的形式之後，call 的第一個參數就是 this ，因此我們就會很清楚知道this 的值是什麼了！</p>
+<h2 id="在箭頭函式的this"><a href="#在箭頭函式的this" class="headerlink" title="在箭頭函式的this:"></a><strong>在箭頭函式的this:</strong></h2><p>綁定到其定義時所在的物件，也可以說『宣告它的地方的 this 是什麼，它的 this 就是什麼』</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">const obj = &#123;</span><br><span class="line">  x: 1,</span><br><span class="line">  hello: function()&#123;</span><br><span class="line">    // 這邊印出來的 this 是什麼，test 的 this 就是什麼</span><br><span class="line">    // 就是我說的：</span><br><span class="line">    // 在宣告它的地方的 this 是什麼，test 的 this 就是什麼</span><br><span class="line">    console.log(this)</span><br><span class="line">    const test = () =&gt; &#123;</span><br><span class="line">      console.log(this.x)</span><br><span class="line">    &#125;</span><br><span class="line">    test()</span><br><span class="line">  &#125;</span><br><span class="line">&#125;obj.hello() // 1</span><br><span class="line">const hello = obj.hello</span><br><span class="line">hello() // undefined</span><br></pre></td></tr></table></figure>
+
+<p>以這個案例來說，在第五行我們在 hello 這個 function 裡面宣告了 test 這個箭頭函式，所以 hello 的 this 是什麼，test 的 this 就是什麼。</p>
+<p>所以當我們呼叫<code>obj.hello()</code>時，test 的 this 就會是 obj；<code>hello()</code>的時候 test 的 this 就會是全域物件。這規則其實都跟之前一樣，差別只有在於說箭頭函式的 this 不是自己決定的，而是取決於在宣告時那個地方的 this。</p>
+<h1 id="結語："><a href="#結語：" class="headerlink" title="結語："></a><strong>結語：</strong></h1><p>老實說針對function我覺得自己還是沒有很了解，尤其是 this、scope這些，this的內容還是網路上東拼西湊才完成的，只敢把自己稍微了解的地方打上來。</p>
+<p>由於現在的能力還是屬於新手階段，經驗與能力還不夠，等未來累積到一定的能力後，會再回來補齊這篇的。</p>
+<p>參考資料：<br><a target="_blank" rel="noopener" href="https://www.fooish.com/javascript/function.html">www.fooish.com</a><br><a target="_blank" rel="noopener" href="https://eyesofkids.gitbooks.io/javascript-start-from-es6/content/part4/arrow_function.html">eyesofkids.gitbooks.io</a><br><a target="_blank" rel="noopener" href="https://blog.techbridge.cc/2019/02/23/javascript-this/">blog.techbridge.cc</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/30/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97-2022-12-30-day9/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpeg">
+      <meta itemprop="name" content="Jeff">
+      <meta itemprop="description" content="這是一個紀錄自己成長的地方">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jeff的隨手筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/12/30/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97-2022-12-30-day9/" class="post-title-link" itemprop="url">『新手日記』Day-9 JavaScript 部分Array Methods 介紹</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2022-12-30 15:20:42 / Modified: 15:44:44" itemprop="dateCreated datePublished" datetime="2022-12-30T15:20:42+08:00">2022-12-30</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97/" itemprop="url" rel="index"><span itemprop="name">新手日記系列</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="『新手日記』Day-9-JavaScript-部分Array-Methods-介紹"><a href="#『新手日記』Day-9-JavaScript-部分Array-Methods-介紹" class="headerlink" title="『新手日記』Day-9 JavaScript 部分Array Methods 介紹"></a><strong>『新手日記』Day-9 JavaScript 部分Array Methods 介紹</strong></h1><p><img src="https://miro.medium.com/max/1400/1*hFNjQ9d1EquF5Ddcy2G4kA.jpeg" alt="https://miro.medium.com/max/1400/1*hFNjQ9d1EquF5Ddcy2G4kA.jpeg"></p>
+<h1 id="無知並不可怕，畢竟這世間有太多的東西我們沒有辦法全部都知道，可怕的是不知道自己無知。"><a href="#無知並不可怕，畢竟這世間有太多的東西我們沒有辦法全部都知道，可怕的是不知道自己無知。" class="headerlink" title="無知並不可怕，畢竟這世間有太多的東西我們沒有辦法全部都知道，可怕的是不知道自己無知。"></a>無知並不可怕，畢竟這世間有太多的東西我們沒有辦法全部都知道，可怕的是不知道自己無知。</h1><p>相信這句話大家都聽過而且都想避免的，但我今天卻犯了。原本今天要記錄的是迴圈，主要是想複習一下forEach(因為昨天突然練習突然打不出來)，就在迴圈筆記完成80%要進入forEach時，在google時才發現他是屬於Array Methods 並不是 Loop。當下傻眼，還好還沒發出去，只是上一篇就不能用並且要去暸解一下Array Methods了</p>
+<p>記得在前幾篇介紹Array的文章裡有一個地方我偷懶直接貼MDN的連結</p>
+<p><img src="https://miro.medium.com/max/1400/1*s5MaWZsVe0N6nHJL9gxdWg.png" alt="https://miro.medium.com/max/1400/1*s5MaWZsVe0N6nHJL9gxdWg.png"></p>
+<p>真棒！馬上就要來補坑了&gt;&lt;”</p>
+<h1 id="什麼是Array-Methods"><a href="#什麼是Array-Methods" class="headerlink" title="什麼是Array Methods"></a><strong>什麼是Array Methods</strong></h1><p>它定義了更加「語義化」的函式名稱。這些array methods讓我們不用自己去設定就可以完成我們想要完成的結果。</p>
+<p>簡單來說又是工程師的福利啊，但至於是不是福利就要看有沒有學會。像我就不覺得是福利，因為我今天看到這幾個Methods時卻無法直接說出他的功能，真的是典型的學習完了就還給老師。</p>
+<p>大家就委屈一點陪我複習一下吧</p>
+<blockquote>
+<p>Array.filter</p>
+</blockquote>
+<p>可以幫你過濾元素，並回傳一個新的 Array。(會保留原陣列)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">const words = [&#x27;spray&#x27;, &#x27;limit&#x27;, &#x27;elite&#x27;, &#x27;exuberant&#x27;, &#x27;destruction&#x27;, &#x27;present&#x27;];const result = words.filter(word =&gt; word.length &gt; 6);console.log(result);</span><br><span class="line">// expected output: Array [&quot;exuberant&quot;, &quot;destruction&quot;, &quot;present&quot;]</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>Array.map()</p>
+</blockquote>
+<p>會回傳一個值，他會透過函式內所回傳的值組合成一個陣列。</p>
+<ul>
+<li>如果不回傳則是 <code>undefined</code></li>
+<li>回傳數量等於原始陣列的長度</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">const array1 = [1, 4, 9, 16];// pass a function to map</span><br><span class="line">const map1 = array1.map(x =&gt; x * 2);console.log(map1);</span><br><span class="line">// expected output: Array [2, 8, 18, 32]</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>Array.forEach</p>
+</blockquote>
+<p>不會額外回傳值，只單純執行每個陣列內的物件或值。類似於for迴圈</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">const array1 = [&#x27;a&#x27;, &#x27;b&#x27;, &#x27;c&#x27;];array1.forEach(element =&gt; console.log(element));</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>Array.find()</p>
+</blockquote>
+<p>find() 與 filter() 很像，但 find() <strong>只會回傳一次值</strong>，且是第一次為 true 的值。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">const array1 = [5, 12, 8, 130, 44];const found = array1.find(element =&gt; element &gt; 10);console.log(found);// expected output: 12</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>Array.join()</p>
+</blockquote>
+<p>會將 Array 中所有的元素連接、合併成一個字串，並回傳此字串。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">const elements = [&#x27;Fire&#x27;, &#x27;Air&#x27;, &#x27;Water&#x27;];console.log(elements.join());</span><br><span class="line">// expected output: &quot;Fire,Air,Water&quot;console.log(elements.join(&#x27;&#x27;));</span><br><span class="line">// expected output: &quot;FireAirWater&quot;console.log(elements.join(&#x27;-&#x27;));</span><br><span class="line">// expected output: &quot;Fire-Air-Water&quot;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>Array.every()</p>
+</blockquote>
+<p>檢查所有的陣列是否符合條件，這僅會回傳一個值 <code>true</code> or <code>false</code>，可以用來檢查陣列中的內容是否符合特定條件。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">const isBelowThreshold = (currentValue) =&gt; currentValue &lt; 40;const array1 = [1, 30, 39, 29, 10, 13];console.log(array1.every(isBelowThreshold));</span><br><span class="line">// expected output: true</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>Array.some()</p>
+</blockquote>
+<p>在執行過程有一個 true 就會回傳 true。判斷某個符合條件的 object 是否有存在在 array 中</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">const array = [1, 2, 3, 4, 5];// checks whether an element is even</span><br><span class="line">const even = (element) =&gt; element % 2 === 0;console.log(array.some(even));</span><br><span class="line">// expected output: true</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>Array.reduce()</p>
+</blockquote>
+<p>將一個累加器及陣列中每項元素（由左至右）傳入回呼函式，將陣列化為單一值。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">const array1 = [1, 2, 3, 4];// 0 + 1 + 2 + 3 + 4</span><br><span class="line">const initialValue = 0;</span><br><span class="line">const sumWithInitial = array1.reduce(</span><br><span class="line">  (previousValue, currentValue) =&gt; previousValue + currentValue,</span><br><span class="line">  initialValue</span><br><span class="line">);console.log(sumWithInitial);</span><br><span class="line">// expected output: 10</span><br></pre></td></tr></table></figure>
+
+<p>previousValue（上一個值），currentValue（當前值）</p>
+<p>雖然這不是我進度裡會去複習的地方，但還真的是因禍得福，不然我根本不知道我漏掉的是多麽重要的一塊。上面的內容全部都是ＡＣ有教過的但我卻幾乎都忘光了。哎～真的要多練習打code，才切一個月的版而已都快要把JavaScript忘光了。</p>
+<p>參考資料：<br><a target="_blank" rel="noopener" href="https://medium.com/starbugs/javascript-%E4%BD%A0%E5%B8%B8%E7%94%A8%E7%9A%84-array-methods-%E6%98%AF%E6%88%91%E5%B8%B8%E7%94%A8%E7%9A%84%E5%97%8E-6fe235953951">medium.com</a><br><a target="_blank" rel="noopener" href="https://www.casper.tw/javascript/2017/06/29/es6-native-array/">www.casper.tw</a><br><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-TW/">developer.mozilla.org</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/30/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97-2022-12-30-day8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpeg">
+      <meta itemprop="name" content="Jeff">
+      <meta itemprop="description" content="這是一個紀錄自己成長的地方">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jeff的隨手筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/12/30/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97-2022-12-30-day8/" class="post-title-link" itemprop="url">『新手日記』Day-8 JavaScript 運算式與運算子</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2022-12-30 15:19:42 / Modified: 15:44:37" itemprop="dateCreated datePublished" datetime="2022-12-30T15:19:42+08:00">2022-12-30</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97/" itemprop="url" rel="index"><span itemprop="name">新手日記系列</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="『新手日記』Day-8-JavaScript-運算式與運算子"><a href="#『新手日記』Day-8-JavaScript-運算式與運算子" class="headerlink" title="『新手日記』Day-8 JavaScript 運算式與運算子"></a><strong>『新手日記』Day-8 JavaScript 運算式與運算子</strong></h1><p><img src="https://miro.medium.com/max/1400/1*fJAbNl_qwqdl1uDz7VfaPA.jpeg" alt="https://miro.medium.com/max/1400/1*fJAbNl_qwqdl1uDz7VfaPA.jpeg"></p>
+<p>運算子在我剛學到時，我以為只是在迴圈裡面會使用到東西。但當我在學期2的電影網站碰到**const list &#x3D; JSON.parse(localStorage.getItem(“favoriteMovies”)) || [];**我整個大傻眼，原來運算子還能這樣用喔！！！</p>
+<p>今天這一篇算是補坑吧(請問一下，哪一篇不是補坑啊???)</p>
+<blockquote>
+<p>基礎先來</p>
+</blockquote>
+<p>JavaScript 的語法可以分為兩大類：</p>
+<p><em><strong>1.Statement（敘述句）</strong></em></p>
+<p>執行某個動作，例如：變數的宣告、賦值，迴圈和if的判斷式</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">let foo;</span><br></pre></td></tr></table></figure>
+
+<p><em><strong>2.Expression（運算式）</strong></em></p>
+<p>他會產生一個值。例如：呼叫function時的參數，或是賦值時，在&#x3D;右側的部分。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">let a = 10 * 10;</span><br></pre></td></tr></table></figure>
+
+<p>在運算式中，會透過提供一些數值給『運算子』進行運算，運算子依照性質分類可以分為以下幾種：</p>
+<h2 id="算術運算子（Arithmetic-Operators）"><a href="#算術運算子（Arithmetic-Operators）" class="headerlink" title="算術運算子（Arithmetic Operators）"></a><strong>算術運算子（Arithmetic Operators）</strong></h2><p>算數運算子包含了最基本的數學四則運算的符號，讓你可以對兩組（value）進行加（+）、減（-）、乘（＊）、除（&#x2F;），此外，還有比較特別的：</p>
+<p>Remainder（%)</p>
+<p><code>//取餘數12 % 5//回傳2</code></p>
+<p>Increment（＋＋）&#x2F; Decrement（- -）</p>
+<p><code>//增加x = 3x++ //回傳3，但回傳後會自動加1變成4++x //會先＋1然後回傳4</code></p>
+<p>Exponentiation （也可以寫成＾）</p>
+<p><code>//次方x = 3 x ** 2 //回傳9</code></p>
+<h2 id="賦值運算子（Assignment-Operators"><a href="#賦值運算子（Assignment-Operators" class="headerlink" title="賦值運算子（Assignment Operators)"></a><strong>賦值運算子（Assignment Operators)</strong></h2><p>我們一直使用的 <code>=</code> 符號，就是一種賦值運算子。除此之外，還有搭配算數運算的 <code>+=</code>、<code>-=</code>、<code>*=</code>⋯⋯等運算子</p>
+<p><code>x += y //等同 x = x + yx -= y //等同 x = x - y以此類推</code></p>
+<h2 id="比較運算子（Comparison-Operators）"><a href="#比較運算子（Comparison-Operators）" class="headerlink" title="比較運算子（Comparison Operators）"></a><strong>比較運算子（Comparison Operators）</strong></h2><p>比較運算子陳述的是邏輯關係，他會對前後的 value 進行比較，然後回傳 boolean 值，也就是 <code>true</code> 或是 <code>false</code>。（有&#x3D;&#x3D;&#x3D;、！&#x3D;&#x3D;、大於、小於、大於等於、小於等於）</p>
+<h3 id="💡-因為兩個等於（-x3D-x3D-）會對被判別的變數做轉換型別的動作（coercion又稱為implicit-type-conversion）。-所以在JavaScript我們都會使用-x3D-x3D-x3D-來代替-x3D-x3D-！-x3D-x3D-來代替-！-x3D"><a href="#💡-因為兩個等於（-x3D-x3D-）會對被判別的變數做轉換型別的動作（coercion又稱為implicit-type-conversion）。-所以在JavaScript我們都會使用-x3D-x3D-x3D-來代替-x3D-x3D-！-x3D-x3D-來代替-！-x3D" class="headerlink" title="💡 因為兩個等於（&#x3D;&#x3D;）會對被判別的變數做轉換型別的動作（coercion又稱為implicit type conversion）。 所以在JavaScript我們都會使用 &#x3D;&#x3D;&#x3D; 來代替 &#x3D;&#x3D;; ！&#x3D;&#x3D; 來代替 ！&#x3D;"></a>💡 因為兩個等於（&#x3D;&#x3D;）會對被判別的變數做轉換型別的動作（coercion又稱為implicit type conversion）。 所以在JavaScript我們都會使用 &#x3D;&#x3D;&#x3D; 來代替 &#x3D;&#x3D;; ！&#x3D;&#x3D; 來代替 ！&#x3D;</h3><h2 id="邏輯運算子（Logical-Operators）"><a href="#邏輯運算子（Logical-Operators）" class="headerlink" title="邏輯運算子（Logical Operators）"></a><strong>邏輯運算子（Logical Operators）</strong></h2><p>&amp;&amp; 而且的意思，如果前後的 value 都是 true，則回傳 true</p>
+<p>|| 「或者」；只要有一邊為 true，則為 true</p>
+<p>! 「非」，將後面接的 boolean 轉成相反的值</p>
+<h3 id="💡-在很多code-我們都會看到類似-if-class-…-之類的程式語言，之所以可以這樣打是因為-，其實他的概念很簡單，只要記-會是-其餘的都是-。"><a href="#💡-在很多code-我們都會看到類似-if-class-…-之類的程式語言，之所以可以這樣打是因為-，其實他的概念很簡單，只要記-會是-其餘的都是-。" class="headerlink" title="💡 在很多code 我們都會看到類似 if (!class) {…}之類的程式語言，之所以可以這樣打是因為 ，其實他的概念很簡單，只要記* 會是 , 其餘的都是 。"></a>💡 在很多code 我們都會看到類似 if (!class) {…}之類的程式語言，之所以可以這樣打是因為 ，其實他的概念很簡單，只要記* 會是 , 其餘的都是 。</h3><h2 id="字串運算子（String-Operators"><a href="#字串運算子（String-Operators" class="headerlink" title="字串運算子（String Operators)"></a><strong>字串運算子（String Operators)</strong></h2><p>運算子 (+) 也能用於字串，將兩字串接在一起，並回傳接在一起後的結果。</p>
+<p>簡化的設定運算子 +&#x3D; 也能用於串接字串。</p>
+<p><code>console.log(&#39;我的 &#39; + &#39;字串&#39;); // 會印出 字串 &quot;我的字串&quot;。let mystring = &#39;字&#39;; mystring += &#39;母&#39;; // 得到 &quot;字母&quot; 並賦與給變數 mystring.</code></p>
+<h2 id="特殊運算子（Special-Operators"><a href="#特殊運算子（Special-Operators" class="headerlink" title="特殊運算子（Special Operators)"></a><strong>特殊運算子（Special Operators)</strong></h2><p>其他沒列入的都可以算在裡面。</p>
+<blockquote>
+<p>短路求值(Short-circuit evaluation)</p>
+</blockquote>
+<p>進入今天重點，短路求值(Short-circuit evaluation)也有人翻譯為<strong>最小化求值</strong></p>
+<p>先講結論好了，我認為使用Short-circuit evaluation 可以幫助 code 變得更符合邏輯外也減少了code</p>
+<p>為什麼這麼說？請聽我娓娓道來：</p>
+<h1 id="Logical-OR-Operator"><a href="#Logical-OR-Operator" class="headerlink" title="Logical OR Operator"></a><strong>Logical OR Operator</strong></h1><h2 id="The-logical-OR-operator-logical-disjunction-for-a-set-of-operands-is-true-if-and-only-if-one-or-more-of-its-operands-is-true-It-is-typically-used-with-boolean-logical-values-When-it-is-it-returns-a-Boolean-value"><a href="#The-logical-OR-operator-logical-disjunction-for-a-set-of-operands-is-true-if-and-only-if-one-or-more-of-its-operands-is-true-It-is-typically-used-with-boolean-logical-values-When-it-is-it-returns-a-Boolean-value" class="headerlink" title="The logical OR (||) operator (logical disjunction) for a set of operands is true if and only if one or more of its operands is true.It is typically used with boolean (logical) values. When it is, it returns a Boolean value."></a>The logical OR (||) operator (logical disjunction) for a set of operands is true if and only if one or more of its operands is true.It is typically used with boolean (logical) values. When it is, it returns a Boolean value.</h2><p>語法：anything || anything</p>
+<p>OR 表達式是從左計算到右，符號是 <code>||</code> ，如果在符號左邊的值為 true，那麼符號右邊的值將不會被考慮或是被執行。</p>
+<h1 id="Logical-AND-Operator"><a href="#Logical-AND-Operator" class="headerlink" title="Logical AND Operator"></a><strong>Logical AND Operator</strong></h1><h2 id="The-logical-AND-amp-amp-expression-is-a-short-circuit-operator-As-each-operand-is-converted-to-a-boolean-if-the-result-of-one-conversion-is-found-to-be-false-the-AND-operator-stops-and-returns-the-original-value-of-that-falsy-operand"><a href="#The-logical-AND-amp-amp-expression-is-a-short-circuit-operator-As-each-operand-is-converted-to-a-boolean-if-the-result-of-one-conversion-is-found-to-be-false-the-AND-operator-stops-and-returns-the-original-value-of-that-falsy-operand" class="headerlink" title="The logical AND(&amp;&amp;) expression is a short-circuit operator. As each operand is converted to a boolean, if the result of one conversion is found to be false, the AND operator stops and returns the original value of that falsy operand;"></a>The logical AND(&amp;&amp;) expression is a short-circuit operator. As each operand is converted to a boolean, if the result of one conversion is found to be false, the AND operator stops and returns the original value of that falsy operand;</h2><p>語法：anything &amp;&amp; anything</p>
+<p>AND 表達式是從左計算到右，符號是 <code>&amp;&amp;</code>，只要有false 就回傳false的值，如果都是true就會返回最後一個值。</p>
+<h1 id="另外，如果-AND-跟-OR-混著用的話就會先做AND"><a href="#另外，如果-AND-跟-OR-混著用的話就會先做AND" class="headerlink" title="另外，如果 AND 跟 OR 混著用的話就會先做AND"></a>另外，如果 AND 跟 OR 混著用的話就會先做AND</h1><h1 id="Nil-Coalescing-Operator"><a href="#Nil-Coalescing-Operator" class="headerlink" title="Nil-Coalescing Operator"></a><strong>Nil-Coalescing Operator</strong></h1><p>老實說這個語法我完全沒碰過，只能到網路上找尋資料。</p>
+<h2 id="The-nullish-coalescing-operator-is-a-logical-operator-that-returns-its-right-hand-side-operand-when-its-left-hand-side-operand-is-null-or-undefined-and-otherwise-returns-its-left-hand-side-operand-This-can-be-seen-as-a-special-case-of-the-logical-OR-operator-which-returns-the-right-hand-side-operand-if-the-left-operand-is-any-falsy-value-not-only-null-or-undefined"><a href="#The-nullish-coalescing-operator-is-a-logical-operator-that-returns-its-right-hand-side-operand-when-its-left-hand-side-operand-is-null-or-undefined-and-otherwise-returns-its-left-hand-side-operand-This-can-be-seen-as-a-special-case-of-the-logical-OR-operator-which-returns-the-right-hand-side-operand-if-the-left-operand-is-any-falsy-value-not-only-null-or-undefined" class="headerlink" title="The nullish coalescing operator (??) is a logical operator that returns its right-hand side operand when its left-hand side operand is null or undefined, and otherwise returns its left-hand side operand.This can be seen as a special case of the logical OR (||) operator, which returns the right-hand side operand if the left operand is any falsy value, not only null or undefined."></a>The nullish coalescing operator (??) is a logical operator that returns its right-hand side operand when its left-hand side operand is null or undefined, and otherwise returns its left-hand side operand.This can be seen as a special case of the logical OR (||) operator, which returns the right-hand side operand if the left operand is any falsy value, not only null or undefined.</h2><p>語法：<code>leftExpr ?? rightExpr</code></p>
+<p><code>??</code>的用法與<code>||</code>的用法非常相似，都能用作預設值，差異之處是：</p>
+<ul>
+<li><code>??</code>會返回第一個<code>defined</code>的值</li>
+<li><code>||</code>會返回第一個<code>truthy</code>的值</li>
+</ul>
+<p>**何為<code>defined</code>? 除了<code>undefined</code>和<code>null</code>**，其他都屬於<code>defined</code>。以下例子一目了然：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">let price = 0;</span><br><span class="line">console.log(price || 100);//100</span><br><span class="line">console.log(price ?? 100);//0</span><br></pre></td></tr></table></figure>
+
+<p>在<code>??</code>的世界中，只要不是<code>null</code>或<code>undefined</code>，條件就能成立。</p>
+<p>轉載至：<a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10243261">https://ithelp.ithome.com.tw/articles/10243261</a></p>
+<blockquote>
+<p>三元運算子(條件運算子)</p>
+</blockquote>
+<p>這個也是我特別想拉出來說的，他在部分時候真的很好用。</p>
+<p>條件運算子是 JavaScript 中唯一需要三個運算元的運算子，因此被稱為三元運算子。</p>
+<p>語法：<code>條件？值1：值2</code></p>
+<p>解釋：<em>條件</em>為 true，運算子回傳 <em>值 1，</em> 否則回傳 <em>值 2。</em></p>
+<p>解釋：<em>條件</em>為 true，運算子回傳 <em>值 1，</em> 否則回傳 <em>值 2。</em></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">let status = &#123;</span><br><span class="line">	name: &#x27;Jeff&#x27;,</span><br><span class="line">	age: 20,</span><br><span class="line">	adult: null</span><br><span class="line">&#125;</span><br><span class="line">status.adult = status.age &gt;= 18 ? &#x27;成人&#x27; : &#x27;小孩&#x27;;</span><br><span class="line">// 如果是用if迴圈</span><br><span class="line">let status = &#123;</span><br><span class="line">	name: &#x27;Jeff&#x27;,</span><br><span class="line">	age: 20,</span><br><span class="line">	adult: null</span><br><span class="line">&#125;</span><br><span class="line">if(status.age &gt;= 18)&#123;</span><br><span class="line">    status.adult = &#x27;成人&#x27;</span><br><span class="line">&#125;else&#123;</span><br><span class="line">    status.adult = &#x27;小孩&#x27;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>是不是非常快速可以打完^U^</p>
+<blockquote>
+<p>結語</p>
+</blockquote>
+<p>複習到這邊剛好滿一個禮拜(剛剛發現今天是第8天 哈哈)，其實在過程中確實有想過我這樣做是不是在浪費時間，為什麼不用練習代替這些複習過程，看到同學都開始預讀學期三的內容我卻還在用這些。</p>
+<p>但堅持到現在，我慢慢看到堅持這樣想發的優點，看到了很多之前沒讀到或是已經沒印象的地方，也了解了一些之前不太清楚的地方，重點還整理好了之後可以重複閱讀的筆記。因此我想我又可以繼續堅持下去，只是速度真的要加快一點就是了～～～</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+  </nav>
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Jeff"
+      src="/uploads/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Jeff</p>
+  <div class="site-description" itemprop="description">這是一個紀錄自己成長的地方</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">34</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jeff0518" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jeff0518" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:cycivs07@icloud.com" title="E-Mail → mailto:cycivs07@icloud.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jeff</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
