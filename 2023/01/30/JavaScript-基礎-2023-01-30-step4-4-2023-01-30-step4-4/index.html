@@ -20,20 +20,22 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="這個月的學習，獲得了大量的知識、技能、觀念，另外心態上也有很大的改變 — 我想在展開下一段旅程前，紀錄下我的心得與反思。">
-<meta property="og:type" content="article">
-<meta property="og:title" content="學期2–2心得">
-<meta property="og:url" content="http://example.com/2022/12/28/%E5%BF%83%E5%BE%97-2022-12-28-%E5%AD%B8%E6%9C%9F2%E2%80%932%E5%BF%83%E5%BE%97-2022-12-28-%E5%AD%B8%E6%9C%9F2%E2%80%932%E5%BF%83%E5%BE%97/index.html">
+  <meta property="og:type" content="article">
+<meta property="og:title" content="『JavaScript 基礎』 arguments跟 parameters以及 spread">
+<meta property="og:url" content="http://example.com/2023/01/30/JavaScript-%E5%9F%BA%E7%A4%8E-2023-01-30-step4-4-2023-01-30-step4-4/index.html">
 <meta property="og:site_name" content="Jeff的隨手筆記">
-<meta property="og:description" content="這個月的學習，獲得了大量的知識、技能、觀念，另外心態上也有很大的改變 — 我想在展開下一段旅程前，紀錄下我的心得與反思。">
 <meta property="og:locale" content="zh_TW">
-<meta property="article:published_time" content="2022-12-28T11:54:09.000Z">
-<meta property="article:modified_time" content="2022-12-30T08:53:33.342Z">
+<meta property="og:image" content="https://i.imgur.com/rZvUip7.png">
+<meta property="og:image" content="https://i.imgur.com/GCPUs9E.png">
+<meta property="article:published_time" content="2023-01-30T15:35:21.000Z">
+<meta property="article:modified_time" content="2023-01-30T15:36:45.832Z">
 <meta property="article:author" content="Jeff">
-<meta property="article:tag" content="學習心得">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="JavaScript 基礎">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.imgur.com/rZvUip7.png">
 
-<link rel="canonical" href="http://example.com/2022/12/28/%E5%BF%83%E5%BE%97-2022-12-28-%E5%AD%B8%E6%9C%9F2%E2%80%932%E5%BF%83%E5%BE%97-2022-12-28-%E5%AD%B8%E6%9C%9F2%E2%80%932%E5%BF%83%E5%BE%97/">
+<link rel="canonical" href="http://example.com/2023/01/30/JavaScript-%E5%9F%BA%E7%A4%8E-2023-01-30-step4-4-2023-01-30-step4-4/">
 
 
 <script id="page-configurations">
@@ -46,7 +48,7 @@
   };
 </script>
 
-  <title>學期2–2心得 | Jeff的隨手筆記</title>
+  <title>『JavaScript 基礎』 arguments跟 parameters以及 spread | Jeff的隨手筆記</title>
   
 
 
@@ -162,7 +164,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/28/%E5%BF%83%E5%BE%97-2022-12-28-%E5%AD%B8%E6%9C%9F2%E2%80%932%E5%BF%83%E5%BE%97-2022-12-28-%E5%AD%B8%E6%9C%9F2%E2%80%932%E5%BF%83%E5%BE%97/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/01/30/JavaScript-%E5%9F%BA%E7%A4%8E-2023-01-30-step4-4-2023-01-30-step4-4/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/uploads/avatar.jpeg">
@@ -175,7 +177,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          學期2–2心得
+          『JavaScript 基礎』 arguments跟 parameters以及 spread
         </h1>
 
         <div class="post-meta">
@@ -184,23 +186,17 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
+              
 
-              <time title="Created: 2022-12-28 19:54:09" itemprop="dateCreated datePublished" datetime="2022-12-28T19:54:09+08:00">2022-12-28</time>
+              <time title="Created: 2023-01-30 23:35:21 / Modified: 23:36:45" itemprop="dateCreated datePublished" datetime="2023-01-30T23:35:21+08:00">2023-01-30</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-12-30 16:53:33" itemprop="dateModified" datetime="2022-12-30T16:53:33+08:00">2022-12-30</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/AC%E5%AD%B8%E7%BF%92%E7%9A%84%E9%BB%9E%E9%BB%9E%E6%BB%B4%E6%BB%B4/" itemprop="url" rel="index"><span itemprop="name">AC學習的點點滴滴</span></a>
+                  <a href="/categories/JavaScript-%E5%9F%BA%E7%A4%8E/" itemprop="url" rel="index"><span itemprop="name">JavaScript 基礎</span></a>
                 </span>
             </span>
 
@@ -215,29 +211,37 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><em><strong>這個月的學習，獲得了大量的知識、技能、觀念，另外心態上也有很大的改變 — 我想在展開下一段旅程前，紀錄下我的心得與反思。</strong></em></p>
+        <p><img src="https://i.imgur.com/rZvUip7.png" alt="Imgur"></p>
 <span id="more"></span>
+<p>這是一門在Udemy 課程，是同學介紹的。主要是因為想要運用到過年前這段時間好好的增進自己的JavaScript的基礎能力，讓自己能往前端工程師更近一步。主要還是會以筆記的形式做呈現！</p>
+<hr>
 <blockquote>
-<p>學習的改變</p>
+<p><em><strong>Parameters(參數)</strong></em></p>
 </blockquote>
-<p>經過了2–2的洗禮，我覺得我自己跟2–2之前的自己進步很大，不管是邏輯思考、判斷怎麼寫，都有顯著的提升。對JavaScript更認識，寫code的時後不再是碰運氣完成，而是真的照我的規劃去實現，但要說改變最多得應該是心理層面吧！</p>
-<p>在之前我還在摸索的學習，包含學習時間的安排、筆記、詢問、查找資料等等，自己感覺都還沒步上正軌，內心其實非常慌張。對自己的否定以及不安，其實都讓我自己感覺到了很大的無形壓力。但在進入2–2後這些想法慢慢的在改變。</p>
-<p>讓我改變最大的是A13作業，這是我第一次不是只有交作業而已，想盡辦法的加功能、讓畫面好看、Debug然後不斷的優化。當成品出來的那一刻真的是滿滿的成就感，雖然慢了一點但原來我是做得到的啊。</p>
+<p>其實在我們介紹function時我們就已經認parameters了：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">greet</span>(<span class="params">firstName, lastName, language</span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(firstName)</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(lastName)</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(language)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>程式碼中的<code>firstName</code>, <code>lastName</code>, <code>language</code>就是parameters。<br>在其他程式語言裡面，如果有參數但我在呼叫時卻沒有給，在執行時通常都會出現問題，但在JavaScript裡即便你沒有給參數他還是會執行，只是會給出<code>undefined</code><br>是不是覺得很熟悉又出現<code>undefined</code>，沒錯會造成這個原因又是<code>Hoisting</code>。<br>至於用強制轉換概念設定預設值或是在參數中建立預設值，因為在前幾篇介紹過了就不再特別說明了。</p>
 <blockquote>
-<p>改變的動機</p>
+<p><em><strong>Arguments(<em>引數</em>)</strong></em></p>
 </blockquote>
-<p>我覺得會有這麼大的改變真的是一起學習的同學，雖然不是那種聊天然後豁然開朗的那種(但還蠻期待有線下活動的)，主要是看到同學在每個章節的提問、工作坊的活躍、以及作業的優化等等，突然發現自己有一個目標跟榜樣就在前方。想到之前在代訓新員工時常對他們說的話『先從模仿開始』，怎麼到自己身上就忘記了呢。</p>
-<p>先從自己的學習開始改變，不再只是上完課程而已，做好複習。在做作業時，遇到有一知半解的地方一定要弄懂。作業只要有能優化的地方一定要嘗試優化，不懂就問在ＡＣ上問或是到Discord ，慢慢的在寫作業時越來越順利，一點一點慢慢的進步，尤其是到A13時真的讓我看到了改變後的成果，讓我知道改變的方向可以繼續走下去。</p>
+<p>argument是傳遞給function的所有parameters之集合，不用管相對應的參數是否有明確定義，也就是說，arguments會包含所有你放入function中的參數值（自己感覺有點像React 裡的props）。<br>來看一下以下範例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">function greet(firstName, lastName, language) &#123;</span><br><span class="line"> </span><br><span class="line">    language = language || &#x27;en&#x27;;</span><br><span class="line">    </span><br><span class="line">    if (arguments.length === 0) &#123;</span><br><span class="line">        console.log(&#x27;Missing parameters!&#x27;);</span><br><span class="line">        console.log(&#x27;-------------&#x27;);</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    console.log(firstName);</span><br><span class="line">    console.log(lastName);</span><br><span class="line">    console.log(language);</span><br><span class="line">    console.log(arguments);</span><br><span class="line">    console.log(&#x27;arg 0: &#x27; + arguments[0]);</span><br><span class="line">    console.log(&#x27;-------------&#x27;);</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">greet();</span><br><span class="line">greet(&#x27;John&#x27;);</span><br><span class="line">greet(&#x27;John&#x27;, &#x27;Doe&#x27;);</span><br><span class="line">greet(&#x27;John&#x27;, &#x27;Doe&#x27;, &#x27;es&#x27;);</span><br></pre></td></tr></table></figure>
+
+<p>我們會得到以下的結果：</p>
+<p><img src="https://i.imgur.com/GCPUs9E.png" alt="Imgur"></p>
+<p>每一次的arguments都會分別顯示在該次函式中有哪些參數值</p>
+<p>注意看arguments回傳的值，我們會注意到是斜體的 [ ] ，這就是之前有學習到的Array-like。</p>
+<p>Array-like(類陣列)並不是真的陣列，因此arguments回傳的值並不具備所有陣列所具有的特徵。</p>
+<p>但由於Array-like裡面會有length的屬性，因此我們可以使用：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="variable language_">arguments</span>.<span class="property">length</span> === <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Missing parameters!&#x27;</span>);</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;-------------&#x27;</span>);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>這段code。（要不是上了這堂課我還真的不知道有arguments）</p>
 <blockquote>
-<p>總結</p>
+<p><em><strong>Spread</strong></em></p>
 </blockquote>
-<p>在經歷了這一個月的學習，讓我真的知道學習就像是：逆水行舟 不進則退。真的不能有還有時間先休息幾天的想法，這樣真的最後快到死線時，整個學習效果是非常差的。</p>
-<p>現在就是持之以恆的下去，讓自己更熟悉JavaScript，讓自己的思考更靈活、邏輯更清晰。</p>
-<p>但另外一方面真的要抽出時間來好好運動，有在運動（勞碌）時精神狀況真的比現在好很多，以及容易分心的狀況也要趕緊改善。</p>
-<blockquote>
-<p>給自己的一段話</p>
-</blockquote>
-<p>即將邁入2–3了，這學期不只有必修的課程要學習，也有選修的課程要學。課業壓力會變比較大，要規劃好學習時間不要分心。為自己設下停損點，不要鑽牛角尖，有時候真的是需要人點自己一下。</p>
+<p>簡單來說，就是它可以把函數中許多的參數(arguments)或陣列中許多的元素(elements)形成一個新的變數。</p>
+<p>由於課堂上沒有做過多的說明，附上<a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax">MDN連結</a>以及<a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10244629">鐵人賽文章</a>方便後續複習。</p>
 
     </div>
 
@@ -247,7 +251,8 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/%E5%AD%B8%E7%BF%92%E5%BF%83%E5%BE%97/" rel="tag"># 學習心得</a>
+              <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+              <a href="/tags/JavaScript-%E5%9F%BA%E7%A4%8E/" rel="tag"># JavaScript 基礎</a>
           </div>
 
         
@@ -256,12 +261,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2022/12/28/%E5%BF%83%E5%BE%97-2022-12-28-%E6%88%91%E7%9A%84%E5%85%AD%E6%9C%88%E5%A4%A9-2022-12-28-%E6%88%91%E7%9A%84%E5%85%AD%E6%9C%88%E5%A4%A9/" rel="prev" title="我的六月天">
-      <i class="fa fa-chevron-left"></i> 我的六月天
+    <a href="/2023/01/30/JavaScript-%E5%9F%BA%E7%A4%8E-2023-01-30-step4-3-2023-01-30-step4-3/" rel="prev" title="『JavaScript 基礎』 Function">
+      <i class="fa fa-chevron-left"></i> 『JavaScript 基礎』 Function
     </a></div>
       <div class="post-nav-item">
-    <a href="/2022/12/28/%E5%BF%83%E5%BE%97-2022-12-28-%E5%AD%B8%E6%9C%9F%E4%B8%89%E5%89%8D%E7%9A%84%E7%B6%93%E9%A9%97%E5%88%86%E4%BA%AB-2022-12-28-%E5%AD%B8%E6%9C%9F%E4%B8%89%E5%89%8D%E7%9A%84%E7%B6%93%E9%A9%97%E5%88%86%E4%BA%AB/" rel="next" title="學期三前的經驗分享">
-      學期三前的經驗分享 <i class="fa fa-chevron-right"></i>
+    <a href="/2023/01/30/JavaScript-%E5%9F%BA%E7%A4%8E-2023-01-30-step4-5-2023-01-30-step4-5/" rel="next" title="『JavaScript 基礎』 IIFE">
+      『JavaScript 基礎』 IIFE <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
