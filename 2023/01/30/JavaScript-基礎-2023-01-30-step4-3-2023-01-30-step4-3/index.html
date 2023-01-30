@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="『JavaScript 基礎』 Function">
+<meta property="og:type" content="article">
+<meta property="og:title" content="『JavaScript 基礎』 Function">
+<meta property="og:url" content="http://example.com/2023/01/30/JavaScript-%E5%9F%BA%E7%A4%8E-2023-01-30-step4-3-2023-01-30-step4-3/index.html">
+<meta property="og:site_name" content="Jeff的隨手筆記">
+<meta property="og:description" content="『JavaScript 基礎』 Function">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://i.imgur.com/rZvUip7.png">
+<meta property="og:image" content="https://i.imgur.com/PnWEVEL.png">
+<meta property="og:image" content="https://i.imgur.com/ctMRxEb.png">
+<meta property="og:image" content="https://i.imgur.com/OGzwYSH.png">
+<meta property="article:published_time" content="2023-01-30T06:25:23.000Z">
+<meta property="article:modified_time" content="2023-01-30T06:26:20.498Z">
+<meta property="article:author" content="Jeff">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="JavaScript 基礎">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.imgur.com/rZvUip7.png">
+
+<link rel="canonical" href="http://example.com/2023/01/30/JavaScript-%E5%9F%BA%E7%A4%8E-2023-01-30-step4-3-2023-01-30-step4-3/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-tw'
+  };
+</script>
+
+  <title>『JavaScript 基礎』 Function | Jeff的隨手筆記</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Jeff的隨手筆記</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">學習當一個前端工程師</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/01/30/JavaScript-%E5%9F%BA%E7%A4%8E-2023-01-30-step4-3-2023-01-30-step4-3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpeg">
+      <meta itemprop="name" content="Jeff">
+      <meta itemprop="description" content="這是一個紀錄自己成長的地方">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jeff的隨手筆記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          『JavaScript 基礎』 Function
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2023-01-30 14:25:23 / Modified: 14:26:20" itemprop="dateCreated datePublished" datetime="2023-01-30T14:25:23+08:00">2023-01-30</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JavaScript-%E5%9F%BA%E7%A4%8E/" itemprop="url" rel="index"><span itemprop="name">JavaScript 基礎</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="『JavaScript-基礎』-Function"><a href="#『JavaScript-基礎』-Function" class="headerlink" title="『JavaScript 基礎』 Function"></a>『JavaScript 基礎』 Function</h2><p><img src="https://i.imgur.com/rZvUip7.png" alt="Imgur"></p>
+<span id="more"></span>
+<p>這是一門在Udemy 課程，是同學介紹的。主要是因為想要運用到過年前這段時間好好的增進自己的JavaScript的基礎能力，讓自己能往前端工程師更近一步。主要還是會以筆記的形式做呈現！</p>
+<hr>
+<p>In JavaScript, functions are objects.</p>
+<blockquote>
+<p><strong>First class functions</strong></p>
+</blockquote>
+<p>指的是任何你可以對函式做出任何對其他型別（Objects, String, Boolean, Numbers）也做得到事，包括將 Function 指定成一個變數，帶入另一個函式中等等 。<br>JavaScript 中的 function 就符合 First Class Functions 這樣的特性：<br>函式只是物件的一種<br>可以將 function 儲存成變數<br>可以將 function 當成參數代入另一個 function 中<br>可以在一個 function 中回傳另一個 function<br>function 跟物件一樣有屬性（property）</p>
+<p>回歸主題：In JavaScript, functions are objects.<br>這句話怎麼說呢？<br>function就像其他object一樣，他會儲存在記憶體中，並且有兩個特殊的部分：name 和 code。</p>
+<ul>
+<li><em><strong>Name:</strong></em><br>function 的名稱是可有可無的，它可以是一個匿名函式（anonymous function）</li>
+<li><em><strong>code:</strong></em><br>可以透過 () 來加以執行（invoke）。</li>
+</ul>
+<p>看下面的範例：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">greet</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Hello&#x27;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">greet.<span class="property">language</span> = <span class="string">&#x27;english&#x27;</span>;</span><br><span class="line"><span class="title function_">greet</span>();</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(greet.<span class="property">language</span>);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>輸出：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Hello</span></span><br><span class="line">english</span><br></pre></td></tr></table></figure>
+
+<p>因為 function 可以當作物件來使用，所以可以直接用<code>.</code>來建立該物件的屬性和值，屬性的名稱為 language，值為 english。</p>
+<p>當我今天要呼叫這個function，只要打該函式的名稱，後面接上括號 () 就可以去執行該函式<br>這樣的例子說明了，function只是一種特殊的物件，它可以被當作物件來使用。</p>
+<hr>
+<p><em><strong>Expressions(表達式) 跟 Statements(陳述句) 的名詞解釋</strong></em></p>
+<blockquote>
+<p><em><strong>Expressions</strong></em></p>
+</blockquote>
+<p>表達式是產生值的代碼（An expression is a unit of code that results in a value.）<br>在JavaScript中，任何的expressions 都會創造一個值，但這個個值不一定會要在變數裡面。<br>例子：</p>
+<p><img src="https://i.imgur.com/PnWEVEL.png" alt="[Imgur](https://i.imgur.com/PnWEVEL.png)"><br>在瀏覽器的 console 中輸入 a &#x3D; 3 時，它會直接回傳 3 這個值；輸入 2 + 3 的時候，它會直接回傳 5；輸入 a &#x3D; { } 的時候，它會回傳一個為物件的值。這種輸入一段程式後，會直接取得回傳一個值的程式內容，我們就稱為 Expressions。<br>簡單來說：只要你輸入的那串程式執行後能直接回傳一個值，那麼它就是個 expression。</p>
+<blockquote>
+<p><em><strong>Statements</strong></em></p>
+</blockquote>
+<p>命令，並且進行一系列操作，特徵為<em><strong>不會回傳一個結果 。</strong></em>只用說的可能不好理解，我們直接用code來說</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (a === <span class="number">3</span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Hello&#x27;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>這是一段陳述句（Statements），因為它不會直接回傳一個值，所以我們不能將它指定為一個變數：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ❌ 錯誤寫法</span></span><br><span class="line"><span class="keyword">var</span> b = <span class="keyword">if</span> (a === <span class="number">3</span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Hello&#x27;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><em><strong>Function Expressions 和 Function Statements</strong></em></p>
+<p>在 JavaScript 中，Function 就是物件的一種，它可以透過 Expression 或 Statements 的方式加以操作。</p>
+<blockquote>
+<p><em><strong>Function Statements</strong></em></p>
+</blockquote>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">greet</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Hi&#x27;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在之前我們有說到，在JavaScript中function 就是物件，所以用物件的概念來理解函式的話，這個函式屬性 name 的值是 greeting，這個函式 code 屬性的值為 console.log(‘hi’)。</p>
+<p><img src="https://i.imgur.com/ctMRxEb.png" alt="Imgur"></p>
+<p>當我們要執行這個函式的時候，只要輸入 greet() 就可以了。<br>而Function Statements 的特色在於，它在程式執行的最開始，該函式就會透過 hoisting 先被儲存在記憶體中，因此我們可以在一開始就呼叫function 而不會出現錯誤：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">greet</span>();   <span class="comment">// &#x27;Hi&#x27;</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">greet</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Hi&#x27;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><em><strong>Function Expressions</strong></em></p>
+</blockquote>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> anonymousGreet = <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;hi&#x27;</span>);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>function(){ … } 這段就是 Function Expression，現在我們則把這個函式表達式的值存在 anonymousGreet 這個變數內。</p>
+<p>剛剛我們有提到JavaScript中的function 就是物件，因此在這個範例，我們從物件的角度來看function：</p>
+<p><img src="https://i.imgur.com/OGzwYSH.png" alt="Imgur"><br>我們先建立了一個function，但這個function的 name 屬性並沒有給它值，之所以可以這麼做是因為，我們在 function expression 前面已經把它指定到一個變數（anonymousGreet），所以可以直接用這個變數名稱來指稱這個函式。對於這種 name 屬性沒有值的function，就叫做匿名函式（anonymous function 或 function literal）</p>
+<p>同樣的要執行它也只需再變數名稱後加上()就可以了。</p>
+<p>但這邊要特別注意，跟Function Statements 不同的是，我們不可以在還沒宣告變數時就呼叫他：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ❌ 錯誤寫法</span></span><br><span class="line"><span class="title function_">anonymousGreet</span>(); </span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> anonymousGreet = <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Hello&#x27;</span>);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>因為在一開始執行程式初期，只會先建立並儲存變數名稱到記憶體中，但程式內容不會一併儲存進去（這時候 anonymousGreet 的值會是 undefined），是不是很眼熟，沒錯就是hoisting。</p>
+<hr>
+<p>接下來我們要談談callback function：</p>
+<p>我們建立了一個function，如下：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">log</span>(<span class="params">a</span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(a);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>因為我們有設定參數，所以這時候我們呼叫這個function時，就必須要給參數，給參數的方式有兩個：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 方法1</span></span><br><span class="line"><span class="keyword">const</span> b = <span class="number">3</span>;</span><br><span class="line"><span class="title function_">log</span>(b);</span><br><span class="line"><span class="comment">// 方法2</span></span><br><span class="line"><span class="title function_">log</span>(<span class="number">3</span>)</span><br></pre></td></tr></table></figure>
+
+<p>兩個的方法輸出都會是3。只是一個是用變數裝，一個是直接把值放到參數中。</p>
+<p>那如果我要放的是一個function並執行呢？也是可以的</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">log</span>(<span class="params">a</span>) &#123;</span><br><span class="line">  <span class="title function_">a</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> anonymousGreet = <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Hi&#x27;</span>);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="title function_">log</span>(anonymousGreet);</span><br></pre></td></tr></table></figure>
+
+<p>或是我們可以寫的更簡化些：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">log</span>(<span class="params">a</span>) &#123;</span><br><span class="line">  <span class="title function_">a</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">log</span>(<span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Hi&#x27;</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>這樣，就可以在不用建立函式的情況下，直接去執行一個匿名函式。</p>
+<p>由於 JavaScript 非同步的特性，若想要確保程式執行的順序，常常會使用到回呼函式（callback function）這種方式，它內部的做法其實也就是把函式傳入另一個函式中去呼叫。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+              <a href="/tags/JavaScript-%E5%9F%BA%E7%A4%8E/" rel="tag"># JavaScript 基礎</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/01/19/JavaScript-%E5%9F%BA%E7%A4%8E-2023-01-19-step4-2-2023-01-19-step4-2/" rel="prev" title="『JavaScript 基礎』 名詞解釋以及傳值還是傳址的筆記">
+      <i class="fa fa-chevron-left"></i> 『JavaScript 基礎』 名詞解釋以及傳值還是傳址的筆記
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%8EJavaScript-%E5%9F%BA%E7%A4%8E%E3%80%8F-Function"><span class="nav-number">1.</span> <span class="nav-text">『JavaScript 基礎』 Function</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Jeff"
+      src="/uploads/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Jeff</p>
+  <div class="site-description" itemprop="description">這是一個紀錄自己成長的地方</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">42</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jeff0518" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jeff0518" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:cycivs07@icloud.com" title="E-Mail → mailto:cycivs07@icloud.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jeff</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
