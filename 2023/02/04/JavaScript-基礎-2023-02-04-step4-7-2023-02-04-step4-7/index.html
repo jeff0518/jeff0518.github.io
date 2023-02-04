@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta property="og:type" content="article">
+<meta property="og:title" content="『JavaScript 基礎』 認識call( ), apply( )和bind( )">
+<meta property="og:url" content="http://example.com/2023/02/04/JavaScript-%E5%9F%BA%E7%A4%8E-2023-02-04-step4-7-2023-02-04-step4-7/index.html">
+<meta property="og:site_name" content="Jeff的隨手筆記">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://i.imgur.com/rZvUip7.png">
+<meta property="og:image" content="https://i.imgur.com/KazpBt9.png">
+<meta property="article:published_time" content="2023-02-04T07:19:43.000Z">
+<meta property="article:modified_time" content="2023-02-04T07:22:42.042Z">
+<meta property="article:author" content="Jeff">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="JavaScript 基礎">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.imgur.com/rZvUip7.png">
+
+<link rel="canonical" href="http://example.com/2023/02/04/JavaScript-%E5%9F%BA%E7%A4%8E-2023-02-04-step4-7-2023-02-04-step4-7/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-tw'
+  };
+</script>
+
+  <title>『JavaScript 基礎』 認識call( ), apply( )和bind( ) | Jeff的隨手筆記</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Jeff的隨手筆記</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">學習當一個前端工程師</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/02/04/JavaScript-%E5%9F%BA%E7%A4%8E-2023-02-04-step4-7-2023-02-04-step4-7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpeg">
+      <meta itemprop="name" content="Jeff">
+      <meta itemprop="description" content="這是一個紀錄自己成長的地方">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jeff的隨手筆記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          『JavaScript 基礎』 認識call( ), apply( )和bind( )
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2023-02-04 15:19:43 / Modified: 15:22:42" itemprop="dateCreated datePublished" datetime="2023-02-04T15:19:43+08:00">2023-02-04</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JavaScript-%E5%9F%BA%E7%A4%8E/" itemprop="url" rel="index"><span itemprop="name">JavaScript 基礎</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img src="https://i.imgur.com/rZvUip7.png" alt="Imgur"></p>
+<span id="more"></span>
+
+<p>這是一門在Udemy 課程，是同學介紹的。主要是因為想要運用到過年前這段時間好好的增進自己的JavaScript的基礎能力，讓自己能往前端工程師更近一步。主要還是會以筆記的形式做呈現！</p>
+<hr>
+<p>在之前的有提到過，我們在執行環境中會有：Variable Environment、Outer Environment、this。<br>其中<code>this</code>某些情況是會指向<code>global environment</code>，某些時候則是指向<code>object</code><br><img src="https://i.imgur.com/KazpBt9.png" alt="Imgur"></p>
+<p>但有些時候我們必須要去control 函式裡面的this所指向的object有辦法嗎？<br>是有辦法的，就是我們現在要介紹的<code>call</code>、<code>apply</code>和<code>bind</code>。</p>
+<h2 id="｜First-Class-Functions"><a href="#｜First-Class-Functions" class="headerlink" title="｜First Class Functions"></a>｜First Class Functions</h2><p>首先我們要先複習一下<code>First Class Functions</code>：</p>
+<p><code>First Class Functions</code>並不是 JavaScript 專有的特性，只要該語言的「函式可被視為與其它變數一樣時」，就可以稱為該語言有<code>First Class Functions</code>的特性。</p>
+<p>這些 JavaScript 的函式就具有以下特性：</p>
+<ul>
+<li>將函式指定到一個變數</li>
+<li>函式可作為參數來傳遞</li>
+<li>函式也可以被回傳（return）</li>
+<li>函式也是物件的物件（傳參考特性、具有屬性）</li>
+</ul>
+<p>因此我們可以知道，function它只是一種特殊的<code>object</code>，而它包含了兩個隱藏的屬性，一個是name property，用來儲存函式的名稱（也可以是匿名函式）；另一個是code property，用來儲存函式當中程式碼的內容。</p>
+<h2 id="｜認識這3個method"><a href="#｜認識這3個method" class="headerlink" title="｜認識這3個method"></a>｜認識這3個method</h2><p>就像剛剛說的，function他只是一種特殊的<code>object</code>所以它具有properties 和 methods。剛剛提到的<code>call</code>、<code>apply</code>和<code>bind</code>就是function裡面的method。</p>
+<p>看一下下面這段code:</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> person = &#123;</span><br><span class="line">    <span class="attr">firstname</span>: <span class="string">&#x27;John&#x27;</span>,</span><br><span class="line">    <span class="attr">lastname</span>: <span class="string">&#x27;Doe&#x27;</span>,</span><br><span class="line">    <span class="attr">getFullName</span>: <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">var</span> fullname = <span class="variable language_">this</span>.<span class="property">firstname</span> + <span class="string">&#x27; &#x27;</span> + <span class="variable language_">this</span>.<span class="property">lastname</span>;</span><br><span class="line">        <span class="keyword">return</span> fullname;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> logName = <span class="keyword">function</span>(<span class="params">lang1, lang2</span>) &#123;</span><br><span class="line"></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Logged: &#x27;</span> + <span class="variable language_">this</span>.<span class="title function_">getFullName</span>());</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">logName</span>()</span><br></pre></td></tr></table></figure>
+
+<p>這段程式碼執行後會出現什麼？如果this觀念有學好應該馬上就可以知道會出現錯誤，原因就在於global object根本沒有getFullName這個方法，這個方法是被建立在person這個物件裡面。所以就會出現：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">TypeError</span>: <span class="variable language_">this</span>.<span class="property">getFullName</span> is not a <span class="keyword">function</span></span><br></pre></td></tr></table></figure>
+
+<p>但如果我們想要指稱logName function中this所指稱的對象，這時候就可以使用<code>bind</code>。</p>
+<h3 id="｜bind"><a href="#｜bind" class="headerlink" title="｜bind"></a>｜bind</h3><p>只要在JavaScript中建立的函式，都會預設有bind這個方法在內。使用的方法只要在該function後使用.bind，並於( )的地方代入欲替換成this的物件。</p>
+<p>這裡要特別注意，不是寫成這樣：<code>logName().bind(person)</code>。因為<code>logName()</code>會是執行後的結果，而<code>bind(person)</code>卻是function的method，所以正卻的寫法應該是：<code>var logPersonName = logName.bind(person)</code>然後在<code>logPersonName()</code>。</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> logName = <span class="keyword">function</span>(<span class="params">lang1, lang2</span>) &#123;</span><br><span class="line"></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Logged: &#x27;</span> + <span class="variable language_">this</span>.<span class="title function_">getFullName</span>());</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> logPersonName = logName.<span class="title function_">bind</span>(person)</span><br><span class="line"><span class="title function_">logPersonName</span>()</span><br></pre></td></tr></table></figure>
+
+<p>也可以直接在logName函式的後面去執行 bind，如下：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> logName = <span class="keyword">function</span>(<span class="params">lang1, lang2</span>) &#123;</span><br><span class="line"></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Logged: &#x27;</span> + <span class="variable language_">this</span>.<span class="title function_">getFullName</span>());</span><br><span class="line"></span><br><span class="line">&#125;.<span class="title function_">bind</span>(person)</span><br><span class="line"></span><br><span class="line"><span class="title function_">logName</span>()</span><br></pre></td></tr></table></figure>
+
+<h3 id="｜call"><a href="#｜call" class="headerlink" title="｜call"></a>｜call</h3><p>call的用法其實就和括號 ( ) 一樣，都是直接去執行<code>invoke</code>這個function，但不一樣的地方在於，call的後面可以帶入你想要指定this的物件，接著再放入參數。</p>
+<p>我們使用剛剛的範例來舉例：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> person = &#123;...&#125;</span><br><span class="line"><span class="keyword">var</span> logName = <span class="keyword">function</span>(<span class="params">lang1, lang2</span>) &#123;</span><br><span class="line"></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Logged: &#x27;</span> + <span class="variable language_">this</span>.<span class="title function_">getFullName</span>());</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Arguments: &#x27;</span> + lang1 + <span class="string">&#x27; &#x27;</span> + lang2);</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;-----------&#x27;</span>);</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> logPersonName = logName.<span class="title function_">bind</span>(person);</span><br><span class="line"><span class="title function_">logPersonName</span>(<span class="string">&#x27;en&#x27;</span>);</span><br><span class="line"></span><br><span class="line">logName.<span class="title function_">call</span>(person, <span class="string">&#x27;en&#x27;</span>, <span class="string">&#x27;es&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<h3 id="｜apply"><a href="#｜apply" class="headerlink" title="｜apply"></a>｜apply</h3><p>apply和call的用法大同小異，唯一不同的地方在於，使用apply時，放入參數的地方，應該要放入的是陣列（array）。講師有提到apply的用法常用到有許多算數的地方。</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> person = &#123;...&#125;</span><br><span class="line"><span class="keyword">var</span> logName = <span class="keyword">function</span>(<span class="params">lang1, lang2</span>) &#123;</span><br><span class="line"></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Logged: &#x27;</span> + <span class="variable language_">this</span>.<span class="title function_">getFullName</span>());</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Arguments: &#x27;</span> + lang1 + <span class="string">&#x27; &#x27;</span> + lang2);</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;-----------&#x27;</span>);</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> logPersonName = logName.<span class="title function_">bind</span>(person);</span><br><span class="line"><span class="title function_">logPersonName</span>(<span class="string">&#x27;en&#x27;</span>);</span><br><span class="line">logName.<span class="title function_">apply</span>(person, [<span class="string">&#x27;en&#x27;</span>, <span class="string">&#x27;es&#x27;</span>]);</span><br></pre></td></tr></table></figure>
+
+<h2 id="｜實例"><a href="#｜實例" class="headerlink" title="｜實例"></a>｜實例</h2><p>bind是複製原本的函式，並且將你所指定的this代入這個函式中，所以如果你要在執行這個函式的話，最後要接上( )來執行該函式；而call和apply則是將你所指定的this直接代入該function中並執行，所以最後面不用在加上( )來執行該函式。</p>
+<p>理論知道後，來看一些實際案例：</p>
+<h3 id="｜Function-Borrowing"><a href="#｜Function-Borrowing" class="headerlink" title="｜Function Borrowing"></a>｜Function Borrowing</h3><p>假設我們現在建立了另一個物件叫做person2，但我想要使用person這個物件裡面的getFullName這個方法時，我該怎麼處裡？其實非常簡單：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> person2 = &#123;</span><br><span class="line">    <span class="attr">firstname</span>: <span class="string">&#x27;Jane&#x27;</span>,</span><br><span class="line">    <span class="attr">lastname</span>: <span class="string">&#x27;Doe&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(person.<span class="property">getFullName</span>.<span class="title function_">apply</span>(person2));</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>首先我們要先找到getFullName，然後用apply()或是call()，裡面的參數則是放我們要放入的person2就可以了。</p>
+<h3 id="｜Function-Currying"><a href="#｜Function-Currying" class="headerlink" title="｜Function Currying"></a>｜Function Currying</h3><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">multiply</span>(<span class="params">a, b</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> a*b;   </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> multipleByTwo = multiply.<span class="title function_">bind</span>(<span class="variable language_">this</span>, <span class="number">2</span>);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">multipleByTwo</span>(<span class="number">4</span>));</span><br></pre></td></tr></table></figure>
+
+<p>我們需要一個2個數相乘的函式，取名叫multiply並設定需要兩個參數。</p>
+<p>這時候我需要a都是固定數值但不要更改到multiply這個函式的內容，所以我們使用了<code>var multipleByTwo = multiply.bind(this, 2)</code>這個寫法，這寫法的意思就是說我們把a這個參數設定成2，然後複製原本multiply這個function變成multipleByTwo。</p>
+<p>所以之後執行multipleByTwo這個函式，就只需要代入一個參數（原本multiply裡的參數b；a已經預設為2）</p>
+<p>這時候如果這時候我把這段改成<code>multiply.bind(this, 2, 5)</code>，就是把 a 的參數設定成2，把 b 的參數設定成 5 。</p>
+<h3 id="｜Functional-Programming"><a href="#｜Functional-Programming" class="headerlink" title="｜Functional Programming"></a>｜Functional Programming</h3><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr1 = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(arr1)</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> arr2 = []</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; arr1.<span class="property">length</span>; i++) &#123;</span><br><span class="line">  arr2.<span class="title function_">push</span>(arr1[i] * <span class="number">2</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(arr2)</span><br></pre></td></tr></table></figure>
+
+<p>這是一段簡單的code，我需要一個陣列arr2，而裡面的元素都是arr1 x 2。</p>
+<p>但在ＡＣ上課時有說到：身為一個工程師，我們總是想要透過最少的程式碼來達到同樣的效果，而且要避免類似的程式碼重覆。</p>
+<p>因此這邊課程教導了我一個概念：Functional Programming</p>
+<p>第一步，就是先把程式碼函式化，把會變動的值當成參數處理：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">mapForEach</span>(<span class="params">arr, fn</span>) &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> newArr = [];</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; arr.<span class="property">length</span>; i++) &#123;</span><br><span class="line"></span><br><span class="line">        newArr.<span class="title function_">push</span>(</span><br><span class="line">            <span class="title function_">fn</span>(arr[i])</span><br><span class="line">        );</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> newArr;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>這邊我們帶入的參數中，第一個是要放入的陣列，取名叫arr;第二個就是要放入要執行的函式，取名叫fn。</p>
+<p>接下來就是放入要放入的內容，如下：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr1 = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>];</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(arr1);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> arr2 = <span class="title function_">mapForEach</span>(arr1, <span class="keyword">function</span>(<span class="params">item</span>) &#123;</span><br><span class="line">   <span class="keyword">return</span> item * <span class="number">2</span>; </span><br><span class="line">&#125;);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(arr2);</span><br></pre></td></tr></table></figure>
+
+<p>結果就會是我們想要的[2, 4, 6]。</p>
+<p>有了<code>mapForEach</code>這個function後我們就可做很多的延伸變化，例如：</p>
+<p><em><strong>判斷在arr1這個陣列中，有哪些元素值是大於2的：</strong></em></p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr3 = <span class="title function_">mapForEach</span>(arr1, <span class="keyword">function</span>(<span class="params">item</span>) &#123;</span><br><span class="line">   <span class="keyword">return</span> item &gt; <span class="number">2</span>; </span><br><span class="line">&#125;);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(arr3);</span><br></pre></td></tr></table></figure>
+
+<p>那如果我們不想放function expression而是想放變數呢？</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> checkPastLimit = <span class="keyword">function</span>(<span class="params">limiter, item</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> item &gt; limiter;   </span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> arr4 = <span class="title function_">mapForEach</span>(arr1, checkPastLimit.<span class="title function_">bind</span>(<span class="variable language_">this</span>, <span class="number">1</span>));</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(arr4);</span><br></pre></td></tr></table></figure>
+
+<p>為什麼這邊要用到bind?原因就在於<code>mapForEach</code>這個函式裡面的<code>newArr.push(fn(arr[i]))</code>這段，fn裡面只會帶入一個參數，但我們在<code>var checkPastLimit = function(limiter, item)&#123;...&#125;</code>卻是要帶入兩個參數。</p>
+<p>因此為了解決這個問題，我們需要將其中一個參數變成預設值，因此才會使用bind。</p>
+<p>那再往下延伸，如果我也不想每次都要使用bind，我只想每次帶入<code>limiter</code>這個參數，可以嗎？</p>
+<p>也是可以，如下：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> checkPastLimitSimplified = <span class="keyword">function</span>(<span class="params">limiter</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">function</span>(<span class="params">limiter, item</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> item &gt; limiter;   </span><br><span class="line">    &#125;.<span class="title function_">bind</span>(<span class="variable language_">this</span>, limiter); </span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> arr5 = <span class="title function_">mapForEach</span>(arr1, <span class="title function_">checkPastLimitSimplified</span>(<span class="number">1</span>));</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(arr5);</span><br></pre></td></tr></table></figure>
+
+<p>甚至可以再更簡化成：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> checkLimiterSimplified = <span class="keyword">function</span>(<span class="params">limiter</span>) &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">function</span>(<span class="params">item</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> item &gt; limiter;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> arr6 = <span class="title function_">mapForEach</span>(arr1, <span class="title function_">checkLimiterSimplified</span>(<span class="number">1</span>));</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(arr6);</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+              <a href="/tags/JavaScript-%E5%9F%BA%E7%A4%8E/" rel="tag"># JavaScript 基礎</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/02/04/JavaScript-%E5%9F%BA%E7%A4%8E-2023-02-04-step4-6-2023-02-04-step4-6/" rel="prev" title="『JavaScript 基礎』 Closures">
+      <i class="fa fa-chevron-left"></i> 『JavaScript 基礎』 Closures
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BD%9CFirst-Class-Functions"><span class="nav-number">1.</span> <span class="nav-text">｜First Class Functions</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BD%9C%E8%AA%8D%E8%AD%98%E9%80%993%E5%80%8Bmethod"><span class="nav-number">2.</span> <span class="nav-text">｜認識這3個method</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BD%9Cbind"><span class="nav-number">2.1.</span> <span class="nav-text">｜bind</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BD%9Ccall"><span class="nav-number">2.2.</span> <span class="nav-text">｜call</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BD%9Capply"><span class="nav-number">2.3.</span> <span class="nav-text">｜apply</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BD%9C%E5%AF%A6%E4%BE%8B"><span class="nav-number">3.</span> <span class="nav-text">｜實例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BD%9CFunction-Borrowing"><span class="nav-number">3.1.</span> <span class="nav-text">｜Function Borrowing</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BD%9CFunction-Currying"><span class="nav-number">3.2.</span> <span class="nav-text">｜Function Currying</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BD%9CFunctional-Programming"><span class="nav-number">3.3.</span> <span class="nav-text">｜Functional Programming</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Jeff"
+      src="/uploads/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Jeff</p>
+  <div class="site-description" itemprop="description">這是一個紀錄自己成長的地方</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">46</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jeff0518" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jeff0518" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:cycivs07@icloud.com" title="E-Mail → mailto:cycivs07@icloud.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jeff</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

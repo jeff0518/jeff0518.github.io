@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta property="og:type" content="article">
+<meta property="og:title" content="『JavaScript 基礎』 Closures">
+<meta property="og:url" content="http://example.com/2023/02/04/JavaScript-%E5%9F%BA%E7%A4%8E-2023-02-04-step4-6-2023-02-04-step4-6/index.html">
+<meta property="og:site_name" content="Jeff的隨手筆記">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://i.imgur.com/rZvUip7.png">
+<meta property="og:image" content="https://i.imgur.com/T4tezH3.png">
+<meta property="og:image" content="https://i.imgur.com/W1sWi90.png">
+<meta property="og:image" content="https://i.imgur.com/wOFUCgu.png">
+<meta property="og:image" content="https://i.imgur.com/0SjOrUO.png">
+<meta property="og:image" content="https://i.imgur.com/2IgQVwu.png">
+<meta property="og:image" content="https://i.imgur.com/ZYhfpvM.png">
+<meta property="og:image" content="https://i.imgur.com/Yqx961V.png">
+<meta property="article:published_time" content="2023-02-04T07:16:35.000Z">
+<meta property="article:modified_time" content="2023-02-04T07:17:48.850Z">
+<meta property="article:author" content="Jeff">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="JavaScript 基礎">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.imgur.com/rZvUip7.png">
+
+<link rel="canonical" href="http://example.com/2023/02/04/JavaScript-%E5%9F%BA%E7%A4%8E-2023-02-04-step4-6-2023-02-04-step4-6/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-tw'
+  };
+</script>
+
+  <title>『JavaScript 基礎』 Closures | Jeff的隨手筆記</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Jeff的隨手筆記</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">學習當一個前端工程師</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/02/04/JavaScript-%E5%9F%BA%E7%A4%8E-2023-02-04-step4-6-2023-02-04-step4-6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpeg">
+      <meta itemprop="name" content="Jeff">
+      <meta itemprop="description" content="這是一個紀錄自己成長的地方">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jeff的隨手筆記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          『JavaScript 基礎』 Closures
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2023-02-04 15:16:35 / Modified: 15:17:48" itemprop="dateCreated datePublished" datetime="2023-02-04T15:16:35+08:00">2023-02-04</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JavaScript-%E5%9F%BA%E7%A4%8E/" itemprop="url" rel="index"><span itemprop="name">JavaScript 基礎</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img src="https://i.imgur.com/rZvUip7.png" alt="Imgur"></p>
+<span id="more"></span>
+
+<p>這是一門在Udemy 課程，是同學介紹的。主要是因為想要運用到過年前這段時間好好的增進自己的JavaScript的基礎能力，讓自己能往前端工程師更近一步。主要還是會以筆記的形式做呈現！</p>
+<hr>
+<p>在正式上課前，講師先給我們看了一段code：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">greet</span>(<span class="params">whattosay</span>) &#123;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">return</span> <span class="keyword">function</span>(<span class="params">name</span>) &#123;</span><br><span class="line">       <span class="variable language_">console</span>.<span class="title function_">log</span>(whattosay + <span class="string">&#x27; &#x27;</span> + name);</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">greet</span>(<span class="string">&#x27;Hi&#x27;</span>)(<span class="string">&#x27;Tony&#x27;</span>)</span><br><span class="line"><span class="comment">// 輸出會是：Hi Tony</span></span><br></pre></td></tr></table></figure>
+
+<p>好像有點難懂，我們換另一種寫法：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">greet</span>(<span class="params">whattosay</span>) &#123;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">return</span> <span class="keyword">function</span>(<span class="params">name</span>) &#123;</span><br><span class="line">       <span class="variable language_">console</span>.<span class="title function_">log</span>(whattosay + <span class="string">&#x27; &#x27;</span> + name);</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> sayHi = <span class="title function_">greet</span>(<span class="string">&#x27;Hi&#x27;</span>);</span><br><span class="line"><span class="title function_">sayHi</span>(<span class="string">&#x27;Tony&#x27;</span>);</span><br><span class="line"><span class="comment">//輸出會是： Hi Tony</span></span><br></pre></td></tr></table></figure>
+
+<p>看起來好像很合理，但如果仔細一想，有一個疑問：為什麼<code>sayHi</code>會知道<code>whattosay</code>這個參數。</p>
+<p>我的想法是：<code>whattosay</code>是在我們<code>called</code> <code>greet function</code>時創建的，而當greet這個function執行完成後參數<code>whattosay</code>應該會從<code>execution stack</code> 離開才對。為什麼<code>sayHi</code>還能找到呢？</p>
+<p>這就是我們要學的<code>closures</code>所帶來的結果。</p>
+<h3 id="｜Closures的底層原理"><a href="#｜Closures的底層原理" class="headerlink" title="｜Closures的底層原理"></a>｜Closures的底層原理</h3><p>當我們執行整段code時，我們知道整段code的<code>global execution context</code>會被建立。</p>
+<p>當我們來到 <code>sayHi = greet</code> 時，他會<code>invokes</code> greet這個function，創建新的<code>execution context</code><br><img src="https://i.imgur.com/T4tezH3.png" alt="Imgur"></p>
+<p>當執行到<code>function greet(whattosay)</code>時，javaScript引擎會注意到這裡有一個<code>parameters</code>(參數)，因此把他放到了<code>execution context</code>裡。<br><img src="https://i.imgur.com/W1sWi90.png" alt="Imgur"></p>
+<p>當再往下執行後，發現了<code>return</code> ，因此回傳了後面整段function，所以整個<code>greet()</code>就會從<code>stack</code>彈出。</p>
+<p>但要記得，我們說過每個<code>execution context</code>在記憶體裡都會有一個空間，在正常情況下，JavaScript引擎會透過<code>garbage collection</code>來清除內容，但在execution context抽離的當下，雖然execution context已經不在了，但裡面的變數還是儲存在那個記憶體位置。<br><img src="https://i.imgur.com/wOFUCgu.png" alt="Imgur"></p>
+<p>當我們繼續往下執行到<code>sayHi(&#39;Tony&#39;)</code>時，我們建立了一個給匿名函式的execution context，同時裡面帶有變數name。<br><img src="https://i.imgur.com/0SjOrUO.png" alt="Imgur"></p>
+<p>當我們執行這個這個匿名函式的<code>console.log(whattosay + &#39; &#39; + name)</code>時，JavaScript引擎就會過<code>scope chain</code>的方式來尋找<code>whattosay</code>這個變數。這時候雖然我們的greet這個function的<code>execution context</code>已經不在了，但其實在這個記憶體位置仍然留有參照（reference），所以在greet function裡面所建立的函式仍然可以找得到whattosay這個變數。<br><img src="https://i.imgur.com/2IgQVwu.png" alt="Imgur"></p>
+<p>到這邊就是整個closure的底層原理。<br><img src="https://i.imgur.com/ZYhfpvM.png" alt="Imgur"></p>
+<h3 id="｜Closure的練習"><a href="#｜Closure的練習" class="headerlink" title="｜Closure的練習"></a>｜Closure的練習</h3><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">buildFunctions</span>(<span class="params"></span>) &#123;</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">var</span> arr = [];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">3</span>; i++) &#123;</span><br><span class="line">        </span><br><span class="line">        arr.<span class="title function_">push</span>(</span><br><span class="line">            <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">                <span class="variable language_">console</span>.<span class="title function_">log</span>(i);   </span><br><span class="line">            &#125;</span><br><span class="line">        )      </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> arr;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> fs = <span class="title function_">buildFunctions</span>();</span><br><span class="line"></span><br><span class="line">fs[<span class="number">0</span>]();</span><br><span class="line">fs[<span class="number">1</span>]();</span><br><span class="line">fs[<span class="number">2</span>]();</span><br></pre></td></tr></table></figure>
+
+<p>看到第一眼本來很直覺的想要說答案是0,1,2，但在仔細看了一遍後注意到arr裡面放的是function而不是number。所以<code>console.log(i)</code>並不會在被執行，而是當我們程式走到<code>fs[0]()</code>時，他才會去執行<code>console.log(i)</code>，所以這時要套用到剛剛學習的觀念，透過<code>scope chain</code>去找到i的值。</p>
+<p>在<code>buildFunctions</code>這個function執行for迴圈時，每當執行一次，就會把 function( ){console.log(i)} 儲存到陣列中，但要注意的是這時候這個被儲到陣列中的function並沒有執行（invoke），而是只是儲存在裡面而已，因為它沒有透過括號 ( ) 來執行；然後 i 會繼續累加，當 i 累加到3的時候，因為不符合 i &lt; 3 所以會跳出迴圈。因此i就會是等於3，而arr會是長這樣：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">arr = [f0, f1, f2]</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.imgur.com/Yqx961V.png" alt="Imgur"></p>
+<p>因此當我們透過<code>scope chain</code>去找i時就會得到i &#x3D; 3，之後再帶入到程式碼裡面就會得到答案3。由於f0、f1跟f2都擁有同樣的outer environment reference，因此答案會是:3,3,3。</p>
+<p>那如果這時候我們要讓他輸出的結果變成 0, 1, 2時，我們該怎麼做？</p>
+<p>這邊提到了2個做法，第一個是使用<code>let</code>，第二個就是使用<code>IIFEs</code>。</p>
+<p>先看<code>let</code>:</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">buildFunctions</span>(<span class="params"></span>) &#123;</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">var</span> arr = [];</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">3</span>; i++) &#123;</span><br><span class="line">        <span class="keyword">let</span> j = i;</span><br><span class="line">        arr.<span class="title function_">push</span>(</span><br><span class="line">            <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">                <span class="variable language_">console</span>.<span class="title function_">log</span>(j);   </span><br><span class="line">            &#125;</span><br><span class="line">        )</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> arr;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>透過let，可以讓每次跑的迴圈都建立在一個新的記憶體位置，因此最後指到的地方會是不一樣的，於是可以輸出0, 1, 2的結果。</p>
+<p>使用<code>IIFEs</code>就稍微複雜了：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">buildFunctions</span>(<span class="params"></span>) &#123;</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">var</span> arr = [];</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">3</span>; i++) &#123;</span><br><span class="line">        arr.<span class="title function_">push</span>(</span><br><span class="line">            (<span class="keyword">function</span>(<span class="params">j</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">                    <span class="variable language_">console</span>.<span class="title function_">log</span>(j);   </span><br><span class="line">                &#125;</span><br><span class="line">            &#125;(i))</span><br><span class="line">        )</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> arr;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>(function(j)&#123;...&#125;)(i)</code>因為這段是IIFEs，所以他會直接被執行並且會把變數i帶到function裏面，這也就導致在一開始原本一樣的<code>outer environment reference</code>變成不一樣，因此當我們要再去<code>outer environment reference</code> 找參數時，就會因為參數的值不同，得到的輸出就不會再是都一樣的。</p>
+<h3 id="｜Closure的進階練習"><a href="#｜Closure的進階練習" class="headerlink" title="｜Closure的進階練習"></a>｜Closure的進階練習</h3><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">makeGreeting</span>(<span class="params">language</span>) &#123;</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">function</span>(<span class="params">firstname, lastname</span>) &#123;</span><br><span class="line">     </span><br><span class="line">        <span class="keyword">if</span> (language === <span class="string">&#x27;en&#x27;</span>) &#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Hello &#x27;</span> + firstname + <span class="string">&#x27; &#x27;</span> + lastname);   </span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (language === <span class="string">&#x27;es&#x27;</span>) &#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Hola &#x27;</span> + firstname + <span class="string">&#x27; &#x27;</span> + lastname);   </span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> greetEnglish = <span class="title function_">makeGreeting</span>(<span class="string">&#x27;en&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> greetSpanish = <span class="title function_">makeGreeting</span>(<span class="string">&#x27;es&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="title function_">greetEnglish</span>(<span class="string">&#x27;John&#x27;</span>, <span class="string">&#x27;Doe&#x27;</span>);</span><br><span class="line"><span class="title function_">greetSpanish</span>(<span class="string">&#x27;John&#x27;</span>, <span class="string">&#x27;Doe&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>閉包的使用當然有很多種，例如上面這段code，雖然比前一個練習更複雜，但我們只要記得：</p>
+<p>每執行一次函式，就會產生一個新的execution context，即使有多個參數值被儲存在記憶體中，JavaScript引擎會自己找到屬於該execution context的變數。</p>
+<h3 id="丨Closure的總結"><a href="#丨Closure的總結" class="headerlink" title="丨Closure的總結"></a>丨Closure的總結</h3><p>closure是JavaScript引擎的一種特性，並不是說你需要去創造它或執行它。透過closure這樣的特性，我們可以確保當我們在執行function的時候，JavaScript引擎能夠找到其相對應的變數，也就是說，不論某一個function是不是已經執行完畢，是不是已經抽離execution stack，JavaScript引擎仍然可以找到外面的變數。</p>
+<p>參考文章：<a target="_blank" rel="noopener" href="https://pjchender.blogspot.com/2016/06/closuresclosurescallback.html">https://pjchender.blogspot.com/2016/06/closuresclosurescallback.html</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+              <a href="/tags/JavaScript-%E5%9F%BA%E7%A4%8E/" rel="tag"># JavaScript 基礎</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/01/30/JavaScript-%E5%9F%BA%E7%A4%8E-2023-01-30-step4-5-2023-01-30-step4-5/" rel="prev" title="『JavaScript 基礎』 IIFE">
+      <i class="fa fa-chevron-left"></i> 『JavaScript 基礎』 IIFE
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/02/04/JavaScript-%E5%9F%BA%E7%A4%8E-2023-02-04-step4-7-2023-02-04-step4-7/" rel="next" title="『JavaScript 基礎』 認識call( ), apply( )和bind( )">
+      『JavaScript 基礎』 認識call( ), apply( )和bind( ) <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BD%9CClosures%E7%9A%84%E5%BA%95%E5%B1%A4%E5%8E%9F%E7%90%86"><span class="nav-number">1.</span> <span class="nav-text">｜Closures的底層原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BD%9CClosure%E7%9A%84%E7%B7%B4%E7%BF%92"><span class="nav-number">2.</span> <span class="nav-text">｜Closure的練習</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BD%9CClosure%E7%9A%84%E9%80%B2%E9%9A%8E%E7%B7%B4%E7%BF%92"><span class="nav-number">3.</span> <span class="nav-text">｜Closure的進階練習</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%A8Closure%E7%9A%84%E7%B8%BD%E7%B5%90"><span class="nav-number">4.</span> <span class="nav-text">丨Closure的總結</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Jeff"
+      src="/uploads/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Jeff</p>
+  <div class="site-description" itemprop="description">這是一個紀錄自己成長的地方</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">46</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jeff0518" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jeff0518" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:cycivs07@icloud.com" title="E-Mail → mailto:cycivs07@icloud.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jeff</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
