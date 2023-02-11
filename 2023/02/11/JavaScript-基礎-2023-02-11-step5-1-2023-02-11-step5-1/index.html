@@ -21,21 +21,21 @@
   </script>
 
   <meta property="og:type" content="article">
-<meta property="og:title" content="『JavaScript 基礎』 arguments跟 parameters以及 spread">
-<meta property="og:url" content="http://example.com/2023/01/30/JavaScript-%E5%9F%BA%E7%A4%8E-2023-01-30-step4-4-2023-01-30-step4-4/index.html">
+<meta property="og:title" content="『JavaScript 基礎』 JavaScript繼承和原型鍊">
+<meta property="og:url" content="http://example.com/2023/02/11/JavaScript-%E5%9F%BA%E7%A4%8E-2023-02-11-step5-1-2023-02-11-step5-1/index.html">
 <meta property="og:site_name" content="Jeff的隨手筆記">
 <meta property="og:locale" content="zh_TW">
 <meta property="og:image" content="https://i.imgur.com/rZvUip7.png">
-<meta property="og:image" content="https://i.imgur.com/GCPUs9E.png">
-<meta property="article:published_time" content="2023-01-30T15:35:21.000Z">
-<meta property="article:modified_time" content="2023-01-30T15:36:45.832Z">
+<meta property="og:image" content="https://i.imgur.com/bH3Tht9.png">
+<meta property="article:published_time" content="2023-02-11T07:48:41.000Z">
+<meta property="article:modified_time" content="2023-02-11T07:50:28.672Z">
 <meta property="article:author" content="Jeff">
 <meta property="article:tag" content="JavaScript">
 <meta property="article:tag" content="JavaScript 基礎">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://i.imgur.com/rZvUip7.png">
 
-<link rel="canonical" href="http://example.com/2023/01/30/JavaScript-%E5%9F%BA%E7%A4%8E-2023-01-30-step4-4-2023-01-30-step4-4/">
+<link rel="canonical" href="http://example.com/2023/02/11/JavaScript-%E5%9F%BA%E7%A4%8E-2023-02-11-step5-1-2023-02-11-step5-1/">
 
 
 <script id="page-configurations">
@@ -48,7 +48,7 @@
   };
 </script>
 
-  <title>『JavaScript 基礎』 arguments跟 parameters以及 spread | Jeff的隨手筆記</title>
+  <title>『JavaScript 基礎』 JavaScript繼承和原型鍊 | Jeff的隨手筆記</title>
   
 
 
@@ -164,7 +164,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/01/30/JavaScript-%E5%9F%BA%E7%A4%8E-2023-01-30-step4-4-2023-01-30-step4-4/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/02/11/JavaScript-%E5%9F%BA%E7%A4%8E-2023-02-11-step5-1-2023-02-11-step5-1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/uploads/avatar.jpeg">
@@ -177,7 +177,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          『JavaScript 基礎』 arguments跟 parameters以及 spread
+          『JavaScript 基礎』 JavaScript繼承和原型鍊
         </h1>
 
         <div class="post-meta">
@@ -188,7 +188,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2023-01-30 23:35:21 / Modified: 23:36:45" itemprop="dateCreated datePublished" datetime="2023-01-30T23:35:21+08:00">2023-01-30</time>
+              <time title="Created: 2023-02-11 15:48:41 / Modified: 15:50:28" itemprop="dateCreated datePublished" datetime="2023-02-11T15:48:41+08:00">2023-02-11</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -213,35 +213,43 @@
       
         <p><img src="https://i.imgur.com/rZvUip7.png" alt="Imgur"></p>
 <span id="more"></span>
+
 <p>這是一門在Udemy 課程，是同學介紹的。主要是因為想要運用到過年前這段時間好好的增進自己的JavaScript的基礎能力，讓自己能往前端工程師更近一步。主要還是會以筆記的形式做呈現！</p>
 <hr>
-<blockquote>
-<p><em><strong>Parameters(參數)</strong></em></p>
-</blockquote>
-<p>其實在我們介紹function時我們就已經認parameters了：</p>
-<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">greet</span>(<span class="params">firstName, lastName, language</span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(firstName)</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(lastName)</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(language)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>這個篇我們來看一下什麼是<strong>繼承和原型鍊</strong></p>
+<h2 id="Inheritance（繼承）"><a href="#Inheritance（繼承）" class="headerlink" title="Inheritance（繼承）"></a>Inheritance（繼承）</h2><aside>
+💡 One object gets access to the properties and methods of another object.
 
-<p>程式碼中的<code>firstName</code>, <code>lastName</code>, <code>language</code>就是parameters。<br>在其他程式語言裡面，如果有參數但我在呼叫時卻沒有給，在執行時通常都會出現問題，但在JavaScript裡即便你沒有給參數他還是會執行，只是會給出<code>undefined</code><br>是不是覺得很熟悉又出現<code>undefined</code>，沒錯會造成這個原因又是<code>Hoisting</code>。<br>至於用強制轉換概念設定預設值或是在參數中建立預設值，因為在前幾篇介紹過了就不再特別說明了。</p>
-<blockquote>
-<p><em><strong>Arguments(<em>引數</em>)</strong></em></p>
-</blockquote>
-<p>argument是傳遞給function的所有parameters之集合，不用管相對應的參數是否有明確定義，也就是說，arguments會包含所有你放入function中的參數值（自己感覺有點像React 裡的props）。<br>來看一下以下範例：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">function greet(firstName, lastName, language) &#123;</span><br><span class="line"> </span><br><span class="line">    language = language || &#x27;en&#x27;;</span><br><span class="line">    </span><br><span class="line">    if (arguments.length === 0) &#123;</span><br><span class="line">        console.log(&#x27;Missing parameters!&#x27;);</span><br><span class="line">        console.log(&#x27;-------------&#x27;);</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    console.log(firstName);</span><br><span class="line">    console.log(lastName);</span><br><span class="line">    console.log(language);</span><br><span class="line">    console.log(arguments);</span><br><span class="line">    console.log(&#x27;arg 0: &#x27; + arguments[0]);</span><br><span class="line">    console.log(&#x27;-------------&#x27;);</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">greet();</span><br><span class="line">greet(&#x27;John&#x27;);</span><br><span class="line">greet(&#x27;John&#x27;, &#x27;Doe&#x27;);</span><br><span class="line">greet(&#x27;John&#x27;, &#x27;Doe&#x27;, &#x27;es&#x27;);</span><br></pre></td></tr></table></figure>
+</aside>
 
-<p>我們會得到以下的結果：</p>
-<p><img src="https://i.imgur.com/GCPUs9E.png" alt="Imgur"></p>
-<p>每一次的arguments都會分別顯示在該次函式中有哪些參數值</p>
-<p>注意看arguments回傳的值，我們會注意到是斜體的 [ ] ，這就是之前有學習到的Array-like。</p>
-<p>Array-like(類陣列)並不是真的陣列，因此arguments回傳的值並不具備所有陣列所具有的特徵。</p>
-<p>但由於Array-like裡面會有length的屬性，因此我們可以使用：</p>
-<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="variable language_">arguments</span>.<span class="property">length</span> === <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Missing parameters!&#x27;</span>);</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;-------------&#x27;</span>);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>繼承可以分成兩種，一種是 classical inheritance，這種方式用在 C# 或 JAVA 當中；另一種則是 JavaScript 所使用的，是屬於 prototypal inheritance。</p>
+<h2 id="prototype-chain-原型鍊"><a href="#prototype-chain-原型鍊" class="headerlink" title="prototype chain(原型鍊)"></a>prototype chain(原型鍊)</h2><p><img src="https://i.imgur.com/bH3Tht9.png" alt="Imgur"></p>
+<p>假設我們現在有一個物件，就稱作 obj ，而這個物件包含一個屬性（property），我們稱作 prop1。</p>
+<p>如果現在我們想要prop1的屬性值，我只要使用 <code>obj.prop1</code> 的方式就可以直接讀取到 prop1的屬性值。</p>
+<p>在之前的課程我們有學到，JavaScript 裡會有一些預設的屬性和方法，因此所有的物件和函式都有包含 prototype 這個屬性，現在假設我們把 prototype 叫做 proto。</p>
+<p>這時候如果我們打上 <code>obj.prop2</code> 時，JavaScript 引擎會先在 obj 這個物件的屬性裡去尋找有沒有叫作 prop2 的屬性，如果它找不到，這時候它就會再進一步往該物件的 proto 裡面去尋找。</p>
+<p><em>如果打成<code>obj.proto.prop2</code>相信大家會比較了解，但因為<code>prototype chain</code>的特性我們不需要這樣打。</em></p>
+<p>每一個物件裡面都包含一個 prototype，包括物件 proto 本身也不例外，因此如果我要找prop3的話也是只要打上<code>obj.prop3</code>就可以了，JavaScript一樣會照上面的步驟執行。因此，從物件本身往 proto 尋找下去的鍊我們就稱作「原型鍊（prototype chain）」。</p>
+<p>P.S.它會一直找下去直到某個對象的原型為 null 為止（也就是不再有原型指向）。</p>
+<h2 id="範例"><a href="#範例" class="headerlink" title="範例"></a>範例</h2><p>我們用實際例子來加強印象：<br>（這個例子只是為了用來說明 prototype chain 的概念，講師有特別強調寫code時千萬不要使用這樣的方式！）</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> person = &#123;</span><br><span class="line">    <span class="attr">firstname</span>: <span class="string">&#x27;Default&#x27;</span>,</span><br><span class="line">    <span class="attr">lastname</span>: <span class="string">&#x27;Default&#x27;</span>,</span><br><span class="line">    <span class="attr">getFullName</span>: <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">firstname</span> + <span class="string">&#x27; &#x27;</span> + <span class="variable language_">this</span>.<span class="property">lastname</span>;  </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> john = &#123;</span><br><span class="line">    <span class="attr">firstname</span>: <span class="string">&#x27;John&#x27;</span>,</span><br><span class="line">    <span class="attr">lastname</span>: <span class="string">&#x27;Doe&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>這段code。（要不是上了這堂課我還真的不知道有arguments）</p>
-<blockquote>
-<p><em><strong>Spread</strong></em></p>
-</blockquote>
-<p>簡單來說，就是它可以把函數中許多的參數(arguments)或陣列中許多的元素(elements)形成一個新的變數。</p>
-<p>由於課堂上沒有做過多的說明，附上<a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax">MDN連結</a>以及<a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10244629">鐵人賽文章</a>方便後續複習。</p>
+<p>記住！！！這只是為了說明才這樣打的，實際寫code千步不要這樣寫，因為會有效能上的問題！！！</p>
+<p>剛剛的講解讓我們知道所有的物件裡面都會包含原型（prototype）這個物件，在 JavaScript 中這個物件的名稱為 <code>__proto__</code>。</p>
+<p>因此，我們做以下的步驟：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">john.<span class="property">__proto__</span> = person;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(john.<span class="title function_">getFullName</span>());</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(john.<span class="property">firstname</span>);</span><br></pre></td></tr></table></figure>
+
+<p>首先，我們讓<code>john</code> 這個物件就繼承了 <code>person</code> 物件。</p>
+<p>根據剛剛所學的，如果原本 john 這個物件中找不到這個屬性名稱或方法時，JavaScript 引擎就會到 <code>__proto__ </code>裡面去找，因此第二行的code就會輸出：<code>John Doe</code>。</p>
+<p>那如果他直接在john 這個物件中找到這個屬性名稱或方法時，JavaScript 引擎就不會到 <code>__proto__ </code>裡面去找，因此第三行的code就會輸出：<code>John</code>。</p>
+<p>再往下走，如果這時候我在加一個新的物件：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> jane = &#123;</span><br><span class="line">    <span class="attr">firstname</span>: <span class="string">&#x27;Jane&#x27;</span>   </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">jane.<span class="property">__proto__</span> = person;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(jane.<span class="title function_">getFullName</span>());</span><br></pre></td></tr></table></figure>
+
+<p>輸出會是：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Jane</span> <span class="title class_">Default</span></span><br></pre></td></tr></table></figure>
+
+<p>和你想的一樣吧，因為在 Jane 這個物件裡只有 firstName 這個屬性，所以當 JavaScript 引擎要尋找 getFullName() 這個方法時就會去 <code>__proto__</code> 去找，而這時候的<code>this</code>是指向Jane（因為是Jane這個object發起調用的），因此他找到了Jane，但Jane這個object沒有lastname，因此他去看了prototype並在那裡找到了lastname，所以我們得到了這個答案！</p>
+<p>因此，在 JavaScript 當中，所有的東西（字串、數值、布林值、函式、陣列、物件…）的 prototype 最後都是物件！<br>詳情可以到：<a target="_blank" rel="noopener" href="https://pjchender.blogspot.com/2016/06/javascriptprototypeobject.html">https://pjchender.blogspot.com/2016/06/javascriptprototypeobject.html</a> 來了解！</p>
 
     </div>
 
@@ -261,12 +269,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2023/01/30/JavaScript-%E5%9F%BA%E7%A4%8E-2023-01-30-step4-3-2023-01-30-step4-3/" rel="prev" title="『JavaScript 基礎』 Function">
-      <i class="fa fa-chevron-left"></i> 『JavaScript 基礎』 Function
+    <a href="/2023/02/04/JavaScript-%E5%9F%BA%E7%A4%8E-2023-02-04-step4-7-2023-02-04-step4-7/" rel="prev" title="『JavaScript 基礎』 認識call( ), apply( )和bind( )">
+      <i class="fa fa-chevron-left"></i> 『JavaScript 基礎』 認識call( ), apply( )和bind( )
     </a></div>
       <div class="post-nav-item">
-    <a href="/2023/01/30/JavaScript-%E5%9F%BA%E7%A4%8E-2023-01-30-step4-5-2023-01-30-step4-5/" rel="next" title="『JavaScript 基礎』 IIFE">
-      『JavaScript 基礎』 IIFE <i class="fa fa-chevron-right"></i>
+    <a href="/2023/02/11/JavaScript-%E5%9F%BA%E7%A4%8E-2023-02-11-step6-1-2023-02-11-step6-1/" rel="next" title="『JavaScript 基礎』 Function constructor（函式建構式）">
+      『JavaScript 基礎』 Function constructor（函式建構式） <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -326,6 +334,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Inheritance%EF%BC%88%E7%B9%BC%E6%89%BF%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">Inheritance（繼承）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#prototype-chain-%E5%8E%9F%E5%9E%8B%E9%8D%8A"><span class="nav-number">2.</span> <span class="nav-text">prototype chain(原型鍊)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AF%84%E4%BE%8B"><span class="nav-number">3.</span> <span class="nav-text">範例</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

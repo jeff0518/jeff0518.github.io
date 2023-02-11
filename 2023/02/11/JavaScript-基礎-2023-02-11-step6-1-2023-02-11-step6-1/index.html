@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta property="og:type" content="article">
+<meta property="og:title" content="『JavaScript 基礎』 Function constructor（函式建構式）">
+<meta property="og:url" content="http://example.com/2023/02/11/JavaScript-%E5%9F%BA%E7%A4%8E-2023-02-11-step6-1-2023-02-11-step6-1/index.html">
+<meta property="og:site_name" content="Jeff的隨手筆記">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://i.imgur.com/rZvUip7.png">
+<meta property="og:image" content="https://i.imgur.com/8UFJ3jE.png">
+<meta property="og:image" content="https://i.imgur.com/MwCdyYC.png">
+<meta property="og:image" content="https://i.imgur.com/XbX1qCq.png">
+<meta property="og:image" content="https://i.imgur.com/02HUyr1.png">
+<meta property="og:image" content="https://i.imgur.com/TLIw7Kv.png">
+<meta property="og:image" content="https://i.imgur.com/Zap1X34.png">
+<meta property="og:image" content="https://i.imgur.com/ygaiR0t.png">
+<meta property="og:image" content="https://i.imgur.com/1RfKoZl.png">
+<meta property="og:image" content="https://i.imgur.com/KrlyN4Z.png">
+<meta property="og:image" content="https://i.imgur.com/e7y49GC.png">
+<meta property="og:image" content="https://i.imgur.com/RwY5ehy.png">
+<meta property="og:image" content="https://i.imgur.com/7LfSZaC.png">
+<meta property="article:published_time" content="2023-02-11T07:51:01.000Z">
+<meta property="article:modified_time" content="2023-02-11T07:55:20.612Z">
+<meta property="article:author" content="Jeff">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="JavaScript 基礎">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.imgur.com/rZvUip7.png">
+
+<link rel="canonical" href="http://example.com/2023/02/11/JavaScript-%E5%9F%BA%E7%A4%8E-2023-02-11-step6-1-2023-02-11-step6-1/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-tw'
+  };
+</script>
+
+  <title>『JavaScript 基礎』 Function constructor（函式建構式） | Jeff的隨手筆記</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Jeff的隨手筆記</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">學習當一個前端工程師</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/02/11/JavaScript-%E5%9F%BA%E7%A4%8E-2023-02-11-step6-1-2023-02-11-step6-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpeg">
+      <meta itemprop="name" content="Jeff">
+      <meta itemprop="description" content="這是一個紀錄自己成長的地方">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jeff的隨手筆記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          『JavaScript 基礎』 Function constructor（函式建構式）
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2023-02-11 15:51:01 / Modified: 15:55:20" itemprop="dateCreated datePublished" datetime="2023-02-11T15:51:01+08:00">2023-02-11</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JavaScript-%E5%9F%BA%E7%A4%8E/" itemprop="url" rel="index"><span itemprop="name">JavaScript 基礎</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img src="https://i.imgur.com/rZvUip7.png" alt="Imgur"></p>
+<span id="more"></span>
+
+<p>這是一門在Udemy 課程，是同學介紹的。主要是因為想要運用到過年前這段時間好好的增進自己的JavaScript的基礎能力，讓自己能往前端工程師更近一步。主要還是會以筆記的形式做呈現！</p>
+<hr>
+<h2 id="｜前言"><a href="#｜前言" class="headerlink" title="｜前言"></a><em><strong>｜前言</strong></em></h2><p>建立object的方式在之前有說過兩個方式：</p>
+<p>1.使用 object literal，也就是大括號的方式來建立物件。</p>
+<p>2.使用 new Object( )的方式。</p>
+<p>但除了上述兩個方式之外，我們還可以使用function constructor（函式建構式）的方式來建立物件。</p>
+<h2 id="｜Function-Constructor"><a href="#｜Function-Constructor" class="headerlink" title="｜Function Constructor"></a><em><strong>｜Function Constructor</strong></em></h2><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">Person</span> ()&#123;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">firstName</span> = <span class="string">&#x27;John&#x27;</span>;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">lastName</span> = <span class="string">&#x27;Doe&#x27;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> john = <span class="keyword">new</span> <span class="title class_">Person</span>();</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(john);</span><br></pre></td></tr></table></figure>
+
+<p>我們看一下輸出：</p>
+<p><img src="https://i.imgur.com/8UFJ3jE.png" alt="Imgur"></p>
+<p>透過 <code>new</code> 它會幫我們建立一個物件，然後在Person這個function裡面有了屬性名稱跟屬性值。<br>課堂有提到，這只是<code>construct objects</code>的方式不同而已，這個方式才是比較好的方式（上一篇的方式只是為了展示它如何作業的）。</p>
+<p>還記得之前有看過這張表嗎？<br><img src="https://i.imgur.com/MwCdyYC.png" alt="Imgur"></p>
+<p><code>new</code>其實是運算子（operators）的其中一種，所以當我們使用 new 這個運算子時，會先有一個空的物件被建立。</p>
+<p>我們知道，當函式被調用時，在execution context 中會有 this 被建立，而當我們使用 new 的時候，函式裡面的 this 會被指定成剛剛所建立的那個空物件。</p>
+<p>所以當Person這個函式被invoke（調用）時，是在幫這個空物件賦予屬性名稱和屬性值。</p>
+<p>我們看一下2個範例，來更了解這個執行的過程：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">Person</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>);</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">firstName</span> = <span class="string">&quot;John&quot;</span>;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">lastName</span> = <span class="string">&quot;Doe&quot;</span>;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;This function is invoked&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> john = <span class="keyword">new</span> <span class="title class_">Person</span>();</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(john);</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.imgur.com/XbX1qCq.png" alt="Imgur"></p>
+<p>在這個範例我們可以確認兩件事情：</p>
+<ol>
+<li>new 會幫我們建立一個空的物件。</li>
+<li>這個function有確實被invoke。</li>
+</ol>
+<p>我們看下一個範例：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">Person</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>);</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">firstName</span> = <span class="string">&quot;John&quot;</span>;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">lastName</span> = <span class="string">&quot;Doe&quot;</span>;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;This function is invoked&#x27;</span>)</span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="attr">greeting</span>: <span class="string">&#x27;i got in the way&#x27;</span>&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> john = <span class="keyword">new</span> <span class="title class_">Person</span>();</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(john);</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.imgur.com/02HUyr1.png" alt="Imgur"></p>
+<p>我只是讓這個函式return 一個物件，結果最後執行結果不再是原本的，而是會改成我們新建立的物件。</p>
+<p>因此我們可以說，只要這個函式建構式 Person 沒有指定 return 其他的物件，它就會直接回傳給我們設置this的變數。</p>
+<p>如果我們這時候再新增一個object jane：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">Person</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>);</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">firstName</span> = <span class="string">&quot;John&quot;</span>;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">lastName</span> = <span class="string">&quot;Doe&quot;</span>;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;This function is invoked&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> john = <span class="keyword">new</span> <span class="title class_">Person</span>();</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(john);</span><br><span class="line"><span class="keyword">var</span> jane = <span class="keyword">new</span> <span class="title class_">Person</span>();</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(jane);</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.imgur.com/TLIw7Kv.png" alt="Imgur"></p>
+<p>我們會看到它們都指向同一個function，因此我們把code稍微做個修改：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">Person</span>(<span class="params">firstname, lastname</span>) &#123;</span><br><span class="line"> </span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>);</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">firstname</span> = firstname;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">lastname</span> = lastname;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;This function is invoked.&#x27;</span>);</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> john = <span class="keyword">new</span> <span class="title class_">Person</span>(<span class="string">&#x27;John&#x27;</span>, <span class="string">&#x27;Doe&#x27;</span>);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(john);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> jane = <span class="keyword">new</span> <span class="title class_">Person</span>(<span class="string">&#x27;Jane&#x27;</span>, <span class="string">&#x27;Doe&#x27;</span>);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(jane);</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.imgur.com/Zap1X34.png" alt="Imgur"></p>
+<p>只要我們讓物件的屬性值變成參數，就能透過function constructor 建立出許多同屬性名稱但不同屬性值的物件。</p>
+<p>所以要記得：<br>1.函式建構式（function constructor）就是普通的 function，只是我們可以透過這個 function 來建立物件。<br>2.透過在 function 前面加上 new 這個運算子，它會把函式中 this 這個關鍵字建立成一個新的物件，然後如果你沒有在該函式的最後指定回傳出其它物件的話，它就會自動回傳這個新的物件給你。</p>
+<p>補充：如果在撰寫程式碼時，忘記加上 new 的話：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">var</span> john = <span class="title class_">Person</span>(<span class="string">&#x27;John&#x27;</span>, <span class="string">&#x27;Doe&#x27;</span>);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(john);</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.imgur.com/ygaiR0t.png" alt="Imgur"></p>
+<p>這時候的this就會指向<code>window</code>，因此我們可以看到<code>firstname</code>跟<code>lastname</code>出現在裡面。</p>
+<p>至於為什麼會回傳<code>undefined</code>則是因為如果沒有說function要return什麼的話，預設就是會return undefined。</p>
+<h2 id="｜設定物件原型"><a href="#｜設定物件原型" class="headerlink" title="｜設定物件原型"></a><em><strong>｜設定物件原型</strong></em></h2><p>剛剛我們提到了怎麼用 <em><strong>Function Constructor搭配關鍵字 new</strong></em>來建立物件，現在來學用 <em><strong>Function Constructor</strong></em>來設定原型。</p>
+<p>之前有提到，在 JavaScript 中的 function其實也是一種物件，其中包含一些屬性像是該函式的名稱（Name）和該函式的內容（Code），但其實 function 這裡面還有一個屬性，這個屬性稱做 <strong>prototype</strong>，這個屬性會以空物件的型式呈現。</p>
+<p>課堂上有一段話：</p>
+<aside>
+💡 And all functions, every function, every function in JavaScript you've ever written in your life, has a prototype property that starts off its life as an empty object, and unless you're using the function as a function constructor, it just hangs out
+
+</aside>
+
+<p>簡單來說就是函數有一个原型属性，默认为空对象，除非它用作function constructor，否则它就只是待在那里。(chatGPT AI說的)</p>
+<p>這邊就出現一個很困惑的一段話：</p>
+<aside>
+💡 The prototype property on a function is not the prototype of the function. It's the prototype of any objects created if you're using the function as a function constructor.
+
+</aside>
+
+<p><strong>函式當中 prototype 這個屬性並不是這個函式的 prototype，它指的是所有透過這個 function constructor 所建立出來的物件的 prototype。</strong></p>
+<p>我們透過下方的code來了解一下這句話的意思</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">Person</span>(<span class="params">firstName, lastName</span>)&#123;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">firstName</span> = firstName;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">lastName</span> = lastName;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> john = <span class="keyword">new</span> <span class="title class_">Person</span>(<span class="string">&#x27;John&#x27;</span>, <span class="string">&#x27;Doe&#x27;</span>);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(john);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> jane = <span class="keyword">new</span> <span class="title class_">Person</span>(<span class="string">&#x27;Jane&#x27;</span>, <span class="string">&#x27;Doe&#x27;</span>);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(jane);</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.imgur.com/1RfKoZl.png" alt="Imgur"></p>
+<p>如上圖所示，我們打上<code>Person.prototype</code>後，出現了<code>&#123;constructor: ƒ&#125;</code><br>，表示 <code>Person</code>函式有一個原型物件，其中包含一個名稱為 “constructor” 的函式。</p>
+<p>而這個 “constructor” 函式就是我們所定義的 <code>Person</code>函式，它是一個function constructor，用於創建物件的實例。</p>
+<p>因此，當我執行 <code>var john = new Person(&quot;John&quot;, &quot;Doe&quot;);</code>和 <code>var jane = new Person(&quot;Jane&quot;, &quot;Doe&quot;);</code>時，實際上是創建了兩個繼承自 <code>Person.prototype</code>的物件實例，它們共享了一個function constructor和一些公共屬性。</p>
+<p>之後我們再加入一段code:</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">Person</span>(<span class="params">firstName, lastName</span>)&#123;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">firstName</span> = firstName;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">lastName</span> = lastName;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title class_">Person</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">getFullName</span> = <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">firstName</span> + <span class="string">&#x27; &#x27;</span> + <span class="variable language_">this</span>.<span class="property">lastName</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> john = <span class="keyword">new</span> <span class="title class_">Person</span>(<span class="string">&#x27;John&#x27;</span>, <span class="string">&#x27;Doe&#x27;</span>);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(john);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> jane = <span class="keyword">new</span> <span class="title class_">Person</span>(<span class="string">&#x27;Jane&#x27;</span>, <span class="string">&#x27;Doe&#x27;</span>);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(jane);</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.imgur.com/KrlyN4Z.png" alt="Imgur"></p>
+<p>我們可以看到<code>Person.prototype</code>多出了一個名為<strong>getFullName</strong>的函式，而且在<code>Person</code>函式中也出現了一個getFullName，還記得剛剛有提到：</p>
+<p>“<strong>函式當中 prototype 這個屬性並不是這個函式的 prototype，它指的是所有透過這個 function constructor 所建立出來的物件的 prototype。”</strong></p>
+<p>因此，透過這個方式，我們就可以完成以下的code，讓我們在最後新增1行code：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(john.<span class="title function_">getFullName</span>());</span><br></pre></td></tr></table></figure>
+
+<p>我們就可以得到：</p>
+<p><img src="https://i.imgur.com/e7y49GC.png" alt="Imgur"></p>
+<h2 id="｜Prototype-的實用處"><a href="#｜Prototype-的實用處" class="headerlink" title="｜Prototype 的實用處"></a><em><strong><strong>｜Prototype 的實用處</strong></strong></em></h2><p>至於這樣做有什麼好處呢？我們可以想想，當我今天有 1000 個物件是根據這個function constructor所建立，而今天我有一個method（方法）想要讓大家使用，我就可以用這個方式。</p>
+<p>但為什麼我不能直接加在函式裡面就好，還要透過這個方式呢？</p>
+<p>這就要牽扯到效能的問題了，我們當然可以把它直接放在函式裡，但不要忘了：</p>
+<p><em><strong>Functions in JavaScript are objects</strong></em></p>
+<p>他們是會佔據記憶體空間的，因此如果我有1000個物件，就表示我會因為這個原因而需要1000個空間來放這個method（方法），但如果我今天是使用是建立在 prototype 中，我們只需要一個空間來存放method（方法）。</p>
+<p>所以，為了效能上的考量，通常會把method（方法）放在建構式的 prototype 中，因為它們可以是通用的；把property（屬性）放在建構式當中，因為每一個物件可能都會有不同的屬性內容，如此將能有效減少記憶體的問題。</p>
+<h2 id="｜Prototypal-Inheritance（原型繼承）"><a href="#｜Prototypal-Inheritance（原型繼承）" class="headerlink" title="｜Prototypal Inheritance（原型繼承）"></a><em><strong><strong>｜Prototypal Inheritance（原型繼承）</strong></strong></em></h2><p>最後，我們來談談prototypal inheritance，還記得我們之說過繼承可以分成兩種，一種是 classical inheritance，這種方式用在 C# 或 JAVA 當中；另一種則是 JavaScript 所使用的，是屬於 prototypal inheritance。</p>
+<p>這邊會介紹一個大部分瀏覽器都支援的語法：<code>Object.create()</code></p>
+<p>看一下下面這個例子：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> <span class="title class_">Person</span> = &#123;</span><br><span class="line">  <span class="attr">firstName</span>: <span class="string">&#x27;Default&#x27;</span>,</span><br><span class="line">  <span class="attr">lastName</span>: <span class="string">&#x27;Default&#x27;</span>,</span><br><span class="line">  <span class="attr">getFullName</span>: <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">firstName</span> + <span class="string">&quot; &quot;</span> + <span class="variable language_">this</span>.<span class="property">lastName</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>注意這邊用的是<code>this.firstName</code>，他會指向Person這個object，但如果沒用this的話，他則是會在<code>getFullName</code> 這個 execution context 中去找我們需要的變數，找不到就會到最外層的全域環境去找。</p>
+<p>這時候我們加入Object.create()：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> john = <span class="title class_">Object</span>.<span class="title function_">create</span>(<span class="title class_">Person</span>);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(john);</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.imgur.com/RwY5ehy.png" alt="Imgur"><br>我們可以從上面這張圖知道，john會是一個空物件，但是它繼承了 Person 這個物件當中的屬性和方法。</p>
+<p>接下來我們把code修改一下:</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> <span class="title class_">Person</span> = &#123;</span><br><span class="line">  <span class="attr">firstName</span>: <span class="string">&#x27;Default&#x27;</span>,</span><br><span class="line">  <span class="attr">lastName</span>: <span class="string">&#x27;Default&#x27;</span>,</span><br><span class="line">  <span class="attr">getFullName</span>: <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">firstName</span> + <span class="string">&quot; &quot;</span> + <span class="variable language_">this</span>.<span class="property">lastName</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> john = <span class="title class_">Object</span>.<span class="title function_">create</span>(<span class="title class_">Person</span>);</span><br><span class="line"></span><br><span class="line">john.<span class="property">firstName</span> = <span class="string">&#x27;John&#x27;</span>;</span><br><span class="line">john.<span class="property">lastName</span> = <span class="string">&#x27;Doe&#x27;</span>;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(john);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(john.<span class="title function_">getFullName</span>());</span><br></pre></td></tr></table></figure>
+
+<p>輸出結果為：</p>
+<p><img src="https://i.imgur.com/7LfSZaC.png" alt="Imgur"></p>
+<p>之所以會這樣，是因為prototype chain（原型鍊）。</p>
+<p>我們先從圖片的第一行來說，因為 firstName 和 lastName 在該物件已經有這兩個屬性</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">john.<span class="property">firstName</span> = <span class="string">&#x27;John&#x27;</span>;</span><br><span class="line">john.<span class="property">lastName</span> = <span class="string">&#x27;Doe&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>因此它不會在往該物件的原型去尋找。</p>
+<p>而對 getFullName 來說，因為在 john 這個物件裡沒有這個方法，於是就會到 prototype 裡面去找，最後會回傳 “John Doe”。</p>
+<p>透過 Object.create() 這種方法，是最單純使用 prototypal inheritance 的方式。如果你想要一個物件的原型，就先建立一個 A 物件當做其他物件的基礎，然後再建立另一個空物件 B，指稱 A 物件當做它的原型，在透過為 B 物件賦予屬性或方法。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+              <a href="/tags/JavaScript-%E5%9F%BA%E7%A4%8E/" rel="tag"># JavaScript 基礎</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/02/11/JavaScript-%E5%9F%BA%E7%A4%8E-2023-02-11-step5-1-2023-02-11-step5-1/" rel="prev" title="『JavaScript 基礎』 JavaScript繼承和原型鍊">
+      <i class="fa fa-chevron-left"></i> 『JavaScript 基礎』 JavaScript繼承和原型鍊
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BD%9C%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">｜前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BD%9CFunction-Constructor"><span class="nav-number">2.</span> <span class="nav-text">｜Function Constructor</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BD%9C%E8%A8%AD%E5%AE%9A%E7%89%A9%E4%BB%B6%E5%8E%9F%E5%9E%8B"><span class="nav-number">3.</span> <span class="nav-text">｜設定物件原型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BD%9CPrototype-%E7%9A%84%E5%AF%A6%E7%94%A8%E8%99%95"><span class="nav-number">4.</span> <span class="nav-text">｜Prototype 的實用處</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BD%9CPrototypal-Inheritance%EF%BC%88%E5%8E%9F%E5%9E%8B%E7%B9%BC%E6%89%BF%EF%BC%89"><span class="nav-number">5.</span> <span class="nav-text">｜Prototypal Inheritance（原型繼承）</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Jeff"
+      src="/uploads/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Jeff</p>
+  <div class="site-description" itemprop="description">這是一個紀錄自己成長的地方</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">48</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jeff0518" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jeff0518" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:cycivs07@icloud.com" title="E-Mail → mailto:cycivs07@icloud.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jeff</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
