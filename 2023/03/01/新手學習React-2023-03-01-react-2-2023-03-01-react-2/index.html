@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="前言首先我們要先複習的就是React Basics，第一篇我要來複習的是 JSX，之所以沒有選擇官方文件上的第一篇Component，是因為我認為如果我連我現在在寫的東西都不知道他是什麼的話，我要怎麼跟人家說我會呢？">
+<meta property="og:type" content="article">
+<meta property="og:title" content="『新手學習React』- React Basics_JSX">
+<meta property="og:url" content="http://example.com/2023/03/01/%E6%96%B0%E6%89%8B%E5%AD%B8%E7%BF%92React-2023-03-01-react-2-2023-03-01-react-2/index.html">
+<meta property="og:site_name" content="Jeff的隨手筆記">
+<meta property="og:description" content="前言首先我們要先複習的就是React Basics，第一篇我要來複習的是 JSX，之所以沒有選擇官方文件上的第一篇Component，是因為我認為如果我連我現在在寫的東西都不知道他是什麼的話，我要怎麼跟人家說我會呢？">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2023-03-01T14:54:21.000Z">
+<meta property="article:modified_time" content="2023-03-01T15:04:01.306Z">
+<meta property="article:author" content="Jeff">
+<meta property="article:tag" content="React">
+<meta property="article:tag" content="React基礎">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2023/03/01/%E6%96%B0%E6%89%8B%E5%AD%B8%E7%BF%92React-2023-03-01-react-2-2023-03-01-react-2/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-tw'
+  };
+</script>
+
+  <title>『新手學習React』- React Basics_JSX | Jeff的隨手筆記</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Jeff的隨手筆記</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">學習當一個前端工程師</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/03/01/%E6%96%B0%E6%89%8B%E5%AD%B8%E7%BF%92React-2023-03-01-react-2-2023-03-01-react-2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpeg">
+      <meta itemprop="name" content="Jeff">
+      <meta itemprop="description" content="這是一個紀錄自己成長的地方">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jeff的隨手筆記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          『新手學習React』- React Basics_JSX
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2023-03-01 22:54:21 / Modified: 23:04:01" itemprop="dateCreated datePublished" datetime="2023-03-01T22:54:21+08:00">2023-03-01</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%96%B0%E6%89%8B%E5%AD%B8%E7%BF%92React/" itemprop="url" rel="index"><span itemprop="name">新手學習React</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>首先我們要先複習的就是React Basics，第一篇我要來複習的是 JSX，之所以沒有選擇官方文件上的第一篇Component，是因為我認為如果我連我現在在寫的東西都不知道他是什麼的話，我要怎麼跟人家說我會呢？</p>
+<span id="more"></span>
+
+<h3 id="什麼是JSX"><a href="#什麼是JSX" class="headerlink" title="什麼是JSX"></a>什麼是JSX</h3><p>先破題，<em><strong>JSX是React 提供了一種語法糖，能讓我們在定義 React element 的結構時有著相當類似於撰寫 HTML 語法的體驗。</strong></em></p>
+<p>在還沒看過zet助教的鐵人賽文章時，我對JSX的理解就是官方文件上的：</p>
+<blockquote>
+<p><em><strong>JSX is a syntax extension for JavaScript that lets you write HTML-like markup inside a JavaScript file.</strong></em></p>
+</blockquote>
+<p>也就是說他只是JavaScript 的語法擴展，讓我們用<em><strong>類似HTML的方式</strong></em>去編寫。</p>
+<p>但在查找資料時，會看到很多文章都是說：『JSX 是把 HTML 寫在 JavaScript 中』。</p>
+<p>但這跟官方文件上的有些許的不一樣，因此我去看了助教的文章才真正的瞭解他到底是什麼。</p>
+<p>以下內容節錄<a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10296066">JSX 根本就不是在 JavaScript 中寫 HTML</a>：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 以普通的呼叫 React.createElement() 來定義 React element</span></span><br><span class="line"><span class="keyword">const</span> reactElement = <span class="title class_">React</span>.<span class="title function_">createElement</span>(</span><br><span class="line">  <span class="string">&#x27;div&#x27;</span>,</span><br><span class="line">  &#123; <span class="attr">id</span>: <span class="string">&#x27;wrapper&#x27;</span>, <span class="attr">className</span>: <span class="string">&#x27;foo&#x27;</span> &#125;,</span><br><span class="line">  <span class="title class_">React</span>.<span class="title function_">createElement</span>(</span><br><span class="line">    <span class="string">&#x27;ul&#x27;</span>,</span><br><span class="line">    &#123; <span class="attr">id</span>: <span class="string">&#x27;list-01&#x27;</span> &#125;,</span><br><span class="line">    <span class="comment">// 從第三個參數開始每個參數都是子元素</span></span><br><span class="line">    <span class="title class_">React</span>.<span class="title function_">createElement</span>(<span class="string">&#x27;li&#x27;</span>, &#123; <span class="attr">className</span>: <span class="string">&#x27;list-item&#x27;</span> &#125;, <span class="string">&#x27;item 1&#x27;</span>), </span><br><span class="line">    <span class="comment">// 第四個參數就會是第二個子元素</span></span><br><span class="line">    <span class="title class_">React</span>.<span class="title function_">createElement</span>(<span class="string">&#x27;li&#x27;</span>, &#123; <span class="attr">className</span>: <span class="string">&#x27;list-item&#x27;</span> &#125;, <span class="string">&#x27;item 2&#x27;</span>), </span><br><span class="line">    <span class="comment">// 第五個參數就會是第三個子元素</span></span><br><span class="line">    <span class="title class_">React</span>.<span class="title function_">createElement</span>(<span class="string">&#x27;li&#x27;</span>, &#123; <span class="attr">className</span>: <span class="string">&#x27;list-item&#x27;</span> &#125;, <span class="string">&#x27;item 3&#x27;</span>), </span><br><span class="line">  ),</span><br><span class="line">  <span class="title class_">React</span>.<span class="title function_">createElement</span>(</span><br><span class="line">    <span class="string">&#x27;button&#x27;</span>,</span><br><span class="line">    &#123; <span class="attr">id</span>: <span class="string">&#x27;button1&#x27;</span> &#125;,</span><br><span class="line">    <span class="string">&#x27;I am a button&#x27;</span></span><br><span class="line">  )</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 以 JSX 語法來定義 React element</span></span><br><span class="line"><span class="keyword">const</span> reactElementWithJSX = (</span><br><span class="line">  <span class="language-xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;wrapper&quot;</span> <span class="attr">className</span>=<span class="string">&quot;foo&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">ul</span> <span class="attr">id</span>=<span class="string">&quot;list-01&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">li</span> <span class="attr">className</span>=<span class="string">&quot;list-item&quot;</span>&gt;</span>item 1<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">li</span> <span class="attr">className</span>=<span class="string">&quot;list-item&quot;</span>&gt;</span>item 2<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">li</span> <span class="attr">className</span>=<span class="string">&quot;list-item&quot;</span>&gt;</span>item 3<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">button</span> <span class="attr">id</span>=<span class="string">&quot;button1&quot;</span>&gt;</span>I am a button<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<p>上面這兩段code我們執行後會發現，使用JSX語法的code經過開發工具的自動轉換之後的React element居然會跟使用 <code>React.createElement()</code>的結果是一樣的，因此透過這個案例我們可以知道，寫 JSX 語法其實就是在寫 <code>React.createElement()</code>。</p>
+<p>所以，<strong>JSX 語法的本質完完全全就是 <code>React.createElement()</code> 方法的呼叫。</strong></p>
+<p>它長得很像 HTML 語法只是因為它被刻意設計成<strong>模仿 HTML 語法的撰寫和開發體驗</strong>，但是與 HTML 在本質上完全是不同的東西！</p>
+<h3 id="JSX-規則"><a href="#JSX-規則" class="headerlink" title="JSX 規則"></a><strong><strong>JSX 規則</strong></strong></h3><ul>
+<li><p><strong>Return a single root element</strong><br>在官方文件有提到，要從元件返回多個元素，請使用單個父標記將它們包裝起來<em>（</em>To return multiple elements from a component, wrap them with a single parent tag.<em>）</em></p>
+  <figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;div&gt;</span><br><span class="line">  <span class="language-xml"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>Hedy Lamarr&#x27;s Todos<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span></span><br><span class="line">  <span class="language-xml"><span class="tag">&lt;<span class="name">img</span> </span></span></span><br><span class="line"><span class="tag"><span class="language-xml">    <span class="attr">src</span>=<span class="string">&quot;https://i.imgur.com/yXOvdOSs.jpg&quot;</span> </span></span></span><br><span class="line"><span class="tag"><span class="language-xml">    <span class="attr">alt</span>=<span class="string">&quot;Hedy Lamarr&quot;</span> </span></span></span><br><span class="line"><span class="tag"><span class="language-xml">    <span class="attr">class</span>=<span class="string">&quot;photo&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">  &gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+<p>  或是可以用 Fragment(它對事物進行分組，而不會在瀏覽器 HTML 樹中留下任何痕跡。)，如果Fragment沒有需要傳入任何的 props 的話，可以使用更簡潔的替代語法 — 直接以<strong>空標籤名稱</strong><br>  來代表 Fragment 元素類型：</p>
+  <figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;&gt;</span><br><span class="line">  <span class="language-xml"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>Hedy Lamarr&#x27;s Todos<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span></span><br><span class="line">  <span class="language-xml"><span class="tag">&lt;<span class="name">img</span> </span></span></span><br><span class="line"><span class="tag"><span class="language-xml">    <span class="attr">src</span>=<span class="string">&quot;https://i.imgur.com/yXOvdOSs.jpg&quot;</span> </span></span></span><br><span class="line"><span class="tag"><span class="language-xml">    <span class="attr">alt</span>=<span class="string">&quot;Hedy Lamarr&quot;</span> </span></span></span><br><span class="line"><span class="tag"><span class="language-xml">    <span class="attr">class</span>=<span class="string">&quot;photo&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">  &gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;/&gt;</span></span></span><br></pre></td></tr></table></figure>
+<p>  之所以要這樣主要是因為一段 JSX 其實就是呼叫一次 <code>React.createElement()</code>，它只會返回「一個 React element」做為結果。讓我們以樹狀結構的方式下去想，就會發現問題其實出在「<strong>樹狀資料結構只能有一個根節點</strong>」上，因此只要我們<strong>把原本想要放置在同層級的多個 React element 節點，以一個共同的父節點給包起來</strong>就可以了。</p>
+</li>
+<li><p><strong>Close all the tags</strong><br>JSX 會要求標籤顯式關閉，就算是在 HTML 中可以只寫開標籤的元素也是一樣（例如<code>&lt;img&gt;</code>）。</p>
+  <figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;&gt;</span><br><span class="line">  <span class="language-xml"><span class="tag">&lt;<span class="name">img</span> </span></span></span><br><span class="line"><span class="tag"><span class="language-xml">    <span class="attr">src</span>=<span class="string">&quot;https://i.imgur.com/yXOvdOSs.jpg&quot;</span> </span></span></span><br><span class="line"><span class="tag"><span class="language-xml">    <span class="attr">alt</span>=<span class="string">&quot;Hedy Lamarr&quot;</span> </span></span></span><br><span class="line"><span class="tag"><span class="language-xml">    <span class="attr">class</span>=<span class="string">&quot;photo&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">   /&gt;</span></span></span><br><span class="line">  <span class="language-xml"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>Invent new traffic lights<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>Rehearse a movie scene<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>Improve the spectrum technology<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span></span><br><span class="line">&lt;/&gt;</span><br></pre></td></tr></table></figure>
+<p>  因為當標籤沒有正確的閉合時，JSX transformer 就會沒有辦法解析這層的 React element 結束在哪裡，因此就會因為找不到對應的閉標籤而無法進行轉換。</p>
+</li>
+<li><p><strong>camelCase <del>all</del> most of the things</strong><br>寫在JSX中的屬性(attribute)會轉換成JS 物件裡的key，在React元件裡我們有時會需要將這些屬性存取成變數，因此屬性命名方式需依照JS的變數命名規則。（例如class 必須寫成className, for必須寫成HTMLFor）<br>❗但是像是aria-*, data-*等屬性則是遵照原本HTML寫的模式</p>
+</li>
+</ul>
+<h3 id="在JSX中使用JS"><a href="#在JSX中使用JS" class="headerlink" title="在JSX中使用JS"></a>在JSX中使用JS</h3><p>JSX 讓我們可以使用類似於 HTML 的語法來定義 React element，但畢竟它不像 HTML 語法一樣是純粹的文字字串，因此當想要在JSX標記內使用<em><strong>JavaScript表達式</strong></em> 就要用<code>大括號&#123; &#125;</code>包起來，除了放回傳值的表達式也可以傳入變數、函式等等</p>
+<p>你只能在 JSX 中以兩種方式使用大括號：</p>
+<ol>
+<li><p>作為直接在 JSX 標籤內的文本，例如：</p>
+ <figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">有效的：</span><br><span class="line">&lt;h1&gt;&#123;name&#125;<span class="string">&#x27;s To Do List&lt;/h1&gt;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">無效的：</span></span><br><span class="line"><span class="string">&lt;&#123;tag&#125;&gt;Gregorio Y. Zara&#x27;</span>s <span class="title class_">To</span> <span class="title class_">Do</span> <span class="title class_">List</span>&lt;/&#123;tag&#125;&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>作為緊跟在<code>=</code>符號之後的屬性<code>src=&#123;avatar&#125;</code>將讀取<code>avatar</code>變數，但如果我是成這樣<code>src=&quot;&#123;avatar&#125;&quot;</code>則是會回傳字串<code>&#123;avatar&#125;</code></p>
+</li>
+</ol>
+<p>有時候我們會在code裡面看到會使用<code>&#123;&#123; &#125;&#125;</code>，這個有2種可能：</p>
+<ol>
+<li><p>JSX正在傳遞一個 object</p>
+ <figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">person=&#123;&#123; <span class="attr">name</span>: <span class="string">&quot;Hedy Lamarr&quot;</span>, <span class="attr">inventions</span>: <span class="number">5</span> &#125;&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>inline CSS styles</p>
+ <figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;ul style=&#123;</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">backgroundColor</span>: <span class="string">&#x27;black&#x27;</span>,</span><br><span class="line">    <span class="attr">color</span>: <span class="string">&#x27;pink&#x27;</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;&gt;</span><br></pre></td></tr></table></figure></li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/React/" rel="tag"># React</a>
+              <a href="/tags/React%E5%9F%BA%E7%A4%8E/" rel="tag"># React基礎</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/02/28/%E6%96%B0%E6%89%8B%E5%AD%B8%E7%BF%92React-2023-02-28-react-1-2023-02-28-react-1/" rel="prev" title="『新手學習React』- 學習規劃">
+      <i class="fa fa-chevron-left"></i> 『新手學習React』- 學習規劃
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E9%BA%BC%E6%98%AFJSX"><span class="nav-number">2.</span> <span class="nav-text">什麼是JSX</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JSX-%E8%A6%8F%E5%89%87"><span class="nav-number">3.</span> <span class="nav-text">JSX 規則</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%A8JSX%E4%B8%AD%E4%BD%BF%E7%94%A8JS"><span class="nav-number">4.</span> <span class="nav-text">在JSX中使用JS</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Jeff"
+      src="/uploads/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Jeff</p>
+  <div class="site-description" itemprop="description">這是一個紀錄自己成長的地方</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">50</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jeff0518" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jeff0518" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:cycivs07@icloud.com" title="E-Mail → mailto:cycivs07@icloud.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jeff</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
