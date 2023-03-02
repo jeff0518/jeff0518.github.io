@@ -20,21 +20,23 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="前言在做ＡＣ學習時，在做畢業專案：Tweet時就有感覺到自己對於 React 有很多不熟悉的地方，想說利用這段時間再從最基本的React開始複習並學習新的Hook以及TypeScript如何跟React一起使用，本次的學習主要是以Udemy上的課程以及React的官方文件為主，再搭配ＡＣ的兩位助教（Zet以及PJ）的鐵人賽文章為輔。">
+  <meta name="description" content="昨天學習完了JSX，接下來來認識React的核心概念之一的Component，它是建立用戶介面(UI)的基礎。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="『新手學習React』- 學習規劃">
-<meta property="og:url" content="http://example.com/2023/02/28/%E6%96%B0%E6%89%8B%E5%AD%B8%E7%BF%92React-2023-02-28-react-1-2023-02-28-react-1/index.html">
+<meta property="og:title" content="『新手學習React』-  React Basics_Component">
+<meta property="og:url" content="http://example.com/2023/03/02/%E6%96%B0%E6%89%8B%E5%AD%B8%E7%BF%92React-2023-03-02-react-3-2023-03-02-react-3/index.html">
 <meta property="og:site_name" content="Jeff的隨手筆記">
-<meta property="og:description" content="前言在做ＡＣ學習時，在做畢業專案：Tweet時就有感覺到自己對於 React 有很多不熟悉的地方，想說利用這段時間再從最基本的React開始複習並學習新的Hook以及TypeScript如何跟React一起使用，本次的學習主要是以Udemy上的課程以及React的官方文件為主，再搭配ＡＣ的兩位助教（Zet以及PJ）的鐵人賽文章為輔。">
+<meta property="og:description" content="昨天學習完了JSX，接下來來認識React的核心概念之一的Component，它是建立用戶介面(UI)的基礎。">
 <meta property="og:locale" content="zh_TW">
-<meta property="article:published_time" content="2023-02-28T14:44:38.000Z">
-<meta property="article:modified_time" content="2023-02-28T17:15:21.307Z">
+<meta property="og:image" content="https://i.imgur.com/tZeP9i4.png">
+<meta property="article:published_time" content="2023-03-02T13:27:32.000Z">
+<meta property="article:modified_time" content="2023-03-02T13:32:15.262Z">
 <meta property="article:author" content="Jeff">
 <meta property="article:tag" content="React">
 <meta property="article:tag" content="React基礎">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.imgur.com/tZeP9i4.png">
 
-<link rel="canonical" href="http://example.com/2023/02/28/%E6%96%B0%E6%89%8B%E5%AD%B8%E7%BF%92React-2023-02-28-react-1-2023-02-28-react-1/">
+<link rel="canonical" href="http://example.com/2023/03/02/%E6%96%B0%E6%89%8B%E5%AD%B8%E7%BF%92React-2023-03-02-react-3-2023-03-02-react-3/">
 
 
 <script id="page-configurations">
@@ -47,7 +49,7 @@
   };
 </script>
 
-  <title>『新手學習React』- 學習規劃 | Jeff的隨手筆記</title>
+  <title>『新手學習React』-  React Basics_Component | Jeff的隨手筆記</title>
   
 
 
@@ -163,7 +165,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/02/28/%E6%96%B0%E6%89%8B%E5%AD%B8%E7%BF%92React-2023-02-28-react-1-2023-02-28-react-1/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/03/02/%E6%96%B0%E6%89%8B%E5%AD%B8%E7%BF%92React-2023-03-02-react-3-2023-03-02-react-3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/uploads/avatar.jpeg">
@@ -176,7 +178,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          『新手學習React』- 學習規劃
+          『新手學習React』-  React Basics_Component
         </h1>
 
         <div class="post-meta">
@@ -185,16 +187,10 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
+              
 
-              <time title="Created: 2023-02-28 22:44:38" itemprop="dateCreated datePublished" datetime="2023-02-28T22:44:38+08:00">2023-02-28</time>
+              <time title="Created: 2023-03-02 21:27:32 / Modified: 21:32:15" itemprop="dateCreated datePublished" datetime="2023-03-02T21:27:32+08:00">2023-03-02</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-03-01 01:15:21" itemprop="dateModified" datetime="2023-03-01T01:15:21+08:00">2023-03-01</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -216,26 +212,39 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在做ＡＣ學習時，在做畢業專案：Tweet時就有感覺到自己對於 React 有很多不熟悉的地方，想說利用這段時間再從最基本的React開始複習並學習新的Hook以及TypeScript如何跟React一起使用，本次的學習主要是以<code>Udemy</code>上的課程以及<code>React的官方文件</code>為主，再搭配ＡＣ的兩位助教（Zet以及PJ）的鐵人賽文章為輔。</p>
+        <p>昨天學習完了JSX，接下來來認識React的核心概念之一的<code>Component</code>，它是建立用戶介面(UI)的基礎。</p>
 <span id="more"></span>
-<p>預計學習的目標有：</p>
+
+<h3 id="Defining-a-component"><a href="#Defining-a-component" class="headerlink" title="Defining a component"></a><strong><strong>Defining a component</strong></strong></h3><p>在學習ＡＣ的React課程時看到<code>Exit ticket</code>有這麼一個問題：「在 React 中，一切都是元件」代表著什麼？<br>這在當時只看完官方文件第一小節的我滿腦子問號，怎麼辦官方文件上沒說啊，只好到網路上找尋答案。那現在學習完晚整學期三的我答的出來嗎？老實說我自己也不確定，我只能依我自己的理解來做回答：</p>
+<p>『React 元件的概念是 React 的核心，每個 React 元件都是獨立的、可重複使用的。<br>它可以被獨立渲染並且接收輸入的資料，也可以將資料傳遞到其他元件。<br>它可以幫助開發者更好地組織程式碼，使應用更具可讀性、可維護性和可擴展性。』</p>
+<p>那要怎麼定義 Component呢？官方文件給出了3個步驟：</p>
 <ul>
-<li>React Basics:<br>Component、JSX、Props、Render、Event</li>
-<li>React 常見 Hooks：<br>useState、useEffect、useContext、useRef、useMemo</li>
-<li>Redux</li>
-<li>React + TypeScript</li>
-<li>React + Router</li>
-<li>Next.js</li>
+<li><strong><strong>Step 1: Export the component</strong></strong></li>
+<li><strong><strong>Step 2: Define the function</strong></strong></li>
+<li><strong><strong>Step 3: Add markup</strong></strong></li>
 </ul>
-<hr>
-<h3 id="學習前必須要了解的ES6語法"><a href="#學習前必須要了解的ES6語法" class="headerlink" title="學習前必須要了解的ES6語法"></a>學習前必須要了解的ES6語法</h3><ul>
-<li>Arrow function<br>在實作中經常會使用到，基本上都是用在event handlers或是 useEffect。<br>推薦學習-<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Functions/Arrow_functions">ＭＤＮ</a></li>
-<li>Primitive types &amp; Object types<br>對於我來說更正確的來說應該是要注意<strong><strong>call by value 還是 reference。</strong></strong><br>推薦學習-<a target="_blank" rel="noopener" href="https://blog.techbridge.cc/2018/06/23/javascript-call-by-value-or-reference/">call by value 還是 reference</a>。</li>
-<li>解構賦值、spread<br>在 props 資料解構和拆分、<code>useState</code> 返回值解構、物件 state immutable update 等地方，都會頻繁的使用到這些陣列與物件的操作語法。<br>推薦學習-<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment">MDN 解構賦值</a><br>推薦學習-<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Operators/Spread_syntax">MDN spread</a></li>
-<li>三元運算子<br>非常方便，寫JSX常常實用的語法<br>推薦學習-<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Operators/Conditional_Operator">MDN</a></li>
-<li>Closure<br>function component 中會大量的應用到 closure 來定義 event handlers 以及配合 hooks，並且以這個特性來保持資料流，因此可以說是 React 最依賴的 JavaScript 特性。<br>推薦學習-<strong><strong><a target="_blank" rel="noopener" href="https://blog.techbridge.cc/2018/12/08/javascript-closure/">談 JS 中的作用域與 Closure</a></strong></strong></li>
-</ul>
-<p>另位非常推薦Kuro大大所寫的『<strong>0 陷阱！0 誤解！8 天重新認識 JavaScript！』</strong>這本書，上面所說的東西都可以在裡面找到，也可以到他的鐵人賽文章觀看<strong>—<a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/users/20065504/ironman/1259">連結</a></strong></p>
+<p>我們就以下方的code來簡單說明：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// function 宣告</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">Button</span> () &#123;</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">button</span>&gt;</span>確定<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="title class_">Button</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 箭頭函式</span></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">Button</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">button</span>&gt;</span>確定<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="title class_">Button</span>;</span><br></pre></td></tr></table></figure>
+
+<p>2種宣告方式都可以，看個人喜歡什麼（個人偏愛箭頭函式）。</p>
+<p>首先我們要先導出 component，這時候我們要用到JavaScript的語法export了。</p>
+<p>導出我們有分兩種：<strong><strong>default vs named。</strong></strong></p>
+<p><img src="https://i.imgur.com/tZeP9i4.png" alt="Imgur"></p>
+<p>一個文件只能有一個default exports，但它可以有任意多個 named exports。在導出時其實兩者個差別就只是有沒default而已，但在導入時就有差別了：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//default export</span></span><br><span class="line"><span class="comment">//在默認導出時你可以任意命名</span></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">Any</span> <span class="keyword">from</span> <span class="string">&#x27;./路徑&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//named export</span></span><br><span class="line"><span class="comment">//在命名導出時你必須打上導出的名稱，如果導出的名稱為Button</span></span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Button</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;./路徑&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>export 跟 import 必須是相對應的，否則就會出現錯誤。</strong></p>
+<p>至於在 <strong><strong>Add markup</strong></strong> 時，return 後面的語句可以全部寫在一行中，例如：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> <span class="language-xml"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;https://i.imgur.com/MK3eW3As.jpg&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;Katherine Johnson&quot;</span> /&gt;</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>但如果 <code>markup</code> 與 <code>return</code> 不在同一行，則必須將其括在一對括號中，例如：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> (</span><br><span class="line">  <span class="language-xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;https://i.imgur.com/MK3eW3As.jpg&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;Katherine Johnson&quot;</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="為什麼Component-命名中的首字母必須為大寫"><a href="#為什麼Component-命名中的首字母必須為大寫" class="headerlink" title="為什麼Component 命名中的首字母必須為大寫"></a>為什麼<strong><strong>Component 命名中的首字母必須為大寫</strong></strong></h3><p>這是在參加讀書會時，Zet助教提出的一個問題，詳細的說明大家可以看<a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10296741">這篇</a>。</p>
+<p>助教在文章裡面有提到React element 的建立，之所以提到這個是因為：<br>React中，建構UI畫面的最小單位是React element一段封閉式節點，因此才會在這題中提到。</p>
+<p>在看到這篇之前我自己的理解是：</p>
+<p>React的元件命名中首字母必須大寫的原因是因為在JSX語法中，小寫字母開頭的元素被視為HTML標籤，而大寫字母開頭的元素則被視為React元件。因此，為了區分React元件和HTML標籤，React的元件命名中必須使用大寫字母開頭。</p>
 
     </div>
 
@@ -255,13 +264,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2023/02/11/JavaScript-%E5%9F%BA%E7%A4%8E-2023-02-11-step6-1-2023-02-11-step6-1/" rel="prev" title="『JavaScript 基礎』 Function constructor（函式建構式）">
-      <i class="fa fa-chevron-left"></i> 『JavaScript 基礎』 Function constructor（函式建構式）
+    <a href="/2023/03/01/%E6%96%B0%E6%89%8B%E5%AD%B8%E7%BF%92React-2023-03-01-react-2-2023-03-01-react-2/" rel="prev" title="『新手學習React』- React Basics_JSX">
+      <i class="fa fa-chevron-left"></i> 『新手學習React』- React Basics_JSX
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2023/03/01/%E6%96%B0%E6%89%8B%E5%AD%B8%E7%BF%92React-2023-03-01-react-2-2023-03-01-react-2/" rel="next" title="『新手學習React』- React Basics_JSX">
-      『新手學習React』- React Basics_JSX <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -320,7 +326,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%B8%E7%BF%92%E5%89%8D%E5%BF%85%E9%A0%88%E8%A6%81%E4%BA%86%E8%A7%A3%E7%9A%84ES6%E8%AA%9E%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">學習前必須要了解的ES6語法</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Defining-a-component"><span class="nav-number">1.</span> <span class="nav-text">Defining a component</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%82%BA%E4%BB%80%E9%BA%BCComponent-%E5%91%BD%E5%90%8D%E4%B8%AD%E7%9A%84%E9%A6%96%E5%AD%97%E6%AF%8D%E5%BF%85%E9%A0%88%E7%82%BA%E5%A4%A7%E5%AF%AB"><span class="nav-number">2.</span> <span class="nav-text">為什麼Component 命名中的首字母必須為大寫</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
