@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="接下來這篇是我自己覺得最為重要的一篇，原因很簡單，我當初在做資料傳遞作業時，完全搞不清楚資料是怎麼傳遞的，一份同學們平均大概8小時的作業我花了2倍的時間還寫不出來，最後還是Gino跟Rafael從頭帶我一遍我才寫稍微暸解。 因此這章節除了複習props以外，也要了解React的資料流。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="『新手學習React』-  React Basics_Props">
+<meta property="og:url" content="http://example.com/2023/03/04/%E6%96%B0%E6%89%8B%E5%AD%B8%E7%BF%92React-2023-03-04-react-4-2023-03-04-react-4/index.html">
+<meta property="og:site_name" content="Jeff的隨手筆記">
+<meta property="og:description" content="接下來這篇是我自己覺得最為重要的一篇，原因很簡單，我當初在做資料傳遞作業時，完全搞不清楚資料是怎麼傳遞的，一份同學們平均大概8小時的作業我花了2倍的時間還寫不出來，最後還是Gino跟Rafael從頭帶我一遍我才寫稍微暸解。 因此這章節除了複習props以外，也要了解React的資料流。">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://i.imgur.com/rB1kBcd.png">
+<meta property="article:published_time" content="2023-03-04T12:32:14.000Z">
+<meta property="article:modified_time" content="2023-03-04T12:38:25.762Z">
+<meta property="article:author" content="Jeff">
+<meta property="article:tag" content="React">
+<meta property="article:tag" content="React基礎">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.imgur.com/rB1kBcd.png">
+
+<link rel="canonical" href="http://example.com/2023/03/04/%E6%96%B0%E6%89%8B%E5%AD%B8%E7%BF%92React-2023-03-04-react-4-2023-03-04-react-4/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-tw'
+  };
+</script>
+
+  <title>『新手學習React』-  React Basics_Props | Jeff的隨手筆記</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Jeff的隨手筆記</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">學習當一個前端工程師</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/03/04/%E6%96%B0%E6%89%8B%E5%AD%B8%E7%BF%92React-2023-03-04-react-4-2023-03-04-react-4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpeg">
+      <meta itemprop="name" content="Jeff">
+      <meta itemprop="description" content="這是一個紀錄自己成長的地方">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jeff的隨手筆記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          『新手學習React』-  React Basics_Props
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2023-03-04 20:32:14 / Modified: 20:38:25" itemprop="dateCreated datePublished" datetime="2023-03-04T20:32:14+08:00">2023-03-04</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%96%B0%E6%89%8B%E5%AD%B8%E7%BF%92React/" itemprop="url" rel="index"><span itemprop="name">新手學習React</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>接下來這篇是我自己覺得最為重要的一篇，原因很簡單，我當初在做資料傳遞作業時，完全搞不清楚資料是怎麼傳遞的，一份同學們平均大概8小時的作業我花了2倍的時間還寫不出來，最後還是Gino跟Rafael從頭帶我一遍我才寫稍微暸解。</p>
+<p>因此這章節除了複習props以外，也要了解React的資料流。</p>
+<span id="more"></span>
+
+<h3 id="Props"><a href="#Props" class="headerlink" title="Props"></a>Props</h3><p>props 簡單來說就是 properties（屬性）的縮寫，它是 React 中一個非常重要的概念。我們可以為自己定義的元件（component）設置屬性（props），並在元件中使用這些屬性。這些屬性可以是任何 JavaScript 值，包括字符串、數字、對象、函數等等，甚至是其他的 React 元件。透過 props 的傳遞，我們可以方便地實現組件之間的數據共享和通信。</p>
+<p>這邊要特別強調：<em><strong>『 Component 的 props 是一種「唯讀且不可變的資料」，一旦由 component 的外部傳入後，就絕對不可以直接在內部修改其內容。』</strong></em></p>
+<p>這個規定不只是 React 實作設計上的刻意限制，也是一種 「讓 props 保證永遠是從外部傳入的原樣」的 pattern，進而讓 component 內更容易追蹤資料的來源，對於維持單向資料流的可靠性以及提升程式碼的可維護性都相當重要。</p>
+<p>我們透過以下範例來了解props要怎麼使用：</p>
+<p>首先我們將 props 傳遞給 <code>&lt;Avatar&gt;</code></p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">Profile</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">Avatar</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">      <span class="attr">person</span>=<span class="string">&#123;&#123;</span> <span class="attr">name:</span> &#x27;<span class="attr">Lin</span> <span class="attr">Lanying</span>&#x27;, <span class="attr">imageId:</span> &#x27;<span class="attr">1bX5QH6</span>&#x27; &#125;&#125;</span></span></span><br><span class="line"><span class="tag"><span class="language-xml">      <span class="attr">size</span>=<span class="string">&#123;100&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">		/&gt;</span></span></span><br><span class="line">	);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="title class_">Profile</span>;</span><br></pre></td></tr></table></figure>
+
+<p>之後在<code>&lt;Avatar&gt;</code>裡面我們就可以使用，除了使用 props 外，我們也可以用解構的方式：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//方法一：</span></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">Avatar</span> = (<span class="params">props</span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">let</span> person = props.<span class="property">person</span>;</span><br><span class="line">  <span class="keyword">let</span> size = props.<span class="property">size</span>;</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">img</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">      <span class="attr">className</span>=<span class="string">&quot;avatar&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">      <span class="attr">src</span>=<span class="string">&#123;getImageUrl(person)&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">      <span class="attr">alt</span>=<span class="string">&#123;person.name&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">      <span class="attr">width</span>=<span class="string">&#123;size&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">      <span class="attr">height</span>=<span class="string">&#123;size&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">    /&gt;</span></span></span><br><span class="line">	);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="title class_">Avatar</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//方法二:</span></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">Avatar</span> = (<span class="params">&#123; person, size &#125;</span>) =&gt; &#123;</span><br><span class="line">	<span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">img</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">      <span class="attr">className</span>=<span class="string">&quot;avatar&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">      <span class="attr">src</span>=<span class="string">&#123;getImageUrl(person)&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">      <span class="attr">alt</span>=<span class="string">&#123;person.name&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">      <span class="attr">width</span>=<span class="string">&#123;size&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">      <span class="attr">height</span>=<span class="string">&#123;size&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">    /&gt;</span></span></span><br><span class="line">	);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="title class_">Avatar</span>;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Props-children"><a href="#Props-children" class="headerlink" title="Props.children"></a>P<strong><strong>rops.children</strong></strong></h3><p>有些元件組合的情況下，元件無法事先知道它下面會有哪些子元件，像是容器 (container) 類型的 Dialog 元件。</p>
+<p><code>props</code> object 的屬性和 component 的屬性是一一對應的，但有個例外就是 <code>props.children</code> 這個內建屬性，它表示該元件下的所有子元件。</p>
+<p>用法像是：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">Card</span> = (<span class="params">props</span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      &#123;props.children&#125;</span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="title class_">Card</span>;</span><br></pre></td></tr></table></figure>
+
+<h3 id="JSX-spread-syntax"><a href="#JSX-spread-syntax" class="headerlink" title="JSX spread syntax"></a>JSX spread syntax</h3><p>有時，傳遞道具會變得非常重複：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">Profile</span> = (<span class="params">&#123; person, size, isSepia, thickBorder &#125;</span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">&quot;card&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">Avatar</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">        <span class="attr">person</span>=<span class="string">&#123;person&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">        <span class="attr">size</span>=<span class="string">&#123;size&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">        <span class="attr">isSepia</span>=<span class="string">&#123;isSepia&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">        <span class="attr">thickBorder</span>=<span class="string">&#123;thickBorder&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">      /&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>雖然這樣很容易了解它的意思，但有時候我們更看重簡潔，因此我們可以使用<strong>擴展運算子(Spread Operator):</strong></p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">Profile</span> = (<span class="params">props</span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">&quot;card&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">Avatar</span> &#123;<span class="attr">...props</span>&#125; /&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="單向資料流"><a href="#單向資料流" class="headerlink" title="單向資料流"></a>單向資料流</h3><p>在 React 中，資料的流動是單向的，由父元件向子元件傳遞，不允許子元件直接修改父元件中的資料。React 的資料流基於以下兩個重要概念：</p>
+<ol>
+<li>單向資料流：資料在元件之間只能單向傳遞，由父元件向子元件傳遞，不允許子組件直接修改父元件中的資料。</li>
+<li>State：State是一種特殊的資料，只能在元件內部使用。當元件狀態發生改變時，React 會自動重新渲染該元件，並通過比較新舊 <code>Virtual DOM Tree</code>  的差異，最後只更新需要更新的部分。</li>
+</ol>
+<p>（渲染過程：Virtual DOM (React element) &#x3D;&gt; 經過 root.render() &#x3D;&gt; 產生畫面上的真實 DOM，詳細內容會在下一篇。）</p>
+<p>那什麼是單向資料流呢？</p>
+<p>我們先來看一下下面這張圖：</p>
+<p><img src="https://i.imgur.com/rB1kBcd.png" alt="Imgur"></p>
+<p>任何 UI 畫面只要不是完全靜態寫死的，則背後一定有其作為來源的原始資料，當我們獲得這些新的原始資料時，將這些資料套入預先定義好的模板以及渲染邏輯，進而產生使用者所看到的畫面。</p>
+<p>而單向資料流的核心概念就是：<strong>畫面結果是原始資料透過模板與渲染邏輯所產生的延伸結果，而這個過程是單向且不可逆的。當資料發生變化時，畫面才會產生對應的變化，以資料去驅動畫面。</strong></p>
+<p>所謂「單向」的意思，就是只有資料變化時才能導致畫面更新，畫面無法在原始資料發生變化以外的情況隨意改變。且畫面本身也不允許以任何原因，主動逆向去直接修改原始資料。</p>
+<p>由於這是一個單向的流程，因此畫面不會因為資料變化以外的任何原因而隨意改變，這樣就可以保證將 UI 產生的主要變因限縮在「資料」上，並且當資料更新時對應綁定的畫面就會自動發生變化，進而提升前端應用程式的可靠性與可維護性。</p>
+<p>以上資料來源：Zet：<a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10296750">單向資料流 &amp; DOM 渲染策略</a></p>
+<h3 id="子元件如何把資料傳遞給父元件"><a href="#子元件如何把資料傳遞給父元件" class="headerlink" title="子元件如何把資料傳遞給父元件"></a>子元件如何把資料傳遞給父元件</h3><p>剛剛有說過，在 React 資料只能從上往下傳遞，也就是由父元件傳遞到子元件。</p>
+<p>但如果今天我要反過來傳遞有辦法嗎？</p>
+<p>嚴格來說答案是不行的，但是我們可以透過<code>callback function</code>來解決：</p>
+<ol>
+<li><p>我們在父元件透過props傳遞<code>callback function</code>給子元件。</p>
+ <figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">App</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> [todos, setTodos] = <span class="title function_">useState</span>()</span><br><span class="line">  <span class="keyword">const</span> <span class="title function_">handleAddTodoItem</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">    <span class="title function_">setTodos</span>(<span class="function"><span class="params">prevTodos</span> =&gt;</span> [...prevTodos, &#123;<span class="attr">id</span>: <span class="title class_">Math</span>.<span class="title function_">random</span>().<span class="title function_">toString</span>(), <span class="attr">description</span>: inputValue&#125;] )</span><br><span class="line">  &#125;</span><br><span class="line">	<span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">TodoForm</span> <span class="attr">handleAddTodoItem</span>=<span class="string">&#123;handleAddTodoItem&#125;/</span>&gt;</span></span></span><br><span class="line">	)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>子元件透過調用<code>callback function</code>，並將要傳遞的資料當作參數傳遞給該函式。</p>
+ <figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">TodoForm</span> = (<span class="params">props</span>) =&gt; &#123;</span><br><span class="line">	<span class="keyword">const</span> inputValue = inputRef.<span class="property">current</span>!.<span class="property">value</span>;</span><br><span class="line">	props.<span class="title function_">handleAddTodoItem</span>(inputValue);</span><br><span class="line">	<span class="keyword">return</span> (...)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>當父元件接收到子元件傳遞的資料後，再將其更新到自身的狀態或進行其他操作。</p>
+</li>
+</ol>
+<p>更加詳細的原理等到複習完render跟state在說明。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/React/" rel="tag"># React</a>
+              <a href="/tags/React%E5%9F%BA%E7%A4%8E/" rel="tag"># React基礎</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/03/02/%E6%96%B0%E6%89%8B%E5%AD%B8%E7%BF%92React-2023-03-02-react-3-2023-03-02-react-3/" rel="prev" title="『新手學習React』-  React Basics_Component">
+      <i class="fa fa-chevron-left"></i> 『新手學習React』-  React Basics_Component
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/03/04/%E5%BF%83%E5%BE%97-2023-03-04-ac-end-2023-03-04-ac-end/" rel="next" title="『學習心得』- ＡＣ前端畢業心得">
+      『學習心得』- ＡＣ前端畢業心得 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Props"><span class="nav-number">1.</span> <span class="nav-text">Props</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Props-children"><span class="nav-number">2.</span> <span class="nav-text">Props.children</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JSX-spread-syntax"><span class="nav-number">3.</span> <span class="nav-text">JSX spread syntax</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%96%AE%E5%90%91%E8%B3%87%E6%96%99%E6%B5%81"><span class="nav-number">4.</span> <span class="nav-text">單向資料流</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%90%E5%85%83%E4%BB%B6%E5%A6%82%E4%BD%95%E6%8A%8A%E8%B3%87%E6%96%99%E5%82%B3%E9%81%9E%E7%B5%A6%E7%88%B6%E5%85%83%E4%BB%B6"><span class="nav-number">5.</span> <span class="nav-text">子元件如何把資料傳遞給父元件</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Jeff"
+      src="/uploads/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Jeff</p>
+  <div class="site-description" itemprop="description">這是一個紀錄自己成長的地方</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">53</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jeff0518" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jeff0518" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:cycivs07@icloud.com" title="E-Mail → mailto:cycivs07@icloud.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jeff</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
