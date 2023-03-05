@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="接下來這篇要來看 React 產生並管理 UI 畫面的核心運作流程與原理。 如果只是單純的照著官方文件學下來不是說不會，畢竟官方文件也是花了4章節在講有關render相關的事情，但還是有些矇矇懂懂的，其實這感覺跟學JavaScript很像，功能正常畫面會出來，但問到為什麼會這樣都是答的支支吾吾，因此這次的目標就是搞懂這個Render!">
+<meta property="og:type" content="article">
+<meta property="og:title" content="『新手學習React』- React Basics_Render">
+<meta property="og:url" content="http://example.com/2023/03/05/%E6%96%B0%E6%89%8B%E5%AD%B8%E7%BF%92React-2023-03-05-react-5-2023-03-05-react-5/index.html">
+<meta property="og:site_name" content="Jeff的隨手筆記">
+<meta property="og:description" content="接下來這篇要來看 React 產生並管理 UI 畫面的核心運作流程與原理。 如果只是單純的照著官方文件學下來不是說不會，畢竟官方文件也是花了4章節在講有關render相關的事情，但還是有些矇矇懂懂的，其實這感覺跟學JavaScript很像，功能正常畫面會出來，但問到為什麼會這樣都是答的支支吾吾，因此這次的目標就是搞懂這個Render!">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2023-03-05T08:28:32.000Z">
+<meta property="article:modified_time" content="2023-03-05T08:38:10.081Z">
+<meta property="article:author" content="Jeff">
+<meta property="article:tag" content="React">
+<meta property="article:tag" content="React基礎">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2023/03/05/%E6%96%B0%E6%89%8B%E5%AD%B8%E7%BF%92React-2023-03-05-react-5-2023-03-05-react-5/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-tw'
+  };
+</script>
+
+  <title>『新手學習React』- React Basics_Render | Jeff的隨手筆記</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Jeff的隨手筆記</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">學習當一個前端工程師</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/03/05/%E6%96%B0%E6%89%8B%E5%AD%B8%E7%BF%92React-2023-03-05-react-5-2023-03-05-react-5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpeg">
+      <meta itemprop="name" content="Jeff">
+      <meta itemprop="description" content="這是一個紀錄自己成長的地方">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jeff的隨手筆記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          『新手學習React』- React Basics_Render
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2023-03-05 16:28:32 / Modified: 16:38:10" itemprop="dateCreated datePublished" datetime="2023-03-05T16:28:32+08:00">2023-03-05</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%96%B0%E6%89%8B%E5%AD%B8%E7%BF%92React/" itemprop="url" rel="index"><span itemprop="name">新手學習React</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>接下來這篇要來看 React 產生並管理 UI 畫面的核心運作流程與原理。</p>
+<p>如果只是單純的照著官方文件學下來不是說不會，畢竟官方文件也是花了4章節在講有關render相關的事情，但還是有些矇矇懂懂的，其實這感覺跟學JavaScript很像，功能正常畫面會出來，但問到為什麼會這樣都是答的支支吾吾，因此這次的目標就是搞懂這個Render!</p>
+<span id="more"></span>
+
+<h2 id="條件渲染"><a href="#條件渲染" class="headerlink" title="條件渲染"></a><strong><strong>條件渲染</strong></strong></h2><p>元件通常都是需要根據不同的條件顯示不同的內容，例如我想要顯示我喜歡的影片等等。在React裡，我們可以透過JavaScript所提供的<code>if</code>或是運算子(operators)。</p>
+<p>例如我想要讓畫面出現完成的打勾沒完成的保持原樣就可以這樣用：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (isPacked) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="language-xml"><span class="tag">&lt;<span class="name">li</span> <span class="attr">className</span>=<span class="string">&quot;item&quot;</span>&gt;</span>&#123;name&#125; ✔<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">return</span> <span class="language-xml"><span class="tag">&lt;<span class="name">li</span> <span class="attr">className</span>=<span class="string">&quot;item&quot;</span>&gt;</span>&#123;name&#125;<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>在正常情況下都是會 <code>return &lt;li className=&quot;item&quot;&gt;&#123;name&#125;&lt;/li&gt;</code>，但是如果<code>isPacked</code>是<code>true</code> 的時候，則會 return 另一組JSX tree。</p>
+<p>我們也可以用<code>條件(三元)運算子</code>(<strong>Conditional (ternary) operator</strong>)來完成這段code:</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> (</span><br><span class="line">  <span class="language-xml"><span class="tag">&lt;<span class="name">li</span> <span class="attr">className</span>=<span class="string">&quot;item&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    &#123;isPacked ? name + &#x27; ✔&#x27; : name&#125;</span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<p>是不是非常簡潔，但要記得不要因為嵌套條件標記而變得混亂。</p>
+<p>我們也可以用<strong><strong>邏輯與運算符</strong></strong> ( <code>&amp;&amp;</code>)：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> (</span><br><span class="line">  <span class="language-xml"><span class="tag">&lt;<span class="name">li</span> <span class="attr">className</span>=<span class="string">&quot;item&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    &#123;name&#125; &#123;isPacked &amp;&amp; &#x27;✔&#x27;&#125;</span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<p>我們可以將其理解為<em>“如果<code>isPacked</code>，則 ( <code>&amp;&amp;</code>) 呈現</em> <code>✔</code><em>，否則，不呈現任何內容”</em>。</p>
+<p>這邊要特別提醒，不要在 &amp;&amp; 左側的條件不要放進數字，在 JavaScript 條件判斷時會把 <code>0</code> 轉成 boolean，但在 React 不會做這件事，React 會直接渲染 <code>0</code> ，所以需要在 <code>&amp;&amp;</code> 左邊的條件要直接放進 boolean <code>importance &gt; 0 &amp;&amp;</code> 而非 <code>importance &amp;&amp;</code> 。</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">Item</span>(<span class="params">&#123; name, importance &#125;</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">li</span> <span class="attr">className</span>=<span class="string">&quot;item&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      &#123;name&#125; &#123;importance &amp;&amp; <span class="tag">&lt;<span class="name">i</span>&gt;</span>(Importance: &#123;importance&#125;)<span class="tag">&lt;/<span class="name">i</span>&gt;</span>&#125;</span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">function</span> <span class="title function_">PackingList</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">section</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">h1</span>&gt;</span>Sally Ride&#x27;s Packing List<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">ul</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">Item</span> <span class="attr">importance</span>=<span class="string">&#123;9&#125;</span> <span class="attr">name</span>=<span class="string">&quot;Space suit&quot;</span> /&gt;</span> </span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">Item</span> <span class="attr">importance</span>=<span class="string">&#123;0&#125;</span> <span class="attr">name</span>=<span class="string">&quot;Helmet with a golden leaf&quot;</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">Item</span> <span class="attr">importance</span>=<span class="string">&#123;6&#125;</span> <span class="attr">name</span>=<span class="string">&quot;Photo of Tam&quot;</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">section</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//Space suit Importance:9</span></span><br><span class="line"><span class="comment">//Helmet with a golden leaf 0</span></span><br><span class="line"><span class="comment">//Photo of Tam Importance:6</span></span><br></pre></td></tr></table></figure>
+
+<p>另外補充一種很常運用 <code>&amp;&amp;</code> 跟 <code>||</code>的方法 。</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//(條件/運算式A) &amp;&amp; (條件/運算式B)</span></span><br><span class="line"><span class="keyword">const</span> myVar = <span class="literal">true</span> &amp;&amp; <span class="string">&#x27;default value&#x27;</span>; </span><br><span class="line"><span class="comment">// myVar 的值為 &quot;default value&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//(條件/運算式A) || (條件/運算式B)</span></span><br><span class="line"><span class="keyword">const</span> myVar = <span class="literal">false</span> || <span class="string">&#x27;default value&#x27;</span>; </span><br><span class="line"><span class="comment">// myVar 的值為 &quot;default value&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>一開始看到這個我常常被搞混，但看了 <a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10191343">Boolean 的真假判斷</a> 之後，稍微有些理解，由於本章是複習React 所以就不深入解說，有興趣的人可以點擊連結去閱讀。</p>
+<p>回到題目，由於我們知道只有下方這幾個值會變成<code>false</code>也就是<strong>「falsy」值</strong>(<code>true</code> 的話叫做<strong>「truthy」值</strong>):</p>
+<ul>
+<li><code>Undefined</code></li>
+<li><code>Null</code></li>
+<li><code>+0</code>, <code>0</code>, or <code>NaN</code></li>
+<li>空字串 <code>&quot;&quot;</code> 或 <code>&#39;&#39;</code></li>
+</ul>
+<p>因此這邊我們只需要判斷 <strong><code>truthy</code> 跟 <code>falsy</code></strong> 來決定要回傳哪一個。</p>
+<p>在 &amp;&amp; 的時候，只要第一個值為 <strong><code>falsy</code></strong> 回傳第一個值，否則回傳後者。</p>
+<p>在 | | 的時候，只要第一個值為 <strong><code>truthy</code></strong> 回傳第一個值，否則回傳後者。</p>
+<h2 id="渲染列表"><a href="#渲染列表" class="headerlink" title="渲染列表"></a><strong><strong>渲染列表</strong></strong></h2><p>在官方文件裡這張主要內容是在講如何使用 <code>map()</code> 跟 <code>filter()</code> 。</p>
+<p> 假設我現在有一個陣列 <code>people</code> ，我想要把是 chemist 的資料呈現在畫面上，我們可以這樣做：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> people = [&#123;</span><br><span class="line">  <span class="attr">id</span>: <span class="number">0</span>,</span><br><span class="line">  <span class="attr">name</span>: <span class="string">&#x27;Creola Katherine Johnson&#x27;</span>,</span><br><span class="line">  <span class="attr">profession</span>: <span class="string">&#x27;mathematician&#x27;</span>,</span><br><span class="line">&#125;, &#123;</span><br><span class="line">  <span class="attr">id</span>: <span class="number">1</span>,</span><br><span class="line">  <span class="attr">name</span>: <span class="string">&#x27;Mario José Molina-Pasquel Henríquez&#x27;</span>,</span><br><span class="line">  <span class="attr">profession</span>: <span class="string">&#x27;chemist&#x27;</span>,</span><br><span class="line">&#125;, &#123;</span><br><span class="line">  <span class="attr">id</span>: <span class="number">2</span>,</span><br><span class="line">  <span class="attr">name</span>: <span class="string">&#x27;Mohammad Abdus Salam&#x27;</span>,</span><br><span class="line">  <span class="attr">profession</span>: <span class="string">&#x27;physicist&#x27;</span>,</span><br><span class="line">&#125;, &#123;</span><br><span class="line">  <span class="attr">name</span>: <span class="string">&#x27;Percy Lavon Julian&#x27;</span>,</span><br><span class="line">  <span class="attr">profession</span>: <span class="string">&#x27;chemist&#x27;</span>,  </span><br><span class="line">&#125;, &#123;</span><br><span class="line">  <span class="attr">name</span>: <span class="string">&#x27;Subrahmanyan Chandrasekhar&#x27;</span>,</span><br><span class="line">  <span class="attr">profession</span>: <span class="string">&#x27;astrophysicist&#x27;</span>,</span><br><span class="line">&#125;];</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">function</span> <span class="title function_">List</span>(<span class="params"></span>) &#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">const</span> chemists = people.<span class="title function_">filter</span>(<span class="function"><span class="params">person</span> =&gt;</span></span><br><span class="line">	  person.<span class="property">profession</span> === <span class="string">&#x27;chemist&#x27;</span></span><br><span class="line">	);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> listItems = chemists.<span class="title function_">map</span>(<span class="function"><span class="params">person</span> =&gt;</span></span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">li</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">     <span class="tag">&lt;<span class="name">img</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">       <span class="attr">src</span>=<span class="string">&#123;getImageUrl(person)&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">       <span class="attr">alt</span>=<span class="string">&#123;person.name&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">     /&gt;</span></span></span><br><span class="line"><span class="language-xml">     <span class="tag">&lt;<span class="name">p</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">       <span class="tag">&lt;<span class="name">b</span>&gt;</span>&#123;person.name&#125;:<span class="tag">&lt;/<span class="name">b</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">       &#123;&#x27; &#x27; + person.profession + &#x27; &#x27;&#125;</span></span><br><span class="line"><span class="language-xml">       known for &#123;person.accomplishment&#125;</span></span><br><span class="line"><span class="language-xml">     <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></span><br><span class="line">);</span><br><span class="line">  );</span><br><span class="line">  <span class="keyword">return</span> <span class="language-xml"><span class="tag">&lt;<span class="name">ul</span>&gt;</span>&#123;listItems&#125;<span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>這樣就可以呈現出來在畫面上，但這時候我們看到錯誤：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Warning</span>: <span class="title class_">Each</span> child <span class="keyword">in</span> a list should have a unique “key” prop.</span><br></pre></td></tr></table></figure>
+
+<p>字面上的意思是，你需要給陣列中的每一個 React 元素一個唯一的編號 (unique key)，因為 React 需要知道實際上哪個元素是哪一個，React 的 Virtual DOM 才能確定哪些元素是需要在 DOM 中被新增的、哪些是要更新的、哪些是要被刪除的。</p>
+<p><em><strong><a target="_blank" rel="noopener" href="https://zh-hant.reactjs.org/docs/lists-and-keys.html#keys">官方文件-key</a></strong></em></p>
+<p>另外<strong>不建議使用 index 作為key值。</strong></p>
+<p>如果陣列的項目沒有被分配 key，React 預設 index 作為 key。<strong>但在項目順序可能改變的情況下，官方並不建議使用 index 作為 key。</strong>原因是:</p>
+<ol>
+<li>會影響效能。(這跟React預測元件更新的diffing演算法有關)</li>
+<li>因為key是基於索引值，因此如果更動順序，也會修改當前的key，可能會導致不合預期的結果。</li>
+</ol>
+<p><em><strong><a target="_blank" rel="noopener" href="https://zh-hant.reactjs.org/docs/reconciliation.html#recursing-on-children">官方文件</a></strong></em></p>
+<p>官方建議的 key來源：</p>
+<ul>
+<li><strong>來自數據庫的數據</strong></li>
+<li><strong>本地生成的數據</strong></li>
+</ul>
+<p>關於Key兩個規定：</p>
+<ul>
+<li><strong>key 必須在兄弟元素中是唯一的</strong>，<strong>但是不同的陣列中可以使用相同的 key</strong></li>
+<li><strong>Key 在渲染過程中不應該被生成或更改，因為這樣會破壞Key的唯一性和穩定性。</strong></li>
+</ul>
+<p>關於第二點Zet助教有特別說明：<br>這將導致渲染之間的 <strong>Key</strong> 永遠不會匹配，從而導致每次都重新創建所有元件和 DOM。這不僅速度慢，而且還會丟失列表項中的任何用戶輸入。相反，請使用基於數據的穩定 ID。</p>
+<h2 id="React-畫面更新的核心機制"><a href="#React-畫面更新的核心機制" class="headerlink" title="React 畫面更新的核心機制"></a><strong><strong>React 畫面更新的核心機制</strong></strong></h2><p>前面已經說完渲染的使用方式，接下來談談底層的部分，接下來的內容都來自Zet助教<a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10298007">鐵人賽文章</a>，有興趣的可以前往觀看原版的。</p>
+<h3 id="Virtual-DOM"><a href="#Virtual-DOM" class="headerlink" title="Virtual DOM"></a><strong>Virtual DOM</strong></h3><p>首先我們要知道什麼是 Virtual DOM：</p>
+<p>從意義上來說，Virtual DOM 是真實 DOM 的虛構描述體，它實際上也是一種樹狀結構的資料。</p>
+<p>當 DOM 的節點需要更動時，不會直接修改 DOM，而是透過 DOM diff 演算法比較 Virtual DOM 修改前與修改後的樹狀結構，再批次更新真實的 DOM 節點。</p>
+<p><strong>每一個 Virtual DOM element 的資料都是普通的 JavaScript 物件變數，內容則嘗試在描述一個真實的 DOM element 預計要長的樣子，</strong>接著透過負責渲染畫面的程式處理後，就能將 Virtual DOM element 轉換並產生成實際的 DOM element，以更新瀏覽器的實際畫面。</p>
+<p>所以實際流程是這樣的：</p>
+<p>Virtual DOM (React element) &#x3D;&gt; 經過 Diff Algorithm &amp; root.render() &#x3D;&gt; 產生畫面上的真實 DOM。這個過程永遠單向</p>
+<p>在 Diff Algorithm 時，<strong>新的 Virtual DOM Tree 與此前最後一次舊畫面用的 Virtual DOM Tree 進行兩棵樹的結構細節比較，其中差異之處才是本次畫面更新中真正有需要變更的部分</strong></p>
+<p>至於這樣的好處就是我們能夠透過這個流程，我們就可以將真實的 DOM 操作範圍最小化，並限縮在這些真正需要變更的地方，來盡可能的減少因 DOM 操作而造成的效能花費。</p>
+<p>更進階的內容可以參考：<a target="_blank" rel="noopener" href="https://www.zhihu.com/question/31809713">關於 Virtual DOM 效益的進階討論</a></p>
+<h3 id="一律重繪的渲染策略"><a href="#一律重繪的渲染策略" class="headerlink" title="一律重繪的渲染策略"></a><strong><strong>一律重繪的渲染策略</strong></strong></h3><p>我們了解了Virtual DOM 的概念後，接下來了解React 的一律重繪的渲染策略：</p>
+<p>『Virtual DOM 在JavaScript 中只是一些自定義的普通變數資料而已，並不像真實 DOM 那樣有直接與瀏覽器的渲染引擎綁定，因此React才可以做出重繪整個 Virtual DOM。』</p>
+<p>在這個策略下，React 只需要知道資料有發生變化就行，<strong>而不關心資料具體變化的差異在哪</strong>，然後進行一律重繪的流程。說的更具體一點的說，React 中一律重繪的是 <strong>React elements</strong>。</p>
+<p>因此我們在 React 中在講「渲染」或「<strong>render</strong>」時，通常都是在說 <strong>Virtual DOM elements（也就是 React elements）的產生</strong>，而不是在指真實 DOM elements 的操作。而「重繪 Virtual DOM」在 React 中通常也被稱為「<strong>re-render</strong>」，具體在 React 中的行為就是「<strong>以新的資料（props 或 state）重新再執行一次 component function，並產生新版的 React elements</strong>」。</p>
+<p>但就算採取這個方式，當App檔案越來越龐大且複雜後，如果無止境的重繪還是會造成效能問題，因此React 會以 component 作為一律重繪的切分單位，而這也是會什麼 state 必須依附於 component function 的其中一個原因。當我們呼叫一個 state 的 <code>setState</code> 方法時，React 就<strong>只會重繪該 state 所屬的 component 以及它底下的所有子孫 components</strong>，而不會整個 App 都重繪。</p>
+<h3 id="Reconciliation"><a href="#Reconciliation" class="headerlink" title="Reconciliation"></a><strong>Reconciliation</strong></h3><p>延續上一個段落，當我們在 component 裡呼叫 <code>setState</code>方法來觸發資料更新時，此時 React 會先以 <code>Object.is()</code>方法來檢查新傳入的 state 是否與舊的不同，<strong>如果相同的話則判定資料沒有變化所以畫面不用更新，就會直接中斷接下來的流程，反之可能有畫面更新的需求。</strong></p>
+<p>React component 會自動觸發 re-render 的流程並且透過 Virtual DOM 還有 Diff 演算法算出畫面中實際需要更新的部分，比對更新前後 virtual DOM 的差異之後，再交由<code>react-dom</code>負責自動去操作更新這些 DOM elements去更動真實的 DOM，有效減少渲染的次數 ，而這個 Diff 的過程也被稱作 reconciliation。</p>
+<p>另外<code>setState</code> 觸發的 <code>re-render</code> 會連帶觸發子 components 的 <code>re-render</code>。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/React/" rel="tag"># React</a>
+              <a href="/tags/React%E5%9F%BA%E7%A4%8E/" rel="tag"># React基礎</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/03/04/%E5%BF%83%E5%BE%97-2023-03-04-ac-end-2023-03-04-ac-end/" rel="prev" title="『學習心得』- ＡＣ前端畢業心得">
+      <i class="fa fa-chevron-left"></i> 『學習心得』- ＡＣ前端畢業心得
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A2%9D%E4%BB%B6%E6%B8%B2%E6%9F%93"><span class="nav-number">1.</span> <span class="nav-text">條件渲染</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B8%B2%E6%9F%93%E5%88%97%E8%A1%A8"><span class="nav-number">2.</span> <span class="nav-text">渲染列表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#React-%E7%95%AB%E9%9D%A2%E6%9B%B4%E6%96%B0%E7%9A%84%E6%A0%B8%E5%BF%83%E6%A9%9F%E5%88%B6"><span class="nav-number">3.</span> <span class="nav-text">React 畫面更新的核心機制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Virtual-DOM"><span class="nav-number">3.1.</span> <span class="nav-text">Virtual DOM</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E5%BE%8B%E9%87%8D%E7%B9%AA%E7%9A%84%E6%B8%B2%E6%9F%93%E7%AD%96%E7%95%A5"><span class="nav-number">3.2.</span> <span class="nav-text">一律重繪的渲染策略</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Reconciliation"><span class="nav-number">3.3.</span> <span class="nav-text">Reconciliation</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Jeff"
+      src="/uploads/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Jeff</p>
+  <div class="site-description" itemprop="description">這是一個紀錄自己成長的地方</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">54</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jeff0518" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jeff0518" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:cycivs07@icloud.com" title="E-Mail → mailto:cycivs07@icloud.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jeff</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
