@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="我的錯！！！我從 WBC 熱身賽一路看到現在(3&#x2F;11)，每天中午晚上都看….我錯了！但在讓我看完整個賽程吧，會盡力完成目標的，雖然已經把1天的目標換成了2天完成了… 在當初設計學習目標時完全忘記了Pure Functions，是在看到官方文件後才回想起來有這個東西，但可能真的是當初讀得太不認真了完全沒有什麼印象，看來需要好好地複習一下。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="『新手學習React』-  React Basice_Pure Functions">
+<meta property="og:url" content="http://example.com/2023/03/11/%E6%96%B0%E6%89%8B%E5%AD%B8%E7%BF%92React-2023-03-11-react-6-2023-03-11-react-6/index.html">
+<meta property="og:site_name" content="Jeff的隨手筆記">
+<meta property="og:description" content="我的錯！！！我從 WBC 熱身賽一路看到現在(3&#x2F;11)，每天中午晚上都看….我錯了！但在讓我看完整個賽程吧，會盡力完成目標的，雖然已經把1天的目標換成了2天完成了… 在當初設計學習目標時完全忘記了Pure Functions，是在看到官方文件後才回想起來有這個東西，但可能真的是當初讀得太不認真了完全沒有什麼印象，看來需要好好地複習一下。">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2023-03-11T08:33:33.000Z">
+<meta property="article:modified_time" content="2023-03-11T08:37:53.944Z">
+<meta property="article:author" content="Jeff">
+<meta property="article:tag" content="React">
+<meta property="article:tag" content="React基礎">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2023/03/11/%E6%96%B0%E6%89%8B%E5%AD%B8%E7%BF%92React-2023-03-11-react-6-2023-03-11-react-6/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-tw'
+  };
+</script>
+
+  <title>『新手學習React』-  React Basice_Pure Functions | Jeff的隨手筆記</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Jeff的隨手筆記</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">學習當一個前端工程師</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/03/11/%E6%96%B0%E6%89%8B%E5%AD%B8%E7%BF%92React-2023-03-11-react-6-2023-03-11-react-6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpeg">
+      <meta itemprop="name" content="Jeff">
+      <meta itemprop="description" content="這是一個紀錄自己成長的地方">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jeff的隨手筆記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          『新手學習React』-  React Basice_Pure Functions
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2023-03-11 16:33:33 / Modified: 16:37:53" itemprop="dateCreated datePublished" datetime="2023-03-11T16:33:33+08:00">2023-03-11</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%96%B0%E6%89%8B%E5%AD%B8%E7%BF%92React/" itemprop="url" rel="index"><span itemprop="name">新手學習React</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>我的錯！！！我從 WBC 熱身賽一路看到現在(3&#x2F;11)，每天中午晚上都看….我錯了！但在讓我看完整個賽程吧，會盡力完成目標的，雖然已經把1天的目標換成了2天完成了…</p>
+<p>在當初設計學習目標時完全忘記了Pure Functions，是在看到官方文件後才回想起來有這個東西，但可能真的是當初讀得太不認真了完全沒有什麼印象，看來需要好好地複習一下。</p>
+<span id="more"></span>
+
+<h3 id="什麼是Pure-Function"><a href="#什麼是Pure-Function" class="headerlink" title="什麼是Pure Function?"></a>什麼是Pure Function?</h3><p>Pure functions 指的是在程式中不會有副作用（side effect）的函式。</p>
+<p>它的特性是在相同輸入下會產生相同的輸出，且不會對外部的變數或狀態產生任何改變。</p>
+<p>這樣的函式對於測試、重複使用、並行執行等都非常有利，並且能夠使程式更加容易理解和維護。在 React 中，Pure functions被廣泛應用在組件的開發和渲染中，因為這樣可以確保渲染結果的穩定性和一致性。</p>
+<p>簡單來說，一個 function 只要符合以下兩個條件：</p>
+<ol>
+<li>相同的 input，永遠都輸出相同的 output。</li>
+<li>沒有產生 side effect。跟其他function不會互相干擾，不會修改&#x2F;引用&#x2F;存取或是依賴到到外部變數，但是當作參數傳入是可以的。</li>
+</ol>
+<p>我們就可以把這個 function 稱為 Pure Function。</p>
+<p>以下我們來用code來解釋這兩的條件：</p>
+<blockquote>
+<p>相同的 input，永遠都輸出相同的 output。(<strong>Same inputs, same output.</strong>)</p>
+</blockquote>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">✅ 符合條件</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">add</span>(<span class="params">value1, value2</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> value1 + value2;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">add</span>(<span class="number">1</span>, <span class="number">2</span>); <span class="comment">// 3</span></span><br><span class="line"><span class="title function_">add</span>(<span class="number">3</span>, <span class="number">5</span>); <span class="comment">// 8</span></span><br><span class="line"><span class="title function_">add</span>(<span class="number">4</span>, <span class="number">6</span>); <span class="comment">// 10</span></span><br><span class="line"><span class="comment">//input是固定，return永遠都同一個結果</span></span><br><span class="line"></span><br><span class="line">❌ 不符合條件</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">now</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Date</span>();</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//每次出來的時間都會不一樣</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>沒有產生 side effect。</p>
+</blockquote>
+<p>先來解釋一下名詞，side effect 中文翻譯成副作用。</p>
+<p>side effect 指的就是在執行 function 時，該 function 的作用會影響到這個function 以外的資料，那麼『會影響到該 function 之外』的這個行為，就叫做 side effect。</p>
+<p>聽到副作用這個詞感覺好像是一個很糟糕的狀況，其實並不是。在程式當中，side effect 單純就只是描述在寫 function 時有可能會出現的情況或是現象而已。</p>
+<p>我們來看一下案例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">let counter = 0;</span><br><span class="line"></span><br><span class="line">function increment() &#123;</span><br><span class="line">  counter += 1;</span><br><span class="line">  return counter;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">increment(); // 1</span><br><span class="line">increment(); // 2</span><br><span class="line">increment(); // 3</span><br><span class="line">//每次呼叫後counter值都會改變，所以不符合</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>以上這個例子中，increment() function 會產生副作用，因為它改變了一個外部的變數 counter 的值。所以，這個 function 不是 pure function。</p>
+<p>另外，像是使用 Math.random() 或是 Date.now() 這種會產生隨機數或是即時時間的 function，也都是有副作用的，因為它們的輸出不是固定的，會隨著時間或是機器而有所不同。</p>
+<p>因此，如果要改變這個案例的輸出結果，我們可以給它一個props:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">let counter = 0;</span><br><span class="line"></span><br><span class="line">function increment(counter) &#123;</span><br><span class="line">  return counter + 1</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">increment(0); // 1</span><br><span class="line">increment(1); // 2</span><br><span class="line">increment(2); // 3</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>加入參數 counter 來取代外部變數就可以讓這個 function 變成 pure function。</p>
+<p>在 React 中，有三個輸入可以在渲染時讀取：props, state 和 context。您應該始終將這些輸入視為只讀。</p>
+<p>當我們希望對用戶輸入做出更改時，應該使用 state 而不是寫入變數。在元件渲染時，永遠不應該更改預先存在的變量或物件。</p>
+<h2 id="Local-mutation（局部突變）："><a href="#Local-mutation（局部突變）：" class="headerlink" title="Local mutation（局部突變）："></a><strong>Local mutation（局部突變）：</strong></h2><p>在上面的例子中，問題是元件在渲染時改變了一個已存在的變量。這通常被稱為“突變”。</p>
+<p>Pure Function 不會改變函數範圍之外的變數或在調用之前創建的 object — — 這會讓它們變『不純』！</p>
+<p>但是，<strong>在渲染時更改剛剛創建的變數和物件是完全可以的。</strong></p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">Cup</span>(<span class="params">&#123; guest &#125;</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="language-xml"><span class="tag">&lt;<span class="name">h2</span>&gt;</span>Tea cup for guest #&#123;guest&#125;<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">function</span> <span class="title function_">TeaGathering</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">let</span> cups = [];</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">1</span>; i &lt;= <span class="number">12</span>; i++) &#123;</span><br><span class="line">    cups.<span class="title function_">push</span>(<span class="language-xml"><span class="tag">&lt;<span class="name">Cup</span> <span class="attr">key</span>=<span class="string">&#123;i&#125;</span> <span class="attr">guest</span>=<span class="string">&#123;i&#125;</span> /&gt;</span></span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> cups;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如同上面，我們創建了一個名為 cups 的空陣列，然後使用 for 迴圈將 12 個 Cup 元件推送到 cups 陣列中。最後，該函式將 cups 陣列返回。這段程式碼的作用是創建一個 TeaGathering 元件，該元件包含 12 個 Cup 元件。由於 Cup 元件是純函式，因此在渲染期間不會產生副作用。因此，這種方法可以安全地使用。</p>
+<h3 id="可能發生副作用的地方"><a href="#可能發生副作用的地方" class="headerlink" title="可能發生副作用的地方"></a>可能發生副作用的地方</h3><p>在功能編程中，非常重視純淨性，但在某些時候，必須進行某些變更。</p>
+<p>這些變更例如更新屏幕、開始動畫、更改數據，稱為副作用。</p>
+<p>它們是在渲染期間“旁邊發生”的事情，而不是在渲染期間發生的事情。</p>
+<p>在 React 中，副作用通常屬於事件處理函式。事件處理函式是 React 在執行某些操作時運行的函式，例如當點擊按鈕時。即使事件處理函式是在元件內部定義，它們也不會在渲染期間運行！因此，事件處理函式不需要是純函式。</p>
+<p>如果已經盡可能使用了所有其他方法，仍然無法使用正確的事件處理函式，我們可以使用 <strong><code>useEffect</code></strong> 將其添加到返回的 JSX 中。這告訴 React 稍後在渲染之後，允許副作用執行它。然而，這種方法應該是您最後的手段。</p>
+<p>常見的副作用但不限於此：</p>
+<ol>
+<li>進行 HTTP request</li>
+<li>Mutating data</li>
+<li>Printing to a screen or console</li>
+<li>操作 DOM </li>
+<li>Math.random()</li>
+<li>取得當前時間</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/React/" rel="tag"># React</a>
+              <a href="/tags/React%E5%9F%BA%E7%A4%8E/" rel="tag"># React基礎</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/03/05/%E6%96%B0%E6%89%8B%E5%AD%B8%E7%BF%92React-2023-03-05-react-5-2023-03-05-react-5/" rel="prev" title="『新手學習React』- React Basics_Render">
+      <i class="fa fa-chevron-left"></i> 『新手學習React』- React Basics_Render
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E9%BA%BC%E6%98%AFPure-Function"><span class="nav-number">1.</span> <span class="nav-text">什麼是Pure Function?</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Local-mutation%EF%BC%88%E5%B1%80%E9%83%A8%E7%AA%81%E8%AE%8A%EF%BC%89%EF%BC%9A"><span class="nav-number"></span> <span class="nav-text">Local mutation（局部突變）：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%AF%E8%83%BD%E7%99%BC%E7%94%9F%E5%89%AF%E4%BD%9C%E7%94%A8%E7%9A%84%E5%9C%B0%E6%96%B9"><span class="nav-number">1.</span> <span class="nav-text">可能發生副作用的地方</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Jeff"
+      src="/uploads/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Jeff</p>
+  <div class="site-description" itemprop="description">這是一個紀錄自己成長的地方</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">55</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jeff0518" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jeff0518" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:cycivs07@icloud.com" title="E-Mail → mailto:cycivs07@icloud.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jeff</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
