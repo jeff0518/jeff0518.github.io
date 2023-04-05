@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="荒廢了一陣子，現在回來了～～">
+<meta property="og:type" content="article">
+<meta property="og:title" content="『新手學習React』- React Basic_Event Handlers">
+<meta property="og:url" content="http://example.com/2023/04/05/%E6%96%B0%E6%89%8B%E5%AD%B8%E7%BF%92React-2023-04-05-react-7-2023-04-05-react-7/index.html">
+<meta property="og:site_name" content="Jeff的隨手筆記">
+<meta property="og:description" content="荒廢了一陣子，現在回來了～～">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2023-04-05T07:50:33.000Z">
+<meta property="article:modified_time" content="2023-04-05T07:58:16.715Z">
+<meta property="article:author" content="Jeff">
+<meta property="article:tag" content="React">
+<meta property="article:tag" content="React基礎">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2023/04/05/%E6%96%B0%E6%89%8B%E5%AD%B8%E7%BF%92React-2023-04-05-react-7-2023-04-05-react-7/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-tw'
+  };
+</script>
+
+  <title>『新手學習React』- React Basic_Event Handlers | Jeff的隨手筆記</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Jeff的隨手筆記</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">學習當一個前端工程師</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/04/05/%E6%96%B0%E6%89%8B%E5%AD%B8%E7%BF%92React-2023-04-05-react-7-2023-04-05-react-7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpeg">
+      <meta itemprop="name" content="Jeff">
+      <meta itemprop="description" content="這是一個紀錄自己成長的地方">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jeff的隨手筆記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          『新手學習React』- React Basic_Event Handlers
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2023-04-05 15:50:33 / Modified: 15:58:16" itemprop="dateCreated datePublished" datetime="2023-04-05T15:50:33+08:00">2023-04-05</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%96%B0%E6%89%8B%E5%AD%B8%E7%BF%92React/" itemprop="url" rel="index"><span itemprop="name">新手學習React</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>荒廢了一陣子，現在回來了～～</p>
+<span id="more"></span>
+
+<h2 id="Event"><a href="#Event" class="headerlink" title="Event"></a>Event</h2><p>Event是什麼應該不用再特別介紹了吧，下面會簡單介紹我們在JavaScript上寫的跟用React寫的有什麼差異性。</p>
+<h3 id="React-跟-JavaScript-的不同"><a href="#React-跟-JavaScript-的不同" class="headerlink" title="React 跟 JavaScript 的不同"></a>React 跟 JavaScript 的不同</h3><p>在我們寫JavaScript時，如果要完成事件我們都必須掛上一個監聽器 addEventListener，去執行我們的事件，但在React 中事件的綁定是直接寫在 JSX 元件上的，並不需要透過 addEventListener 的方式進行監聽，但有幾個地方是我們要去調整的：</p>
+<ul>
+<li><p>HTML DOM 的 event handler (事件處理函式) 屬性 (attribute) 名稱都是小寫的，但 React 是使用 camelCase。React 已經有事先封裝好一些事件類型像是：onChick, onChange等等</p>
+</li>
+<li><p>HTML DOM 的 event handler 屬性的值是一個字串 (string)，但在 JSX 中是一個函數 (function)</p>
+  <figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//HTML</span></span><br><span class="line">&lt;button onclick=<span class="string">&quot;activateLasers()&quot;</span>&gt;</span><br><span class="line">  <span class="title class_">Activate</span> <span class="title class_">Lasers</span></span><br><span class="line">&lt;/button&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">//React</span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">button</span> <span class="attr">onClick</span>=<span class="string">&#123;activateLasers&#125;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">  Activate Lasers</span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+  <aside>
+  💡 注意：如果是onClick={event handler} 這只是指向這個 function，他會等到我們真的點擊後才會執行，如果我們是這樣打onClick={event handler()}他就會變成執行這行時直接執行。
+  
+  </aside>
+  </li>
+<li><p>在 React 的事件處理函式中，你不能像在 DOM 可以 <code>return false</code> 代表停止瀏覽器預設行為，你需要明確的 call <code>preventDefault()</code></p>
+  <figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">submitHandler</span> = (<span class="params">event: React.FormEvent</span>) =&gt; &#123;</span><br><span class="line">    event.<span class="title function_">preventDefault</span>();</span><br><span class="line">    <span class="keyword">const</span> inputValuesData = inputValues;</span><br><span class="line">    <span class="title function_">isValid</span>();</span><br><span class="line">    <span class="keyword">if</span> (formIsValid.<span class="property">current</span> !== <span class="string">&quot;true&quot;</span>) <span class="keyword">return</span>;</span><br><span class="line">    <span class="title function_">getCurrentCtx</span>(inputValues);</span><br><span class="line">  &#125;;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="Event-Object"><a href="#Event-Object" class="headerlink" title="Event Object"></a><strong><strong>Event Object</strong></strong></h3><p>當給 DOM 綁定事件處理函數時，函數會自動傳入一個 event，這個 event 紀錄了當前事件的屬性和方法，在 React 中，雖然 event 不是瀏覽器提供的，但是由 React 將原生瀏覽器的 event 進行封裝，對外提供一個 API，這裡就無須考慮瀏覽器的兼容性，與原生瀏覽器處理事件方法一樣(像是event.preventDefault(), event.stopPropatation)</p>
+<p>介紹完差異後，我們來用一個官網上的實際案例來說明：</p>
+<h2 id="Adding-event-handlers"><a href="#Adding-event-handlers" class="headerlink" title="Adding event handlers"></a><strong><strong>Adding event handlers</strong></strong></h2><p>今天我們要建立 <strong><strong>event handlers</strong></strong>時，我們會先宣告一個函數，然後將其作為 prop 傳遞給 JSX。</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">function</span> <span class="title function_">Button</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">function</span> <span class="title function_">handleClick</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="title function_">alert</span>(<span class="string">&#x27;You clicked me!&#x27;</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">button</span> <span class="attr">onClick</span>=<span class="string">&#123;handleClick&#125;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      Click me</span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>也可以使用 arrow function:</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;button onClick=&#123;<span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="title function_">alert</span>(<span class="string">&#x27;You clicked me!&#x27;</span>);</span><br><span class="line">&#125;&#125;&gt;</span><br></pre></td></tr></table></figure>
+
+<p>這邊再提醒一次<em><strong>：如果是 onClick&#x3D;{event handler} 這只是指向這個 function，他會等到我們真的點擊後才會執行，如果我們是這樣打 onClick&#x3D;{event handler()} 他就會變成執行這行時直接執行。</strong></em> </p>
+<h2 id="Propagation"><a href="#Propagation" class="headerlink" title="Propagation"></a>P<strong><strong>ropagation</strong></strong></h2><p><strong><em>Stopping</em> :</strong></p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">Button</span>(<span class="params">&#123; onClick, children &#125;</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">button</span> <span class="attr">onClick</span>=<span class="string">&#123;e</span> =&gt;</span> &#123;</span></span><br><span class="line"><span class="language-xml">      e.stopPropagation();</span></span><br><span class="line"><span class="language-xml">      onClick();</span></span><br><span class="line"><span class="language-xml">    &#125;&#125;&gt;</span></span><br><span class="line"><span class="language-xml">      &#123;children&#125;</span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">function</span> <span class="title function_">Toolbar</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">&quot;Toolbar&quot;</span> <span class="attr">onClick</span>=<span class="string">&#123;()</span> =&gt;</span> &#123;</span></span><br><span class="line"><span class="language-xml">      alert(&#x27;You clicked on the toolbar!&#x27;);</span></span><br><span class="line"><span class="language-xml">    &#125;&#125;&gt;</span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">Button</span> <span class="attr">onClick</span>=<span class="string">&#123;()</span> =&gt;</span> alert(&#x27;Playing!&#x27;)&#125;&gt;</span></span><br><span class="line"><span class="language-xml">        Play Movie</span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;/<span class="name">Button</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">Button</span> <span class="attr">onClick</span>=<span class="string">&#123;()</span> =&gt;</span> alert(&#x27;Uploading!&#x27;)&#125;&gt;</span></span><br><span class="line"><span class="language-xml">        Upload Image</span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;/<span class="name">Button</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>當你點擊一個按鈕時：</p>
+<ol>
+<li>React 調用<code>onClick&lt;button&gt;</code>傳遞給.</li>
+<li>該處理程序在 中定義<code>Button</code>，它執行以下操作：<ul>
+<li>呼叫<code>e.stopPropagation()</code>，防止事件進一步冒泡。</li>
+<li>調用<code>onClickToolbar</code>函數，它是從組件傳遞的 prop。</li>
+</ul>
+</li>
+<li>該組件中定義的函數<code>Toolbar</code>顯示按鈕自己的警報。</li>
+<li>由於傳播已停止，因此父級<code>&lt;div&gt;onClick</code>的處理程序不會運行。</li>
+</ol>
+<p>不要混淆<code>e.stopPropagation()</code>和<code>e.preventDefault()</code>。兩者差別：</p>
+<ul>
+<li><code>[e.stopPropagation()](https://developer.mozilla.org/docs/Web/API/Event/stopPropagation)</code>停止觸發附加到上述標籤的事件處理程序。</li>
+<li><code>[e.preventDefault()](https://developer.mozilla.org/docs/Web/API/Event/preventDefault)</code>阻止少數事件的默認瀏覽器行為。<a target="_blank" rel="noopener" href="https://developer.mozilla.org/docs/Web/API/Event/preventDefault"></a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/React/" rel="tag"># React</a>
+              <a href="/tags/React%E5%9F%BA%E7%A4%8E/" rel="tag"># React基礎</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/03/11/%E6%96%B0%E6%89%8B%E5%AD%B8%E7%BF%92React-2023-03-11-react-6-2023-03-11-react-6/" rel="prev" title="『新手學習React』-  React Basice_Pure Functions">
+      <i class="fa fa-chevron-left"></i> 『新手學習React』-  React Basice_Pure Functions
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Event"><span class="nav-number">1.</span> <span class="nav-text">Event</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#React-%E8%B7%9F-JavaScript-%E7%9A%84%E4%B8%8D%E5%90%8C"><span class="nav-number">1.1.</span> <span class="nav-text">React 跟 JavaScript 的不同</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Event-Object"><span class="nav-number">1.2.</span> <span class="nav-text">Event Object</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Adding-event-handlers"><span class="nav-number">2.</span> <span class="nav-text">Adding event handlers</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Propagation"><span class="nav-number">3.</span> <span class="nav-text">Propagation</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Jeff"
+      src="/uploads/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Jeff</p>
+  <div class="site-description" itemprop="description">這是一個紀錄自己成長的地方</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">56</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jeff0518" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jeff0518" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:cycivs07@icloud.com" title="E-Mail → mailto:cycivs07@icloud.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jeff</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
