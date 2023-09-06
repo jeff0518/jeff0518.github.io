@@ -20,15 +20,15 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="進入主題之前先來認識一個非常重要的觀念：Execution context 執行環境。 Execution context 執行環境 A wrapper to help manage the code that is running  雖然 JavaScript 是一個單執行緒、同步的程式，但在轉譯的過程中並不會逐行丟給電腦去執行。 我們的程式碼會在執行時，會先依照詞彙環境(Lexical Env">
+  <meta name="description" content="進入主題之前先來認識一個非常重要的觀念：Execution context 執行環境。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="『Day -4』提升(Hoisting)">
 <meta property="og:url" content="http://example.com/2023/09/06/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-06-Day4/index.html">
 <meta property="og:site_name" content="Jeff的隨手筆記">
-<meta property="og:description" content="進入主題之前先來認識一個非常重要的觀念：Execution context 執行環境。 Execution context 執行環境 A wrapper to help manage the code that is running  雖然 JavaScript 是一個單執行緒、同步的程式，但在轉譯的過程中並不會逐行丟給電腦去執行。 我們的程式碼會在執行時，會先依照詞彙環境(Lexical Env">
+<meta property="og:description" content="進入主題之前先來認識一個非常重要的觀念：Execution context 執行環境。">
 <meta property="og:locale" content="zh_TW">
 <meta property="article:published_time" content="2023-09-06T04:11:20.000Z">
-<meta property="article:modified_time" content="2023-09-06T04:12:08.640Z">
+<meta property="article:modified_time" content="2023-09-06T04:23:51.374Z">
 <meta property="article:author" content="Jeff">
 <meta property="article:tag" content="JavaScript">
 <meta name="twitter:card" content="summary">
@@ -186,7 +186,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2023-09-06 12:11:20 / Modified: 12:12:08" itemprop="dateCreated datePublished" datetime="2023-09-06T12:11:20+08:00">2023-09-06</time>
+              <time title="Created: 2023-09-06 12:11:20 / Modified: 12:23:51" itemprop="dateCreated datePublished" datetime="2023-09-06T12:11:20+08:00">2023-09-06</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -210,6 +210,7 @@
 
       
         <p>進入主題之前先來認識一個非常重要的觀念：<strong><strong>Execution context 執行環境。</strong></strong></p>
+<span id="more"></span>
 <h2 id="Execution-context-執行環境"><a href="#Execution-context-執行環境" class="headerlink" title="Execution context 執行環境"></a><strong><strong>Execution context 執行環境</strong></strong></h2><blockquote>
 <p>A wrapper to help manage the code that is running</p>
 </blockquote>

@@ -20,15 +20,15 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="我們在昨天有提到scope 這個詞，那這個詞到底是什麼意思呢？為什麼block scope一出來就讓我們放棄用var來宣告呢？讓我們看下去吧 Lexical environment 詞彙環境在講到scop以前，我必須先提一下一個很重要而且相關的概念，那就是Lexical environment (詞彙環境)。  Where you write something is important  你在哪">
+  <meta name="description" content="我們在昨天有提到scope 這個詞，那這個詞到底是什麼意思呢？為什麼block scope一出來就讓我們放棄用var來宣告呢？讓我們看下去吧">
 <meta property="og:type" content="article">
 <meta property="og:title" content="『Day -3』 作用域(scope)">
 <meta property="og:url" content="http://example.com/2023/09/06/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-06-Day3/index.html">
 <meta property="og:site_name" content="Jeff的隨手筆記">
-<meta property="og:description" content="我們在昨天有提到scope 這個詞，那這個詞到底是什麼意思呢？為什麼block scope一出來就讓我們放棄用var來宣告呢？讓我們看下去吧 Lexical environment 詞彙環境在講到scop以前，我必須先提一下一個很重要而且相關的概念，那就是Lexical environment (詞彙環境)。  Where you write something is important  你在哪">
+<meta property="og:description" content="我們在昨天有提到scope 這個詞，那這個詞到底是什麼意思呢？為什麼block scope一出來就讓我們放棄用var來宣告呢？讓我們看下去吧">
 <meta property="og:locale" content="zh_TW">
 <meta property="article:published_time" content="2023-09-06T04:07:39.000Z">
-<meta property="article:modified_time" content="2023-09-06T04:10:51.091Z">
+<meta property="article:modified_time" content="2023-09-06T04:23:46.362Z">
 <meta property="article:author" content="Jeff">
 <meta property="article:tag" content="JavaScript">
 <meta name="twitter:card" content="summary">
@@ -186,7 +186,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2023-09-06 12:07:39 / Modified: 12:10:51" itemprop="dateCreated datePublished" datetime="2023-09-06T12:07:39+08:00">2023-09-06</time>
+              <time title="Created: 2023-09-06 12:07:39 / Modified: 12:23:46" itemprop="dateCreated datePublished" datetime="2023-09-06T12:07:39+08:00">2023-09-06</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -210,6 +210,7 @@
 
       
         <p>我們在昨天有提到scope 這個詞，那這個詞到底是什麼意思呢？為什麼block scope一出來就讓我們放棄用<code>var</code>來宣告呢？讓我們看下去吧</p>
+<span id="more"></span>
 <h2 id="Lexical-environment-詞彙環境"><a href="#Lexical-environment-詞彙環境" class="headerlink" title="Lexical environment 詞彙環境"></a><strong><strong>Lexical environment 詞彙環境</strong></strong></h2><p>在講到scop以前，我必須先提一下一個很重要而且相關的概念，那就是<strong><strong>Lexical environment (詞彙環境)。</strong></strong></p>
 <blockquote>
 <p><em><strong>Where you write something is important</strong></em></p>
