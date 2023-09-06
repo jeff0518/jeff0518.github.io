@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="我們在昨天有提到scope 這個詞，那這個詞到底是什麼意思呢？為什麼block scope一出來就讓我們放棄用var來宣告呢？讓我們看下去吧 Lexical environment 詞彙環境在講到scop以前，我必須先提一下一個很重要而且相關的概念，那就是Lexical environment (詞彙環境)。  Where you write something is important  你在哪">
+<meta property="og:type" content="article">
+<meta property="og:title" content="『Day -3』 作用域(scope)">
+<meta property="og:url" content="http://example.com/2023/09/06/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-06-Day3/index.html">
+<meta property="og:site_name" content="Jeff的隨手筆記">
+<meta property="og:description" content="我們在昨天有提到scope 這個詞，那這個詞到底是什麼意思呢？為什麼block scope一出來就讓我們放棄用var來宣告呢？讓我們看下去吧 Lexical environment 詞彙環境在講到scop以前，我必須先提一下一個很重要而且相關的概念，那就是Lexical environment (詞彙環境)。  Where you write something is important  你在哪">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2023-09-06T04:07:39.000Z">
+<meta property="article:modified_time" content="2023-09-06T04:10:51.091Z">
+<meta property="article:author" content="Jeff">
+<meta property="article:tag" content="JavaScript">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2023/09/06/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-06-Day3/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-tw'
+  };
+</script>
+
+  <title>『Day -3』 作用域(scope) | Jeff的隨手筆記</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Jeff的隨手筆記</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">學習當一個前端工程師</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/09/06/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-06-Day3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpeg">
+      <meta itemprop="name" content="Jeff">
+      <meta itemprop="description" content="這是一個紀錄自己成長的地方">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jeff的隨手筆記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          『Day -3』 作用域(scope)
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2023-09-06 12:07:39 / Modified: 12:10:51" itemprop="dateCreated datePublished" datetime="2023-09-06T12:07:39+08:00">2023-09-06</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/2023%E9%90%B5%E4%BA%BA%E8%B3%BD/" itemprop="url" rel="index"><span itemprop="name">2023鐵人賽</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>我們在昨天有提到scope 這個詞，那這個詞到底是什麼意思呢？為什麼block scope一出來就讓我們放棄用<code>var</code>來宣告呢？讓我們看下去吧</p>
+<h2 id="Lexical-environment-詞彙環境"><a href="#Lexical-environment-詞彙環境" class="headerlink" title="Lexical environment 詞彙環境"></a><strong><strong>Lexical environment 詞彙環境</strong></strong></h2><p>在講到scop以前，我必須先提一下一個很重要而且相關的概念，那就是<strong><strong>Lexical environment (詞彙環境)。</strong></strong></p>
+<blockquote>
+<p><em><strong>Where you write something is important</strong></em></p>
+</blockquote>
+<p>你在哪裡寫東西在JS裡是非常重要的，例如我宣告一個變數在function的內部或外部就會差非常多。</p>
+<p>當程式透過引擎轉譯給電腦執行時，會因為它應對的記憶體位置影響他和其他function的互動，因此 Lexical environment 就是指開發環境中程式碼的位置。</p>
+<h2 id="scope是什麼"><a href="#scope是什麼" class="headerlink" title="scope是什麼"></a><strong>scope是什麼</strong></h2><p>MDN是這樣解釋的：</p>
+<blockquote>
+<p>The <strong>scope</strong> is the current context of execution in which values and expressions are “visible” or can be referenced. If a variable or expression is not in the current scope, it will not be available for use. Scopes can also be layered in a hierarchy, so that child scopes have access to parent scopes, but not vice versa.</p>
+</blockquote>
+<p>簡單來說Scope就是變數的有效範圍，離開有效範圍的變數無法被存取，另外父層作用域無法取得子層作用域的變數，但子層作用域的變數可以取得父層作用域的變數。</p>
+<p>我們來看一下下面這個例子會更清楚：</p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = <span class="string">&quot;Hello World&quot;</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">b</span>(<span class="params"></span>) &#123;</span><br><span class="line">	<span class="keyword">let</span> c = <span class="string">&quot;Hi&quot;</span></span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(a)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">b</span>()</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(c)</span><br></pre></td></tr></table></figure>
+
+<p>結果是：</p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Hello</span> <span class="title class_">World</span></span><br><span class="line"><span class="title class_">ReferenceError</span>: c is not defined</span><br></pre></td></tr></table></figure>
+
+<p>由於變數 <strong><code>c</code></strong> 是在函式 <strong><code>b()</code></strong> 內部宣告的，這表示它的作用域僅限於函式內部。一旦函式 <strong><code>b()</code></strong> 執行完畢，變數 <strong><code>c</code></strong> 的作用域也就結束了，所以我們無法在函式外部訪問它。</p>
+<h2 id="Scope的分類"><a href="#Scope的分類" class="headerlink" title="Scope的分類"></a>Scope的分類</h2><p>在 MDN 上把他分成這幾種：</p>
+<ul>
+<li>Global scope（全域作用域）: The default scope for all code running in script mode.</li>
+<li>Module scope（模組作用域）: The scope for code running in module mode.</li>
+<li>Function scope（函式作用域）: The scope created with a <a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Glossary/Function">function</a>.</li>
+</ul>
+<p>In addition, variables declared with <code>let</code> or <code>const</code> can belong to an additional scope:</p>
+<ul>
+<li>Block scope（區塊作用域）: The scope created with a pair of curly braces (a <a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/block">block</a>).</li>
+</ul>
+<p>接下來我們就針對這些作用域來簡單介紹一下</p>
+<h3 id="Global-scope"><a href="#Global-scope" class="headerlink" title="Global scope"></a>Global scope</h3><p>Global scope 中文為 <em><strong>全域作用域</strong></em> 是JavaScript作用域的最外層，也就是大家常聽到的<strong>全域</strong></p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = <span class="string">&quot;Hello World&quot;</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">b</span>(<span class="params"></span>) &#123;</span><br><span class="line">	<span class="keyword">let</span> c = <span class="string">&quot;Hi&quot;</span></span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(a)</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>以這個案例來說，a就是屬於全域變數。<br>另外瀏覽器中BOM的window物件，我們也會稱作全域變數。</p>
+<h3 id="Module-scope"><a href="#Module-scope" class="headerlink" title="Module scope"></a>Module scope</h3><p>過去 javascript 沒有原生的模組系統，早期會透過 IIFE 及 clousure 避免私有變數外溢，es6 後加入了 esm 作為原生的模組語法。</p>
+<p>在 esm 中，每一個檔案都是一個模組，有自己的作用域 (scope)，模組的作用域可以幫助我們</p>
+<ul>
+<li>相較於單一環境，能夠減少命名衝突</li>
+<li>擁有私有變數及方法，避免外溢至全域環境</li>
+<li>依照單一職責原則 (single responsibility principle) 劃分函式或模組，提升可維護性</li>
+</ul>
+<p>這意味著在模組內定義的變數、函式和其他程式碼對於其他模組或全域作用域的程式碼而言是不可訪問的，除非明確地導出。</p>
+<p>當您導入一個模組時，導入的程式碼僅在導入的模組範圍內可用。例如，如果您將一個模組導入到一個函式內，則導入的程式碼只能在該函式內部訪問，而在函式外部則無法訪問。</p>
+<h3 id="Function-scope"><a href="#Function-scope" class="headerlink" title="Function scope"></a>Function scope</h3><p>就如同名字所說的，有效範圍只在函式內部，函式結束後，裡面的變數就無法取得了。</p>
+<p>在ES6之前，JavaScript 變數有效範圍的最小單位是以 <code>function</code> 做分界的。</p>
+<p>一樣，我們用案例來說明:</p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> x = <span class="number">100</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">addHadler</span>(<span class="params">y</span>) &#123;</span><br><span class="line">  <span class="keyword">var</span> x = <span class="number">20</span>;</span><br><span class="line">  <span class="keyword">return</span> x + y;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>( <span class="title function_">addHadler</span>(<span class="number">50</span>) ); </span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>( x );            </span><br></pre></td></tr></table></figure>
+
+<p>結果是：</p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">70</span></span><br><span class="line"><span class="number">100</span></span><br></pre></td></tr></table></figure>
+
+<p>由於我們在函式裡面再次定義了變數 <code>x</code> ，因此當我們在執行<code>return x + y</code> 時，x就會用我們重新定義的值。而我們在執行<code>console.log( x )</code> 時，由於“父層作用域無法取得子層作用域的變數”，因此我們只能在往上尋找X，所以最後才會印出100這個答案。</p>
+<h3 id="Block-scope"><a href="#Block-scope" class="headerlink" title="Block scope"></a>Block scope</h3><p>區塊作用域（Block Scope）是指變數（或函式）在一個區塊內部被定義，僅在該區塊內部有效，且在區塊外部無法訪問。區塊可以是由一對花括號 <strong><code>&#123;&#125;</code></strong> 所構成的，例如在條件語句（if、else）、循環語句（for、while）、函式內部等。</p>
+<p>在區塊作用域中，變數在區塊的範圍內有效，不會影響到區塊外的同名變數。這有助於避免變數名稱衝突，提高程式碼的可讀性和可維護性。</p>
+<p>在找資料時有看到這一段code，很清楚的解釋了var 跟 let、const 作用域的差別：</p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">checkScope</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">    <span class="keyword">let</span> a = <span class="string">&#x27;塊級作用域&#x27;</span>;</span><br><span class="line">    <span class="keyword">var</span> b = <span class="string">&#x27;函式作用域&#x27;</span>;</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="comment">// a 變數屬於 if 判斷式中的塊級作用域，在此處不可用</span></span><br><span class="line">    <span class="comment">// b 變數屬於 check 函式的作用域，在此處可用</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(b); <span class="comment">// 函式作用域</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// a 在此處不可用，b 在此處可用</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// a,b 在此處不可用</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>以上就是關於scope的簡單介紹，每一次複習都會有新的發現，就像我到今天才知道有Module scope 一樣，之前看過的資料好像都沒有提到這個&gt;&lt;”</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/09/06/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-06-Day2/" rel="prev" title="『Day -2』變數(variable)">
+      <i class="fa fa-chevron-left"></i> 『Day -2』變數(variable)
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/09/06/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-06-Day4/" rel="next" title="『Day -4』提升(Hoisting)">
+      『Day -4』提升(Hoisting) <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Lexical-environment-%E8%A9%9E%E5%BD%99%E7%92%B0%E5%A2%83"><span class="nav-number">1.</span> <span class="nav-text">Lexical environment 詞彙環境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#scope%E6%98%AF%E4%BB%80%E9%BA%BC"><span class="nav-number">2.</span> <span class="nav-text">scope是什麼</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Scope%E7%9A%84%E5%88%86%E9%A1%9E"><span class="nav-number">3.</span> <span class="nav-text">Scope的分類</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Global-scope"><span class="nav-number">3.1.</span> <span class="nav-text">Global scope</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Module-scope"><span class="nav-number">3.2.</span> <span class="nav-text">Module scope</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Function-scope"><span class="nav-number">3.3.</span> <span class="nav-text">Function scope</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Block-scope"><span class="nav-number">3.4.</span> <span class="nav-text">Block scope</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Jeff"
+      src="/uploads/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Jeff</p>
+  <div class="site-description" itemprop="description">這是一個紀錄自己成長的地方</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">58</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jeff0518" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jeff0518" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:cycivs07@icloud.com" title="E-Mail → mailto:cycivs07@icloud.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jeff</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

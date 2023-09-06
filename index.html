@@ -158,6 +158,491 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/09/06/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-06-Day4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpeg">
+      <meta itemprop="name" content="Jeff">
+      <meta itemprop="description" content="這是一個紀錄自己成長的地方">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jeff的隨手筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/09/06/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-06-Day4/" class="post-title-link" itemprop="url">『Day -4』提升(Hoisting)</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2023-09-06 12:11:20 / Modified: 12:12:08" itemprop="dateCreated datePublished" datetime="2023-09-06T12:11:20+08:00">2023-09-06</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/2023%E9%90%B5%E4%BA%BA%E8%B3%BD/" itemprop="url" rel="index"><span itemprop="name">2023鐵人賽</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>進入主題之前先來認識一個非常重要的觀念：<strong><strong>Execution context 執行環境。</strong></strong></p>
+<h2 id="Execution-context-執行環境"><a href="#Execution-context-執行環境" class="headerlink" title="Execution context 執行環境"></a><strong><strong>Execution context 執行環境</strong></strong></h2><blockquote>
+<p>A wrapper to help manage the code that is running</p>
+</blockquote>
+<p>雖然 JavaScript 是一個單執行緒、同步的程式，但在轉譯的過程中並不會逐行丟給電腦去執行。</p>
+<p>我們的程式碼會在執行時，會先依照詞彙環境(Lexical Environment)被解析器轉換，在電腦中被創造並擺到該放的記憶體位置去，最後電腦才執行。尤其JS某些特性(例如這篇要講的hoisting)就是在創造階段產生，因此理解JS在執行環境中的狀態是很重要的一件事。</p>
+<h2 id="什麼是-hoisting"><a href="#什麼是-hoisting" class="headerlink" title="什麼是 hoisting"></a>什麼是 hoisting</h2><p>首先，讓我們看一段程式碼：</p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">b</span>();</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(a);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> a = <span class="string">&quot;Hello World&quot;</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">b</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Called b !&#x27;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我們會得到：</p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Called</span> b!</span><br><span class="line"><span class="literal">undefined</span></span><br></pre></td></tr></table></figure>
+
+<p>為什麼印出來的會是undefined 而不是 error呢？</p>
+<p>我們再試一個把宣告拿掉的：</p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">b</span>();</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(a);</span><br><span class="line"></span><br><span class="line"><span class="comment">// var a = &#x27;Hello World!&#x27;;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">b</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Called b!&#x27;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我們會得到：</p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Called</span> b!</span><br><span class="line"><span class="title class_">ReferenceError</span>: a is not defined</span><br></pre></td></tr></table></figure>
+
+<p>為什麼？？？？？</p>
+<p>第一次我以為會出現error結果沒有，第二次我以為會跟第一次一樣結果出現error。</p>
+<p>這個現象就叫做 『hoisting』。</p>
+<h2 id="Hoisting-的原理"><a href="#Hoisting-的原理" class="headerlink" title="Hoisting 的原理"></a>Hoisting 的原理</h2><p>要了解JavaScript 之所以可以這麼做，我們要了解Execution context的創建方式：</p>
+<p>其實Execution context 是分兩個階段創建的。變數跟函式在某總程度上是可以用，即便他們是寫在console 後面，就是因為這個原因。下面我們看看是分哪兩個階段：</p>
+<blockquote>
+<p>第一階段是創造(creation)</p>
+</blockquote>
+<p>在這個階段，JavaScript引擎會在儲存空間中確認要創建變數以及函式的位子，然後創建出來，但是還沒把值放到變數中，所以當程式碼開始執行時，我們才可以使用它們。</p>
+<blockquote>
+<p>第二階段就是執行(execution)</p>
+</blockquote>
+<p>執行時函式跟變數就有些不同了，在JavaScript裡，所有的變數在最初的設置都是undefined，而函式在最初設置就是完整的。</p>
+<p>所以，我們可以這樣解讀：</p>
+<p>JavaScript引擎在執行我們的程式碼，是先依照程式碼上我們宣告的變數跟函式在記憶體中創建他們的位子，然後才會開始一行一行執行下來，因為變數在最初的設置都是undefined，所以在執行到console.log(a)時，因為還沒有執行到 var a &#x3D; “Hello World” 所以印出來的會是undefined。</p>
+<p>ＰＪ助教在自己的部落格有補充到：在我們定義變項的過程中，可以分成宣告(declaration)和給值(initialization)的兩個過程，只有declaration的內容會在逐行執行程式前先被執行並儲存在記憶體中(hoisted)；給值的內容則是在hoisted後，逐行執行程式時，才會被執行到。</p>
+<h3 id="補充：undefined-與-not-defined"><a href="#補充：undefined-與-not-defined" class="headerlink" title="補充：undefined 與 not defined"></a>補充：<em><strong>undefined 與 not defined</strong></em></h3><p>在剛剛的案例中，我們有看到兩個詞：undefined 跟 not defined。</p>
+<p>undefined 跟 not defined 差在哪邊？</p>
+<p>剛剛在說hoisting 時有提到，JavaScript 引擎會先在記憶體創建屬於變數的空間，並且在未賦值前都會是undefined。</p>
+<p>在JavaScript中 undefined 是一個特殊關鍵值，代表尚未被定義。not defined 則是代表我們在儲存空間中沒有找到這個。</p>
+<p>因此我們可以說 undefined是尚未給定義但已宣告變項的值，但是not defined則是該變項尚未宣告過，執行後會出現錯誤訊息！</p>
+<h2 id="let-amp-const-有-hoisting嗎？"><a href="#let-amp-const-有-hoisting嗎？" class="headerlink" title="let &amp; const 有 hoisting嗎？"></a>let &amp; const 有 hoisting嗎？</h2><p>我們來用兩段code來證明吧！</p>
+<p>第一段：</p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(a) <span class="comment">// ReferenceError: a is not defined</span></span><br><span class="line"><span class="keyword">let</span> a</span><br></pre></td></tr></table></figure>
+
+<p>看起來好像沒有耶，如果有應該是出現 <code>undefined</code> ，但這邊卻是報錯。</p>
+<p>那我們繼續看第二段：</p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">10</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">test</span>(<span class="params"></span>)&#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(a)</span><br><span class="line">  <span class="keyword">let</span> a</span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">test</span>()</span><br></pre></td></tr></table></figure>
+
+<p>如果真的沒有 hoisting 的話，答案應該會輸出<code>10</code> 。（應該不用解釋了吧ＸＤＤ）</p>
+<p>答案卻是：<code>ReferenceError: a is not defined</code>。</p>
+<p>所以我們可以說，其實let &amp; const 是有 hoisting，但是跟<code>var</code> 的hoisting 有一點不一樣。</p>
+<h2 id="暫時死區-Temporal-Dead-Zone，TDZ"><a href="#暫時死區-Temporal-Dead-Zone，TDZ" class="headerlink" title="暫時死區(Temporal Dead Zone，TDZ)"></a><strong><strong>暫時死區(Temporal Dead Zone，TDZ)</strong></strong></h2><p>let &amp; const 的 hoisting 與 <code>var</code> 的差別在於提升之後，<code>var</code> 宣告的變數會被初始化為 undefined，而 let 與 const 的宣告不會被初始化為 undefined，而且如果你在「賦值之前」就存取它，就會拋出錯誤。</p>
+<p>在「提升之後」以及「賦值之前」這段「期間」，如果你存取它就會拋出錯誤，而這段期間就稱做是 TDZ，它是一個為了解釋 let 與 const 的 hoisting 行為所提出的一個名詞。</p>
+<p>我們看下面的程式碼會更清楚：</p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">test</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> a = <span class="number">1</span>; <span class="comment">// c 的 TDZ 開始</span></span><br><span class="line">    <span class="keyword">var</span> b = <span class="number">2</span>;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(c) <span class="comment">// 錯誤</span></span><br><span class="line">    <span class="keyword">if</span> (a &gt; <span class="number">1</span>) &#123;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(a)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">let</span> c = <span class="number">10</span> <span class="comment">// c 的 TDZ 結束</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">test</span>()</span><br></pre></td></tr></table></figure>
+
+<p>當我們進入test這個function時，c 的 TDZ 就會開始，要一直等到<code>let c = 10</code> c 的 TDZ 才會結束，只要在這段時間內你使用c就會發生錯誤。</p>
+<p>用一句話來總結：</p>
+<blockquote>
+<p>let 與 const 也有 hoisting 但沒有初始化為 undefined，而且在賦值之前試圖取值會發生錯誤。</p>
+</blockquote>
+<hr>
+<p>雖然這篇只是短短的，但當時在”JavaScript: Understanding the Weird Parts“學習到這一段時真的有大開眼界的感覺，原來我之前根本沒有了解hoisting。</p>
+<p>本篇大部份是照抄我的部落格文章，讓我水一天一下XD</p>
+<h2 id="參考資料："><a href="#參考資料：" class="headerlink" title="參考資料："></a>參考資料：</h2><p><a target="_blank" rel="noopener" href="https://blog.techbridge.cc/2018/11/10/javascript-hoisting/">https://blog.techbridge.cc/2018/11/10/javascript-hoisting/</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/09/06/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-06-Day3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpeg">
+      <meta itemprop="name" content="Jeff">
+      <meta itemprop="description" content="這是一個紀錄自己成長的地方">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jeff的隨手筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/09/06/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-06-Day3/" class="post-title-link" itemprop="url">『Day -3』 作用域(scope)</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2023-09-06 12:07:39 / Modified: 12:10:51" itemprop="dateCreated datePublished" datetime="2023-09-06T12:07:39+08:00">2023-09-06</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/2023%E9%90%B5%E4%BA%BA%E8%B3%BD/" itemprop="url" rel="index"><span itemprop="name">2023鐵人賽</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>我們在昨天有提到scope 這個詞，那這個詞到底是什麼意思呢？為什麼block scope一出來就讓我們放棄用<code>var</code>來宣告呢？讓我們看下去吧</p>
+<h2 id="Lexical-environment-詞彙環境"><a href="#Lexical-environment-詞彙環境" class="headerlink" title="Lexical environment 詞彙環境"></a><strong><strong>Lexical environment 詞彙環境</strong></strong></h2><p>在講到scop以前，我必須先提一下一個很重要而且相關的概念，那就是<strong><strong>Lexical environment (詞彙環境)。</strong></strong></p>
+<blockquote>
+<p><em><strong>Where you write something is important</strong></em></p>
+</blockquote>
+<p>你在哪裡寫東西在JS裡是非常重要的，例如我宣告一個變數在function的內部或外部就會差非常多。</p>
+<p>當程式透過引擎轉譯給電腦執行時，會因為它應對的記憶體位置影響他和其他function的互動，因此 Lexical environment 就是指開發環境中程式碼的位置。</p>
+<h2 id="scope是什麼"><a href="#scope是什麼" class="headerlink" title="scope是什麼"></a><strong>scope是什麼</strong></h2><p>MDN是這樣解釋的：</p>
+<blockquote>
+<p>The <strong>scope</strong> is the current context of execution in which values and expressions are “visible” or can be referenced. If a variable or expression is not in the current scope, it will not be available for use. Scopes can also be layered in a hierarchy, so that child scopes have access to parent scopes, but not vice versa.</p>
+</blockquote>
+<p>簡單來說Scope就是變數的有效範圍，離開有效範圍的變數無法被存取，另外父層作用域無法取得子層作用域的變數，但子層作用域的變數可以取得父層作用域的變數。</p>
+<p>我們來看一下下面這個例子會更清楚：</p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = <span class="string">&quot;Hello World&quot;</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">b</span>(<span class="params"></span>) &#123;</span><br><span class="line">	<span class="keyword">let</span> c = <span class="string">&quot;Hi&quot;</span></span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(a)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">b</span>()</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(c)</span><br></pre></td></tr></table></figure>
+
+<p>結果是：</p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Hello</span> <span class="title class_">World</span></span><br><span class="line"><span class="title class_">ReferenceError</span>: c is not defined</span><br></pre></td></tr></table></figure>
+
+<p>由於變數 <strong><code>c</code></strong> 是在函式 <strong><code>b()</code></strong> 內部宣告的，這表示它的作用域僅限於函式內部。一旦函式 <strong><code>b()</code></strong> 執行完畢，變數 <strong><code>c</code></strong> 的作用域也就結束了，所以我們無法在函式外部訪問它。</p>
+<h2 id="Scope的分類"><a href="#Scope的分類" class="headerlink" title="Scope的分類"></a>Scope的分類</h2><p>在 MDN 上把他分成這幾種：</p>
+<ul>
+<li>Global scope（全域作用域）: The default scope for all code running in script mode.</li>
+<li>Module scope（模組作用域）: The scope for code running in module mode.</li>
+<li>Function scope（函式作用域）: The scope created with a <a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Glossary/Function">function</a>.</li>
+</ul>
+<p>In addition, variables declared with <code>let</code> or <code>const</code> can belong to an additional scope:</p>
+<ul>
+<li>Block scope（區塊作用域）: The scope created with a pair of curly braces (a <a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/block">block</a>).</li>
+</ul>
+<p>接下來我們就針對這些作用域來簡單介紹一下</p>
+<h3 id="Global-scope"><a href="#Global-scope" class="headerlink" title="Global scope"></a>Global scope</h3><p>Global scope 中文為 <em><strong>全域作用域</strong></em> 是JavaScript作用域的最外層，也就是大家常聽到的<strong>全域</strong></p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = <span class="string">&quot;Hello World&quot;</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">b</span>(<span class="params"></span>) &#123;</span><br><span class="line">	<span class="keyword">let</span> c = <span class="string">&quot;Hi&quot;</span></span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(a)</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>以這個案例來說，a就是屬於全域變數。<br>另外瀏覽器中BOM的window物件，我們也會稱作全域變數。</p>
+<h3 id="Module-scope"><a href="#Module-scope" class="headerlink" title="Module scope"></a>Module scope</h3><p>過去 javascript 沒有原生的模組系統，早期會透過 IIFE 及 clousure 避免私有變數外溢，es6 後加入了 esm 作為原生的模組語法。</p>
+<p>在 esm 中，每一個檔案都是一個模組，有自己的作用域 (scope)，模組的作用域可以幫助我們</p>
+<ul>
+<li>相較於單一環境，能夠減少命名衝突</li>
+<li>擁有私有變數及方法，避免外溢至全域環境</li>
+<li>依照單一職責原則 (single responsibility principle) 劃分函式或模組，提升可維護性</li>
+</ul>
+<p>這意味著在模組內定義的變數、函式和其他程式碼對於其他模組或全域作用域的程式碼而言是不可訪問的，除非明確地導出。</p>
+<p>當您導入一個模組時，導入的程式碼僅在導入的模組範圍內可用。例如，如果您將一個模組導入到一個函式內，則導入的程式碼只能在該函式內部訪問，而在函式外部則無法訪問。</p>
+<h3 id="Function-scope"><a href="#Function-scope" class="headerlink" title="Function scope"></a>Function scope</h3><p>就如同名字所說的，有效範圍只在函式內部，函式結束後，裡面的變數就無法取得了。</p>
+<p>在ES6之前，JavaScript 變數有效範圍的最小單位是以 <code>function</code> 做分界的。</p>
+<p>一樣，我們用案例來說明:</p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> x = <span class="number">100</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">addHadler</span>(<span class="params">y</span>) &#123;</span><br><span class="line">  <span class="keyword">var</span> x = <span class="number">20</span>;</span><br><span class="line">  <span class="keyword">return</span> x + y;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>( <span class="title function_">addHadler</span>(<span class="number">50</span>) ); </span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>( x );            </span><br></pre></td></tr></table></figure>
+
+<p>結果是：</p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">70</span></span><br><span class="line"><span class="number">100</span></span><br></pre></td></tr></table></figure>
+
+<p>由於我們在函式裡面再次定義了變數 <code>x</code> ，因此當我們在執行<code>return x + y</code> 時，x就會用我們重新定義的值。而我們在執行<code>console.log( x )</code> 時，由於“父層作用域無法取得子層作用域的變數”，因此我們只能在往上尋找X，所以最後才會印出100這個答案。</p>
+<h3 id="Block-scope"><a href="#Block-scope" class="headerlink" title="Block scope"></a>Block scope</h3><p>區塊作用域（Block Scope）是指變數（或函式）在一個區塊內部被定義，僅在該區塊內部有效，且在區塊外部無法訪問。區塊可以是由一對花括號 <strong><code>&#123;&#125;</code></strong> 所構成的，例如在條件語句（if、else）、循環語句（for、while）、函式內部等。</p>
+<p>在區塊作用域中，變數在區塊的範圍內有效，不會影響到區塊外的同名變數。這有助於避免變數名稱衝突，提高程式碼的可讀性和可維護性。</p>
+<p>在找資料時有看到這一段code，很清楚的解釋了var 跟 let、const 作用域的差別：</p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">checkScope</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">    <span class="keyword">let</span> a = <span class="string">&#x27;塊級作用域&#x27;</span>;</span><br><span class="line">    <span class="keyword">var</span> b = <span class="string">&#x27;函式作用域&#x27;</span>;</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="comment">// a 變數屬於 if 判斷式中的塊級作用域，在此處不可用</span></span><br><span class="line">    <span class="comment">// b 變數屬於 check 函式的作用域，在此處可用</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(b); <span class="comment">// 函式作用域</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// a 在此處不可用，b 在此處可用</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// a,b 在此處不可用</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>以上就是關於scope的簡單介紹，每一次複習都會有新的發現，就像我到今天才知道有Module scope 一樣，之前看過的資料好像都沒有提到這個&gt;&lt;”</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/09/06/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-06-Day2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpeg">
+      <meta itemprop="name" content="Jeff">
+      <meta itemprop="description" content="這是一個紀錄自己成長的地方">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jeff的隨手筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/09/06/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-06-Day2/" class="post-title-link" itemprop="url">『Day -2』變數(variable)</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2023-09-06 12:05:47 / Modified: 12:06:58" itemprop="dateCreated datePublished" datetime="2023-09-06T12:05:47+08:00">2023-09-06</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/2023%E9%90%B5%E4%BA%BA%E8%B3%BD/" itemprop="url" rel="index"><span itemprop="name">2023鐵人賽</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>在學習JavaScript的人在查找資料時一定都會看到 <code>var</code> 、 <code>let</code>、 <code>const</code>這些宣告變數的方式，為什麼宣告變數會有這麼多方式呢，以下就讓我們來好好的了解一下這三種宣告方式的差異點吧</p>
+<h1 id="變數"><a href="#變數" class="headerlink" title="變數"></a>變數</h1><p>在說到他們間的差異時，先來複習一下什麼是變數。</p>
+<p>變數就是我們用來儲存資料的基本單位。</p>
+<p>就像我們在搬家時，都會在紙箱上面寫上這箱裡面裝的是什麼，這樣我們在之後整理東西就會比較迅速;而變數就像是那個有寫名字的紙箱，用來存放我們想要存放的資料。</p>
+<p>在命名變數的名稱的時候，我們會讓變數是一個有意義的名稱，來提高程式碼的可讀性。另外我們在命名時還要避開JavaScript保留字 (Reserved Words) 與關鍵字 (keyword)。</p>
+<p>下面是一段宣告變數的程式碼：</p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> myBirthday = <span class="string">&#x27;1988/05/18&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>讓我們看到 <code>let</code> 、<code>=</code> 跟  <code>myBirthday</code> ，他們三個分別對應到的是對變數的宣告（declare）、指派（assign）與命名慣例（naming convention），接下來我們就照著這三個分類來做解釋。</p>
+<h1 id="宣告（declare）"><a href="#宣告（declare）" class="headerlink" title="宣告（declare）"></a>宣告（declare）</h1><h2 id="ES6前的時代"><a href="#ES6前的時代" class="headerlink" title="ES6前的時代"></a><strong>ES6前的時代</strong></h2><p>在ES6前，我們在宣告變數時都是使用 <code>var</code> ，宣告的方式也跟現在一樣，如下：</p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> myBirthday = <span class="string">&#x27;1988/05/18&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>疑，既然以前的寫法跟現在的寫法一樣，那為什麼要改呢？</p>
+<p>最主要的原因就是 <strong>scope</strong> 的不同，**<code>var</code>** 宣告的變數具有函式作用域（function scope），這意味著它們在函式內部可以被訪問，而不論它們是否在函式中聲明。這可能導致變數被提升（hoisting）到函式的頂部，可能引發意外行為或錯誤。</p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">func</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(a); <span class="comment">// undefined</span></span><br><span class="line">  <span class="keyword">var</span> a = <span class="number">5</span>;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(a); <span class="comment">// 5</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">func</span>();</span><br></pre></td></tr></table></figure>
+
+<p>如果我今天用的是let來宣告，則是會出現error:</p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">func</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(a); <span class="comment">// ReferenceError: Cannot access &#x27;a&#x27; before initialization</span></span><br><span class="line">  <span class="keyword">var</span> a = <span class="number">5</span>;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(a); </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">func</span>();</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>至於為什麼var宣告的不會出現error，這是因為a這個變數被提升（hoisting）了。</p>
+<p>另外還會因為scope衍伸出下列狀況：</p>
+<ol>
+<li><strong>全域變數：</strong> 使用 <strong><code>var</code></strong> 宣告的變數在全域作用域內都可見，這可能導致變數名稱衝突，特別是在多個 JavaScript 檔案中。</li>
+<li><strong>重複宣告：</strong> 在同一作用域內重複使用 <strong><code>var</code></strong> 宣告同一個變數，不會引發錯誤，而是視為同一個變數，可能導致錯誤的邏輯。</li>
+<li><strong>無 block scope：</strong> <strong><code>var</code></strong> 宣告的變數無法在區塊（例如 **<code>if</code><strong>、</strong><code>for</code>**）內建立新的作用域，這可能導致意外的變數共享和作用域問題。</li>
+</ol>
+<p>scope 跟 hoisting 詳細的說明我會後面在做解釋(主要是講下去整篇會太長，而且scope跟hoisting蠻適合拉出來說，之後要複習也方便)</p>
+<h2 id="ES6時代"><a href="#ES6時代" class="headerlink" title="ES6時代"></a>ES6時代</h2><p>ES6發布之後，JavaScript有了區塊域(block)的概念，因此我們捨棄了無法在block內設立新的scope的<code>var</code> ，取代它的就是 <code>let</code> 跟 <code>const</code>。</p>
+<h3 id="let、const特性"><a href="#let、const特性" class="headerlink" title="let、const特性"></a><strong><strong>let、const特性</strong></strong></h3><ul>
+<li>區塊作用域（block scope）</li>
+<li>變數會提升，但若未宣告該變數時，就去提取該變數便會報錯，而非回傳<code>undefined</code></li>
+<li>不允許重複宣告</li>
+<li>全域變數不會成為<code>window</code>的屬性</li>
+</ul>
+<p>當我們使用 <code>let</code> 關鍵字宣告變數時，代表我們預期資料是可以被改變的。</p>
+<p>與<code>let</code>相反，當我們使用 <code>const</code> 來宣告時，我們預期這組資料不能被改變，也就是常數（constant）的概念。</p>
+<h3 id="區塊作用域（block-scope）"><a href="#區塊作用域（block-scope）" class="headerlink" title="區塊作用域（block scope）"></a>區塊作用域（block scope）</h3><p>區塊作用域指的就是大括號<code>&#123;&#125;</code>之間的區域，這個時候變數就只存活在<code>&#123;&#125;</code>這個括號裡，<code>&#123;&#125;</code>外就不能調用。</p>
+<p>我們來看一個非常簡單的例子：</p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="keyword">const</span> x = <span class="number">10</span>;</span><br><span class="line">		<span class="keyword">let</span> y = <span class="number">20</span>;</span><br><span class="line">		<span class="keyword">var</span> z = <span class="number">30</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(x) <span class="comment">//ReferenceError: x is not defined</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(y) <span class="comment">//ReferenceError: y is not defined</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(z) <span class="comment">//30</span></span><br></pre></td></tr></table></figure>
+
+<p>再來一個例子，相信大家會更了解：</p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">func</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">    <span class="keyword">let</span> x = <span class="number">10</span>;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(x); <span class="comment">// 10</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(x); <span class="comment">//ReferenceError: x is not defined</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">func</span>();</span><br></pre></td></tr></table></figure>
+
+<h3 id="變數提升，但若未宣告該變數，會回傳錯誤，而非undefined"><a href="#變數提升，但若未宣告該變數，會回傳錯誤，而非undefined" class="headerlink" title="變數提升，但若未宣告該變數，會回傳錯誤，而非undefined"></a>變數提升<strong><strong>，但若未宣告該變數，會回傳錯誤，而非undefined</strong></strong></h3><p>使用<code>let</code>、<code>const</code>、<code>var</code>來宣告變數，都會提升至作用域的最高處。不同的是，如果我們沒有宣告就直接使用該變數時，var會回傳預設值<code>undefined</code>，但<code>const</code>和<code>let</code>會報錯。</p>
+<h3 id="不允許重複宣告"><a href="#不允許重複宣告" class="headerlink" title="不允許重複宣告"></a><strong><strong>不允許重複宣告</strong></strong></h3><p>如果該變數已經被宣告過，就不能再宣告。<code>let</code>和<code>const</code>都一樣。</p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> food = <span class="string">&#x27;apple&#x27;</span>;</span><br><span class="line"><span class="keyword">let</span> food = <span class="string">&#x27;egg&#x27;</span>; </span><br><span class="line"></span><br><span class="line"><span class="comment">//SyntaxError: Identifier &#x27;food&#x27; has already been declared</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="全域變數不會成為window的屬性"><a href="#全域變數不會成為window的屬性" class="headerlink" title="全域變數不會成為window的屬性"></a>全域變數不會成為<code>window</code>的屬性</h3><p>用<code>var</code>宣告全域變數，會成為<code>window</code>的屬性，但<code>let</code>和<code>const</code>不會。</p>
+<h1 id="指派（assign）"><a href="#指派（assign）" class="headerlink" title="指派（assign）"></a>指派（assign）</h1><p>在第一次接觸變數的賦值時，我一直是把<code>=</code>看作是<code>等於</code> ，但越學越覺得有點奇怪。</p>
+<p>首先，讓我們把最一開始那段程式碼拆解一下：</p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> myBirthday</span><br><span class="line">myBirthday = <span class="string">&#x27;1988/05/18&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>這邊我一開始學習時會把它理解成：myBirthday 等於 ‘1988&#x2F;05&#x2F;18’。</p>
+<p>但這時候問題來了，當我把這個變數改變裡面的值的時候：</p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">myBirthday = <span class="string">&#x27;2000/05/18&#x27;</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(myBirthday)</span><br></pre></td></tr></table></figure>
+
+<p>他會印出：2000&#x2F;05&#x2F;18。</p>
+<p>但明明myBirthday 是等於 ‘1988&#x2F;05&#x2F;18’，為什麼我可以改變它？</p>
+<p>這才讓我發現我在解讀這行code的方式可能不是那麼正確。</p>
+<p>現在我會把這行解讀成：我把’1988&#x2F;05&#x2F;18’這個字串指派(assign)給myBirthday這個變數。</p>
+<h1 id="命名慣例（naming-convention）"><a href="#命名慣例（naming-convention）" class="headerlink" title="命名慣例（naming convention）"></a>命名慣例（naming convention）</h1><p>在 JavaScript 中，我們在為變數命名時，需要注意以下幾點：</p>
+<h2 id="特殊符號"><a href="#特殊符號" class="headerlink" title="特殊符號"></a>特殊符號</h2><p>可以使用錢符 <code>$</code>、底線 <code>_</code>當成首字。如 <code>$myBirthday</code>、<code>_myBirthday</code>。</p>
+<h2 id="大小寫"><a href="#大小寫" class="headerlink" title="大小寫"></a>大小寫</h2><p>在 JavaScript 裡，大小寫是有區分的，像是 <code>MyBirthday</code> 與 <code>myBirthday</code> 會被視作不同變數。</p>
+<h2 id="JavaScript-的保留字"><a href="#JavaScript-的保留字" class="headerlink" title="JavaScript 的保留字"></a>JavaScript 的保留字</h2><p>在前面有提到，JavaScript 會有一些字作為特定的用途，而這些單字就不能拿來做為變數的名稱。</p>
+<h2 id="不能用數字開頭"><a href="#不能用數字開頭" class="headerlink" title="不能用數字開頭"></a>不能用數字開頭</h2><p>數字不能作為變數開頭。</p>
+<h3 id="兩個單字使用camelCase-命名法"><a href="#兩個單字使用camelCase-命名法" class="headerlink" title="兩個單字使用camelCase 命名法"></a>兩個單字使用camelCase 命名法</h3><p>前面有提到<code>讓變數是一個有意義的名稱，來提高程式碼的可讀性</code>。</p>
+<p>因此在變數的命名上有時候我們就會有兩個單字，但如果我們這樣寫：</p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> my birthday = <span class="string">&#x27;1988/05/18&#x27;</span> <span class="comment">//error</span></span><br><span class="line"><span class="keyword">let</span> my-birthday = <span class="string">&#x27;1988/05/18&#x27;</span> <span class="comment">//error，此命名法稱為烤肉串命名法（kebab-case）</span></span><br></pre></td></tr></table></figure>
+
+<p>以上兩種寫法都會出現 error。</p>
+<p>基本上我們都是會使用駝峰命名法（camel case)，也就是第二的單字開始字首都要大寫：</p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> myBirthday = <span class="string">&#x27;1988/05/18&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>或是也可以使用<strong>下橫線：</strong></p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> my_birthday = <span class="string">&#x27;1988/05/18&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>以上就是今天針對變數所做的介紹，下一篇會來重新學習資料型別，預計會分成兩到三篇來介紹。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/09/06/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-06-Day1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpeg">
+      <meta itemprop="name" content="Jeff">
+      <meta itemprop="description" content="這是一個紀錄自己成長的地方">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jeff的隨手筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/09/06/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-06-Day1/" class="post-title-link" itemprop="url">『Day -1』鐵人賽參賽前言</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2023-09-06 11:59:09 / Modified: 12:04:47" itemprop="dateCreated datePublished" datetime="2023-09-06T11:59:09+08:00">2023-09-06</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/2023%E9%90%B5%E4%BA%BA%E8%B3%BD/" itemprop="url" rel="index"><span itemprop="name">2023鐵人賽</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>大家好，我是Jeff，在注意到今年鐵人賽準備要開始報名時，就在心裡問自己：要參加嗎？</p>
+<p>回想去年的這個時間，我還只是一個剛學JavaScript兩個月左右的時間小菜雞，就在自己的部落格嘗試連續發學習的心得30天（雖然只完成27天而已），那時候還對自己說明年轉職成功的我一定會參加鐵人賽，來挑戰自己一下。</p>
+<p>但現實面總是殘酷的，在轉職這條路的後半段遭遇到了很大的挫折，頹廢了幾個月的時間，也曾想過年紀真的不小了是否要放棄這條路回去自己的本業，但想到如果真的就這樣放棄了還真的有點不甘心。最後決定重整心情打算把之前荒廢的時間補回來，而重新開始的起點就選擇從這次的鐵人賽開始吧。</p>
+<p>因此在報名的時間一開始我就報名了，這次是選擇自我挑戰組，原因除了是第一次參賽以外就是自己的能力還是有很多不足的地方，跟正式參賽的大大相比是完全上不了臺面的XDD</p>
+<p>另外說一下本次挑戰的參考資料：</p>
+<p>這次挑戰上的文章主要還會是以去年學習時所做的筆記為主體，但會把這次重新學習後的想法加入舊的筆記裡，成為一篇新的筆記，順便來看一下自己之前是多麽的菜XDD</p>
+<p>以下是這次的參考資料，之後如果有參考新的資料會在該篇文章秀出：</p>
+<ul>
+<li>ALPHA camp的教案</li>
+<li>&lt;&lt;0 陷阱！0 誤解！8 天重新認識 JavaScript！&gt;&gt;</li>
+<li>JavaScript: Understanding the Weird Parts</li>
+<li>PJ大神的<a target="_blank" rel="noopener" href="https://pjchender.blogspot.com/">部落格</a></li>
+<li>第11屆鐵人賽：<strong><strong>JS 原力覺醒</strong></strong></li>
+</ul>
+<p>最後，感謝各位點進來觀看，如果之後文章有任何錯誤的地方，還請各位大大不吝指教！！！</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
     <link itemprop="mainEntityOfPage" href="http://example.com/2023/04/05/%E6%96%B0%E6%89%8B%E5%AD%B8%E7%BF%92React-2023-04-05-react-7-2023-04-05-react-7/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -610,312 +1095,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/03/01/%E6%96%B0%E6%89%8B%E5%AD%B8%E7%BF%92React-2023-03-01-react-2-2023-03-01-react-2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/avatar.jpeg">
-      <meta itemprop="name" content="Jeff">
-      <meta itemprop="description" content="這是一個紀錄自己成長的地方">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Jeff的隨手筆記">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/03/01/%E6%96%B0%E6%89%8B%E5%AD%B8%E7%BF%92React-2023-03-01-react-2-2023-03-01-react-2/" class="post-title-link" itemprop="url">『新手學習React』- React Basics_JSX</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2023-03-01 22:54:21 / Modified: 23:04:01" itemprop="dateCreated datePublished" datetime="2023-03-01T22:54:21+08:00">2023-03-01</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%96%B0%E6%89%8B%E5%AD%B8%E7%BF%92React/" itemprop="url" rel="index"><span itemprop="name">新手學習React</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>首先我們要先複習的就是React Basics，第一篇我要來複習的是 JSX，之所以沒有選擇官方文件上的第一篇Component，是因為我認為如果我連我現在在寫的東西都不知道他是什麼的話，我要怎麼跟人家說我會呢？</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023/03/01/%E6%96%B0%E6%89%8B%E5%AD%B8%E7%BF%92React-2023-03-01-react-2-2023-03-01-react-2/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/02/28/%E6%96%B0%E6%89%8B%E5%AD%B8%E7%BF%92React-2023-02-28-react-1-2023-02-28-react-1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/avatar.jpeg">
-      <meta itemprop="name" content="Jeff">
-      <meta itemprop="description" content="這是一個紀錄自己成長的地方">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Jeff的隨手筆記">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/02/28/%E6%96%B0%E6%89%8B%E5%AD%B8%E7%BF%92React-2023-02-28-react-1-2023-02-28-react-1/" class="post-title-link" itemprop="url">『新手學習React』- 學習規劃</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2023-02-28 22:44:38" itemprop="dateCreated datePublished" datetime="2023-02-28T22:44:38+08:00">2023-02-28</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-03-01 01:15:21" itemprop="dateModified" datetime="2023-03-01T01:15:21+08:00">2023-03-01</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%96%B0%E6%89%8B%E5%AD%B8%E7%BF%92React/" itemprop="url" rel="index"><span itemprop="name">新手學習React</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在做ＡＣ學習時，在做畢業專案：Tweet時就有感覺到自己對於 React 有很多不熟悉的地方，想說利用這段時間再從最基本的React開始複習並學習新的Hook以及TypeScript如何跟React一起使用，本次的學習主要是以<code>Udemy</code>上的課程以及<code>React的官方文件</code>為主，再搭配ＡＣ的兩位助教（Zet以及PJ）的鐵人賽文章為輔。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023/02/28/%E6%96%B0%E6%89%8B%E5%AD%B8%E7%BF%92React-2023-02-28-react-1-2023-02-28-react-1/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/02/11/JavaScript-%E5%9F%BA%E7%A4%8E-2023-02-11-step6-1-2023-02-11-step6-1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/avatar.jpeg">
-      <meta itemprop="name" content="Jeff">
-      <meta itemprop="description" content="這是一個紀錄自己成長的地方">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Jeff的隨手筆記">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/02/11/JavaScript-%E5%9F%BA%E7%A4%8E-2023-02-11-step6-1-2023-02-11-step6-1/" class="post-title-link" itemprop="url">『JavaScript 基礎』 Function constructor（函式建構式）</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2023-02-11 15:51:01 / Modified: 15:55:20" itemprop="dateCreated datePublished" datetime="2023-02-11T15:51:01+08:00">2023-02-11</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/JavaScript-%E5%9F%BA%E7%A4%8E/" itemprop="url" rel="index"><span itemprop="name">JavaScript 基礎</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><img src="https://i.imgur.com/rZvUip7.png" alt="Imgur"></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023/02/11/JavaScript-%E5%9F%BA%E7%A4%8E-2023-02-11-step6-1-2023-02-11-step6-1/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/02/11/JavaScript-%E5%9F%BA%E7%A4%8E-2023-02-11-step5-1-2023-02-11-step5-1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/avatar.jpeg">
-      <meta itemprop="name" content="Jeff">
-      <meta itemprop="description" content="這是一個紀錄自己成長的地方">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Jeff的隨手筆記">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/02/11/JavaScript-%E5%9F%BA%E7%A4%8E-2023-02-11-step5-1-2023-02-11-step5-1/" class="post-title-link" itemprop="url">『JavaScript 基礎』 JavaScript繼承和原型鍊</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2023-02-11 15:48:41 / Modified: 15:50:28" itemprop="dateCreated datePublished" datetime="2023-02-11T15:48:41+08:00">2023-02-11</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/JavaScript-%E5%9F%BA%E7%A4%8E/" itemprop="url" rel="index"><span itemprop="name">JavaScript 基礎</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><img src="https://i.imgur.com/rZvUip7.png" alt="Imgur"></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023/02/11/JavaScript-%E5%9F%BA%E7%A4%8E-2023-02-11-step5-1-2023-02-11-step5-1/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -986,20 +1165,20 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">56</span>
+          <span class="site-state-item-count">58</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-count">5</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
