@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="在剛開始接觸JavaScript時，常常會聽到有人說JavaScript是個 弱型別 的程式語言，那時候對於這句話的解讀是：因為JavaScript 的不嚴謹以及他的型別會自動轉換，所以才說它是弱型別 的程式語言。 直到2023的今天我才知道這樣的說法『不完全正確』，應該是要說：  JavaScript 是”動態型別”加”弱型別” 的程式語言">
+<meta property="og:type" content="article">
+<meta property="og:title" content="『Day -5』資料型別(data types)(1)">
+<meta property="og:url" content="http://example.com/2023/09/07/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-07-Day5/index.html">
+<meta property="og:site_name" content="Jeff的隨手筆記">
+<meta property="og:description" content="在剛開始接觸JavaScript時，常常會聽到有人說JavaScript是個 弱型別 的程式語言，那時候對於這句話的解讀是：因為JavaScript 的不嚴謹以及他的型別會自動轉換，所以才說它是弱型別 的程式語言。 直到2023的今天我才知道這樣的說法『不完全正確』，應該是要說：  JavaScript 是”動態型別”加”弱型別” 的程式語言">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2023-09-07T01:33:59.000Z">
+<meta property="article:modified_time" content="2023-09-07T01:40:21.148Z">
+<meta property="article:author" content="Jeff">
+<meta property="article:tag" content="JavaScript">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2023/09/07/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-07-Day5/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-tw'
+  };
+</script>
+
+  <title>『Day -5』資料型別(data types)(1) | Jeff的隨手筆記</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Jeff的隨手筆記</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">學習當一個前端工程師</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/09/07/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-07-Day5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpeg">
+      <meta itemprop="name" content="Jeff">
+      <meta itemprop="description" content="這是一個紀錄自己成長的地方">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jeff的隨手筆記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          『Day -5』資料型別(data types)(1)
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2023-09-07 09:33:59 / Modified: 09:40:21" itemprop="dateCreated datePublished" datetime="2023-09-07T09:33:59+08:00">2023-09-07</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/2023%E9%90%B5%E4%BA%BA%E8%B3%BD/" itemprop="url" rel="index"><span itemprop="name">2023鐵人賽</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>在剛開始接觸JavaScript時，常常會聽到有人說JavaScript是個 <em><strong>弱型別</strong></em> 的程式語言，那時候對於這句話的解讀是：因為JavaScript 的不嚴謹以及他的型別會自動轉換，所以才說它是<em><strong>弱型別</strong></em> 的程式語言。</p>
+<p>直到2023的今天我才知道這樣的說法<em><strong>『不完全正確』</strong></em>，應該是要說：</p>
+<blockquote>
+<p>JavaScript 是”動態型別”加”弱型別” 的程式語言</p>
+</blockquote>
+<span id="more"></span>
+<h1 id="靜態型別-vs-動態型別"><a href="#靜態型別-vs-動態型別" class="headerlink" title="靜態型別 vs 動態型別"></a>靜態型別 vs 動態型別</h1><p>那什麼是動態型別？既然有動態型別是不是也有靜態型別，下面我們就來看一下兩者的不同之處：</p>
+<h2 id="靜態型別"><a href="#靜態型別" class="headerlink" title="靜態型別"></a>靜態型別</h2><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">in</span> <span class="title class_">Java</span>（<span class="keyword">static</span> typing）:</span><br><span class="line">bool isNew = <span class="string">&#x27;hello&#x27;</span>; <span class="comment">// an error</span></span><br><span class="line"><span class="comment">// 設定這個變數是bool,所以當我放入true/false以外的字都會出現錯誤</span></span><br></pre></td></tr></table></figure>
+
+<p>編譯式語言多半是靜態語言，Java 和 C# 是其中的代表。</p>
+<p>這類語言在型別的管理上十分嚴謹，在語法撰寫時就會要求對變數型別有明確定義，有時讓人覺得囉嗦；但相對的，一旦有變數誤用或資料型態上的 Bug，在編譯時期就能發現，降低執行時期的風險。</p>
+<h2 id="動態型別"><a href="#動態型別" class="headerlink" title="動態型別"></a>動態型別</h2><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">in</span> <span class="title class_">JavaScript</span> (dynamic typing):</span><br><span class="line"><span class="keyword">var</span> isNew = <span class="literal">true</span>; <span class="comment">// no errors</span></span><br><span class="line">isNew = <span class="string">&#x27;yup!&#x27;</span></span><br><span class="line">isNew = <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<p>在程式執行過程才會進行資料型態的檢查或確認，因此直譯式語言都是動態語言。如 Python、PHP、Ruby，還有 JavaScript，都屬於此類語言。</p>
+<p>這類語言在程式編寫時，不用花太多心思在宣告型別的語法上，簡潔而靈活，可以在過程依需求任意改變型別，做到十分靈活的變數處理；但相對缺乏對當前變數的型別限制，當執行到某一行程式時，無法絕對肯定變數現在放了什麼類型的值時，容易造成非預期的執行可能性，導致非預期的執行結果。</p>
+<h1 id="強型別-vs-弱型別"><a href="#強型別-vs-弱型別" class="headerlink" title="強型別 vs 弱型別"></a>強型別 vs 弱型別</h1><p>了解了動態型別跟靜態型別後，接下來我們來看一下強型別跟弱型別：</p>
+<ul>
+<li>強型別(strongly typed)：偏向不容許隱性型別轉換，型別檢查上較為嚴格。</li>
+<li>弱型別(weakly typed)：偏向容許隱性型別轉換，型別檢查上較為寬鬆。</li>
+</ul>
+<p>所謂的隱性型別轉換如下：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> a = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">const</span> b = <span class="string">&#x27;2&#x27;</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(a + b)</span><br></pre></td></tr></table></figure>
+
+<p>在可以隱性型別轉換的程式語言（如JavaScript）會因為變數是number + string，兩個型別不同而自動把第一個參數轉換成string，因此輸出結果就會是：12(這是字串)</p>
+<p>但如果是在不可以隱性型別轉換的程式語言（如Java），就會直接噴錯</p>
+<p>因此<strong>動態型別加上過於寬鬆的弱型別，就有人認為是 JavaScript 最叫人頭痛的萬惡根源。</strong></p>
+<h1 id="那JavaScript-有哪些型別？"><a href="#那JavaScript-有哪些型別？" class="headerlink" title="那JavaScript 有哪些型別？"></a>那JavaScript 有哪些型別？</h1><p>答案是2個：Primitive type 跟 object。<del>分法很簡單只要不是Primitive type就是屬於 object，ＸＤ。</del></p>
+<p>說正經的，Primitive type總共有7種，只要不屬於這7種的就是object。</p>
+<h2 id="Primitive-type："><a href="#Primitive-type：" class="headerlink" title="Primitive type："></a>Primitive type：</h2><ul>
+<li>undefined: you shouldn’t set a variable to this</li>
+<li>null:you can set a variable to this</li>
+<li>boolean</li>
+<li>number</li>
+<li>string</li>
+<li>symbol</li>
+<li>bigint</li>
+</ul>
+<h2 id="Objects："><a href="#Objects：" class="headerlink" title="Objects："></a>Objects：</h2><ul>
+<li>object</li>
+<li>array</li>
+<li>function</li>
+<li>…</li>
+</ul>
+<blockquote>
+<p>這邊要特別注意一點，變數本身是沒有型別的，是變數的值才有型別之分。</p>
+</blockquote>
+<p>另外在JavaScript中，Primitive type 是不可變（immutable）的，而Objects 是可變（mutable）的。</p>
+<p>這是因為Primitive type在賦值或操作時，是直接複製其值到新的變數，而不會影響原始值本身。而Objects 則是引用類型，賦值或操作時是傳遞的是物件的引用（記憶體地址），因此改變新變數的值會影響原始物件，關於這段會在傳值還是傳址的篇章在做說明。</p>
+<hr>
+<p>簡單介紹了一下強弱型別以及動態型別、靜態型別，接下來就是要來介紹Primitive type 跟 objects了</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/09/06/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-06-Day4/" rel="prev" title="『Day -4』提升(Hoisting)">
+      <i class="fa fa-chevron-left"></i> 『Day -4』提升(Hoisting)
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/09/07/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-07-Day6/" rel="next" title="『Day -6』資料型別(data types)(2)">
+      『Day -6』資料型別(data types)(2) <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%9D%9C%E6%85%8B%E5%9E%8B%E5%88%A5-vs-%E5%8B%95%E6%85%8B%E5%9E%8B%E5%88%A5"><span class="nav-number">1.</span> <span class="nav-text">靜態型別 vs 動態型別</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9D%9C%E6%85%8B%E5%9E%8B%E5%88%A5"><span class="nav-number">1.1.</span> <span class="nav-text">靜態型別</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8B%95%E6%85%8B%E5%9E%8B%E5%88%A5"><span class="nav-number">1.2.</span> <span class="nav-text">動態型別</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BC%B7%E5%9E%8B%E5%88%A5-vs-%E5%BC%B1%E5%9E%8B%E5%88%A5"><span class="nav-number">2.</span> <span class="nav-text">強型別 vs 弱型別</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%82%A3JavaScript-%E6%9C%89%E5%93%AA%E4%BA%9B%E5%9E%8B%E5%88%A5%EF%BC%9F"><span class="nav-number">3.</span> <span class="nav-text">那JavaScript 有哪些型別？</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Primitive-type%EF%BC%9A"><span class="nav-number">3.1.</span> <span class="nav-text">Primitive type：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Objects%EF%BC%9A"><span class="nav-number">3.2.</span> <span class="nav-text">Objects：</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Jeff"
+      src="/uploads/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Jeff</p>
+  <div class="site-description" itemprop="description">這是一個紀錄自己成長的地方</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">61</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jeff0518" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jeff0518" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:cycivs07@icloud.com" title="E-Mail → mailto:cycivs07@icloud.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jeff</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

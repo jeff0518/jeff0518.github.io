@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="昨天介紹了JavaScript有兩個型別，分別是：Primitive type 跟 objects。 今天我們先來認識 Primitive type。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="『Day -6』資料型別(data types)(2)">
+<meta property="og:url" content="http://example.com/2023/09/07/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-07-Day6/index.html">
+<meta property="og:site_name" content="Jeff的隨手筆記">
+<meta property="og:description" content="昨天介紹了JavaScript有兩個型別，分別是：Primitive type 跟 objects。 今天我們先來認識 Primitive type。">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2023-09-07T01:35:30.000Z">
+<meta property="article:modified_time" content="2023-09-07T01:42:42.499Z">
+<meta property="article:author" content="Jeff">
+<meta property="article:tag" content="JavaScript">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2023/09/07/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-07-Day6/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-tw'
+  };
+</script>
+
+  <title>『Day -6』資料型別(data types)(2) | Jeff的隨手筆記</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Jeff的隨手筆記</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">學習當一個前端工程師</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/09/07/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-07-Day6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpeg">
+      <meta itemprop="name" content="Jeff">
+      <meta itemprop="description" content="這是一個紀錄自己成長的地方">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jeff的隨手筆記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          『Day -6』資料型別(data types)(2)
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2023-09-07 09:35:30 / Modified: 09:42:42" itemprop="dateCreated datePublished" datetime="2023-09-07T09:35:30+08:00">2023-09-07</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/2023%E9%90%B5%E4%BA%BA%E8%B3%BD/" itemprop="url" rel="index"><span itemprop="name">2023鐵人賽</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>昨天介紹了JavaScript有兩個型別，分別是：Primitive type 跟 objects。</p>
+<p>今天我們先來認識 Primitive type。</p>
+<span id="more"></span>
+<h2 id="Primitive-type"><a href="#Primitive-type" class="headerlink" title="Primitive type"></a>Primitive type</h2><p>原始資料型別（Primitive Type）是程式語言中的基本型別，它們是不可變（immutable）且直接存儲在記憶體中的數值。這些型別在記憶體中佔用固定大小，並通常是比較簡單的數值，用於儲存單一值。</p>
+<p>接下來我們就針對這7項來做一個簡單的介紹：</p>
+<h3 id="number"><a href="#number" class="headerlink" title="number"></a><strong>number</strong></h3><p>在JavaScript中，不管是帶整數或是有小數點，所有數字都是單純的數字類型。</p>
+<p>另外還有幾種特殊的數字：<code>Infinity</code>、<code>-Infinity</code>、<code>NaN</code>。</p>
+<ul>
+<li><p><code>Infinity</code> 是指數學上的無限大(正數&#x2F;0)</p>
+</li>
+<li><p><code>Infinity</code> 是指數學上的負無限大(負數&#x2F;0)</p>
+</li>
+<li><p><code>NaN</code> 在 JavaScript 當中是個有趣的存在，就字面上來說，它不是個數字（Not a number），但你若用 <code>typeof</code> 運算子來判斷型態，它又會告訴你這是個 <code>number</code>。</p>
+  <figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">typeof</span>(<span class="title class_">NaN</span>);<span class="comment">// &quot;number&quot;</span></span><br></pre></td></tr></table></figure>
+<p>  因此搞得我有點頭痛，也不是很理解。</p>
+<p>  在網路上找資料時，有看到一些文章引用《You Don’t Know JS》這本書，在書裡作者有做了一段解釋：</p>
+<blockquote>
+<p>It would be much more accurate to think of NaN as being “invalid number,” “failed number,” or even “bad number,” than to think of it as “not a number.”</p>
+</blockquote>
+<blockquote>
+<p>NaN is a kind of “sentinel value” (an otherwise normal value that’s assigned a special meaning) that represents a special kind of error condition within the number set. The error condition is, in essence: “I tried to perform a mathematic operation but failed, so here’s the failed number result instead.”</p>
+</blockquote>
+<p>  NaN最好被理解為“無效數字”、“失敗的數字”或甚至“錯誤數字”，而不是“非數字”。</p>
+<p>  NaN是一種“特殊值”（一個被賦予特殊含義的正常值），代表數字集合中的一種特殊錯誤狀態。這個錯誤狀態實際上是：“我嘗試進行一個數學運算，但失敗了，所以這裡是失敗的結果。”</p>
+<p>  我自己的解讀是：<code>NaN</code> 是一個Number類型的數值，但這個值無法用真實的數字表示。</p>
+</li>
+</ul>
+<p>既然知道什麼是<code>NaN</code>了，那要如何判斷呢？</p>
+<p>這邊我們要先清楚知道一件事情，<code>NaN</code> 與任何數字作數學運算，結果都是 <code>NaN</code>。 也就是說， <code>NaN</code> 並不等於任何的數字，甚至是自己。</p>
+<p>在傳統上會使用<code>isNaN()</code> ，但現在大家都會使用<code>Number.isNaN()</code> ，會這樣改變是因為<code>isNaN()</code> 一直存在誤判的問題，我們來看下面的例子就更清楚了：</p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">isNaN</span>(&#123;&#125;)  <span class="comment">//true</span></span><br><span class="line"><span class="built_in">isNaN</span>(<span class="string">&#x27;hello&#x27;</span>)  <span class="comment">//true</span></span><br></pre></td></tr></table></figure>
+
+<p>我們剛剛確定了<code>NaN</code> 是一個Number類型的數值，因此當我們判斷 object 跟 string 時，照理講應該是要為 <code>false</code> 才對，但上面卻顯示為 <code>true</code> 。</p>
+<p>會造成這樣的原因主要是因為<code>isNaN</code>會<strong>先把()裡的值轉型成數字</strong>，如果不能轉成數字，這個值就是<code>NaN</code>了。</p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">isNaN</span>(&#123;&#125;) <span class="comment">// 會先將()內的&#123;&#125;轉為數字，得到 NaN</span></span><br><span class="line"><span class="comment">// 因此會變成這樣子</span></span><br><span class="line"><span class="built_in">isNaN</span>(<span class="title class_">NaN</span>) <span class="comment">// 檢查是否為 NaN，得到 true</span></span><br></pre></td></tr></table></figure>
+
+<p>為了解決先轉型做數字而導致誤判的這個問題，ES6提出了使用<code>Number.isNaN()</code>的建議。</p>
+<p><code>Number.isNaN()</code><strong>不會事先把()裡的值轉為數字，而是判斷該值是否一個數字</strong>，因此避免了剛剛的錯誤。</p>
+<p>另外，由於JavaScript 的 number 實作是基於「IEEE 754」二進位浮點數算術標準。</p>
+<p>因此當我們看到：</p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">0.1</span> + <span class="number">0.2</span> === <span class="number">0.3</span> <span class="comment">//false</span></span><br></pre></td></tr></table></figure>
+
+<p>不要感到訝異，這不是瀏覽器發生錯誤，而是十進位的小數無法完美的用二進位的方式表示，只能用無限循環的位數來趨近於十進位的小數，因此才會出現這樣的結果。</p>
+<p>為了避免這個誤差問題，最直接的方法是把數字轉為整數才去作其他處理。目前我所知道的大多數人都比較推薦用JS函式庫，例如number precision、math.js等等去作處理。</p>
+<h3 id="string"><a href="#string" class="headerlink" title="string"></a>string</h3><p>JavaScript並沒有字元(char)的概念，只有字串。</p>
+<p>字串會用一組單引號(’ ’)或是雙引號(” “)包夾住，兩者不可混用。</p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> str1  = <span class="string">&#x27;這是一個字串&#x27;</span>;</span><br><span class="line"><span class="keyword">let</span> str2 = <span class="string">&quot;這也是一個字串&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> str3 = <span class="string">&#x27;Let&#x27;</span>s go!<span class="string">&#x27;;    // error</span></span><br><span class="line"><span class="string">//改成以下的方式就可以</span></span><br><span class="line"><span class="string">let str3 = &quot;Let&#x27;</span>s go!<span class="string">&quot;;    </span></span><br><span class="line"><span class="string">let str3 = &#x27;Let\&#x27;s go!&#x27;;   // \n或者\是跳脫字元</span></span><br></pre></td></tr></table></figure>
+
+<p>或是也可以使用ES6後出來的<strong><strong>Template String：</strong></strong></p>
+<p>使用 反引號(&#96;&#96;) 來插入一段字串，並且可以使用 <code>$&#123;&#125;</code> 來加入變數或函式，如下：</p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> count = <span class="number">2</span></span><br><span class="line"><span class="keyword">let</span> price = <span class="number">150</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`購物車金額總共是<span class="subst">$&#123;count * price&#125;</span>元`</span>);</span><br></pre></td></tr></table></figure>
+
+<h3 id="boolean"><a href="#boolean" class="headerlink" title="boolean"></a><strong><strong>boolean</strong></strong></h3><p>只會回傳兩種值：<code>True</code> 或 <code>False</code>，大量運用在邏輯判斷中。</p>
+<p>之後會提到 <strong>Coercion(強制轉換)<strong>時，在boolean時會提到兩個名詞：</strong></strong><code>falsy</code>與<code>truthy</code>。**</p>
+<p>他的概念其實很簡單，只要記的所有的物件都是 <strong><code>Truthy</code></strong>, 只有 <strong>空字串, 數字0, NaN, false, undefined和 null</strong> 會是 <strong><code>Falsy</code></strong>, 其餘的都是 <code>Truthy</code>。</p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="literal">false</span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;This won&#x27;t be printed&quot;</span>); <span class="comment">// 不會執行，因為 false 是 falsy 值</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (<span class="number">0</span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;This won&#x27;t be printed&quot;</span>); <span class="comment">// 不會執行，因為 0 是 falsy 值</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (<span class="string">&#x27;&#x27;</span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;This won&#x27;t be printed&quot;</span>); <span class="comment">// 不會執行，因為空字串是 falsy 值</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (<span class="literal">null</span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;This won&#x27;t be printed&quot;</span>); <span class="comment">// 不會執行，因為 null 是 falsy 值</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (<span class="literal">undefined</span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;This won&#x27;t be printed&quot;</span>); <span class="comment">// 不會執行，因為 undefined 是 falsy 值</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (<span class="title class_">NaN</span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;This won&#x27;t be printed&quot;</span>); <span class="comment">// 不會執行，因為 NaN 是 falsy 值</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;This will be printed&quot;</span>); <span class="comment">// 會執行，因為 true 是 truthy 值</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (<span class="number">42</span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;This will be printed&quot;</span>); <span class="comment">// 會執行，因為 42 是 truthy 值</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (<span class="string">&#x27;hello&#x27;</span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;This will be printed&quot;</span>); <span class="comment">// 會執行，因為非空字串是 truthy 值</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="null-與-undefined"><a href="#null-與-undefined" class="headerlink" title="null 與 undefined"></a><strong><strong>null 與 undefined</strong></strong></h3><p><code>null</code>：我定義了一個新的變數，並賦值 <code>null</code> 給這個變數。</p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> color = <span class="literal">null</span>; <span class="comment">// 宣告 color 並赋值 null</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(color); <span class="comment">// null</span></span><br></pre></td></tr></table></figure>
+
+<p><code>undefined</code> ：我定義了一個新的變數，卻沒有賦值給它，它的值就會是 <code>undefined</code> ;或者表示object 的屬性不存在</p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> x; <span class="comment">// 宣告 x，但未赋值</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(x); <span class="comment">// undefined</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> person = &#123; <span class="attr">name</span>: <span class="string">&quot;John&quot;</span>, <span class="attr">age</span>: <span class="number">30</span> &#125;;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(person.<span class="property">address</span>); <span class="comment">// 不存在的属性，輸出 undefined</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="symbol"><a href="#symbol" class="headerlink" title="symbol"></a><strong>symbol</strong></h3><p>Symbol 是透過<code>Symbol()</code>生成的。</p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> s = <span class="title class_">Symbol</span>();</span><br><span class="line"></span><br><span class="line"><span class="keyword">typeof</span> s</span><br><span class="line"><span class="comment">// &quot;symbol&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>由於它是 Primitive type，<strong>表示獨一無二的值。</strong>建立它我們不需要使用 new 這個指令。</p>
+<p><code>Symbol()</code>可以接受一個字串作為参數，表示對 Symbol 的描述，方便之後做區分。</p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> s1 = <span class="title class_">Symbol</span>(<span class="string">&#x27;foo&#x27;</span>);</span><br><span class="line"><span class="keyword">let</span> s2 = <span class="title class_">Symbol</span>(<span class="string">&#x27;bar&#x27;</span>);</span><br><span class="line"></span><br><span class="line">s1 <span class="comment">// Symbol(foo)</span></span><br><span class="line">s2 <span class="comment">// Symbol(bar)</span></span><br><span class="line"></span><br><span class="line">s1.<span class="title function_">toString</span>() <span class="comment">// &quot;Symbol(foo)&quot;</span></span><br><span class="line">s2.<span class="title function_">toString</span>() <span class="comment">// &quot;Symbol(bar)&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>因為沒有用到過所以就先簡略介紹一下，詳細內容可以到 <a target="_blank" rel="noopener" href="https://pjchender.dev/javascript/js-symbols/">這裡</a> 了解。</p>
+<h3 id="bigint"><a href="#bigint" class="headerlink" title="bigint"></a><strong>bigint</strong></h3><p>從ES2020開始被引入，對數學、金融、科學來說是很重要的，因為當number因為當number大於某範圍會有精確度問題，故會將值當作string處理，但BigInt是可以表示為numeric values。</p>
+<p>因為沒有用到過所以就先簡略介紹一下</p>
+<hr>
+<p>以上就是對於Primitive type的簡單介紹，明天就來把資料型別給全部結束！</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/09/07/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-07-Day5/" rel="prev" title="『Day -5』資料型別(data types)(1)">
+      <i class="fa fa-chevron-left"></i> 『Day -5』資料型別(data types)(1)
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/09/07/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-07-Day7/" rel="next" title="『Day -7』資料型別(data types)(3)">
+      『Day -7』資料型別(data types)(3) <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Primitive-type"><span class="nav-number">1.</span> <span class="nav-text">Primitive type</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#number"><span class="nav-number">1.1.</span> <span class="nav-text">number</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#string"><span class="nav-number">1.2.</span> <span class="nav-text">string</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#boolean"><span class="nav-number">1.3.</span> <span class="nav-text">boolean</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#null-%E8%88%87-undefined"><span class="nav-number">1.4.</span> <span class="nav-text">null 與 undefined</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#symbol"><span class="nav-number">1.5.</span> <span class="nav-text">symbol</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#bigint"><span class="nav-number">1.6.</span> <span class="nav-text">bigint</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Jeff"
+      src="/uploads/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Jeff</p>
+  <div class="site-description" itemprop="description">這是一個紀錄自己成長的地方</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">61</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jeff0518" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jeff0518" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:cycivs07@icloud.com" title="E-Mail → mailto:cycivs07@icloud.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jeff</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
