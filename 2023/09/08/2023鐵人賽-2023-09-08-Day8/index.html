@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="我們在介紹data type時有提到，所有基本型別 (Primitives) 以外的值都是物件。 物件我們前面介紹了object 跟 array，現在要來介紹function了。 但在進入主題前，先讓我們認識兩個名詞：Expressions(表達式) 跟 Statements(陳述句)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="『Day -8』函式(function)">
+<meta property="og:url" content="http://example.com/2023/09/08/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-08-Day8/index.html">
+<meta property="og:site_name" content="Jeff的隨手筆記">
+<meta property="og:description" content="我們在介紹data type時有提到，所有基本型別 (Primitives) 以外的值都是物件。 物件我們前面介紹了object 跟 array，現在要來介紹function了。 但在進入主題前，先讓我們認識兩個名詞：Expressions(表達式) 跟 Statements(陳述句)">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://i.imgur.com/PnWEVEL.png">
+<meta property="og:image" content="https://i.imgur.com/ctMRxEb.png">
+<meta property="og:image" content="https://i.imgur.com/OGzwYSH.png">
+<meta property="article:published_time" content="2023-09-08T00:26:44.000Z">
+<meta property="article:modified_time" content="2023-09-08T00:32:04.411Z">
+<meta property="article:author" content="Jeff">
+<meta property="article:tag" content="JavaScript">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.imgur.com/PnWEVEL.png">
+
+<link rel="canonical" href="http://example.com/2023/09/08/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-08-Day8/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-tw'
+  };
+</script>
+
+  <title>『Day -8』函式(function) | Jeff的隨手筆記</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Jeff的隨手筆記</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">學習當一個前端工程師</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/09/08/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-08-Day8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpeg">
+      <meta itemprop="name" content="Jeff">
+      <meta itemprop="description" content="這是一個紀錄自己成長的地方">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jeff的隨手筆記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          『Day -8』函式(function)
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2023-09-08 08:26:44 / Modified: 08:32:04" itemprop="dateCreated datePublished" datetime="2023-09-08T08:26:44+08:00">2023-09-08</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/2023%E9%90%B5%E4%BA%BA%E8%B3%BD/" itemprop="url" rel="index"><span itemprop="name">2023鐵人賽</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>我們在介紹data type時有提到，<strong>所有基本型別 (Primitives) 以外的值都是物件。</strong></p>
+<p>物件我們前面介紹了object 跟 array，現在要來介紹function了。</p>
+<p>但在進入主題前，先讓我們認識兩個名詞：<em><strong>Expressions(表達式) 跟 Statements(陳述句)</strong></em></p>
+<span id="more"></span>
+<h3 id="Expressions-表達式"><a href="#Expressions-表達式" class="headerlink" title="Expressions(表達式)"></a><em><strong>Expressions(表達式)</strong></em></h3><p>表達式是產生值的代碼（An expression is a unit of code that results in a value.）</p>
+<p>在JavaScript中，任何的expressions 都會創造一個值，但這個個值不一定會要在變數裡面。</p>
+<p>例子：</p>
+<p><img src="https://i.imgur.com/PnWEVEL.png" alt="images"></p>
+<p>在瀏覽器的 console 中輸入 a &#x3D; 3 時，它會直接回傳 3 這個值；輸入 2 + 3 的時候，它會直接回傳 5；輸入 a &#x3D; { } 的時候，它會回傳一個為物件的值。這種輸入一段程式後，會直接取得回傳一個值的程式內容，我們就稱為 Expressions。</p>
+<p>簡單來說：只要你輸入的那串程式執行後能直接回傳一個值，那麼它就是個 expression。</p>
+<h3 id="Statements-陳述句"><a href="#Statements-陳述句" class="headerlink" title="Statements(陳述句)"></a><em><strong>Statements(陳述句)</strong></em></h3><p><em><strong>Statements</strong></em>是程式語言中的基本指令或命令，它們代表了一個完整的操作或行為。特徵為<em><strong>不會回傳一個結果 。</strong></em></p>
+<p>只用說的可能不好理解，我們直接用code來說</p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (a === <span class="number">3</span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Hello&#x27;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>這是一段陳述句（Statements），因為它不會直接回傳一個值，所以我們不能將它指定為一個變數：</p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ❌ 錯誤寫法</span></span><br><span class="line"><span class="keyword">var</span> b = <span class="keyword">if</span> (a === <span class="number">3</span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Hello&#x27;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="基本結構"><a href="#基本結構" class="headerlink" title="基本結構"></a><strong>基本結構</strong></h1><p>函式最基本的用途，是把會重覆使用的程式碼封裝起來，以便可以在需要的時候拿出來使用。</p>
+<p>以下是一個函式的基本寫法：</p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">greet</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Hello&#x27;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>function 是關鍵字。</p>
+<p>greet 是函式名稱。</p>
+<p>()內會放參數(parameters)。</p>
+<p>{}內就是函式主體。</p>
+<p>而當我們要使用函式就要使用「調用 (invoke)」。</p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">greet</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Hello&#x27;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">greet</span>() <span class="comment">// Hello</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="First-class-functions-一級函式"><a href="#First-class-functions-一級函式" class="headerlink" title="First class functions(一級函式)"></a><strong>First class functions(一級函式)</strong></h1><p>在JavaScript裡，函式的特性可不僅僅只是“把會重覆使用的程式碼封裝起來”而已，它還可以做出任何你對其他型別（Objects, String, Boolean, Numbers）也做得到事。</p>
+<p>例如：將 Function 指定成一個變數，帶入另一個函式中、可以在一個 function 中回傳另一個 function、function 跟物件一樣有屬性（property）等等 。</p>
+<aside>
+💡 補充：一級函式並非是 JavaScript 專有的特性，只要該語言的「函式可被視為與其它變數一樣時」，就可以稱為該語言有一級函式的特性。
+
+</aside>
+
+<p>那為什麼我們會說：<strong>In JavaScript, functions are objects.</strong></p>
+<p>function就像其他object一樣，他會儲存在記憶體中，並且有兩個特殊的部分：name 和 code。</p>
+<ul>
+<li>Name:function 的名稱是可有可無的，它可以是一個匿名函式（anonymous function）</li>
+<li>code:可以透過 () 來加以執行（invoke）。</li>
+</ul>
+<p>看下面的範例：</p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">greet</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Hello&#x27;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">greet.<span class="property">language</span> = <span class="string">&#x27;English&#x27;</span>;</span><br><span class="line"><span class="title function_">greet</span>();</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(greet.<span class="property">language</span>);</span><br></pre></td></tr></table></figure>
+
+<p>輸出：</p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Hello</span></span><br><span class="line"><span class="title class_">English</span></span><br></pre></td></tr></table></figure>
+
+<p>因為 function 可以當作物件來使用，所以可以直接用<code>.</code>來建立該物件的屬性和值，屬性的名稱為 language，值為 English。</p>
+<p>當我今天要呼叫這個function，只要打該函式的名稱，後面接上括號 () 就可以去執行該函式</p>
+<p>這樣的例子說明了，function只是一種特殊的物件，它可以被當作物件來使用。</p>
+<h1 id="Function-Expressions-和-Function-Statements"><a href="#Function-Expressions-和-Function-Statements" class="headerlink" title="Function Expressions 和 Function Statements"></a><em><strong>Function Expressions 和 Function Statements</strong></em></h1><p>既然我們知道了在 JavaScript 中，Function 就是物件的一種，所以我們可以透過 Expression 或 Statements 的方式來操作它。</p>
+<h2 id="Function-Statements"><a href="#Function-Statements" class="headerlink" title="Function Statements"></a><em><strong>Function Statements</strong></em></h2><figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">greet</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Hi&#x27;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>剛剛我們有說到，在JavaScript中function 就是物件，所以用物件的概念來理解函式的話，這個函式屬性 name 的值是 greeting，這個函式 code 屬性的值為 console.log(‘hi’)。</p>
+<p><img src="https://i.imgur.com/ctMRxEb.png" alt="images"></p>
+<p>當我們要執行這個函式的時候，只要輸入 greet() 就可以了。</p>
+<p>而Function Statements 的特色在於，它在程式執行的最開始，該函式就會透過 hoisting先被儲存在記憶體中，因此我們可以在一開始就呼叫function 而不會出現錯誤：</p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">greet</span>();   <span class="comment">// &#x27;Hi&#x27;</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">greet</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Hi&#x27;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Function-Expressions"><a href="#Function-Expressions" class="headerlink" title="Function Expressions"></a><em><strong>Function Expressions</strong></em></h2><figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> anonymousGreet = <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;hi&#x27;</span>);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>function(){ … } 這段就是 Function Expression，現在我們則把這個函式表達式的值存在 anonymousGreet 這個變數內。</p>
+<p>剛剛我們有提到JavaScript中的function 就是物件，因此在這個範例，我們從物件的角度來看function：</p>
+<p><img src="https://i.imgur.com/OGzwYSH.png" alt="images"></p>
+<p>我們先建立了一個function，但這個function的 name 屬性並沒有給它值，之所以可以這麼做是因為，我們在 function expression 前面已經把它指定到一個變數（anonymousGreet），所以可以直接用這個變數名稱來指稱這個函式。對於這種 name 屬性沒有值的function，就叫做匿名函式（anonymous function 或 function literal）</p>
+<p>同樣的要執行它也只需再變數名稱後加上()就可以了。</p>
+<p>但這邊要特別注意，跟Function Statements 不同的是，我們不可以在還沒宣告變數時就呼叫他：</p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ❌ 錯誤寫法</span></span><br><span class="line"><span class="title function_">anonymousGreet</span>(); </span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> anonymousGreet = <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Hello&#x27;</span>);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>因為在一開始執行程式初期，只會先建立並儲存變數名稱到記憶體中，但程式內容不會一併儲存進去（這時候 anonymousGreet 的值會是 undefined），關於這個的底層原理會在之後的章節說明。</p>
+<h2 id="callback-function"><a href="#callback-function" class="headerlink" title="callback function"></a>callback function</h2><p>最後我們要來談談callback function。</p>
+<p>我們建立了一個function，如下：</p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">log</span>(<span class="params">a</span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(a);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>因為我們有設定參數，所以這時候我們呼叫這個function時，就必須要給參數，給參數的方式有兩個：</p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 方法1</span></span><br><span class="line"><span class="keyword">const</span> b = <span class="number">3</span>;</span><br><span class="line"><span class="title function_">log</span>(b);</span><br><span class="line"><span class="comment">// 方法2</span></span><br><span class="line"><span class="title function_">log</span>(<span class="number">3</span>)</span><br></pre></td></tr></table></figure>
+
+<p>兩個的方法輸出都會是3。只是一個是用變數裝，一個是直接把值放到參數中。</p>
+<p>那如果我要放的是一個function並執行呢？也是可以的</p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">log</span>(<span class="params">a</span>) &#123;</span><br><span class="line">  <span class="title function_">a</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> anonymousGreet = <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Hi&#x27;</span>);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="title function_">log</span>(anonymousGreet);</span><br></pre></td></tr></table></figure>
+
+<p>或是我們可以寫的更簡化些：</p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">log</span>(<span class="params">a</span>) &#123;</span><br><span class="line">  <span class="title function_">a</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">log</span>(<span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Hi&#x27;</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>這樣，就可以在不用建立函式的情況下，直接去執行一個匿名函式。</p>
+<p>由於 JavaScript 非同步的特性，若想要確保程式執行的順序，常常會使用到回呼函式（callback function）這種方式，它內部的做法其實也就是把函式傳入另一個函式中去呼叫。</p>
+<hr>
+<p>我大概是第一位資料型別可以水這麼多天的人吧ＸＤＤＤ</p>
+<p>明天還有一篇關於Function的底層原理，加上這篇就5篇了。</p>
+<p>還好這是自我挑戰組XDDD</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/09/07/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-07-Day7/" rel="prev" title="『Day -7』資料型別(data types)(3)">
+      <i class="fa fa-chevron-left"></i> 『Day -7』資料型別(data types)(3)
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Expressions-%E8%A1%A8%E9%81%94%E5%BC%8F"><span class="nav-number">1.</span> <span class="nav-text">Expressions(表達式)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Statements-%E9%99%B3%E8%BF%B0%E5%8F%A5"><span class="nav-number">2.</span> <span class="nav-text">Statements(陳述句)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E7%B5%90%E6%A7%8B"><span class="nav-number"></span> <span class="nav-text">基本結構</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#First-class-functions-%E4%B8%80%E7%B4%9A%E5%87%BD%E5%BC%8F"><span class="nav-number"></span> <span class="nav-text">First class functions(一級函式)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Function-Expressions-%E5%92%8C-Function-Statements"><span class="nav-number"></span> <span class="nav-text">Function Expressions 和 Function Statements</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Function-Statements"><span class="nav-number"></span> <span class="nav-text">Function Statements</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Function-Expressions"><span class="nav-number"></span> <span class="nav-text">Function Expressions</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#callback-function"><span class="nav-number"></span> <span class="nav-text">callback function</span></a></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Jeff"
+      src="/uploads/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Jeff</p>
+  <div class="site-description" itemprop="description">這是一個紀錄自己成長的地方</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">62</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jeff0518" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jeff0518" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:cycivs07@icloud.com" title="E-Mail → mailto:cycivs07@icloud.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jeff</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
