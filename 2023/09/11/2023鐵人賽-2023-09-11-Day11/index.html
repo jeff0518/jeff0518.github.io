@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="今天我們要來把昨天沒說完的運算子給說完，因此今天的主題是：邏輯運算子（Logical operators）以及 條件（三元）運算子（Conditional (ternary) operator）">
+<meta property="og:type" content="article">
+<meta property="og:title" content="『Day -11』運算子(Operator)（2）">
+<meta property="og:url" content="http://example.com/2023/09/11/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-11-Day11/index.html">
+<meta property="og:site_name" content="Jeff的隨手筆記">
+<meta property="og:description" content="今天我們要來把昨天沒說完的運算子給說完，因此今天的主題是：邏輯運算子（Logical operators）以及 條件（三元）運算子（Conditional (ternary) operator）">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://i.imgur.com/KMHnIoB.png">
+<meta property="article:published_time" content="2023-09-11T02:28:58.000Z">
+<meta property="article:modified_time" content="2023-09-11T02:33:13.123Z">
+<meta property="article:author" content="Jeff">
+<meta property="article:tag" content="JavaScript">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.imgur.com/KMHnIoB.png">
+
+<link rel="canonical" href="http://example.com/2023/09/11/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-11-Day11/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-tw'
+  };
+</script>
+
+  <title>『Day -11』運算子(Operator)（2） | Jeff的隨手筆記</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Jeff的隨手筆記</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">學習當一個前端工程師</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/09/11/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-11-Day11/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpeg">
+      <meta itemprop="name" content="Jeff">
+      <meta itemprop="description" content="這是一個紀錄自己成長的地方">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jeff的隨手筆記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          『Day -11』運算子(Operator)（2）
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2023-09-11 10:28:58 / Modified: 10:33:13" itemprop="dateCreated datePublished" datetime="2023-09-11T10:28:58+08:00">2023-09-11</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/2023%E9%90%B5%E4%BA%BA%E8%B3%BD/" itemprop="url" rel="index"><span itemprop="name">2023鐵人賽</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>今天我們要來把昨天沒說完的運算子給說完，因此今天的主題是：<strong>邏輯運算子（Logical operators）</strong>以及 <strong>條件（三元）運算子（Conditional (ternary) operator）</strong></p>
+<span id="more"></span>
+<h1 id="邏輯運算子（Logical-operators）"><a href="#邏輯運算子（Logical-operators）" class="headerlink" title="邏輯運算子（Logical operators）"></a><strong>邏輯運算子（Logical operators）</strong></h1><p>我們先來看一下MDN幫我們整理過的表格：</p>
+<p><img src="https://i.imgur.com/KMHnIoB.png"></p>
+<p>好像沒有很清楚，我們一樣用程式碼再來看一次：</p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ＆＆</span></span><br><span class="line"><span class="keyword">var</span> a1 = <span class="literal">true</span> &amp;&amp; <span class="literal">true</span>; <span class="comment">// t &amp;&amp; t 回傳 true</span></span><br><span class="line"><span class="keyword">var</span> a2 = <span class="literal">true</span> &amp;&amp; <span class="literal">false</span>; <span class="comment">// t &amp;&amp; f 回傳 false</span></span><br><span class="line"><span class="keyword">var</span> a3 = <span class="literal">false</span> &amp;&amp; <span class="literal">true</span>; <span class="comment">// f &amp;&amp; t 回傳 false</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// ||</span></span><br><span class="line"><span class="keyword">var</span> o1 = <span class="literal">true</span> || <span class="literal">true</span>; <span class="comment">// t || t 回傳 true</span></span><br><span class="line"><span class="keyword">var</span> o2 = <span class="literal">false</span> || <span class="literal">true</span>; <span class="comment">// f || t 回傳 true</span></span><br><span class="line"><span class="keyword">var</span> o3 = <span class="literal">true</span> || <span class="literal">false</span>; <span class="comment">// t || f 回傳 true</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// !</span></span><br><span class="line"><span class="keyword">var</span> n1 = !<span class="literal">true</span>; <span class="comment">// !t 回傳 false</span></span><br><span class="line"><span class="keyword">var</span> n2 = !<span class="literal">false</span>; <span class="comment">// !f 回傳 true</span></span><br><span class="line"><span class="keyword">var</span> n3 = !<span class="string">&quot;Cat&quot;</span>; <span class="comment">// !t 回傳 false</span></span><br></pre></td></tr></table></figure>
+
+<p>因此我是這麼理解的：</p>
+<ul>
+<li>&amp;&amp;「而且」：如果前後的 value 都是 true，則回傳 true</li>
+<li>||「或者」：只要有一邊為 true，則為 true</li>
+<li>!「非」：將後面接的 boolean 轉成相反的值</li>
+</ul>
+<p>在一開始我們最常會在<code>if</code>裡面看到這些東西，例如：</p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> isLogged = <span class="literal">true</span>;</span><br><span class="line"><span class="keyword">const</span> isAdmin = <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (isLogged &amp;&amp; isAdmin) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;You have admin privileges&quot;</span>);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;You do not have admin privileges&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>但大家都知道，<del><em><strong>工程師很懶惰的</strong></em></del> 效率是現在大家最重視的事情，像這樣子每次都要寫<code>if eles</code>的判斷實在是浪費效率，因此有了<strong>短路解析(Short-circuit evaluation)，也有人說是短路求值。</strong></p>
+<h2 id="短路解析-Short-circuit-evaluation"><a href="#短路解析-Short-circuit-evaluation" class="headerlink" title="短路解析(Short-circuit evaluation)"></a><strong>短路解析(Short-circuit evaluation)</strong></h2><p>短路解析(Short-circuit evaluation)是指一種方法，它是指<strong>用<code>||</code>或<code>&amp;&amp;</code>來寫比起<code>if</code>判斷式更短更簡潔的判斷式</strong>。</p>
+<p>接下來我們就來對兩個(&amp;&amp; 和 ||)來做解說：</p>
+<h3 id="＆＆"><a href="#＆＆" class="headerlink" title="＆＆"></a>＆＆</h3><p>使用 <strong><code>&amp;&amp;</code></strong> 運算符時，第一個表達式為 <code>false</code>，則整個表達式一定為 <code>false</code>，JavaScript 會立即停止執行後續的表達式，因此後續的表達式不會被執行。</p>
+<p>我們來看範例，會比較清楚：</p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> data = &#123;</span><br><span class="line">  <span class="attr">firstName</span>: <span class="string">&quot;Jeff&quot;</span>,</span><br><span class="line">  <span class="attr">lastName</span>: <span class="string">&quot;Wang&quot;</span>,</span><br><span class="line">  <span class="attr">address</span>: &#123;</span><br><span class="line">    <span class="attr">street</span>: <span class="string">&quot;111 Main St.&quot;</span>,</span><br><span class="line">    <span class="attr">city</span>: <span class="string">&quot;New York&quot;</span>,</span><br><span class="line">    <span class="attr">state</span>: <span class="string">&quot;NY&quot;</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">data &amp;&amp; <span class="variable language_">console</span>.<span class="title function_">log</span>(data)</span><br></pre></td></tr></table></figure>
+
+<p>因此當你今天有一個必須要“<strong>第一個條件成立，才會繼續執行後面“</strong>的程式碼就可以考慮這樣的方式。</p>
+<h3 id=""><a href="#" class="headerlink" title="||"></a>||</h3><p>使用 <strong><code>||</code></strong> 運算子時，第一個表達式為 <code>true</code>，則整個表達式一定為 <code>true</code>，JavaScript 會立即停止執行後續的表達式，因此後續的表達式不會被執行。</p>
+<p>一樣先看範例：</p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> data = response.<span class="title function_">json</span>();</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(data.<span class="property">message</span> || <span class="string">&quot;Something went wrong&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>這是一段我們跟資料庫要資料的片段程式碼，他的意思是如果<code>data.message</code> 裡面有資料就幫我印出來，但如果沒有就幫我印出”Something went wrong”。</p>
+<p>或者我們也可以用撈<code>localStorage</code>的資料來做示範：</p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> data = <span class="variable language_">localStorage</span>.<span class="title function_">getItem</span>(<span class="string">&#x27;todo&#x27;</span>);</span><br><span class="line"><span class="keyword">if</span> (data) &#123;</span><br><span class="line">  data = <span class="title class_">JSON</span>.<span class="title function_">parse</span>(data);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  data = [];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>改成Short-circuit evaluation 後：</p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> data = <span class="title class_">JSON</span>.<span class="title function_">parse</span>(<span class="variable language_">localStorage</span>.<span class="title function_">getItem</span>(<span class="string">&#x27;todo&#x27;</span>))||[];</span><br></pre></td></tr></table></figure>
+
+<p>這個方式是我們在撈資料時非常常用的方式，可以解省非常多的時間。</p>
+<h3 id="補充：可選串連運算子-與-空值合併運算子"><a href="#補充：可選串連運算子-與-空值合併運算子" class="headerlink" title="補充：可選串連運算子 (?.) 與 空值合併運算子 (??)"></a>補充：可選串連運算子 <strong><strong>(?.) 與 空值合併運算子 (??)</strong></strong></h3><p>這是在MDN查找資料時突然看到的，才想起來之前有遇到過，但真的遇到不多就忘記了。</p>
+<p>自己了解不多，所以如果有錯再請大家指教。</p>
+<blockquote>
+<p><em><strong>可選串連運算子（Optional chaining ） (?.)</strong></em></p>
+</blockquote>
+<p>當串連物件裡面的參照或方法可能是<code>undefined</code> 或 <code>null</code> 時，可選串連運算子提供簡單的方法去存取這些串連物件下的值。</p>
+<p>我們用下面這個案例做說明：</p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> adventurer = &#123;</span><br><span class="line">  <span class="attr">name</span>: <span class="string">&#x27;Alice&#x27;</span>,</span><br><span class="line">  <span class="attr">cat</span>: &#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&#x27;Dinah&#x27;</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 狀況1</span></span><br><span class="line"><span class="keyword">const</span> dogName = adventurer.<span class="property">dog</span>.<span class="property">name</span>;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(dogName); </span><br><span class="line"><span class="comment">// TypeError: Cannot read properties of undefined (reading &#x27;name&#x27;)</span></span><br><span class="line"><span class="comment">// 狀況2</span></span><br><span class="line"><span class="keyword">const</span> dogName = adventurer.<span class="property">dog</span>？.<span class="property">name</span>;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(dogName); <span class="comment">// undefined</span></span><br></pre></td></tr></table></figure>
+
+<p>當如果今天是狀況1時，我們直接使用 **<code>adventurer.dog.name</code>**，但是因為 <strong><code>dog</code></strong> 物件不存在，所以這裡會拋出錯誤，報告說無法讀取未定義的屬性。</p>
+<p>當在狀況2時，我們使用了可選鏈運算符 <code>?.，這表示如果 **</code>dog<code>** 物件不存在，直接返回 **</code>undefined<code>**，而不會出現錯誤。因此，**</code>dogName<code>** 的值就會是為 **</code>undefined&#96;**。</p>
+<p>為什麼我們會需要這個呢？沒有這個object 出現錯誤不是很正常嗎？</p>
+<p>這是因為在很多狀況下，我們更希望得到的是 <code>undefined</code>（表示沒有<code>dog</code>屬性）而不是一個錯誤。</p>
+<blockquote>
+<p><em><strong><strong>空值合併運算子（Nullish coalescing operator） (??)</strong></strong></em></p>
+</blockquote>
+<p><code>??</code>的用法與<code>||</code>的用法非常相似，都能用作預設值，差異之處是：</p>
+<ul>
+<li><code>??</code>會返回第一個<code>defined</code>的值</li>
+<li><code>||</code>會返回第一個<code>truthy</code>的值</li>
+</ul>
+<p>那什麼是<code>defined</code>的值呢？</p>
+<p>當一個值，如果它不是<code>null</code>也不是<code>undefined</code>，那它就會是<code>defined</code>，意思是一個已經定義的值。我們看一下案例，來加深一下記憶：</p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> foo = <span class="literal">null</span> ?? <span class="string">&#x27;default string&#x27;</span>;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(foo);</span><br><span class="line"><span class="comment">// Expected output: &quot;default string&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> baz = <span class="number">0</span> ?? <span class="number">42</span>;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(baz);</span><br><span class="line"><span class="comment">// Expected output: 0</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="條件（三元）運算子（Conditional-ternary-operator）"><a href="#條件（三元）運算子（Conditional-ternary-operator）" class="headerlink" title="條件（三元）運算子（Conditional (ternary) operator）"></a><strong>條件（三元）運算子（Conditional (ternary) operator）</strong></h1><p>條件運算子是 JavaScript 唯一用到三個運算元的運算子，應此也稱三元運算子。它的格式通常如下：</p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">condition ? exprIfTrue : exprIfFalse</span><br></pre></td></tr></table></figure>
+
+<p>其中，<code>condition</code> 是一個布林值的表達式，<code>exprIfTrue</code> 和 <code>exprIfFalse</code> 是兩個可以求值的表達式。三元運算符根據 <code>condition</code> 的布林值來選擇執行哪一個表達式，如果 <code>condition</code> 為真，則執行 <code>exprIfTrue</code>，否則執行 <code>exprIfFalse</code>。</p>
+<p>另外除了 <code>false</code> 之外，可能的 <code>falsy</code>（偽值） 表達式還包括：<code>null</code>、<code>NaN</code>、<code>0</code>、空字符串 <code>&quot;&quot;</code> 和 <code>undefined</code>。</p>
+<p>如果條件是這些值之一，則條件表達式的結果將是執行 <code>exprIfFalse</code> 表達式的結果。</p>
+<p>舉個例子：</p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> age = <span class="number">26</span>;</span><br><span class="line"><span class="keyword">var</span> beverage = age &gt;= <span class="number">21</span> ? <span class="string">&quot;Beer&quot;</span> : <span class="string">&quot;Juice&quot;</span>;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(beverage); <span class="comment">// &quot;Beer&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>用這樣的寫法我們就不用寫if … else的判斷式了，可以解省非常多的時間。</p>
+<hr>
+<p>不知不覺又寫的有點多，但重新再學一次真的感觸很多，繼續加油！還剩下19天。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/09/10/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-10-Day10/" rel="prev" title="『Day -10』運算子(Operator)（1）">
+      <i class="fa fa-chevron-left"></i> 『Day -10』運算子(Operator)（1）
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%82%8F%E8%BC%AF%E9%81%8B%E7%AE%97%E5%AD%90%EF%BC%88Logical-operators%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">邏輯運算子（Logical operators）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9F%AD%E8%B7%AF%E8%A7%A3%E6%9E%90-Short-circuit-evaluation"><span class="nav-number">1.1.</span> <span class="nav-text">短路解析(Short-circuit evaluation)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%86%EF%BC%86"><span class="nav-number">1.1.1.</span> <span class="nav-text">＆＆</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">1.1.2.</span> <span class="nav-text">||</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A3%9C%E5%85%85%EF%BC%9A%E5%8F%AF%E9%81%B8%E4%B8%B2%E9%80%A3%E9%81%8B%E7%AE%97%E5%AD%90-%E8%88%87-%E7%A9%BA%E5%80%BC%E5%90%88%E4%BD%B5%E9%81%8B%E7%AE%97%E5%AD%90"><span class="nav-number">1.1.3.</span> <span class="nav-text">補充：可選串連運算子 (?.) 與 空值合併運算子 (??)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A2%9D%E4%BB%B6%EF%BC%88%E4%B8%89%E5%85%83%EF%BC%89%E9%81%8B%E7%AE%97%E5%AD%90%EF%BC%88Conditional-ternary-operator%EF%BC%89"><span class="nav-number">2.</span> <span class="nav-text">條件（三元）運算子（Conditional (ternary) operator）</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Jeff"
+      src="/uploads/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Jeff</p>
+  <div class="site-description" itemprop="description">這是一個紀錄自己成長的地方</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">65</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jeff0518" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jeff0518" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:cycivs07@icloud.com" title="E-Mail → mailto:cycivs07@icloud.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jeff</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
