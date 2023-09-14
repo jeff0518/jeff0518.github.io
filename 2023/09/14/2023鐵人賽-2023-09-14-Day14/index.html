@@ -20,20 +20,25 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="大家好，我是Jeff，在注意到今年鐵人賽準備要開始報名時，就在心裡問自己：要參加嗎？">
+  <meta name="description" content="接下來這幾篇我想來複習JavaScript的DOM。 但要講DOM前，我們要先來了解JavaScript在網頁裡到底是負責什麼。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="『Day -1』鐵人賽參賽前言">
-<meta property="og:url" content="http://example.com/2023/09/06/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-06-Day1/index.html">
+<meta property="og:title" content="『Day -14』認識DOM">
+<meta property="og:url" content="http://example.com/2023/09/14/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-14-Day14/index.html">
 <meta property="og:site_name" content="Jeff的隨手筆記">
-<meta property="og:description" content="大家好，我是Jeff，在注意到今年鐵人賽準備要開始報名時，就在心裡問自己：要參加嗎？">
+<meta property="og:description" content="接下來這幾篇我想來複習JavaScript的DOM。 但要講DOM前，我們要先來了解JavaScript在網頁裡到底是負責什麼。">
 <meta property="og:locale" content="zh_TW">
-<meta property="article:published_time" content="2023-09-06T03:59:09.000Z">
-<meta property="article:modified_time" content="2023-09-06T04:23:41.325Z">
+<meta property="og:image" content="https://i.imgur.com/HzmVlig.png">
+<meta property="og:image" content="https://i.imgur.com/2fl0aaZ.png">
+<meta property="og:image" content="https://i.imgur.com/quiHq7e.png">
+<meta property="og:image" content="https://img.youtube.com/vi/zvKadd9Cflc/0.jpg">
+<meta property="article:published_time" content="2023-09-14T02:52:56.000Z">
+<meta property="article:modified_time" content="2023-09-14T02:54:31.963Z">
 <meta property="article:author" content="Jeff">
 <meta property="article:tag" content="JavaScript">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.imgur.com/HzmVlig.png">
 
-<link rel="canonical" href="http://example.com/2023/09/06/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-06-Day1/">
+<link rel="canonical" href="http://example.com/2023/09/14/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-14-Day14/">
 
 
 <script id="page-configurations">
@@ -46,7 +51,7 @@
   };
 </script>
 
-  <title>『Day -1』鐵人賽參賽前言 | Jeff的隨手筆記</title>
+  <title>『Day -14』認識DOM | Jeff的隨手筆記</title>
   
 
 
@@ -162,7 +167,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/09/06/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-06-Day1/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/09/14/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-14-Day14/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/uploads/avatar.jpeg">
@@ -175,7 +180,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          『Day -1』鐵人賽參賽前言
+          『Day -14』認識DOM
         </h1>
 
         <div class="post-meta">
@@ -186,7 +191,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2023-09-06 11:59:09 / Modified: 12:23:41" itemprop="dateCreated datePublished" datetime="2023-09-06T11:59:09+08:00">2023-09-06</time>
+              <time title="Created: 2023-09-14 10:52:56 / Modified: 10:54:31" itemprop="dateCreated datePublished" datetime="2023-09-14T10:52:56+08:00">2023-09-14</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -209,22 +214,70 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>大家好，我是Jeff，在注意到今年鐵人賽準備要開始報名時，就在心裡問自己：要參加嗎？</p>
+        <p>接下來這幾篇我想來複習JavaScript的DOM。</p>
+<p>但要講DOM前，我們要先來了解JavaScript在網頁裡到底是負責什麼。</p>
 <span id="more"></span>
-<p>回想去年的這個時間，我還只是一個剛學JavaScript兩個月左右的時間小菜雞，就在自己的部落格嘗試連續發學習的心得30天（雖然只完成27天而已），那時候還對自己說明年轉職成功的我一定會參加鐵人賽，來挑戰自己一下。</p>
-<p>但現實面總是殘酷的，在轉職這條路的後半段遭遇到了很大的挫折，頹廢了幾個月的時間，也曾想過年紀真的不小了是否要放棄這條路回去自己的本業，但想到如果真的就這樣放棄了還真的有點不甘心。最後決定重整心情打算把之前荒廢的時間補回來，而重新開始的起點就選擇從這次的鐵人賽開始吧。</p>
-<p>因此在報名的時間一開始我就報名了，這次是選擇自我挑戰組，原因除了是第一次參賽以外就是自己的能力還是有很多不足的地方，跟正式參賽的大大相比是完全上不了臺面的XDD</p>
-<p>另外說一下本次挑戰的參考資料：</p>
-<p>這次挑戰上的文章主要還會是以去年學習時所做的筆記為主體，但會把這次重新學習後的想法加入舊的筆記裡，成為一篇新的筆記，順便來看一下自己之前是多麽的菜XDD</p>
-<p>以下是這次的參考資料，之後如果有參考新的資料會在該篇文章秀出：</p>
+
+<h2 id="JavaScript-與網頁前端的關係"><a href="#JavaScript-與網頁前端的關係" class="headerlink" title="JavaScript 與網頁前端的關係"></a><strong><strong>JavaScript 與網頁前端的關係</strong></strong></h2><p>在學前端的人都應該聽過一句話：『HTML、CSS 與 JavaScript 是網頁前端三大要素』。</p>
+<p>其中：</p>
 <ul>
-<li>ALPHA camp的教案</li>
-<li>&lt;&lt;0 陷阱！0 誤解！8 天重新認識 JavaScript！&gt;&gt;</li>
-<li>JavaScript: Understanding the Weird Parts</li>
-<li>PJ大神的<a target="_blank" rel="noopener" href="https://pjchender.blogspot.com/">部落格</a></li>
-<li>第11屆鐵人賽：<strong><strong>JS 原力覺醒</strong></strong></li>
+<li>HTML：網頁的結構骨架</li>
+<li>CSS：負責外觀和風格</li>
+<li>JavaScript：用於添加交互性和動態效果的程式語言。</li>
 </ul>
-<p>最後，感謝各位點進來觀看，如果之後文章有任何錯誤的地方，還請各位大大不吝指教！！！</p>
+<p>但JavaScript嚴格來說並沒有提供網頁的操作方法，我們現在可以在網頁的操作其實都是瀏覽器所提供的。</p>
+<p>因此要理解 JavaScript 對網頁的操作，我們首先要先來了解一下瀏覽器：</p>
+<h3 id="瀏覽器裡的-JavaScript"><a href="#瀏覽器裡的-JavaScript" class="headerlink" title="瀏覽器裡的 JavaScript"></a><strong><strong>瀏覽器裡的 JavaScript</strong></strong></h3><p>廣泛來說，在瀏覽器上的 JavaScript 實際上包含了：</p>
+<ul>
+<li><strong>JavaScript 核心</strong> (以 ECMAScript 標準為基礎)</li>
+<li><strong>BOM</strong> (Browser Object Model，瀏覽器物件模型)</li>
+<li><strong>DOM</strong> (Document Object Model，文件物件模型)</li>
+</ul>
+<p>「BOM」與「DOM」是由瀏覽器執行環境所提供，前端開發者就是透過 JavaScript 去呼叫 BOM 與 DOM 提供的 API，進一步透過它們去控制瀏覽器的行為與網頁的內容。</p>
+<h3 id="Browser-Object-Model（BOM）"><a href="#Browser-Object-Model（BOM）" class="headerlink" title="Browser Object Model（BOM）"></a>Browser Object Model（BOM）</h3><p>根據<a target="_blank" rel="noopener" href="https://www.w3schools.com/js/js_window.asp">W3C的資料</a>，BOM是指在瀏覽器環境中，用來操作瀏覽器窗口、處理用戶輸入、導航等相關功能的一組方法和屬性。</p>
+<p>儘管BOM本身並沒有正式的標準，但現代網頁瀏覽器已經實現了類似的方法和屬性，以提供JavaScript互動性和對瀏覽器環境的控制。</p>
+<p>了解什麼是BOM後，我們要來認識一下<strong>BOM的核心： window 物件：</strong></p>
+<p>window 物件內建提供很多不同的屬性 (properties) 和方法 (methods)。</p>
+<p>而 <code>window</code> 物件提供的屬性主要為 <code>document</code>、<code>location</code>、<code>navigator</code>、<code>screen</code>、<code>history</code> 以及 <code>frames</code>。</p>
+<p><img src="https://i.imgur.com/HzmVlig.png" alt="Imgur"></p>
+<p>在瀏覽器裡的 <code>window object</code>扮演著兩種角色：</p>
+<ul>
+<li>ECMAScript 標準裡的「全域物件」 (Global Object)</li>
+<li>JavaScript 用來與瀏覽器溝通的窗口</li>
+</ul>
+<h3 id="Document-Object-Model（DOM）"><a href="#Document-Object-Model（DOM）" class="headerlink" title="Document Object Model（DOM）"></a>Document Object Model（DOM）</h3><p>Document Object Model（DOM）文件物件模型，一般來說我們很少聽到中文的翻譯，大家都會直接說是<strong>DOM。</strong></p>
+<p>DOM 規格由這兩個組織：W3C 和 WhatWG 共同制定，並由 WhatWG 統一發布 <a target="_blank" rel="noopener" href="https://dom.spec.whatwg.org/">DOM Living Standard</a>。各家瀏覽器廠商再依照規格實作出 DOM，並提供相關的 JavaScript 操作語法。</p>
+<p><img src="https://i.imgur.com/2fl0aaZ.png" alt="Imgur"></p>
+<p>瀏覽器載入 HTML 以後，會進一步把 HTML 的語法結構，解析成為上圖右的物件模型，所謂的「物件」擁有屬性與方法。</p>
+<p>任何在網頁裡出現的內容，無論看得到或看不到的，都會被解析成為 DOM 的一部分，包含註解。</p>
+<p>在了解完了BOM 跟 DOM之後，接下來我們來看一下他們是如何呈現在螢幕上的。</p>
+<h3 id="Browser-Rendering-Path"><a href="#Browser-Rendering-Path" class="headerlink" title="Browser Rendering Path"></a>Browser Rendering Path</h3><p>瀏覽器把HTML跟CSS的文件變成網頁的過程我們把它稱作Render(渲染)。</p>
+<p>每次當我們進入到網頁時，瀏覽器從解析檔案到畫面顯示出來會進行以下流程：</p>
+<p><img src="https://i.imgur.com/quiHq7e.png" alt="Imgur"></p>
+<ul>
+<li>解析 HTML &#x2F; CSS 檔案，建立物件模型：<ul>
+<li>HTML → DOM (Document Object Model)</li>
+<li>CSS → CSSOM (CSS Object Model)</li>
+</ul>
+</li>
+<li>將 DOM 和 CSSOM 合併為 Render Tree，準備開始運算</li>
+<li>計算每個元素的畫面位置，產生 Layout</li>
+<li>繪製畫面細節 (Paint)</li>
+</ul>
+<p>以上的過程我們就會稱作是：Browser Rendering Path。</p>
+<p>而我們可以使用JavaScript來操作網頁就是在DOM以及CSSOM被建立的時候。</p>
+<p>補充：CSSOM 是一個存放所有 CSS 選擇器與相關特性的樹狀結構容器，擁有根節點、鄰居節點、後代節點、子代節點以及其他關係。CSSCOM 非常類似於 DOM 文件物件模型 。</p>
+<h2 id="DOM-API是什麼？"><a href="#DOM-API是什麼？" class="headerlink" title="DOM API是什麼？"></a>DOM API是什麼？</h2><p>首先我們先來了解什麼是API</p>
+<h3 id="API"><a href="#API" class="headerlink" title="API"></a>API</h3><p>API (Application Programming Interface)，中文翻譯是應用程式介面。</p>
+<p>可以看一下下方影片，可以更了解什麼是API:</p>
+<p><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=zvKadd9Cflc"><img src="https://img.youtube.com/vi/zvKadd9Cflc/0.jpg" alt="Yes"></a></p>
+<p>在了解什麼是API後，那來說一下什麼是DOM API。</p>
+<h3 id="DOM-API"><a href="#DOM-API" class="headerlink" title="DOM API"></a>DOM API</h3><p>是一組允許開發者使用程式碼來操作和修改 HTML 和 XML 文件的方法和屬性集合。它是用 JavaScript 編寫的，您可以使用它來使用 JavaScript 操作 Web 文檔的 DOM。</p>
+<p>簡單來說，DOM API 提供了一個在網頁中操作 HTML 元素的介面，使開發者能夠透過程式碼來創建、修改、刪除和查詢網頁中的元素。它可以讓你動態地更新網頁內容、處理事件、添加效果，以及與使用者互動。</p>
+<hr>
+<p>DOM API的操作我們就下一篇來說吧～</p>
+<p>補充資料：</p>
+<p><a target="_blank" rel="noopener" href="https://webdesign.tutsplus.com/what-is-the-dom-api-for-javascript--cms-35650a">https://webdesign.tutsplus.com/what-is-the-dom-api-for-javascript--cms-35650a</a></p>
 
     </div>
 
@@ -243,13 +296,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2023/04/05/%E6%96%B0%E6%89%8B%E5%AD%B8%E7%BF%92React-2023-04-05-react-7-2023-04-05-react-7/" rel="prev" title="『新手學習React』- React Basic_Event Handlers">
-      <i class="fa fa-chevron-left"></i> 『新手學習React』- React Basic_Event Handlers
+    <a href="/2023/09/13/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-13-Day13/" rel="prev" title="『Day -13』Call  by value & Call  by reference">
+      <i class="fa fa-chevron-left"></i> 『Day -13』Call  by value & Call  by reference
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2023/09/06/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-06-Day2/" rel="next" title="『Day -2』變數(variable)">
-      『Day -2』變數(variable) <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -308,6 +358,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#JavaScript-%E8%88%87%E7%B6%B2%E9%A0%81%E5%89%8D%E7%AB%AF%E7%9A%84%E9%97%9C%E4%BF%82"><span class="nav-number">1.</span> <span class="nav-text">JavaScript 與網頁前端的關係</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%80%8F%E8%A6%BD%E5%99%A8%E8%A3%A1%E7%9A%84-JavaScript"><span class="nav-number">1.1.</span> <span class="nav-text">瀏覽器裡的 JavaScript</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Browser-Object-Model%EF%BC%88BOM%EF%BC%89"><span class="nav-number">1.2.</span> <span class="nav-text">Browser Object Model（BOM）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Document-Object-Model%EF%BC%88DOM%EF%BC%89"><span class="nav-number">1.3.</span> <span class="nav-text">Document Object Model（DOM）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Browser-Rendering-Path"><span class="nav-number">1.4.</span> <span class="nav-text">Browser Rendering Path</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DOM-API%E6%98%AF%E4%BB%80%E9%BA%BC%EF%BC%9F"><span class="nav-number">2.</span> <span class="nav-text">DOM API是什麼？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#API"><span class="nav-number">2.1.</span> <span class="nav-text">API</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DOM-API"><span class="nav-number">2.2.</span> <span class="nav-text">DOM API</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
