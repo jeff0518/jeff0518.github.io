@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="上一篇提到DOM 是一種樹狀結構，而樹狀結構特別擅長查找資料。 因此這篇章就是要來認識「查找 DOM 元素」的相關語法。 查找 DOM 元素有兩種途徑：  直接選出一個節點 (select) - 要在樹狀結構裡查找資料，至少要先選出第一個元素 從一個特定節點，查找到週邊的節點 - 選出一個元素後，就可以順著結構找出父元素、子元素 、甚至同一層的兄弟元素，這種行為稱為「遍歷 (traverse)」。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="『Day -16』DOM Node 的建立、刪除與修改">
+<meta property="og:url" content="http://example.com/2023/09/16/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-16-Day16/index.html">
+<meta property="og:site_name" content="Jeff的隨手筆記">
+<meta property="og:description" content="上一篇提到DOM 是一種樹狀結構，而樹狀結構特別擅長查找資料。 因此這篇章就是要來認識「查找 DOM 元素」的相關語法。 查找 DOM 元素有兩種途徑：  直接選出一個節點 (select) - 要在樹狀結構裡查找資料，至少要先選出第一個元素 從一個特定節點，查找到週邊的節點 - 選出一個元素後，就可以順著結構找出父元素、子元素 、甚至同一層的兄弟元素，這種行為稱為「遍歷 (traverse)」。">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://i.imgur.com/oHlQVg3.png">
+<meta property="og:image" content="https://i.imgur.com/vn4dasu.png">
+<meta property="og:image" content="https://i.imgur.com/UOhFZl4.png">
+<meta property="og:image" content="https://i.imgur.com/Sh7Eabj.png">
+<meta property="og:image" content="https://i.imgur.com/ubDIxMe.png">
+<meta property="og:image" content="https://i.imgur.com/eFeBSv3.png">
+<meta property="og:image" content="https://i.imgur.com/GU2jklU.png">
+<meta property="og:image" content="https://i.imgur.com/FRkLnnO.png">
+<meta property="og:image" content="https://i.imgur.com/70ENKWf.png">
+<meta property="og:image" content="https://i.imgur.com/Vv0XLMZ.png">
+<meta property="og:image" content="https://i.imgur.com/PJsjNUQ.png">
+<meta property="og:image" content="https://i.imgur.com/Ae5QAut.png">
+<meta property="article:published_time" content="2023-09-16T06:34:39.000Z">
+<meta property="article:modified_time" content="2023-09-16T06:36:15.135Z">
+<meta property="article:author" content="Jeff">
+<meta property="article:tag" content="JavaScript">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.imgur.com/oHlQVg3.png">
+
+<link rel="canonical" href="http://example.com/2023/09/16/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-16-Day16/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-tw'
+  };
+</script>
+
+  <title>『Day -16』DOM Node 的建立、刪除與修改 | Jeff的隨手筆記</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Jeff的隨手筆記</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">學習當一個前端工程師</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/09/16/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-16-Day16/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpeg">
+      <meta itemprop="name" content="Jeff">
+      <meta itemprop="description" content="這是一個紀錄自己成長的地方">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jeff的隨手筆記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          『Day -16』DOM Node 的建立、刪除與修改
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2023-09-16 14:34:39 / Modified: 14:36:15" itemprop="dateCreated datePublished" datetime="2023-09-16T14:34:39+08:00">2023-09-16</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/2023%E9%90%B5%E4%BA%BA%E8%B3%BD/" itemprop="url" rel="index"><span itemprop="name">2023鐵人賽</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>上一篇提到DOM 是一種樹狀結構，而樹狀結構特別擅長查找資料。</p>
+<p>因此這篇章就是要來認識「查找 DOM 元素」的相關語法。</p>
+<p>查找 DOM 元素有兩種途徑：</p>
+<ul>
+<li><strong>直接選出一個節點 (select)</strong> - 要在樹狀結構裡查找資料，至少要先選出第一個元素</li>
+<li><strong>從一個特定節點，查找到週邊的節點</strong> - 選出一個元素後，就可以順著結構找出父元素、子元素 、甚至同一層的兄弟元素，這種行為稱為「遍歷 (traverse)」。<span id="more"></span>
+首先我們先從選出<strong>特定 DOM 節點</strong>開始：</li>
+</ul>
+<h1 id="特定-DOM-節點"><a href="#特定-DOM-節點" class="headerlink" title="特定 DOM 節點"></a><strong>特定 DOM 節點</strong></h1><p>這次的案例：</p>
+<p><img src="https://i.imgur.com/oHlQVg3.png" alt="Imgur"></p>
+<h2 id="querySelector-amp-querySelectorAll"><a href="#querySelector-amp-querySelectorAll" class="headerlink" title="querySelector &amp; querySelectorAll"></a><strong>querySelector &amp; querySelectorAll</strong></h2><h3 id="querySelector"><a href="#querySelector" class="headerlink" title="querySelector"></a><strong>querySelector</strong></h3><p>語法：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">document</span>.<span class="title function_">querySelector</span>(<span class="variable constant_">CSS</span>-selector)</span><br></pre></td></tr></table></figure>
+
+<p><code>querySelector</code> 用 <strong>CSS 選擇器</strong>來找元素，因此在括號裡下字串的方式，和平常寫 CSS 選擇器的邏輯是一模一樣。我們就來試試看來把<ul>裡的選項抓出來：</p>
+<p><img src="https://i.imgur.com/vn4dasu.png" alt="Imgur"></p>
+<p>但如果我今天想要抓出所有<li>的話就不能使用這個，我們可以試一下：</p>
+<p><img src="https://i.imgur.com/UOhFZl4.png" alt="Imgur"></p>
+<p>我們可以看到使用這個methods只會return 第一個滿足條件的element。</p>
+<p>因此如果我們想要抓出全部的就必須使用另外一個methods。</p>
+<h3 id="querySelectorAll"><a href="#querySelectorAll" class="headerlink" title="querySelectorAll"></a><strong>querySelectorAll</strong></h3><p>語法：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">document</span>.<span class="title function_">querySelectorAll</span>(<span class="variable constant_">CSS</span>-selector)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.imgur.com/Sh7Eabj.png" alt="Imgur"></p>
+<p>這樣所有滿足條件的都會 return 。</p>
+<p>另外我們注意看一下，return 回來的是一個NodeList，什麼是NodeList啊？</p>
+<h3 id="NodeList"><a href="#NodeList" class="headerlink" title="NodeList"></a>NodeList</h3><p><strong><code>NodeList</code></strong> 是一個 JavaScript Object，它表示了一個節點（Node）的集合。</p>
+<p><strong><code>NodeList</code></strong> 很類似於Array ，但它並不是真正的 Array。</p>
+<p>它不能新增刪除元素，只有幾個簡單的唯讀操作:</p>
+<ul>
+<li>查看長度 <code>length</code></li>
+<li>遍歷內容 <code>forEach</code></li>
+<li>使用 index 來存取特定項目</li>
+</ul>
+<p><img src="https://i.imgur.com/ubDIxMe.png" alt="Imgur"></p>
+<aside>
+💡 Tips：如果我們要使用JavaScript來操作時，我們必須把他設為變數才可以使用。
+
+</aside>
+
+<h2 id="getElementBy家族"><a href="#getElementBy家族" class="headerlink" title="getElementBy家族"></a><strong>getElementBy家族</strong></h2><p>這個系列的語法是用<strong>字串</strong>來搜尋，不是 <strong>CSS 選擇器</strong>。</p>
+<p>我們在昨天有提到『大多數人使用 querySelector 系列而不使用 get 系列』，但有一個語法是例外，那就是<code>getElementById</code> 。</p>
+<p>至於原因我詢問了chat GPT，我是覺得蠻合理的啦，大家也可以看一下：</p>
+<ol>
+<li><strong>簡單易用：</strong> <strong><code>getElementById</code></strong> 是一個簡單的方法，適合於簡單的頁面操作。只需要提供元素的 ID，就可以快速地獲取該元素，不需要特別的選擇器語法。</li>
+<li><strong>效能：</strong> <strong><code>getElementById</code></strong> 是一個非常快速的方法，因為它在 DOM 中直接使用元素的 ID 進行查找，而不需要額外的選擇器解析和比對。</li>
+<li><strong>元素唯一性：</strong> 每個網頁中的元素 ID 應該是唯一的。這使得使用 <strong><code>getElementById</code></strong> 取得的元素確實是唯一的，不會有多個元素匹配。</li>
+</ol>
+<p>然而，也有一些限制和考慮因素：</p>
+<ol>
+<li><strong>僅限於 ID：</strong> <strong><code>getElementById</code></strong> 只能使用元素的 ID 進行選取。如果您想使用其他屬性或複雜的選擇器來選取元素，則需要使用其他 DOM 選取方法，如 <strong><code>querySelector</code></strong> 或 **<code>querySelectorAll</code>**。</li>
+<li><strong>不支援動態內容：</strong> 如果您的網頁內容是動態生成的，並且元素的 ID 是在後續添加的，則 <strong><code>getElementById</code></strong> 可能無法正確地找到這些動態添加的元素。</li>
+</ol>
+<h2 id="修改DOM節點"><a href="#修改DOM節點" class="headerlink" title="修改DOM節點"></a>修改DOM節點</h2><p>現在我們先來學習如何新增element，並呈現在畫面上。</p>
+<p>我們會利用到3個語法：</p>
+<ul>
+<li><code>document.createElement</code> 新增一個元素</li>
+<li><code>NODE.innerHTML</code> 修改元素的文字</li>
+<li><code>NODE.appendChild</code> 將元素插入現有 DOM 結構中：</li>
+</ul>
+<p><img src="https://i.imgur.com/eFeBSv3.png" alt="Imgur"></p>
+<p>我們可以看到上面這個圖片，html的body裡面，只有一個<div>的標籤但是，因為我們在JavaScript上打上了3段code，就讓我們的畫面多出了一段文字。這就是最基本的DOM的語法。</p>
+<h3 id="innerText-與-textContent"><a href="#innerText-與-textContent" class="headerlink" title="innerText 與 textContent"></a><strong><strong>innerText 與 textContent</strong></strong></h3><p><code>innerText</code> 和 <code>textContent</code> 通常都被使用於「取得元素內的文字」，但兩者之間有什麼差別？</p>
+<p>在MDN上是這麼說的：</p>
+<p><strong><code>Node.innerText</code></strong> 是一個代表節點及其後代之「已渲染」（rendered）文字內容的屬性。</p>
+<p><code>**Node.textContent**</code> 屬性表示了節點或其後代的文字內容。</p>
+<p>總結來說，如果您需要操作元素的 HTML 內容，可以使用 **<code>innerHTML</code>**。如果您只需要處理元素的純文本內容，則應使用 **<code>innerText</code>**。</p>
+<h2 id="節點插入-DOM-Tree"><a href="#節點插入-DOM-Tree" class="headerlink" title="節點插入 DOM Tree"></a><strong>節點插入 DOM Tree</strong></h2><p>我們在剛剛的案例有一個語法<code>NODE.appendChild</code> 將元素插入現有 DOM 結構中，除了這個以外我們還有其他兩個方法：</p>
+<ul>
+<li><code>NODE.insertBefore</code></li>
+<li><code>NODE.replaceChild</code></li>
+</ul>
+<p>我們來認識一下這三個方法的不同吧</p>
+<h3 id="NODE-appendChild"><a href="#NODE-appendChild" class="headerlink" title="NODE.appendChild"></a><code>NODE.appendChild</code></h3><p>將一個節點附加到另一個節點的子節點列表的末尾。</p>
+<p><img src="https://i.imgur.com/GU2jklU.png" alt="Imgur"></p>
+<p>圖片來源：AC教案</p>
+<h3 id="NODE-insertBefore"><a href="#NODE-insertBefore" class="headerlink" title="NODE.insertBefore"></a><code>NODE.insertBefore</code></h3><p>在指定節點之前插入新的節點。</p>
+<p><img src="https://i.imgur.com/FRkLnnO.png" alt="Imgur"></p>
+<p>圖片來源：AC教案</p>
+<h3 id="NODE-replaceChild"><a href="#NODE-replaceChild" class="headerlink" title="NODE.replaceChild"></a><code>NODE.replaceChild</code></h3><p>替換一個子節點為另一個節點。</p>
+<p><img src="https://i.imgur.com/70ENKWf.png" alt="Imgur"></p>
+<p>圖片來源：AC教案</p>
+<p>在了解後，我們來用這3個方法把剛剛案例完成吧。</p>
+<p><img src="https://i.imgur.com/Vv0XLMZ.png" alt="Imgur"></p>
+<p>感覺有點冗長，但主要是為了復原原本的例子，早知道原本範例打少一點XDD</p>
+<h3 id="補充："><a href="#補充：" class="headerlink" title="補充："></a>補充：</h3><p>這是一個IE不支援的語法，但….IE已經不在了～～～所以全部的瀏覽器都可以用XDD</p>
+<p><img src="https://i.imgur.com/PJsjNUQ.png" alt="Imgur"></p>
+<p>圖片來源：ＡＣ教案</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> container = <span class="variable language_">document</span>.<span class="title function_">querySelector</span>(<span class="string">&quot;.card-body&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> h1 = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&quot;h1&quot;</span>);</span><br><span class="line">h1.<span class="property">innerHTML</span> = <span class="string">&quot;Professional Sports&quot;</span>;</span><br><span class="line"><span class="keyword">const</span> ul = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&quot;ul&quot;</span>);</span><br><span class="line">container.<span class="title function_">appendChild</span>(h1);</span><br><span class="line">container.<span class="title function_">appendChild</span>(ul);</span><br><span class="line"><span class="keyword">const</span> li_1 = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&quot;li&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> li_2 = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&quot;li&quot;</span>);</span><br><span class="line">li_1.<span class="property">innerHTML</span> = <span class="string">&quot;NFL&quot;</span>;</span><br><span class="line">li_2.<span class="property">innerHTML</span> = <span class="string">&quot;MLB&quot;</span>;</span><br><span class="line">ul.<span class="title function_">prepend</span>(li_1);</span><br><span class="line">ul.<span class="title function_">append</span>(li_2);</span><br><span class="line">ul.<span class="title function_">prepend</span>(<span class="string">&quot;NBA&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>我們會看到：</p>
+<p><img src="https://i.imgur.com/Ae5QAut.png" alt="Imgur"></p>
+<p>這套語法的撰寫風格比較簡潔，而且同時可以插入節點或文字。提供給大家參考。</p>
+<h2 id="刪除節點"><a href="#刪除節點" class="headerlink" title="刪除節點"></a><strong>刪除節點</strong></h2><h3 id="parentElement-removeChild-NODE"><a href="#parentElement-removeChild-NODE" class="headerlink" title="parentElement.removeChild(NODE)"></a><code>parentElement.removeChild(NODE)</code></h3><p>這個方法是用來從指定的父節點中移除子節點 **<code>NODE</code>**。例如：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> parent = <span class="variable language_">document</span>.<span class="title function_">querySelector</span>(<span class="string">&quot;.parent&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> child = <span class="variable language_">document</span>.<span class="title function_">querySelector</span>(<span class="string">&quot;.child&quot;</span>);</span><br><span class="line">parent.<span class="title function_">removeChild</span>(child);</span><br></pre></td></tr></table></figure>
+
+<h3 id="NODE-remove"><a href="#NODE-remove" class="headerlink" title="NODE.remove()"></a><code>NODE.remove()</code></h3><p>這個方法可以直接從 DOM 中移除特定的節點 **<code>NODE</code>**。例如：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> element = <span class="variable language_">document</span>.<span class="title function_">querySelector</span>(<span class="string">&quot;.element&quot;</span>);</span><br><span class="line">element.<span class="title function_">remove</span>();</span><br></pre></td></tr></table></figure>
+
+<h2 id="操作-CSS"><a href="#操作-CSS" class="headerlink" title="操作 CSS"></a><strong>操作 CSS</strong></h2><h3 id="NODE-classList"><a href="#NODE-classList" class="headerlink" title="NODE.classList"></a><code>NODE.classList</code></h3><p>這是一個用來操作節點的 class 名稱的屬性。它會回傳一個類似陣列的物件，可以用來新增、刪除、查看 class 名稱。</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> element = <span class="variable language_">document</span>.<span class="title function_">querySelector</span>(<span class="string">&quot;.element&quot;</span>);</span><br><span class="line"></span><br><span class="line">element.<span class="property">classList</span>.<span class="title function_">add</span>(<span class="string">&quot;new-class&quot;</span>);<span class="comment">//增加</span></span><br><span class="line">element.<span class="property">classList</span>.<span class="title function_">remove</span>(<span class="string">&quot;old-class&quot;</span>);<span class="comment">//刪除</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="NODE-className-className"><a href="#NODE-className-className" class="headerlink" title="NODE.className = className"></a><code>NODE.className = className</code></h3><p>這個屬性直接設定節點的 class 名稱，但注意這會將目前節點的所有 class 都替換掉。</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> element = <span class="variable language_">document</span>.<span class="title function_">querySelector</span>(<span class="string">&quot;.element&quot;</span>);</span><br><span class="line">element.<span class="property">className</span> = <span class="string">&quot;new-class&quot;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>DOM 也有提供 <code>style</code> 屬性，例如：<code>NODE.style.backgroundColor</code> ，但為了讓程式碼一目瞭然地被歸類在它們應該在的位置，建議還是先寫好 CSS 文件，再透過 <code>classList</code> 等方法去修改樣式。</p>
+<hr>
+<p>DOM真的是我目前為止打最久的一個主題吧(未來的原型可能會超過)，主要原因有兩個：1.真的很久沒有用這些語法了都忘了差不多了。2.就是我之前的筆記看不懂…導致我再回去把課程重上。</p>
+<p>這次的教訓就是，筆記要認真做而且三不五時要回去更新，之前做筆記還會分發芽期、培育期、長青期，目的就是要讓自己回去檢視過去是否有理解錯誤的地方，結果這次在整理筆記發先我所有的筆記都是發芽期，培育期少之又少，長青期更是完全沒有。</p>
+<p>明天就是遍歷(traverse)了，終於要結束這個主題了～</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/09/15/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-15-Day15/" rel="prev" title="『Day15』樹狀結構與 DOM 節點">
+      <i class="fa fa-chevron-left"></i> 『Day15』樹狀結構與 DOM 節點
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%89%B9%E5%AE%9A-DOM-%E7%AF%80%E9%BB%9E"><span class="nav-number">1.</span> <span class="nav-text">特定 DOM 節點</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#querySelector-amp-querySelectorAll"><span class="nav-number">1.1.</span> <span class="nav-text">querySelector &amp; querySelectorAll</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#querySelector"><span class="nav-number">1.1.1.</span> <span class="nav-text">querySelector</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#querySelectorAll"><span class="nav-number">1.1.2.</span> <span class="nav-text">querySelectorAll</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NodeList"><span class="nav-number">1.1.3.</span> <span class="nav-text">NodeList</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#getElementBy%E5%AE%B6%E6%97%8F"><span class="nav-number">1.2.</span> <span class="nav-text">getElementBy家族</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9DOM%E7%AF%80%E9%BB%9E"><span class="nav-number">1.3.</span> <span class="nav-text">修改DOM節點</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#innerText-%E8%88%87-textContent"><span class="nav-number">1.3.1.</span> <span class="nav-text">innerText 與 textContent</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AF%80%E9%BB%9E%E6%8F%92%E5%85%A5-DOM-Tree"><span class="nav-number">1.4.</span> <span class="nav-text">節點插入 DOM Tree</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#NODE-appendChild"><span class="nav-number">1.4.1.</span> <span class="nav-text">NODE.appendChild</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NODE-insertBefore"><span class="nav-number">1.4.2.</span> <span class="nav-text">NODE.insertBefore</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NODE-replaceChild"><span class="nav-number">1.4.3.</span> <span class="nav-text">NODE.replaceChild</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A3%9C%E5%85%85%EF%BC%9A"><span class="nav-number">1.4.4.</span> <span class="nav-text">補充：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%AA%E9%99%A4%E7%AF%80%E9%BB%9E"><span class="nav-number">1.5.</span> <span class="nav-text">刪除節點</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#parentElement-removeChild-NODE"><span class="nav-number">1.5.1.</span> <span class="nav-text">parentElement.removeChild(NODE)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NODE-remove"><span class="nav-number">1.5.2.</span> <span class="nav-text">NODE.remove()</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C-CSS"><span class="nav-number">1.6.</span> <span class="nav-text">操作 CSS</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#NODE-classList"><span class="nav-number">1.6.1.</span> <span class="nav-text">NODE.classList</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NODE-className-className"><span class="nav-number">1.6.2.</span> <span class="nav-text">NODE.className &#x3D; className</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Jeff"
+      src="/uploads/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Jeff</p>
+  <div class="site-description" itemprop="description">這是一個紀錄自己成長的地方</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">70</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jeff0518" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jeff0518" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:cycivs07@icloud.com" title="E-Mail → mailto:cycivs07@icloud.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jeff</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
