@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="我們先來看一張DOM Tree的圖">
+<meta property="og:type" content="article">
+<meta property="og:title" content="『Day -17』遍歷周邊 DOM 節點">
+<meta property="og:url" content="http://example.com/2023/09/17/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-17-Day17/index.html">
+<meta property="og:site_name" content="Jeff的隨手筆記">
+<meta property="og:description" content="我們先來看一張DOM Tree的圖">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://i.imgur.com/ZtufkSX.png">
+<meta property="og:image" content="https://i.imgur.com/jcpoJkY.png">
+<meta property="og:image" content="https://i.imgur.com/AA98m82.png">
+<meta property="og:image" content="https://i.imgur.com/2a3JXMY.png">
+<meta property="og:image" content="https://i.imgur.com/EmlKSNq.png">
+<meta property="og:image" content="https://i.imgur.com/QipQS7L.png">
+<meta property="article:published_time" content="2023-09-17T02:21:09.000Z">
+<meta property="article:modified_time" content="2023-09-17T02:22:19.179Z">
+<meta property="article:author" content="Jeff">
+<meta property="article:tag" content="JavaScript">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.imgur.com/ZtufkSX.png">
+
+<link rel="canonical" href="http://example.com/2023/09/17/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-17-Day17/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-tw'
+  };
+</script>
+
+  <title>『Day -17』遍歷周邊 DOM 節點 | Jeff的隨手筆記</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Jeff的隨手筆記</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">學習當一個前端工程師</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/09/17/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-17-Day17/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpeg">
+      <meta itemprop="name" content="Jeff">
+      <meta itemprop="description" content="這是一個紀錄自己成長的地方">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jeff的隨手筆記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          『Day -17』遍歷周邊 DOM 節點
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2023-09-17 10:21:09 / Modified: 10:22:19" itemprop="dateCreated datePublished" datetime="2023-09-17T10:21:09+08:00">2023-09-17</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/2023%E9%90%B5%E4%BA%BA%E8%B3%BD/" itemprop="url" rel="index"><span itemprop="name">2023鐵人賽</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>我們先來看一張DOM Tree的圖</p>
+<p><img src="https://i.imgur.com/ZtufkSX.png" alt="Imgur"></p>
+<span id="more"></span>
+<p>DOM 節點有分層的概念，節點與節點之間的關係我們大致上可以分成兩種：</p>
+<ul>
+<li><p><strong>父子關係</strong>：</p>
+<p>  除了 <code>document</code> 之外，每一個節點都會有個上層的節點，我們通常稱之為「父節點」 (Parent node)，而相對地，從屬於自己下層的節點，就會稱為「子節點」(Child node)。</p>
+</li>
+<li><p><strong>兄弟關係</strong>：有同一個「父節點」的節點，那麼他們彼此之間就是「兄弟節點」(Siblings node)。</p>
+</li>
+</ul>
+<p>有時候你無法直接用名稱或選擇器找到節點，這時候就必須透過<strong>關係</strong>。</p>
+<p>簡單解釋一下這個流程，依然拿之前的案例來做說明：</p>
+<p><img src="https://i.imgur.com/jcpoJkY.png" alt="Imgur"></p>
+<p>這是一篇文章其中有一篇文章的標題是<code>Professional Sports</code> ，當今天我必須要回傳在這個標題裡所有放在<code>&lt;li&gt;</code>的文字內容(別問我為什麼要回傳XD)，這時候在DOM Tree的查找路徑會是：</p>
+<p>從<code>&lt;h4&gt;Professional Sports&lt;/h4&gt;</code> 出發。</p>
+<p>找到他的兄弟<code>&lt;ul&gt;</code> 。</p>
+<p>在找到<code>&lt;ul&gt;</code>的children(孩子)<code>&lt;li&gt;</code> 。</p>
+<p>而這個從樹狀結構裡查找資料的動作就是我們今天的主題<code>**traverse**</code>。</p>
+<h2 id="選出周邊的元素節點"><a href="#選出周邊的元素節點" class="headerlink" title="選出周邊的元素節點"></a><strong>選出周邊的元素節點</strong></h2><p>我們來看一下語法：</p>
+<p><img src="https://i.imgur.com/AA98m82.png" alt="Imgur"></p>
+<ul>
+<li>**<code>parentElement</code>**：返回元素的父級元素。</li>
+<li>**<code>nextElementSibling</code>**：返回元素的下一個兄弟元素。</li>
+<li>**<code>previousElementSibling</code>**：返回元素的前一個兄弟元素。</li>
+<li>**<code>firstElementChild</code>**：返回元素的第一個子元素。</li>
+<li>**<code>lastElementChild</code>**：返回元素的最後一個子元素。</li>
+</ul>
+<p>我們在之前那個案例來實際操作一下吧：</p>
+<p><img src="https://i.imgur.com/2a3JXMY.png" alt="Imgur"></p>
+<p>其中要特別說一下最一開始的<code>HTMLCollection(5)</code> ，還記得昨天我們有說到<code>NodeList</code> 嗎？</p>
+<p>如果忘記也沒關係，我們在看一下：</p>
+<p><strong><code>NodeList</code></strong> 很類似於Array ，但它並不是真正的 Array。</p>
+<p>它不能新增刪除元素，只有幾個簡單的唯讀操作:</p>
+<ul>
+<li>查看長度 <code>length</code></li>
+<li>遍歷內容 <code>forEach</code></li>
+<li>使用 index 來存取特定項目</li>
+</ul>
+<p>像 <code>HTMLCollection()</code> 跟 <code>NodeList</code> 很類似於Array ，但它並不是真正的 Array的，我們有一個專有的名詞，叫做<code>Array-like object</code> 但一般我們都會叫他<code>Array-like</code> 。</p>
+<p>詳細的內容這邊就不說了，有興趣的朋友再去網路上看。</p>
+<h3 id="另外一組語法"><a href="#另外一組語法" class="headerlink" title="另外一組語法"></a>另外一組語法</h3><p>大家如果在網路上看資料時，想必都會看到另外一組語法：</p>
+<p><strong><code>parentNode</code><strong>、</strong><code>nextSibling</code><strong>、</strong><code>previousSibling</code><strong>、</strong><code>firstChild</code></strong> 和 <strong><code>lastChild</code></strong></p>
+<p>為什麼會有兩組呢？我們先來看一下實際操作後大家應該就會知道差別在哪裡了：</p>
+<p><img src="https://i.imgur.com/EmlKSNq.png" alt="Imgur"></p>
+<p>為什麼這組語法出來的結果會有這麼多的text啊？主要還是我們在排版程式碼時的「換行&#x2F;縮排」，會產生隱藏的文字節點。詳細內容大家可以到 <a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model/Whitespace">MDN</a> 看，我這邊就是簡單提一下。</p>
+<p>至於這兩種語法的區別，我個人的解讀是在於它們如何處理節點。其中 <strong><code>parentElement</code></strong> 和 <strong><code>nextElementSibling</code></strong> 等屬性和方法只會考慮元素節點（Element Node），而忽略其他類型的節點，如文字節點、註釋節點等。而 <strong><code>parentNode</code></strong> 和 <strong><code>nextSibling</code></strong> 等屬性和方法則會考慮所有類型的節點。</p>
+<p>這是我自己的解讀，如果有錯還請大家指教！</p>
+<p>我在知乎跟稀土上有看到兩篇文章，大家也可以參考一下：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/165422508">知乎參考文章</a>、<a target="_blank" rel="noopener" href="https://juejin.cn/post/7066778860024496165">稀土參考文章</a></p>
+<hr>
+<h2 id="陣列遍歷"><a href="#陣列遍歷" class="headerlink" title="陣列遍歷"></a><strong><strong>陣列遍歷</strong></strong></h2><p>當我們想對一個陣列裡的每個元素都執行某個方法時，除了傳統的 for 迴圈外，還可以使用什麼呢？就讓我們一起看下去：</p>
+<h3 id="for"><a href="#for" class="headerlink" title="for"></a><code>for</code></h3><p>使用情境：</p>
+<ul>
+<li>用於執行迴圈次數「明確」的狀況</li>
+<li>例如：印出陣列 <code>[0, 1, 2]</code> 中的每一個數字</li>
+</ul>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="number">3</span>; i++)&#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(i);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 0</span></span><br><span class="line"><span class="comment">// 1</span></span><br><span class="line"><span class="comment">// 2</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="arr-forEach"><a href="#arr-forEach" class="headerlink" title="arr.forEach"></a><strong><code>arr.forEach</code></strong></h3><p>使用情境：</p>
+<ul>
+<li>用法與 for loop 類似，差別在於 forEach 不需設定索引的邊界條件</li>
+<li>缺點是無法使用 break 中斷迴圈，或 return 返回值等等</li>
+</ul>
+<p>語法：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">array.<span class="title function_">forEach</span>(<span class="keyword">function</span>(<span class="params">currentValue, index, arr</span>), thisValue)</span><br></pre></td></tr></table></figure>
+
+<p>currentValue ：當前陣列元素的值</p>
+<p>index ：當前陣列元素的 index</p>
+<p>arr ：當前陣列本身。</p>
+<p>我們用一個範例來解釋：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> scores = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line"><span class="keyword">let</span> sum = <span class="number">0</span></span><br><span class="line">scores.<span class="title function_">forEach</span>(<span class="keyword">function</span> (<span class="params">score, index</span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`現在輸到第 <span class="subst">$&#123;index&#125;</span> 項，值是 <span class="subst">$&#123;score&#125;</span>`</span>)</span><br><span class="line">  sum += score</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`現在總和是： <span class="subst">$&#123;sum&#125;</span>`</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>由於這個函式只會在 <code>forEach</code> 裡面運作，別的地方用不到，因此沒有特別取名的必要。因此可以使用箭頭函式：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> scores = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line"><span class="keyword">let</span> sum = <span class="number">0</span></span><br><span class="line">scores.<span class="title function_">forEach</span>(<span class="function">(<span class="params">score, index</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`現在輸到第 <span class="subst">$&#123;index&#125;</span> 項，值是 <span class="subst">$&#123;score&#125;</span>`</span>)</span><br><span class="line">  sum += score</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`現在總和是： <span class="subst">$&#123;sum&#125;</span>`</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>其結果為：</p>
+<p><img src="https://i.imgur.com/QipQS7L.png" alt="Imgur"><br>有兩點要注意：</p>
+<ul>
+<li><strong><code>forEach</code></strong> 沒有回傳值：<br><code>forEach</code>方法的角色是領路人，把陣列中的每個元素依序交給 function 處理，交付完它的任務就結束了。</li>
+<li><strong>function 的參數可以自由命名</strong>：<br>慣用的命名手法是陣列用複數單字命名 (例如 words, scores )，代表單一陣列元素的參數就用單數命名 (例如 word, score)。<br>另外 item 和 element 也常被用來代表單一元素。</li>
+</ul>
+<h3 id="for…of"><a href="#for…of" class="headerlink" title="for…of"></a><strong><code>for…of</code></strong></h3><p>語法：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (variable <span class="keyword">of</span> iterable)</span><br><span class="line">  statement</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong><code>variable</code></strong> ：在每次迭代中從序列中接收一個值。可以是使用 const、let 或 var 進行聲明，也可以是分配目標（例如之前聲明的變數、物件屬性或解構賦值模式）。</li>
+<li>**<code>iterable</code>**：一個可迭代的 object。 作為迴圈運作的值序列的來源。</li>
+<li><strong><code>statement</code></strong> ：在每次迭代中要執行的陳述式。</li>
+</ul>
+<p>一樣我們用一個範例來解釋：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> array1 = [<span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;b&#x27;</span>, <span class="string">&#x27;c&#x27;</span>];</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">const</span> element <span class="keyword">of</span> array1) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(element);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Expected output: &quot;a&quot;</span></span><br><span class="line"><span class="comment">// Expected output: &quot;b&quot;</span></span><br><span class="line"><span class="comment">// Expected output: &quot;c&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>至於跟他很像的for…in我很少用到比較沒有那麼清楚，這邊附上<a target="_blank" rel="noopener" href="https://pjchender.blogspot.com/2016/06/javascript-for-in-function.html">ＰＪ大神所寫的文章</a>讓大家參考。</p>
+<h3 id="map"><a href="#map" class="headerlink" title="map"></a><strong><code>map</code></strong></h3><p>語法：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> newArray = array.<span class="title function_">map</span>(<span class="function">(<span class="params">currentValue, index, array</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// return newValue based on currentValue</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong><code>currentValue</code></strong>: 目前迭代的陣列元素的值。</li>
+<li><strong><code>index</code></strong> (選填): 目前迭代的陣列元素的索引。</li>
+<li><strong><code>array</code></strong> (選填): 原始的陣列。</li>
+</ul>
+<p><strong><code>map()</code></strong> 方法的主要特點是它不會改變原始陣列，而是返回一個新的陣列，其中每個元素都是經過回呼函式處理後的結果。</p>
+<p>看個案例會更加清楚：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> array1 = [<span class="number">1</span>, <span class="number">4</span>, <span class="number">9</span>, <span class="number">16</span>];</span><br><span class="line"></span><br><span class="line"><span class="comment">// Pass a function to map</span></span><br><span class="line"><span class="keyword">const</span> map1 = array1.<span class="title function_">map</span>(<span class="function">(<span class="params">x</span>) =&gt;</span> x * <span class="number">2</span>);</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(map1);</span><br><span class="line"><span class="comment">// Expected output: Array [2, 8, 18, 32]</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>終於寫完了，但有幾個<strong><strong>遍歷</strong></strong>的方法我並沒有寫出來，是因為這邊所列的都是我在這段學習過程中有使用到且還記得的&gt;&lt;”</p>
+<p>沒寫出來的應該是我沒用過、或是我真的忘了。</p>
+<p>但很多資料也都只寫到這些，應該還行啦。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/09/16/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-16-Day16/" rel="prev" title="『Day -16』DOM Node 的建立、刪除與修改">
+      <i class="fa fa-chevron-left"></i> 『Day -16』DOM Node 的建立、刪除與修改
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%81%B8%E5%87%BA%E5%91%A8%E9%82%8A%E7%9A%84%E5%85%83%E7%B4%A0%E7%AF%80%E9%BB%9E"><span class="nav-number">1.</span> <span class="nav-text">選出周邊的元素節點</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%A6%E5%A4%96%E4%B8%80%E7%B5%84%E8%AA%9E%E6%B3%95"><span class="nav-number">1.1.</span> <span class="nav-text">另外一組語法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%99%A3%E5%88%97%E9%81%8D%E6%AD%B7"><span class="nav-number">2.</span> <span class="nav-text">陣列遍歷</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#for"><span class="nav-number">2.1.</span> <span class="nav-text">for</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#arr-forEach"><span class="nav-number">2.2.</span> <span class="nav-text">arr.forEach</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#for%E2%80%A6of"><span class="nav-number">2.3.</span> <span class="nav-text">for…of</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#map"><span class="nav-number">2.4.</span> <span class="nav-text">map</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Jeff"
+      src="/uploads/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Jeff</p>
+  <div class="site-description" itemprop="description">這是一個紀錄自己成長的地方</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">71</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jeff0518" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jeff0518" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:cycivs07@icloud.com" title="E-Mail → mailto:cycivs07@icloud.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jeff</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
