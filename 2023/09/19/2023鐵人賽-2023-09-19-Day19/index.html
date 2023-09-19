@@ -20,26 +20,26 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta property="og:type" content="article">
-<meta property="og:title" content="『JavaScript 基礎』 IIFE">
-<meta property="og:url" content="http://example.com/2023/01/30/JavaScript-%E5%9F%BA%E7%A4%8E-2023-01-30-step4-5-2023-01-30-step4-5/index.html">
+  <meta name="description" content="再繼續往下走之前我們先來認識一下什麼是IIFE? 第一次看到這個詞的時候，是在看youtube看**深入淺出 Javascript30** 的解說影片上得知的，但當時並不在意，想說課堂上沒教應該不是什麼重要的，誰知道現在又在**JavaScript: Understanding the Weird Part**上看到在教這個，看來是要來好好了解一下">
+<meta property="og:type" content="article">
+<meta property="og:title" content="『Day -19』IIFE">
+<meta property="og:url" content="http://example.com/2023/09/19/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-19-Day19/index.html">
 <meta property="og:site_name" content="Jeff的隨手筆記">
+<meta property="og:description" content="再繼續往下走之前我們先來認識一下什麼是IIFE? 第一次看到這個詞的時候，是在看youtube看**深入淺出 Javascript30** 的解說影片上得知的，但當時並不在意，想說課堂上沒教應該不是什麼重要的，誰知道現在又在**JavaScript: Understanding the Weird Part**上看到在教這個，看來是要來好好了解一下">
 <meta property="og:locale" content="zh_TW">
-<meta property="og:image" content="https://i.imgur.com/rZvUip7.png">
 <meta property="og:image" content="https://i.imgur.com/YUshpYx.png">
 <meta property="og:image" content="https://i.imgur.com/47tUMLH.png">
 <meta property="og:image" content="https://i.imgur.com/w4jTO4S.png">
 <meta property="og:image" content="https://i.imgur.com/qejFebs.png">
 <meta property="og:image" content="https://i.imgur.com/Zl0tTID.png">
-<meta property="article:published_time" content="2023-01-30T15:40:31.000Z">
-<meta property="article:modified_time" content="2023-01-30T16:06:55.893Z">
+<meta property="article:published_time" content="2023-09-19T06:47:50.000Z">
+<meta property="article:modified_time" content="2023-09-19T06:48:47.421Z">
 <meta property="article:author" content="Jeff">
 <meta property="article:tag" content="JavaScript">
-<meta property="article:tag" content="JavaScript 基礎">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://i.imgur.com/rZvUip7.png">
+<meta name="twitter:image" content="https://i.imgur.com/YUshpYx.png">
 
-<link rel="canonical" href="http://example.com/2023/01/30/JavaScript-%E5%9F%BA%E7%A4%8E-2023-01-30-step4-5-2023-01-30-step4-5/">
+<link rel="canonical" href="http://example.com/2023/09/19/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-19-Day19/">
 
 
 <script id="page-configurations">
@@ -52,7 +52,7 @@
   };
 </script>
 
-  <title>『JavaScript 基礎』 IIFE | Jeff的隨手筆記</title>
+  <title>『Day -19』IIFE | Jeff的隨手筆記</title>
   
 
 
@@ -168,7 +168,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/01/30/JavaScript-%E5%9F%BA%E7%A4%8E-2023-01-30-step4-5-2023-01-30-step4-5/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/09/19/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-19-Day19/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/uploads/avatar.jpeg">
@@ -181,7 +181,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          『JavaScript 基礎』 IIFE
+          『Day -19』IIFE
         </h1>
 
         <div class="post-meta">
@@ -190,23 +190,17 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
+              
 
-              <time title="Created: 2023-01-30 23:40:31" itemprop="dateCreated datePublished" datetime="2023-01-30T23:40:31+08:00">2023-01-30</time>
+              <time title="Created: 2023-09-19 14:47:50 / Modified: 14:48:47" itemprop="dateCreated datePublished" datetime="2023-09-19T14:47:50+08:00">2023-09-19</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-01-31 00:06:55" itemprop="dateModified" datetime="2023-01-31T00:06:55+08:00">2023-01-31</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/JavaScript-%E5%9F%BA%E7%A4%8E/" itemprop="url" rel="index"><span itemprop="name">JavaScript 基礎</span></a>
+                  <a href="/categories/2023%E9%90%B5%E4%BA%BA%E8%B3%BD/" itemprop="url" rel="index"><span itemprop="name">2023鐵人賽</span></a>
                 </span>
             </span>
 
@@ -221,32 +215,36 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img src="https://i.imgur.com/rZvUip7.png" alt="Imgur"></p>
+        <p>再繼續往下走之前我們先來認識一下什麼是IIFE?</p>
+<p>第一次看到這個詞的時候，是在看youtube看**<code>深入淺出 Javascript30</code>** 的解說影片上得知的，但當時並不在意，想說課堂上沒教應該不是什麼重要的，誰知道現在又在**<code>JavaScript: Understanding the Weird Part</code>**上看到在教這個，看來是要來好好了解一下</p>
 <span id="more"></span>
-<p>這是一門在Udemy 課程，是同學介紹的。主要是因為想要運用到過年前這段時間好好的增進自己的JavaScript的基礎能力，讓自己能往前端工程師更近一步。主要還是會以筆記的形式做呈現！</p>
-<hr>
-<p><em><strong>IIFE，全稱Immediately Invoked Functions Expressions(立即執行函式)</strong></em></p>
-<p>在之前有提到建立 function 的方法通常有 function statement 和 function expression 這兩種方式，<br>而<code>IIFEs</code> 指的就是透過 function expression 的方式來建立函式，並且立即執行它。<br>如下列程式碼：</p>
+<h2 id="什麼是IIFE"><a href="#什麼是IIFE" class="headerlink" title="什麼是IIFE?"></a>什麼是IIFE?</h2><p><em><strong>IIFE，全稱Immediately Invoked Functions Expressions(立即執行函式)</strong></em></p>
+<p>在之前有提到建立 function 的方法通常有 function statement 和 function expression 這兩種方式，</p>
+<p>而<code>IIFE</code> 指的就是透過 function expression 的方式來建立函式，並且立即執行它。</p>
+<p>如下列程式碼：</p>
 <figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// function statement</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">greet</span>(<span class="params">name</span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Hello &#x27;</span> + name);   </span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">greet</span>(<span class="string">&#x27;John&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// using a function expression</span></span><br><span class="line"><span class="keyword">var</span> greetFunc = <span class="keyword">function</span>(<span class="params">name</span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Hello &#x27;</span> + name);</span><br><span class="line">&#125;;</span><br><span class="line"><span class="title function_">greetFunc</span>(<span class="string">&#x27;John&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// using an Immediately Invoked Function Expression (IIFE)</span></span><br><span class="line"><span class="keyword">var</span> greeting = (<span class="keyword">function</span>(<span class="params">name</span>) &#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;Hello &#x27;</span> + name;</span><br><span class="line">    </span><br><span class="line">&#125;)(<span class="string">&#x27;John&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(greeting);</span><br></pre></td></tr></table></figure>
 
 <p>輸出結果為：</p>
 <figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Hello</span> <span class="title class_">John</span></span><br><span class="line"><span class="title class_">Hello</span> <span class="title class_">John</span></span><br><span class="line"><span class="title class_">Hello</span> <span class="title class_">John</span></span><br></pre></td></tr></table></figure>
 
-<p>前面兩段code在之前的章節我們都有學習到，但第三段code看起來很像是第二段code，只是多了點東西。其實這就是<code>IIFE</code>，用function expression的方式建立function後直接在最後面加上()。</p>
+<p>前面兩段code在之前的章節我們都有學習到，應該難不倒大家吧，但是第三段code看起來很像是第二段code但又多了點東西，讓我有點困惑。</p>
+<p>其實這就是<code>IIFE</code>，用function expression的方式建立function後直接在最後面加上()。</p>
 <p>我們用下面兩張圖片來說明會更加了解：</p>
-<p><img src="https://i.imgur.com/YUshpYx.png" alt="Imgur"></p>
+<p><img src="https://i.imgur.com/YUshpYx.png"></p>
 <p>這張圖片就是我們之前學的function expression，我們可以看到，當我們console.log(greeting)出來的會是一個function。</p>
-<p><img src="https://i.imgur.com/47tUMLH.png" alt="Imgur"></p>
-<p>但當我把function用<code>()</code>包起來並且再加上一個<code>()</code>後，他就會直接執行這個function裡的內容並回傳字串。</p>
-<p>另外這邊還有一個重點，在使用 <code>IIFE</code> 的寫法後，他回傳的內容會是字串，因此我們沒有辦法再次執行它。</p>
+<p>既然知道前面這一段是一個function後，在正常的情況下，當我們今天要使用這個function就要使用「調用 (invoke)」，也就是再加上一個<code>()</code> 。也就是第一段跟第二段的code。</p>
+<p>但如果是要使用<code>IIFE</code>的話，必須先把前面的function用<code>()</code>包起來，然後再加上「調用 (invoke)」，他就會直接執行這個function裡的內容並回傳字串。</p>
+<p><img src="https://i.imgur.com/47tUMLH.png"></p>
+<p>另外這邊還有一個重點，在使用 <code>IIFE</code> 的寫法後，要記住他回傳的內容會是 <em><strong>字串</strong></em> ，因此我們沒有辦法再次執行它。</p>
 <p>如果我們強制在後面加上()，例如:</p>
 <figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// using an Immediately Invoked Function Expression (IIFE)</span></span><br><span class="line"><span class="keyword">var</span> greeting = (<span class="keyword">function</span>(<span class="params">name</span>) &#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;Hello &#x27;</span> + name;</span><br><span class="line">    </span><br><span class="line">&#125;)(<span class="string">&#x27;John&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">greeting</span>());</span><br></pre></td></tr></table></figure>
 
 <p>我們會得到：</p>
 <figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">TypeError</span>: greeting is not a <span class="keyword">function</span></span><br></pre></td></tr></table></figure>
 
-<h2 id="所以我們要特別注意這邊，避免出現錯誤（現在才知道我之前為什麼有時候會出現這個東西了）"><a href="#所以我們要特別注意這邊，避免出現錯誤（現在才知道我之前為什麼有時候會出現這個東西了）" class="headerlink" title="所以我們要特別注意這邊，避免出現錯誤（現在才知道我之前為什麼有時候會出現這個東西了）"></a>所以我們要特別注意這邊，避免出現錯誤（現在才知道我之前為什麼有時候會出現這個東西了）</h2><p>在之前我們有提到過expression 的概念：輸入後能夠直接回傳值的一串程式，我們一般會把它存成一個變數，但是它不一定要被存成一個變數。</p>
-<p>當如果想在function也做到，這是後我的第一個想法會是：</p>
+<p><strong>所以我們要特別注意這邊，避免出現錯誤（現在才知道我之前為什麼有時候會出現這個東西了）</strong></p>
+<h2 id="更深入的應用-IIFE"><a href="#更深入的應用-IIFE" class="headerlink" title="更深入的應用 IIFE"></a><strong><strong>更深入的應用 IIFE</strong></strong></h2><p>在之前我們有提到過expression 的概念：輸入後能夠直接回傳值的一串程式，我們一般會把它存成一個變數，但是它不一定要被存成一個變數。</p>
+<p>當如果想在function也做到，這時候我的第一個想法會是：</p>
 <figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ❌ 錯誤寫法</span></span><br><span class="line"><span class="keyword">function</span>(<span class="params">name</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> greeting = <span class="string">&#x27;Inside IIFE: Hello&#x27;</span>;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(greeting + <span class="string">&#x27; &#x27;</span> + name);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>這時候我會得到一個錯誤：</p>
@@ -262,24 +260,29 @@
 <figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> firstname = <span class="string">&#x27;John&#x27;</span>;</span><br><span class="line"></span><br><span class="line">(<span class="keyword">function</span>(<span class="params">name</span>) &#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">var</span> greeting = <span class="string">&#x27;Inside IIFE: Hello&#x27;</span>;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(greeting + <span class="string">&#x27; &#x27;</span> + name);</span><br><span class="line">    </span><br><span class="line">&#125;(firstname));</span><br></pre></td></tr></table></figure>
 
 <hr>
-<p>這段我們要來探討，為什麼我們需要使用IIFEs？</p>
-<p>還記得之前課堂上有提到的一個名詞：namespace。</p>
-<p>namespace的使用是為了避免變項名稱重覆所造成的問題，而IIFEs也很類似，他也是可以避免我們所建立的變項名稱因為覆蓋而造成影響。</p>
-<p>接下來我們要了解在JavaScript引擎實際發生了什麼，我們就拿下面的範例來說明：</p>
+<h2 id="為什麼我們需要使用IIFE？"><a href="#為什麼我們需要使用IIFE？" class="headerlink" title="為什麼我們需要使用IIFE？"></a>為什麼我們需要使用IIFE？</h2><p>還記得之前有提到的一個名詞：namespace。</p>
+<p>namespace的使用是為了避免變項名稱重覆所造成的問題，而IIFE也很類似，他也是可以避免我們所建立的變項名稱因為覆蓋而造成影響。</p>
+<p>我們就拿下面的範例來說明在JavaScript引擎實際發生了什麼：</p>
 <figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">(<span class="keyword">function</span>(<span class="params">name</span>) &#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">var</span> greeting = <span class="string">&#x27;Hello&#x27;</span>;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(greeting + <span class="string">&#x27; &#x27;</span> + name);</span><br><span class="line">    </span><br><span class="line">&#125;(<span class="string">&#x27;John&#x27;</span>));</span><br></pre></td></tr></table></figure>
 
-<p>套用之前所學的，當我執行剛剛那段code時，會先建立Global Execution Context(裡面是空的，因為我們沒有設立變數)</p>
-<p><img src="https://i.imgur.com/w4jTO4S.png" alt="Imgur"></p>
-<p>接下來JavaScript引擎會執行這段IIFEs，它會將這個匿名函式儲存在Execution Context中。</p>
-<p><img src="https://i.imgur.com/qejFebs.png" alt="Imgur"></p>
-<p>由於我們在function的最後有加上( )，所以這段function會立即被執行。JavaScript引擎會去逐行執行我們這個function中的程式碼內容，當它發現到我們的程式碼中建立了一個變數<code>var greeting = &#39;Hello&#39;;</code>，因此這個變數就被建立在這個execution context 中。</p>
-<p><img src="https://i.imgur.com/Zl0tTID.png" alt="Imgur"></p>
-<p>因此，透過IIFEs，我們可以發現，在IIFEs中所建立的變數，都不會影響到Global Execution Context所建立的變數，也就是說，透過IIFEs，它避免了我們的變數間可能會互相干擾覆蓋的情況。</p>
+<p>當我執行剛剛那段code時，會先建立Global Execution Context(裡面是空的，因為我們沒有設立變數)</p>
+<p><img src="https://i.imgur.com/w4jTO4S.png"></p>
+<p>接下來JavaScript引擎會執行這段IIFE，它會將這個匿名函式儲存在Execution Context中。</p>
+<p><img src="https://i.imgur.com/qejFebs.png"></p>
+<p>由於我們在function的最後有加上( )，所以這段function會立即被執行。</p>
+<p>JavaScript引擎會去逐行執行我們這個function中的程式碼內容，當它發現到我們的程式碼中建立了一個變數<code>var greeting = &#39;Hello&#39;;</code>，因此這個變數就被建立在這個execution context 中。</p>
+<p><img src="https://i.imgur.com/Zl0tTID.png"></p>
+<p>因此，透過IIFE，我們可以發現，在IIFE中所建立的變數，都不會影響到Global Execution Context所建立的變數，也就是說，透過IIFE，它避免了我們的變數間可能會互相干擾覆蓋的情況。</p>
 <hr>
-<p>在課堂的最後有提到，如果我要讓function execution這層的變數能夠同時影響到Global Execution Context的變數時，我該怎麼做？</p>
+<p>那如果我要讓function execution這層的變數能夠同時影響到Global Execution Context的變數時，我該怎麼做？</p>
 <p>其實也是之前有提到的一個觀念：<code>by reference</code></p>
 <p>由於我們知道物件是<code>by reference</code>的特性，因此我們只要把全域變數帶入就可以了，因此我們必須要多一個參數，叫做<code>global</code>，在帶入參數的地方放入<code>window</code>(全域變數)，之後再直接針對window裡面的物件去做改變。如下：</p>
 <figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> greeting = <span class="string">&quot;Hola&quot;</span>;</span><br><span class="line">(<span class="keyword">function</span>(<span class="params"><span class="variable language_">global</span>, name</span>) &#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">var</span> greeting = <span class="string">&#x27;Hello&#x27;</span>;</span><br><span class="line">    <span class="variable language_">global</span>.<span class="property">greeting</span> = <span class="string">&#x27;Hello&#x27;</span>;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(greeting + <span class="string">&#x27; &#x27;</span> + name);</span><br><span class="line">    </span><br><span class="line">&#125;(<span class="variable language_">window</span>, <span class="string">&#x27;John&#x27;</span>));</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(greeting);</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>我又發現鐵人賽的一個困難點了，排每天主題！！！</p>
+<p>開賽前都不覺得這會是問題，但實際開始寫後發現這是一個很難的問題XD</p>
+<p>就例如今天的主題，我非常猶豫要不要先講Event Loop，畢竟上一篇是講Event 剛好名字有相關(喂～～)。但講Event Loop又會帶到callback function，講到這個又會提到closures…一環扣著一環啊，最後我放棄選擇了，我決定用我之前上<strong>JavaScript: Understanding the Weird Part</strong>所教的順序來寫，這樣我的內容才會比較有條理一點吧&gt;&lt;”</p>
 
     </div>
 
@@ -290,7 +293,6 @@
       <footer class="post-footer">
           <div class="post-tags">
               <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
-              <a href="/tags/JavaScript-%E5%9F%BA%E7%A4%8E/" rel="tag"># JavaScript 基礎</a>
           </div>
 
         
@@ -299,13 +301,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2023/01/30/JavaScript-%E5%9F%BA%E7%A4%8E-2023-01-30-step4-4-2023-01-30-step4-4/" rel="prev" title="『JavaScript 基礎』 arguments跟 parameters以及 spread">
-      <i class="fa fa-chevron-left"></i> 『JavaScript 基礎』 arguments跟 parameters以及 spread
+    <a href="/2023/09/18/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-18-Day18/" rel="prev" title="『Day -18』事件機制的原理">
+      <i class="fa fa-chevron-left"></i> 『Day -18』事件機制的原理
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2023/02/04/JavaScript-%E5%9F%BA%E7%A4%8E-2023-02-04-step4-6-2023-02-04-step4-6/" rel="next" title="『JavaScript 基礎』 Closures">
-      『JavaScript 基礎』 Closures <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -364,7 +363,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%80%E4%BB%A5%E6%88%91%E5%80%91%E8%A6%81%E7%89%B9%E5%88%A5%E6%B3%A8%E6%84%8F%E9%80%99%E9%82%8A%EF%BC%8C%E9%81%BF%E5%85%8D%E5%87%BA%E7%8F%BE%E9%8C%AF%E8%AA%A4%EF%BC%88%E7%8F%BE%E5%9C%A8%E6%89%8D%E7%9F%A5%E9%81%93%E6%88%91%E4%B9%8B%E5%89%8D%E7%82%BA%E4%BB%80%E9%BA%BC%E6%9C%89%E6%99%82%E5%80%99%E6%9C%83%E5%87%BA%E7%8F%BE%E9%80%99%E5%80%8B%E6%9D%B1%E8%A5%BF%E4%BA%86%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">所以我們要特別注意這邊，避免出現錯誤（現在才知道我之前為什麼有時候會出現這個東西了）</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E9%BA%BC%E6%98%AFIIFE"><span class="nav-number">1.</span> <span class="nav-text">什麼是IIFE?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9B%B4%E6%B7%B1%E5%85%A5%E7%9A%84%E6%87%89%E7%94%A8-IIFE"><span class="nav-number">2.</span> <span class="nav-text">更深入的應用 IIFE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%82%BA%E4%BB%80%E9%BA%BC%E6%88%91%E5%80%91%E9%9C%80%E8%A6%81%E4%BD%BF%E7%94%A8IIFE%EF%BC%9F"><span class="nav-number">3.</span> <span class="nav-text">為什麼我們需要使用IIFE？</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
