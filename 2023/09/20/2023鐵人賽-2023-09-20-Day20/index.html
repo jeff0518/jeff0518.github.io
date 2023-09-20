@@ -20,30 +20,41 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="這是一個紀錄自己成長的地方">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Jeff的隨手筆記">
-<meta property="og:url" content="http://example.com/index.html">
+  <meta name="description" content="在正式進入之前，我們先來看一段code： 12345678910function greet(whattosay) &amp;#123;   return function(name) &amp;#123;       console.log(whattosay + &amp;#x27; &amp;#x27; + name);   &amp;#125;&amp;#125;greet(&amp;#x27;Hi&amp;#x27;)(&amp;#x27;Tony&amp;#x27">
+<meta property="og:type" content="article">
+<meta property="og:title" content="『Day -20』Closures">
+<meta property="og:url" content="http://example.com/2023/09/20/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-20-Day20/index.html">
 <meta property="og:site_name" content="Jeff的隨手筆記">
-<meta property="og:description" content="這是一個紀錄自己成長的地方">
+<meta property="og:description" content="在正式進入之前，我們先來看一段code： 12345678910function greet(whattosay) &amp;#123;   return function(name) &amp;#123;       console.log(whattosay + &amp;#x27; &amp;#x27; + name);   &amp;#125;&amp;#125;greet(&amp;#x27;Hi&amp;#x27;)(&amp;#x27;Tony&amp;#x27">
 <meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://i.imgur.com/T4tezH3.png">
+<meta property="og:image" content="https://i.imgur.com/W1sWi90.png">
+<meta property="og:image" content="https://i.imgur.com/wOFUCgu.png">
+<meta property="og:image" content="https://i.imgur.com/0SjOrUO.png">
+<meta property="og:image" content="https://i.imgur.com/2IgQVwu.png">
+<meta property="og:image" content="https://i.imgur.com/ZYhfpvM.png">
+<meta property="og:image" content="https://i.imgur.com/Yqx961V.png">
+<meta property="article:published_time" content="2023-09-20T01:59:53.000Z">
+<meta property="article:modified_time" content="2023-09-20T02:00:32.793Z">
 <meta property="article:author" content="Jeff">
+<meta property="article:tag" content="JavaScript">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.imgur.com/T4tezH3.png">
 
-<link rel="canonical" href="http://example.com/">
+<link rel="canonical" href="http://example.com/2023/09/20/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-20-Day20/">
 
 
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome : true,
-    isPost : false,
+    isHome : false,
+    isPost : true,
     lang   : 'zh-tw'
   };
 </script>
 
-  <title>Jeff的隨手筆記</title>
+  <title>『Day -20』Closures | Jeff的隨手筆記</title>
   
 
 
@@ -152,9 +163,10 @@
         <div class="content-wrap">
           
 
-          <div class="content index posts-expand">
+          <div class="content post posts-expand">
             
-      
+
+    
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
@@ -170,10 +182,9 @@
       <meta itemprop="name" content="Jeff的隨手筆記">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/09/20/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-20-Day20/" class="post-title-link" itemprop="url">『Day -20』Closures</a>
-        </h2>
+        <h1 class="post-title" itemprop="name headline">
+          『Day -20』Closures
+        </h1>
 
         <div class="post-meta">
             <span class="post-meta-item">
@@ -206,7 +217,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>在正式進入之前，我們先來看一段code：</p>
+        <p>在正式進入之前，我們先來看一段code：</p>
 <figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">greet</span>(<span class="params">whattosay</span>) &#123;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">return</span> <span class="keyword">function</span>(<span class="params">name</span>) &#123;</span><br><span class="line">       <span class="variable language_">console</span>.<span class="title function_">log</span>(whattosay + <span class="string">&#x27; &#x27;</span> + name);</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">greet</span>(<span class="string">&#x27;Hi&#x27;</span>)(<span class="string">&#x27;Tony&#x27;</span>)</span><br><span class="line"><span class="comment">// 輸出會是：Hi Tony</span></span><br></pre></td></tr></table></figure>
 
 <p>好像有點難懂，我們換另一種寫法：</p>
@@ -268,708 +279,34 @@
 <p>因此又重新看了一遍**<code>JavaScript: Understanding the Weird Part</code> 。**</p>
 <p>結果字幕沒有中文了…還好只是複習一下自己忘記的地方，不然完全不懂的情況下要我聽英文看英文字幕學習我應該辦不到….</p>
 
-      
     </div>
 
     
     
     
+
       <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
+          <div class="post-tags">
+              <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          </div>
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/09/19/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-19-Day19/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/avatar.jpeg">
-      <meta itemprop="name" content="Jeff">
-      <meta itemprop="description" content="這是一個紀錄自己成長的地方">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Jeff的隨手筆記">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/09/19/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-19-Day19/" class="post-title-link" itemprop="url">『Day -19』IIFE</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2023-09-19 14:47:50 / Modified: 14:48:47" itemprop="dateCreated datePublished" datetime="2023-09-19T14:47:50+08:00">2023-09-19</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/2023%E9%90%B5%E4%BA%BA%E8%B3%BD/" itemprop="url" rel="index"><span itemprop="name">2023鐵人賽</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>再繼續往下走之前我們先來認識一下什麼是IIFE?</p>
-<p>第一次看到這個詞的時候，是在看youtube看**<code>深入淺出 Javascript30</code>** 的解說影片上得知的，但當時並不在意，想說課堂上沒教應該不是什麼重要的，誰知道現在又在**<code>JavaScript: Understanding the Weird Part</code>**上看到在教這個，看來是要來好好了解一下</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023/09/19/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-19-Day19/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
         
-      
-    </div>
 
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/09/18/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-18-Day18/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/avatar.jpeg">
-      <meta itemprop="name" content="Jeff">
-      <meta itemprop="description" content="這是一個紀錄自己成長的地方">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Jeff的隨手筆記">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/09/18/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-18-Day18/" class="post-title-link" itemprop="url">『Day -18』事件機制的原理</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2023-09-18 11:29:18 / Modified: 11:30:04" itemprop="dateCreated datePublished" datetime="2023-09-18T11:29:18+08:00">2023-09-18</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/2023%E9%90%B5%E4%BA%BA%E8%B3%BD/" itemprop="url" rel="index"><span itemprop="name">2023鐵人賽</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>JavaScript 是一個事件驅動 (Event-driven) 的程式語言，當瀏覽器載入網頁開始讀取後，雖然馬上會讀取 JavaScript 事件相關的程式碼，但是必須等到「事件」被觸發(如使用者點擊、按下鍵盤等)後，才會再進行對應程式的執行。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023/09/18/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-18-Day18/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
         
-      
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/09/19/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-19-Day19/" rel="prev" title="『Day -19』IIFE">
+      <i class="fa fa-chevron-left"></i> 『Day -19』IIFE
+    </a></div>
+      <div class="post-nav-item"></div>
     </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
       </footer>
+    
   </article>
   
   
   
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/09/17/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-17-Day17/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/avatar.jpeg">
-      <meta itemprop="name" content="Jeff">
-      <meta itemprop="description" content="這是一個紀錄自己成長的地方">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Jeff的隨手筆記">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/09/17/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-17-Day17/" class="post-title-link" itemprop="url">『Day -17』遍歷周邊 DOM 節點</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2023-09-17 10:21:09 / Modified: 10:22:19" itemprop="dateCreated datePublished" datetime="2023-09-17T10:21:09+08:00">2023-09-17</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/2023%E9%90%B5%E4%BA%BA%E8%B3%BD/" itemprop="url" rel="index"><span itemprop="name">2023鐵人賽</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>我們先來看一張DOM Tree的圖</p>
-<p><img src="https://i.imgur.com/ZtufkSX.png" alt="Imgur"></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023/09/17/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-17-Day17/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/09/16/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-16-Day16/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/avatar.jpeg">
-      <meta itemprop="name" content="Jeff">
-      <meta itemprop="description" content="這是一個紀錄自己成長的地方">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Jeff的隨手筆記">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/09/16/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-16-Day16/" class="post-title-link" itemprop="url">『Day -16』DOM Node 的建立、刪除與修改</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2023-09-16 14:34:39 / Modified: 14:36:15" itemprop="dateCreated datePublished" datetime="2023-09-16T14:34:39+08:00">2023-09-16</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/2023%E9%90%B5%E4%BA%BA%E8%B3%BD/" itemprop="url" rel="index"><span itemprop="name">2023鐵人賽</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>上一篇提到DOM 是一種樹狀結構，而樹狀結構特別擅長查找資料。</p>
-<p>因此這篇章就是要來認識「查找 DOM 元素」的相關語法。</p>
-<p>查找 DOM 元素有兩種途徑：</p>
-<ul>
-<li><strong>直接選出一個節點 (select)</strong> - 要在樹狀結構裡查找資料，至少要先選出第一個元素</li>
-<li><strong>從一個特定節點，查找到週邊的節點</strong> - 選出一個元素後，就可以順著結構找出父元素、子元素 、甚至同一層的兄弟元素，這種行為稱為「遍歷 (traverse)」。
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023/09/16/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-16-Day16/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/09/15/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-15-Day15/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/avatar.jpeg">
-      <meta itemprop="name" content="Jeff">
-      <meta itemprop="description" content="這是一個紀錄自己成長的地方">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Jeff的隨手筆記">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/09/15/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-15-Day15/" class="post-title-link" itemprop="url">『Day15』樹狀結構與 DOM 節點</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2023-09-15 15:20:29 / Modified: 15:24:38" itemprop="dateCreated datePublished" datetime="2023-09-15T15:20:29+08:00">2023-09-15</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/2023%E9%90%B5%E4%BA%BA%E8%B3%BD/" itemprop="url" rel="index"><span itemprop="name">2023鐵人賽</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>昨天我們解釋了什麼是DOM跟BOM，今天我們繼續來認識DOM Tree 和 DOM Node</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023/09/15/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-15-Day15/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/09/14/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-14-Day14/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/avatar.jpeg">
-      <meta itemprop="name" content="Jeff">
-      <meta itemprop="description" content="這是一個紀錄自己成長的地方">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Jeff的隨手筆記">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/09/14/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-14-Day14/" class="post-title-link" itemprop="url">『Day -14』認識DOM</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2023-09-14 10:52:56 / Modified: 10:54:31" itemprop="dateCreated datePublished" datetime="2023-09-14T10:52:56+08:00">2023-09-14</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/2023%E9%90%B5%E4%BA%BA%E8%B3%BD/" itemprop="url" rel="index"><span itemprop="name">2023鐵人賽</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>接下來這幾篇我想來複習JavaScript的DOM。</p>
-<p>但要講DOM前，我們要先來了解JavaScript在網頁裡到底是負責什麼。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023/09/14/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-14-Day14/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/09/13/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-13-Day13/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/avatar.jpeg">
-      <meta itemprop="name" content="Jeff">
-      <meta itemprop="description" content="這是一個紀錄自己成長的地方">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Jeff的隨手筆記">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/09/13/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-13-Day13/" class="post-title-link" itemprop="url">『Day -13』Call  by value & Call  by reference</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2023-09-13 09:33:46 / Modified: 09:35:39" itemprop="dateCreated datePublished" datetime="2023-09-13T09:33:46+08:00">2023-09-13</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/2023%E9%90%B5%E4%BA%BA%E8%B3%BD/" itemprop="url" rel="index"><span itemprop="name">2023鐵人賽</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>既然都是要寫JavaScript的資訊，不免俗的要來 <del><strong>水一篇</strong></del> 好好探討一下傳值還是傳址。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023/09/13/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-13-Day13/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/09/12/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-12-Day12/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/avatar.jpeg">
-      <meta itemprop="name" content="Jeff">
-      <meta itemprop="description" content="這是一個紀錄自己成長的地方">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Jeff的隨手筆記">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/09/12/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-12-Day12/" class="post-title-link" itemprop="url">『Day -12』強制轉型(Coercion)</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2023-09-12 15:09:26 / Modified: 15:11:01" itemprop="dateCreated datePublished" datetime="2023-09-12T15:09:26+08:00">2023-09-12</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/2023%E9%90%B5%E4%BA%BA%E8%B3%BD/" itemprop="url" rel="index"><span itemprop="name">2023鐵人賽</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>在前面的篇章有提到在JavaScript裡，要比較兩個值是否一樣要用3個等號而不是兩個等號，這是因為JavaScript有一項特性，叫做coercion。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023/09/12/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-12-Day12/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/09/11/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-11-Day11/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/avatar.jpeg">
-      <meta itemprop="name" content="Jeff">
-      <meta itemprop="description" content="這是一個紀錄自己成長的地方">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Jeff的隨手筆記">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/09/11/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-11-Day11/" class="post-title-link" itemprop="url">『Day -11』運算子(Operator)（2）</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2023-09-11 10:28:58 / Modified: 10:33:13" itemprop="dateCreated datePublished" datetime="2023-09-11T10:28:58+08:00">2023-09-11</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/2023%E9%90%B5%E4%BA%BA%E8%B3%BD/" itemprop="url" rel="index"><span itemprop="name">2023鐵人賽</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>今天我們要來把昨天沒說完的運算子給說完，因此今天的主題是：<strong>邏輯運算子（Logical operators）</strong>以及 <strong>條件（三元）運算子（Conditional (ternary) operator）</strong></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023/09/11/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-11-Day11/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-
-  
-  <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
-  </nav>
 
 
 
@@ -1021,6 +358,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E9%BA%BC%E6%98%AFClosures"><span class="nav-number">1.</span> <span class="nav-text">什麼是Closures</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Closures%E7%9A%84%E5%BA%95%E5%B1%A4%E5%8E%9F%E7%90%86"><span class="nav-number">2.</span> <span class="nav-text">Closures的底層原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Closure%E7%9A%84%E7%B7%B4%E7%BF%92"><span class="nav-number">3.</span> <span class="nav-text">Closure的練習</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BD%9CClosure%E7%9A%84%E9%80%B2%E9%9A%8E%E7%B7%B4%E7%BF%92"><span class="nav-number">4.</span> <span class="nav-text">｜Closure的進階練習</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Closure%E7%9A%84%E7%B8%BD%E7%B5%90"><span class="nav-number">5.</span> <span class="nav-text">Closure的總結</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A3%9C%E5%85%85%EF%BC%9Acallback-function"><span class="nav-number">6.</span> <span class="nav-text">補充：callback function</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
