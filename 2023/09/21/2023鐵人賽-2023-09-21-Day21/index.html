@@ -27,19 +27,16 @@
 <meta property="og:site_name" content="Jeff的隨手筆記">
 <meta property="og:description" content="今天要講的 Event Loop，看到網路上很多文章都有提到，這是 JS 最獨特的地方，幾乎沒有其他語言有這個特性。 今天這份文章會以Philip Roberts 在 JS Conf 的演講影片 What the heck is the event loop anyway，為主要架構，在搭配其他文章內容，如有說錯還請大家指教！ 之所以選這部影片，是因為我第一次接觸 Event Loop就是看這支影">
 <meta property="og:locale" content="zh_TW">
-<meta property="og:image" content="https://img.youtube.com/vi/https://youtube.com/clip/UgkxYVMUW6exj79qzqFMdMFLgB-DEwZAKqOS?si=KymzBQBgRz2jf0qN/0.jpg">
-<meta property="og:image" content="https://img.youtube.com/vi/https://youtube.com/clip/Ugkxhed-L8AzrlSOGHAvPxL72JtARHQ6gqDe?si=pBLLsMW7q7dEqqk0/0.jpg">
 <meta property="og:image" content="https://i.imgur.com/T4nvAGm.png">
 <meta property="og:image" content="https://i.imgur.com/vtWhcfp.png">
 <meta property="og:image" content="https://i.imgur.com/yqIHG9V.png">
-<meta property="og:image" content="https://img.youtube.com/vi/https://youtube.com/clip/Ugkx0QDj8SO_ASPk94YwDuTfvpT5WIyFHD35?si=Jf31EJgKhr4nwcxV/0.jpg">
-<meta property="og:image" content="https://img.youtube.com/vi/https://www.youtube.com/watch?v=https://www.youtube.com/clip/UgkxlMVXnTYZfhaqs6RhrCZuo-IKuAq6PgYc/0.jpg">
+<meta property="og:image" content="https://img.youtube.com/vi/8aGhZQkoFbQ/0.jpg">
 <meta property="article:published_time" content="2023-09-21T07:23:37.000Z">
-<meta property="article:modified_time" content="2023-09-21T07:24:22.083Z">
+<meta property="article:modified_time" content="2023-09-21T07:34:22.396Z">
 <meta property="article:author" content="Jeff">
 <meta property="article:tag" content="JavaScript">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://img.youtube.com/vi/https://youtube.com/clip/UgkxYVMUW6exj79qzqFMdMFLgB-DEwZAKqOS?si=KymzBQBgRz2jf0qN/0.jpg">
+<meta name="twitter:image" content="https://i.imgur.com/T4nvAGm.png">
 
 <link rel="canonical" href="http://example.com/2023/09/21/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-21-Day21/">
 
@@ -194,7 +191,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2023-09-21 15:23:37 / Modified: 15:24:22" itemprop="dateCreated datePublished" datetime="2023-09-21T15:23:37+08:00">2023-09-21</time>
+              <time title="Created: 2023-09-21 15:23:37 / Modified: 15:34:22" itemprop="dateCreated datePublished" datetime="2023-09-21T15:23:37+08:00">2023-09-21</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -220,16 +217,17 @@
         <p>今天要講的 Event Loop，看到網路上很多文章都有提到，這是 JS 最獨特的地方，幾乎沒有其他語言有這個特性。</p>
 <p>今天這份文章會以Philip Roberts 在 JS Conf 的演講影片 <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=8aGhZQkoFbQ&ab_channel=JSConf">What the heck is the event loop anyway</a>，為主要架構，在搭配其他文章內容，如有說錯還請大家指教！</p>
 <p>之所以選這部影片，是因為我第一次接觸 Event Loop就是看這支影片，因為當時ＡＣ的作業要寫這篇的心得並發到部落格，當時真的有看沒有懂XDD</p>
+<span id="more"></span>
 <h2 id="Single-Threaded（單線程）"><a href="#Single-Threaded（單線程）" class="headerlink" title="Single Threaded（單線程）"></a>S<strong><strong>ingle Threaded（單線程）</strong></strong></h2><p>“<strong>JavaScript 是一種單線程（single-threaded）的程式語言</strong>“，這表示 JavaScript 在執行時只使用單一的執行緒。這代表它一次只能執行一段程式碼，無法同時處理多個任務。</p>
 <p>然而，JavaScript 通常是在瀏覽器或 Node.js 這樣的環境中運行。這些環境提供了一個執行環境（Runtime Environment），包含了其他執行緒，這些執行緒可以處理一些非同步的任務。比如說，當你使用 <strong><code>setTimeout</code></strong> 函式時，JavaScript 引擎會將它交給執行環境的其他部分處理，以便在指定的時間後執行你提供的code。</p>
 <p>簡單來說，雖然 JavaScript 自身是單線程的，但是在運行的環境中（如瀏覽器或 Node.js），可以利用其他執行緒來處理非同步的任務，從而實現同時進行多項操作。</p>
 <h2 id="Execution-Context-Stack（執行環境堆疊）"><a href="#Execution-Context-Stack（執行環境堆疊）" class="headerlink" title="Execution Context Stack（執行環境堆疊）"></a>Execution Context Stack（執行環境堆疊）</h2><p>還記得我們前幾章一直有提到的<code>execution context</code> 嗎？</p>
 <p>當 JavaScript 程式開始執行時，它會創建一個<code>global execution context</code>(全域執行環境)。在這個<code>global execution context</code>內，如果呼叫了一個函式，就會為該函式創建一個新的<code>execution context</code>，並將其添加到”執行環境堆疊” 的頂部。當函式完成時，它的<code>execution context</code>從堆疊中移除，程式將繼續在在呼叫函式之前的環境中執行。</p>
 <p>每個執行環境都有自己的變數和函式宣告空間。這個執行環境堆疊的概念是管理程式範圍和執行順序的關鍵。</p>
-<p>下面是我節錄影片裡，關於執行堆疊（called stack）的片段，相信大家會更了解。<br><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=https://youtube.com/clip/UgkxYVMUW6exj79qzqFMdMFLgB-DEwZAKqOS?si=KymzBQBgRz2jf0qN"><img src="https://img.youtube.com/vi/https://youtube.com/clip/UgkxYVMUW6exj79qzqFMdMFLgB-DEwZAKqOS?si=KymzBQBgRz2jf0qN/0.jpg" alt="Yes"></a></p>
+<p>由於部分原因無法觀看節錄的畫面，關於執行堆疊（called stack）的片段大家可以到4分40左右開始觀看。<br>下面是我節錄影片裡，關於執行堆疊（called stack）的片段，相信大家會更了解。</p>
 <h2 id="Blocking（阻塞）"><a href="#Blocking（阻塞）" class="headerlink" title="Blocking（阻塞）"></a>Blocking（<strong><strong>阻塞）</strong></strong></h2><p>這段影片有提到一個詞，Blocking，中文稱作『阻塞』。</p>
 <p>他的意思是當我們在執行程式遇到 blocking時，程式的執行就會像卡住一樣等待很久的時間，直到 blocking的操作完成後程式才會繼續執行。</p>
-<p>[<img src="https://img.youtube.com/vi/https://youtube.com/clip/Ugkxhed-L8AzrlSOGHAvPxL72JtARHQ6gqDe?si=pBLLsMW7q7dEqqk0/0.jpg" alt="Yes">]</p>
+<p>由於部分原因無法觀看節錄的畫面，這部分大家可以到8分10秒左右觀看</p>
 <p>這樣會造成用戶體驗非常糟糕，因此JavaScript 鼓勵使用 non-blocking(非阻塞) 的操作，如asynchronous（非同步）編程模型，例如使用 Promise、async&#x2F;await 或 callbacks 來處理潛在的長時間操作，以保證程式在等待某些操作完成時仍然可以繼續執行其他任務，不會被blocking。</p>
 <h2 id="Synchronous-x2F-Asynchronous（同步與非同步）"><a href="#Synchronous-x2F-Asynchronous（同步與非同步）" class="headerlink" title="Synchronous&#x2F;Asynchronous（同步與非同步）"></a>Synchronous&#x2F;Asynchronous（同步與非同步）</h2><p>了解了什麼是blocking（阻塞）與non-blocking（非阻塞）後，其實你已經懂了synchronous(同步) 與 asynchronous(非同步)，為什麼這麼說呢？因為在<a target="_blank" rel="noopener" href="https://nodejs.org/en/docs/guides/blocking-vs-non-blocking/">Node.js 的官方文件</a>是這麼說的：</p>
 <blockquote>
@@ -282,8 +280,7 @@
 <li>Event Loop</li>
 </ol>
 <p>整個由上述部分，包含 JS 引擎所組成的環境，也稱為 JS Runtime Environment ( JRE )。</p>
-<p>我們先來看一下演講者是如何解釋這整個運作，之後我們再來解釋這4個名詞。<br>備注：setTimeout 5000的解說可看12:50-14:50，整個流程比較詳細，但因為只能分享1分鐘的片段，所以用setTimeout 0的片段給大家展示。</p>
-<p><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=https://youtube.com/clip/Ugkx0QDj8SO_ASPk94YwDuTfvpT5WIyFHD35?si=Jf31EJgKhr4nwcxV"><img src="https://img.youtube.com/vi/https://youtube.com/clip/Ugkx0QDj8SO_ASPk94YwDuTfvpT5WIyFHD35?si=Jf31EJgKhr4nwcxV/0.jpg" alt="Yes"></a></p>
+<p>我們先來看一下演講者是如何解釋這整個運作，之後我們再來解釋這4個名詞。<br>備注：setTimeout 5000的解說可看12:50-14:50，整個流程比較詳細</p>
 <h3 id="Web-API"><a href="#Web-API" class="headerlink" title="Web API"></a>Web API</h3><p>Web API 是瀏覽器提供的一組介面，讓 JavaScript 可以與瀏覽器進行互動。</p>
 <p>剛剛我們知道了瀏覽器並不只是只有一個JS引擎所組成，我們在寫網頁的時候，有一些所謂「內建的」API 如 SetTimeout &#x2F; setInterval ，這些 API 不存在於 JavaScript 原始碼內，但你仍然可以在開發時直接使用。</p>
 <p>因為這些 API 是屬於瀏覽器提供的 Web API 。Web API 並非 JS 引擎的一部分，但他屬於瀏覽器運行流程的一環。</p>
@@ -299,7 +296,7 @@
 <h3 id="Event-Table"><a href="#Event-Table" class="headerlink" title="Event Table"></a>Event Table</h3><p>影片中並沒有提到這個，但在&lt;&lt;JS 原力覺醒 &gt;&gt;的鐵人賽文章有提到這個。以下是原文：</p>
 <p>Event Table 與 Event Queue 互相搭配的資料集合，他負責記錄在非同步目的達成後，有哪些函式或者事件要被執行，這裡指的非同步目的指的是像計時完畢、API資料獲取完畢、事件被觸發。當我們執行 setTimeout 這個函式時，JS 會把給定的函式與像是倒數的秒數之類的附帶資訊 ( meta data )推送到 Event Table裡面，等到一秒過後（目的達成）該函式就會被正式推送到Event Queue 等待執行。</p>
 <h3 id="Event-Loop"><a href="#Event-Loop" class="headerlink" title="Event Loop"></a>Event Loop</h3><p>Event Loop 是一個持續運行的機制，用於監聽 Event Queue 中是否有待執行的回調函式。如果Event Queue 不為空，事件迴圈會將隊列中的回調函式逐一取出執行。Event Loop 確保了 JavaScript 程序在等待非同步操作的同時，主線程仍然可以處理其他任務。</p>
-<h3 id="總結："><a href="#總結：" class="headerlink" title="總結："></a>總結：</h3><p>到這邊大家應該都懂了吧，如果還是不是那麼清楚，我們在把下面這段看完應該就更了解了。<br><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=https://www.youtube.com/watch?v=https://www.youtube.com/clip/UgkxlMVXnTYZfhaqs6RhrCZuo-IKuAq6PgYc"><img src="https://img.youtube.com/vi/https://www.youtube.com/watch?v=https://www.youtube.com/clip/UgkxlMVXnTYZfhaqs6RhrCZuo-IKuAq6PgYc/0.jpg" alt="Yes"></a></p>
+<h3 id="總結："><a href="#總結：" class="headerlink" title="總結："></a>總結：</h3><p>到這邊大家應該都懂了吧，如果還是不是那麼清楚，我們在把下面這段看完應該就更了解了。<br><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=8aGhZQkoFbQ"><img src="https://img.youtube.com/vi/8aGhZQkoFbQ/0.jpg" alt="Yes"></a></p>
 <hr>
 <p>第一次嘗試用影片來解說，不然這個要解釋流程我又要劃一堆圖了。</p>
 <p>如果有違反任何規定請告知我，我會馬上處理！</p>

@@ -183,7 +183,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2023-09-21 15:23:37 / Modified: 15:24:22" itemprop="dateCreated datePublished" datetime="2023-09-21T15:23:37+08:00">2023-09-21</time>
+              <time title="Created: 2023-09-21 15:23:37 / Modified: 15:34:22" itemprop="dateCreated datePublished" datetime="2023-09-21T15:23:37+08:00">2023-09-21</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -209,94 +209,14 @@
           <p>今天要講的 Event Loop，看到網路上很多文章都有提到，這是 JS 最獨特的地方，幾乎沒有其他語言有這個特性。</p>
 <p>今天這份文章會以Philip Roberts 在 JS Conf 的演講影片 <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=8aGhZQkoFbQ&ab_channel=JSConf">What the heck is the event loop anyway</a>，為主要架構，在搭配其他文章內容，如有說錯還請大家指教！</p>
 <p>之所以選這部影片，是因為我第一次接觸 Event Loop就是看這支影片，因為當時ＡＣ的作業要寫這篇的心得並發到部落格，當時真的有看沒有懂XDD</p>
-<h2 id="Single-Threaded（單線程）"><a href="#Single-Threaded（單線程）" class="headerlink" title="Single Threaded（單線程）"></a>S<strong><strong>ingle Threaded（單線程）</strong></strong></h2><p>“<strong>JavaScript 是一種單線程（single-threaded）的程式語言</strong>“，這表示 JavaScript 在執行時只使用單一的執行緒。這代表它一次只能執行一段程式碼，無法同時處理多個任務。</p>
-<p>然而，JavaScript 通常是在瀏覽器或 Node.js 這樣的環境中運行。這些環境提供了一個執行環境（Runtime Environment），包含了其他執行緒，這些執行緒可以處理一些非同步的任務。比如說，當你使用 <strong><code>setTimeout</code></strong> 函式時，JavaScript 引擎會將它交給執行環境的其他部分處理，以便在指定的時間後執行你提供的code。</p>
-<p>簡單來說，雖然 JavaScript 自身是單線程的，但是在運行的環境中（如瀏覽器或 Node.js），可以利用其他執行緒來處理非同步的任務，從而實現同時進行多項操作。</p>
-<h2 id="Execution-Context-Stack（執行環境堆疊）"><a href="#Execution-Context-Stack（執行環境堆疊）" class="headerlink" title="Execution Context Stack（執行環境堆疊）"></a>Execution Context Stack（執行環境堆疊）</h2><p>還記得我們前幾章一直有提到的<code>execution context</code> 嗎？</p>
-<p>當 JavaScript 程式開始執行時，它會創建一個<code>global execution context</code>(全域執行環境)。在這個<code>global execution context</code>內，如果呼叫了一個函式，就會為該函式創建一個新的<code>execution context</code>，並將其添加到”執行環境堆疊” 的頂部。當函式完成時，它的<code>execution context</code>從堆疊中移除，程式將繼續在在呼叫函式之前的環境中執行。</p>
-<p>每個執行環境都有自己的變數和函式宣告空間。這個執行環境堆疊的概念是管理程式範圍和執行順序的關鍵。</p>
-<p>下面是我節錄影片裡，關於執行堆疊（called stack）的片段，相信大家會更了解。<br><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=https://youtube.com/clip/UgkxYVMUW6exj79qzqFMdMFLgB-DEwZAKqOS?si=KymzBQBgRz2jf0qN"><img src="https://img.youtube.com/vi/https://youtube.com/clip/UgkxYVMUW6exj79qzqFMdMFLgB-DEwZAKqOS?si=KymzBQBgRz2jf0qN/0.jpg" alt="Yes"></a></p>
-<h2 id="Blocking（阻塞）"><a href="#Blocking（阻塞）" class="headerlink" title="Blocking（阻塞）"></a>Blocking（<strong><strong>阻塞）</strong></strong></h2><p>這段影片有提到一個詞，Blocking，中文稱作『阻塞』。</p>
-<p>他的意思是當我們在執行程式遇到 blocking時，程式的執行就會像卡住一樣等待很久的時間，直到 blocking的操作完成後程式才會繼續執行。</p>
-<p>[<img src="https://img.youtube.com/vi/https://youtube.com/clip/Ugkxhed-L8AzrlSOGHAvPxL72JtARHQ6gqDe?si=pBLLsMW7q7dEqqk0/0.jpg" alt="Yes">]</p>
-<p>這樣會造成用戶體驗非常糟糕，因此JavaScript 鼓勵使用 non-blocking(非阻塞) 的操作，如asynchronous（非同步）編程模型，例如使用 Promise、async&#x2F;await 或 callbacks 來處理潛在的長時間操作，以保證程式在等待某些操作完成時仍然可以繼續執行其他任務，不會被blocking。</p>
-<h2 id="Synchronous-x2F-Asynchronous（同步與非同步）"><a href="#Synchronous-x2F-Asynchronous（同步與非同步）" class="headerlink" title="Synchronous&#x2F;Asynchronous（同步與非同步）"></a>Synchronous&#x2F;Asynchronous（同步與非同步）</h2><p>了解了什麼是blocking（阻塞）與non-blocking（非阻塞）後，其實你已經懂了synchronous(同步) 與 asynchronous(非同步)，為什麼這麼說呢？因為在<a target="_blank" rel="noopener" href="https://nodejs.org/en/docs/guides/blocking-vs-non-blocking/">Node.js 的官方文件</a>是這麼說的：</p>
-<blockquote>
-<p>Blocking methods execute synchronously and non-blocking methods execute asynchronously.</p>
-</blockquote>
-<blockquote>
-<p>阻塞的方法會同步地（synchronously）執行，而非阻塞的方法會非同步地（asynchronously）執行</p>
-</blockquote>
-<p>但我相信還是會有很多人跟我一樣，同步不就是同時進行嗎？為什麼我卻只能一次執行一件事。</p>
-<p>這就要提到中文翻譯的問題了，但我英文很差這邊就用另一個方式跟大家解釋：</p>
-<h3 id="synchronous-同步"><a href="#synchronous-同步" class="headerlink" title="synchronous(同步)"></a>synchronous(同步)</h3><p><img src="https://i.imgur.com/T4nvAGm.png" alt="Imgur"></p>
-<p>Synchronous：餐廳老闆自己從帶位、點餐、煮菜等，一條龍完成所有作業，在完成一組客人後，才能接待下一位客人。</p>
-<p>在JavaScript大部分功能都是同步的，而同步的定義是指：程式碼的執行順序，依照由上而下執行，最後才輸出。</p>
-<p>優點當然是很好閱讀，但缺點就是效率變很差。</p>
-<h3 id="asynchronous-非同步"><a href="#asynchronous-非同步" class="headerlink" title="asynchronous(非同步)"></a>asynchronous(非同步)</h3><p><img src="https://i.imgur.com/vtWhcfp.png" alt="Imgur"></p>
-<p>Asynchronous：餐廳老闆請了不同的人負責各自專門的事情，服務生負責點餐、廚師負責煮飯。在固定的時間內，可以藉由大家的合作，處理多組客人。</p>
-<p>在這案例我們可以得知：</p>
-<ul>
-<li>非同步機制能加速餐廳運作，更高效率的處理事情！</li>
-<li>但非同步的狀況下，不同客人在不同階段需要的服務是不同的，因此員工間可能會產生「等待」的過程。</li>
-</ul>
-<p>我們可以做個總結：所謂的「非同步處理」，可以說就是釐清各式各樣的「等待」流程，並且在因「等待」而複雜化的程式流程中，確保程式能正確運作。</p>
-<p>詳細的同步非同步我們會在下一篇中跟大家解釋。</p>
-<h3 id="非同步處理與堆疊（Async-Callback-amp-Call-Stack）"><a href="#非同步處理與堆疊（Async-Callback-amp-Call-Stack）" class="headerlink" title="非同步處理與堆疊（Async Callback &amp; Call Stack）"></a><strong><strong>非同步處理與堆疊（Async Callback &amp; Call Stack）</strong></strong></h3><p>在了解同步非同步後，我們回到影片的案例。</p>
-<p>在影片裡，演講者用了經典的<code>setTimeout</code>來舉例，讓我們看一下code：</p>
-<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;hi&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">setTimeout</span>(<span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;there&#x27;</span>)</span><br><span class="line">&#125;, <span class="number">5000</span>)</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;JSConfEU&#x27;</span>)</span><br></pre></td></tr></table></figure>
-
-<p>這段code的結果想必大家應該都很清楚，就是：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hi</span><br><span class="line">JSConfEU</span><br><span class="line">there</span><br></pre></td></tr></table></figure>
-
-<p>但是如果我們把<code>setTimeout</code>的時間改成0的時候，結果會是什麼呢？</p>
-<p>答案還是：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hi</span><br><span class="line">JSConfEU</span><br><span class="line">there</span><br></pre></td></tr></table></figure>
-
-<p>疑？為什麼<code>setTimeout</code> 的時間已經是0了應該會直接執行啊？</p>
-<p>這就是我們今天所要探討的主題：Event Loop!</p>
-<h2 id="JS-Runtime-Environment"><a href="#JS-Runtime-Environment" class="headerlink" title="JS Runtime Environment"></a>JS Runtime Environment</h2><p>我們先來看一張圖：</p>
-<p><img src="https://i.imgur.com/yqIHG9V.png" alt="Imgur"></p>
-<p>我們前面有提到，JS 引擎底下有三個部分：</p>
-<ul>
-<li>Memory Heap「 記憶體堆疊」</li>
-<li>Global Execution Context「全域執行環境」</li>
-<li>Execution Context Stack「執行環境堆疊」。</li>
-</ul>
-<p>但整個瀏覽器並不只是只有一個JS引擎所組成，因為 JS 語言特性屬於單執行緒，同時又為了讓網頁具有像「監聽事件」、「計時」、「 拉第三方API 」這些類似「背景作業」的功能，瀏覽器提供了另外一些部分來達成，分別是：</p>
-<ol>
-<li>Web API</li>
-<li>Event Queue</li>
-<li>Event Table</li>
-<li>Event Loop</li>
-</ol>
-<p>整個由上述部分，包含 JS 引擎所組成的環境，也稱為 JS Runtime Environment ( JRE )。</p>
-<p>我們先來看一下演講者是如何解釋這整個運作，之後我們再來解釋這4個名詞。<br>備注：setTimeout 5000的解說可看12:50-14:50，整個流程比較詳細，但因為只能分享1分鐘的片段，所以用setTimeout 0的片段給大家展示。</p>
-<p><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=https://youtube.com/clip/Ugkx0QDj8SO_ASPk94YwDuTfvpT5WIyFHD35?si=Jf31EJgKhr4nwcxV"><img src="https://img.youtube.com/vi/https://youtube.com/clip/Ugkx0QDj8SO_ASPk94YwDuTfvpT5WIyFHD35?si=Jf31EJgKhr4nwcxV/0.jpg" alt="Yes"></a></p>
-<h3 id="Web-API"><a href="#Web-API" class="headerlink" title="Web API"></a>Web API</h3><p>Web API 是瀏覽器提供的一組介面，讓 JavaScript 可以與瀏覽器進行互動。</p>
-<p>剛剛我們知道了瀏覽器並不只是只有一個JS引擎所組成，我們在寫網頁的時候，有一些所謂「內建的」API 如 SetTimeout &#x2F; setInterval ，這些 API 不存在於 JavaScript 原始碼內，但你仍然可以在開發時直接使用。</p>
-<p>因為這些 API 是屬於瀏覽器提供的 Web API 。Web API 並非 JS 引擎的一部分，但他屬於瀏覽器運行流程的一環。</p>
-<p>關於 Web API ，舉一些例子：</p>
-<ul>
-<li>操作 DOM 節點的 API 如 ：document.getElementById</li>
-<li>AJAX 相關 API 像是：XMLHttpRequest</li>
-<li>計時類型的 API ，就像剛剛提到的 setTimeout</li>
-</ul>
-<p>這類 Web API 在與 JS 原始碼一起執行的時候，並不會直接影響 JS 主執行環境的運行，而是會運用非同步的方式，<strong>瀏覽器會將這些必須等待執行結果的動作，丟給其他部分去執行</strong>，讓 JS 引擎可以繼續做他應該做的事情，等到Web API 完成後將相應的回調函式添加到Event Queue中。</p>
-<h3 id="Event-Queue"><a href="#Event-Queue" class="headerlink" title="Event Queue"></a>Event Queue</h3><p>在 JavaScript 中，Event Queue 是用來處理非同步事件的一個概念。</p>
-<p>當非同步事件（如定時器、DOM 事件、HTTP 請求的回應等）發生時，相關的回調函式會被放入Event Queue中，等待被執行。Event Queue是一個先進先出（FIFO）的資料結構，確保了事件的執行順序。</p>
-<h3 id="Event-Table"><a href="#Event-Table" class="headerlink" title="Event Table"></a>Event Table</h3><p>影片中並沒有提到這個，但在&lt;&lt;JS 原力覺醒 &gt;&gt;的鐵人賽文章有提到這個。以下是原文：</p>
-<p>Event Table 與 Event Queue 互相搭配的資料集合，他負責記錄在非同步目的達成後，有哪些函式或者事件要被執行，這裡指的非同步目的指的是像計時完畢、API資料獲取完畢、事件被觸發。當我們執行 setTimeout 這個函式時，JS 會把給定的函式與像是倒數的秒數之類的附帶資訊 ( meta data )推送到 Event Table裡面，等到一秒過後（目的達成）該函式就會被正式推送到Event Queue 等待執行。</p>
-<h3 id="Event-Loop"><a href="#Event-Loop" class="headerlink" title="Event Loop"></a>Event Loop</h3><p>Event Loop 是一個持續運行的機制，用於監聽 Event Queue 中是否有待執行的回調函式。如果Event Queue 不為空，事件迴圈會將隊列中的回調函式逐一取出執行。Event Loop 確保了 JavaScript 程序在等待非同步操作的同時，主線程仍然可以處理其他任務。</p>
-<h3 id="總結："><a href="#總結：" class="headerlink" title="總結："></a>總結：</h3><p>到這邊大家應該都懂了吧，如果還是不是那麼清楚，我們在把下面這段看完應該就更了解了。<br><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=https://www.youtube.com/watch?v=https://www.youtube.com/clip/UgkxlMVXnTYZfhaqs6RhrCZuo-IKuAq6PgYc"><img src="https://img.youtube.com/vi/https://www.youtube.com/watch?v=https://www.youtube.com/clip/UgkxlMVXnTYZfhaqs6RhrCZuo-IKuAq6PgYc/0.jpg" alt="Yes"></a></p>
-<hr>
-<p>第一次嘗試用影片來解說，不然這個要解釋流程我又要劃一堆圖了。</p>
-<p>如果有違反任何規定請告知我，我會馬上處理！</p>
-<p>參考資料：</p>
-<p><a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2014/10/event-loop.html">http://www.ruanyifeng.com/blog/2014/10/event-loop.html</a></p>
-<p><a target="_blank" rel="noopener" href="https://yeefun.github.io/event-loop-in-depth/">https://yeefun.github.io/event-loop-in-depth/</a></p>
-<p><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=8aGhZQkoFbQ&ab_channel=JSConf">What the heck is the event loop anyway</a></p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023/09/21/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-21-Day21/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -338,10 +258,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2023-09-20 09:59:53 / Modified: 10:00:32" itemprop="dateCreated datePublished" datetime="2023-09-20T09:59:53+08:00">2023-09-20</time>
+              <time title="Created: 2023-09-20 09:59:53" itemprop="dateCreated datePublished" datetime="2023-09-20T09:59:53+08:00">2023-09-20</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2023-09-21 15:34:15" itemprop="dateModified" datetime="2023-09-21T15:34:15+08:00">2023-09-21</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -365,66 +291,14 @@
       
           <p>在正式進入之前，我們先來看一段code：</p>
 <figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">greet</span>(<span class="params">whattosay</span>) &#123;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">return</span> <span class="keyword">function</span>(<span class="params">name</span>) &#123;</span><br><span class="line">       <span class="variable language_">console</span>.<span class="title function_">log</span>(whattosay + <span class="string">&#x27; &#x27;</span> + name);</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">greet</span>(<span class="string">&#x27;Hi&#x27;</span>)(<span class="string">&#x27;Tony&#x27;</span>)</span><br><span class="line"><span class="comment">// 輸出會是：Hi Tony</span></span><br></pre></td></tr></table></figure>
-
-<p>好像有點難懂，我們換另一種寫法：</p>
-<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">greet</span>(<span class="params">whattosay</span>) &#123;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">return</span> <span class="keyword">function</span>(<span class="params">name</span>) &#123;</span><br><span class="line">       <span class="variable language_">console</span>.<span class="title function_">log</span>(whattosay + <span class="string">&#x27; &#x27;</span> + name);</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> sayHi = <span class="title function_">greet</span>(<span class="string">&#x27;Hi&#x27;</span>);</span><br><span class="line"><span class="title function_">sayHi</span>(<span class="string">&#x27;Tony&#x27;</span>);</span><br><span class="line"><span class="comment">//輸出會是： Hi Tony</span></span><br></pre></td></tr></table></figure>
-
-<p>看起來好像很合理，但如果仔細一想，有一個疑問：為什麼<code>sayHi</code>會知道<code>whattosay</code>這個參數。</p>
-<p>我的想法是：<code>whattosay</code>是在我們<code>called</code> <code>greet function</code>時創建的，而當greet這個function執行完成後參數<code>whattosay</code>應該會從<code>execution stack</code> 離開才對。為什麼<code>sayHi</code>還能找到呢？</p>
-<p>這就是我們要學的<code>closures</code>所帶來的結果。</p>
-<h3 id="什麼是Closures"><a href="#什麼是Closures" class="headerlink" title="什麼是Closures"></a>什麼是Closures</h3><p>先來一段MDN的說明：</p>
-<blockquote>
-<p>A <strong>closure</strong> is the combination of a function bundled together (enclosed) with references to its surrounding state (the <strong>lexical environment</strong>). In other words, a closure gives you access to an outer function’s scope from an inner function. In JavaScript, closures are created every time a function is created, at function creation time.</p>
-</blockquote>
-<p>簡單來說，閉包是指當內部 function 引用了外部 function 的變數時，這些變數會被保存在閉包內，使得即使外部 function 執行完畢後，內部函式依然可以訪問和操作這些變數。</p>
-<p>一般而言，當function被執行後，function 內的資料就會被銷毀，從而釋放記憶體空間。</p>
-<p>但有了這項特性後，我就可以利用這個特性來保存我們想要的資料。</p>
-<h3 id="Closures的底層原理"><a href="#Closures的底層原理" class="headerlink" title="Closures的底層原理"></a><strong>Closures的底層原理</strong></h3><p>當我們執行整段code時，我們知道整段code的<code>global execution context</code>會被建立。</p>
-<p>當我們來到 <code>var sayHi = greet(’Hi’)</code> 時，他會<code>invokes</code> greet這個function，創建新的<code>execution context</code> 。</p>
-<p><img src="https://i.imgur.com/T4tezH3.png"></p>
-<p>當我們要執行<code>function greet(whattosay)</code>時，javaScript引擎會注意到這裡有一個<code>parameters</code>(參數)，因此把他放到了<code>execution context</code>裡。</p>
-<p><img src="https://i.imgur.com/W1sWi90.png"></p>
-<p>當再往下執行後，發現了<code>return</code> ，因此回傳了後面整段function，所以整個<code>greet()</code>就會從<code>stack</code>彈出。</p>
-<p>但要記得，我們說過每個<code>execution context</code>在記憶體裡都會有一個空間，在正常情況下，JavaScript引擎會透過<code>garbage collection</code>來清除內容，但在execution context抽離的當下，雖然execution context已經不在了，但裡面的變數還是儲存在那個記憶體位置。</p>
-<p><img src="https://i.imgur.com/wOFUCgu.png"></p>
-<p>當我們繼續往下執行到<code>sayHi(&#39;Tony&#39;)</code>時，我們建立了一個給匿名函式的execution context，同時裡面帶有變數name。</p>
-<p><img src="https://i.imgur.com/0SjOrUO.png"></p>
-<p>當我們執行這個這個匿名函式的<code>console.log(whattosay + &#39; &#39; + name)</code>時，JavaScript引擎就會過<code>scope chain</code>的方式來尋找<code>whattosay</code>這個變數。這時候雖然我們的greet這個function的<code>execution context</code>已經不在了，但其實在這個記憶體位置仍然留有參照（reference），所以在greet function裡面所建立的函式仍然可以找得到<code>whattosay</code>這個變數。</p>
-<p><img src="https://i.imgur.com/2IgQVwu.png"></p>
-<p>到這邊就是整個closure的底層原理。</p>
-<p><img src="https://i.imgur.com/ZYhfpvM.png"></p>
-<h3 id="Closure的練習"><a href="#Closure的練習" class="headerlink" title="Closure的練習"></a><strong>Closure的練習</strong></h3><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">buildFunctions</span>(<span class="params"></span>) &#123;</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">var</span> arr = [];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">3</span>; i++) &#123;</span><br><span class="line">        </span><br><span class="line">        arr.<span class="title function_">push</span>(</span><br><span class="line">            <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">                <span class="variable language_">console</span>.<span class="title function_">log</span>(i);   </span><br><span class="line">            &#125;</span><br><span class="line">        )      </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> arr;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> fs = <span class="title function_">buildFunctions</span>();</span><br><span class="line"></span><br><span class="line">fs[<span class="number">0</span>]();</span><br><span class="line">fs[<span class="number">1</span>]();</span><br><span class="line">fs[<span class="number">2</span>]();</span><br></pre></td></tr></table></figure>
-
-<p>看到第一眼本來很直覺的想要說答案是0,1,2，但在仔細看了一遍後注意到arr裡面放的是function而不是number。</p>
-<p>所以<code>console.log(i)</code>並不會在被執行，而是當我們程式走到<code>fs[0]()</code>時，他才會去執行<code>console.log(i)</code>，所以透過<code>scope chain</code>去找到i的值。</p>
-<p>在<code>buildFunctions</code>這個function執行for迴圈時，每當執行一次，就會把 function( ){console.log(i)} 儲存到陣列中，但要注意的是這時候這個被儲到陣列中的function並沒有執行（invoke），而是只是儲存在裡面而已，因為它沒有透過括號 ( ) 來執行；然後 i 會繼續累加，當 i 累加到3的時候，因為不符合 i &lt; 3 所以會跳出迴圈。因此i就會是等於3，而arr會是長這樣：</p>
-<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">arr = [f0, f1, f2]</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://i.imgur.com/Yqx961V.png"></p>
-<p>因此當我們透過<code>scope chain</code>去找i時就會得到i &#x3D; 3，之後再帶入到程式碼裡面就會得到答案3。由於f0、f1跟f2都擁有同樣的outer environment reference，因此答案會是:3,3,3。</p>
-<p>那如果這時候我們要讓他輸出的結果變成 0, 1, 2時，我們該怎麼做？</p>
-<p>這邊提到了2個做法，第一個是使用<code>let</code>，第二個就是使用<code>IIFEs</code>。</p>
-<p>先看<code>let</code>:</p>
-<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">buildFunctions</span>(<span class="params"></span>) &#123;</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">var</span> arr = [];</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">3</span>; i++) &#123;</span><br><span class="line">        <span class="keyword">let</span> j = i;</span><br><span class="line">        arr.<span class="title function_">push</span>(</span><br><span class="line">            <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">                <span class="variable language_">console</span>.<span class="title function_">log</span>(j);   </span><br><span class="line">            &#125;</span><br><span class="line">        )</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> arr;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>透過let，可以讓每次跑的迴圈都建立在一個新的記憶體位置，因此最後指到的地方會是不一樣的，於是可以輸出0, 1, 2的結果。</p>
-<p>使用<code>IIFE</code>就稍微複雜了：</p>
-<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">buildFunctions</span>(<span class="params"></span>) &#123;</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">var</span> arr = [];</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">3</span>; i++) &#123;</span><br><span class="line">        arr.<span class="title function_">push</span>(</span><br><span class="line">            (<span class="keyword">function</span>(<span class="params">j</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">                    <span class="variable language_">console</span>.<span class="title function_">log</span>(j);   </span><br><span class="line">                &#125;</span><br><span class="line">            &#125;(i))</span><br><span class="line">        )</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> arr;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><code>(function(j)&#123;...&#125;)(i)</code>因為這段是IIFE，所以他會直接被執行並且會把變數i帶到function裏面，這也就導致在一開始原本一樣的<code>outer environment reference</code>變成不一樣，因此當我們要再去<code>outer environment reference</code> 找參數時，就會因為參數的值不同，得到的輸出就不會再是都一樣的。</p>
-<h3 id="｜Closure的進階練習"><a href="#｜Closure的進階練習" class="headerlink" title="｜Closure的進階練習"></a><strong>｜Closure的進階練習</strong></h3><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">makeGreeting</span>(<span class="params">language</span>) &#123;</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">function</span>(<span class="params">firstname, lastname</span>) &#123;</span><br><span class="line">     </span><br><span class="line">        <span class="keyword">if</span> (language === <span class="string">&#x27;en&#x27;</span>) &#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Hello &#x27;</span> + firstname + <span class="string">&#x27; &#x27;</span> + lastname);   </span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (language === <span class="string">&#x27;es&#x27;</span>) &#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Hola &#x27;</span> + firstname + <span class="string">&#x27; &#x27;</span> + lastname);   </span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> greetEnglish = <span class="title function_">makeGreeting</span>(<span class="string">&#x27;en&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> greetSpanish = <span class="title function_">makeGreeting</span>(<span class="string">&#x27;es&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="title function_">greetEnglish</span>(<span class="string">&#x27;John&#x27;</span>, <span class="string">&#x27;Doe&#x27;</span>);</span><br><span class="line"><span class="title function_">greetSpanish</span>(<span class="string">&#x27;John&#x27;</span>, <span class="string">&#x27;Doe&#x27;</span>);</span><br></pre></td></tr></table></figure>
-
-<p>閉包的使用當然有很多種，例如上面這段code，雖然比前一個練習更複雜，但我們只要記得：</p>
-<p>每執行一次函式，就會產生一個新的execution context，即使有多個參數值被儲存在記憶體中，JavaScript引擎會自己找到屬於該execution context的變數。</p>
-<h3 id="Closure的總結"><a href="#Closure的總結" class="headerlink" title="Closure的總結"></a><strong>Closure的總結</strong></h3><p>closure是JavaScript引擎的一種特性，並不是說你需要去創造它或執行它。透過closure這樣的特性，我們可以確保當我們在執行function的時候，JavaScript引擎能夠找到其相對應的變數，也就是說，不論某一個function是不是已經執行完畢，是不是已經抽離execution stack，JavaScript引擎仍然可以找到外面的變數。</p>
-<h3 id="補充：callback-function"><a href="#補充：callback-function" class="headerlink" title="補充：callback function"></a>補充：<strong><strong>callback function</strong></strong></h3><p>callback function指的是在一個function（例如，funcA）中放入另一個function（例如，funcB），而且當這個funcA執行完後會觸發funcB的執行。</p>
-<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 為了確保先執行 funcA 再執行 funcB</span></span><br><span class="line"><span class="comment">// 我們在 funcA 加上 callback 參數</span></span><br><span class="line"><span class="keyword">var</span> funcA = <span class="keyword">function</span>(<span class="params">callback</span>)&#123;</span><br><span class="line">  <span class="keyword">var</span> i = <span class="title class_">Math</span>.<span class="title function_">random</span>() + <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">  <span class="variable language_">window</span>.<span class="built_in">setTimeout</span>(<span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;function A&#x27;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 如果 callback 是個函式就呼叫它</span></span><br><span class="line">    <span class="keyword">if</span>( <span class="keyword">typeof</span> callback === <span class="string">&#x27;function&#x27;</span> )&#123;</span><br><span class="line">      <span class="title function_">callback</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">  &#125;, i * <span class="number">1000</span>);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> funcB = <span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">  <span class="keyword">var</span> i = <span class="title class_">Math</span>.<span class="title function_">random</span>() + <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">  <span class="variable language_">window</span>.<span class="built_in">setTimeout</span>(<span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;function B&#x27;</span>);</span><br><span class="line">  &#125;, i * <span class="number">1000</span>);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 將 funcB 作為參數帶入 funcA()</span></span><br><span class="line"><span class="title function_">funcA</span>( funcB );</span><br></pre></td></tr></table></figure>
-
-<hr>
-<p>Closure的觀念非常重要，在重新整理過一遍筆記後，發現自己還是有不是那麼了解的地方。</p>
-<p>因此又重新看了一遍**<code>JavaScript: Understanding the Weird Part</code> 。**</p>
-<p>結果字幕沒有中文了…還好只是複習一下自己忘記的地方，不然完全不懂的情況下要我聽英文看英文字幕學習我應該辦不到….</p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023/09/20/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-20-Day20/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
