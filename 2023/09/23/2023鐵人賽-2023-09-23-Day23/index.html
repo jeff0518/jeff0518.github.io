@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="前一篇我們講了Promise ，今天來把剩下的async function&#x2F;await 講完。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="『Day -23』async function &#x2F;await">
+<meta property="og:url" content="http://example.com/2023/09/23/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-23-Day23/index.html">
+<meta property="og:site_name" content="Jeff的隨手筆記">
+<meta property="og:description" content="前一篇我們講了Promise ，今天來把剩下的async function&#x2F;await 講完。">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://i.imgur.com/A3eZZ40.png">
+<meta property="og:image" content="https://i.imgur.com/RYtdFCy.png">
+<meta property="og:image" content="https://i.imgur.com/RW9YE4b.png">
+<meta property="article:published_time" content="2023-09-23T02:10:30.000Z">
+<meta property="article:modified_time" content="2023-09-23T02:11:32.219Z">
+<meta property="article:author" content="Jeff">
+<meta property="article:tag" content="JavaScript">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.imgur.com/A3eZZ40.png">
+
+<link rel="canonical" href="http://example.com/2023/09/23/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-23-Day23/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-tw'
+  };
+</script>
+
+  <title>『Day -23』async function /await | Jeff的隨手筆記</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Jeff的隨手筆記</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">學習當一個前端工程師</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/09/23/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-23-Day23/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpeg">
+      <meta itemprop="name" content="Jeff">
+      <meta itemprop="description" content="這是一個紀錄自己成長的地方">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jeff的隨手筆記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          『Day -23』async function /await
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2023-09-23 10:10:30 / Modified: 10:11:32" itemprop="dateCreated datePublished" datetime="2023-09-23T10:10:30+08:00">2023-09-23</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/2023%E9%90%B5%E4%BA%BA%E8%B3%BD/" itemprop="url" rel="index"><span itemprop="name">2023鐵人賽</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>前一篇我們講了Promise ，今天來把剩下的<code>async function/await</code> 講完。</p>
+<span id="more"></span>
+<p><img src="https://i.imgur.com/A3eZZ40.png" alt="Imgur"></p>
+<p>還記得這張圖嗎？</p>
+<p>從Callback 變成 Promise，我們讓code變的：</p>
+<ol>
+<li>有更清晰的code結構</li>
+<li>處理錯誤更容易</li>
+<li>避免再出現<code>Callback Hell</code></li>
+<li>更好的流程控制</li>
+</ol>
+<p>那既然Promise這麼棒了，為什麼ES7還要再出一個<code>async function/await</code> 呢？</p>
+<p>遇到不懂的趕快先去<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/async_function">MDN</a> 找一下資料：</p>
+<blockquote>
+<p>The <strong><code>async function</code></strong> declaration creates a binding of a new async function to a given name. The <code>await</code> keyword is permitted within the function body, enabling asynchronous, promise-based behavior to be written in a cleaner style and avoiding the need to explicitly configure promise chains.</p>
+</blockquote>
+<p>小小抱怨一下，MDN繁體中文版本的回答真的讓人一言難盡…</p>
+<p>首先我要先修正一下自己的觀念，<code>async function/await</code> 的本質是 promise 的語法糖，它可以讓我們的Promise 程式碼的可讀性大大提升。</p>
+<h2 id="Promise-與-async-await"><a href="#Promise-與-async-await" class="headerlink" title="Promise 與 async, await"></a><strong><strong>Promise 與 async, await</strong></strong></h2><p>這句話怎麼說呢？我們來看一下兩者對於同一個功能寫法上的差異吧：</p>
+<p>Promise:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">const apiURL = `https://webdev.alphacamp.io/api/lyrics/Coldplay/Yellow.json`</span><br><span class="line">function fetchResourceWithPromise(url) &#123;</span><br><span class="line">  return fetch(url)</span><br><span class="line">    .then(response =&gt; &#123;</span><br><span class="line">      if (!response.ok) &#123;</span><br><span class="line">        throw new Error(&#x27;Network response was not ok&#x27;);</span><br><span class="line">      &#125;</span><br><span class="line">      return response.json();</span><br><span class="line">    &#125;)</span><br><span class="line">    .then(data =&gt; &#123;</span><br><span class="line">      console.log(data);</span><br><span class="line">    &#125;)</span><br><span class="line">    .catch(error =&gt; &#123;</span><br><span class="line">      console.error(&#x27;There was a problem:&#x27;, error);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">fetchResourceWithPromise(apiURL);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>Async function&#x2F;await:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">const apiURL = `https://webdev.alphacamp.io/api/lyrics/Coldplay/Yellow.json`</span><br><span class="line">async function fetchResourceWithAsyncAwait(url) &#123;</span><br><span class="line">  try &#123;</span><br><span class="line">    const response = await fetch(url);</span><br><span class="line">    if (!response.ok) &#123;</span><br><span class="line">      throw new Error(&#x27;Network response was not ok&#x27;);</span><br><span class="line">    &#125;</span><br><span class="line">    const data = await response.json();</span><br><span class="line">    console.log(data);</span><br><span class="line">  &#125; catch (error) &#123;</span><br><span class="line">    console.error(&#x27;There was a problem:&#x27;, error);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">fetchResourceWithAsyncAwait(apiURL);</span><br></pre></td></tr></table></figure>
+
+<p>對於一個剛接觸非同步觀念的新手來說，<code>Async function/await</code> 的方式會讓我更好理解，主要原因就在於 <code>Async function/await</code>將 <strong><code>then</code></strong>  的串鏈轉換成了直接的 <code>await</code> ，減少了縮排和區塊的視覺干擾，較能在閱讀時專注於程式本身的邏輯。</p>
+<p>接下來讓我們認識<code>Async function/await</code></p>
+<h1 id="Async-function-x2F-await"><a href="#Async-function-x2F-await" class="headerlink" title="Async function&#x2F;await"></a>Async function&#x2F;await</h1><h2 id="Async-function"><a href="#Async-function" class="headerlink" title="Async function"></a><strong>Async function</strong></h2><p><code>async function</code> 可以用來定義一個非同步函式，讓這個 function 本體是屬於非同步，但其內部以“<strong>同步的方式運行非同步</strong>”程式碼。</p>
+<h3 id="基本寫法"><a href="#基本寫法" class="headerlink" title="基本寫法"></a>基本寫法</h3><p>我們只需要在定義 function 前加上 <code>async</code> 就可以使用 async function:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">async function asyncFn() &#123;</span><br><span class="line">  return &#x27;a&#x27;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">asyncFn()</span><br></pre></td></tr></table></figure>
+
+<h3 id="回傳值"><a href="#回傳值" class="headerlink" title="回傳值"></a>回傳值</h3><p>一般來說，任何一個function裡面如果有return 都是會回傳return後面的值：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">function asyncFn() &#123;</span><br><span class="line">  return &#x27;a&#x27;;</span><br><span class="line">&#125;</span><br><span class="line">console.log(asyncFn());</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.imgur.com/RYtdFCy.png" alt="Imgur"></p>
+<p>那如果是<code>async function</code> 呢？</p>
+<p>我們來看看如果把<code>async function</code> console出來會是什麼：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">async function asyncFn() &#123;</span><br><span class="line">  return &#x27;a&#x27;;</span><br><span class="line">&#125;</span><br><span class="line">console.log(asyncFn());</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.imgur.com/RW9YE4b.png" alt="Imgur"></p>
+<p>由於是以非同步的方式運行，因此我們無法得到 a 這個回傳值，但是我們得到了一個與 Promise 結構相似的函式，因此我們可以得知：</p>
+<p>當<code>async function</code> 被呼叫時會回傳一個<strong><strong>Promise 物件。</strong></strong></p>
+<p>這個 Promise 物件代表著當 <strong><code>asyncFn</code></strong> 非同步執行完成後，它的結果值會是 **<code>&#39;a&#39;</code>**。你可以使用 <strong><code>.then</code></strong> 來處理這個 Promise，以獲取最終的結果值。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">asyncFn().then(result =&gt; &#123;</span><br><span class="line">  console.log(result); // &#x27;a&#x27;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>雖然我完全沒有用過這個語法就是了XD</p>
+<h2 id="Await"><a href="#Await" class="headerlink" title="Await"></a>A<strong>wait</strong></h2><p><code>await</code> 是屬於一元運算子，它會直接回傳後方表達式的值。</p>
+<p>雖然是運算子，但是在原始碼中直接運行 <code>await</code> 則會出現錯誤，它只能在 <code>async function</code> 中運行，所以 <code>async function/await</code> 基本上是一體的，不會單獨出現。</p>
+<p>另外<code>await</code>工作還未完成，就不會跑後面的程式碼，這樣的寫法使程式碼看起來更像我們前面提到的：<code>async function</code>本體是屬於非同步，但其內部以“<strong>同步的方式運行非同步</strong>”</p>
+<h2 id="流程控制"><a href="#流程控制" class="headerlink" title="流程控制"></a>流程控制</h2><p>在 <code>async function/await</code>  中的錯誤處理是使用 <code>try...catch...</code>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">async function asyncFn() &#123;</span><br><span class="line">  try &#123;</span><br><span class="line">    const value = await somePromise();</span><br><span class="line">    return value;</span><br><span class="line">  &#125; catch (err) &#123;</span><br><span class="line">    console.log(&#x27;Oops, there was an error :(&#x27;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">asyncFn()</span><br></pre></td></tr></table></figure>
+
+<p>將正常情況下要執行的程式碼直接置入於 <code>try</code> 流程內，當遇到例外的錯誤時則撰寫在 <code>catch</code> 區塊內。</p>
+<hr>
+<p>簡單的介紹一下，建議大家可以點擊下方的參考資料，觀看卡斯伯大大的文章，會更全面的了解。</p>
+<p>但是必需再強調一次，<code>async function/await</code> 的本質是 promise 的語法糖，並不是一種全新的語法，因此了解promise 以及「非同步處理」觀念本身要很清楚，採用 async&#x2F;await 目的是讓程式變好讀。</p>
+<p><strong>「仔細判讀程式流程」的基礎功一定要做紮實，程式流程沒想清楚，光是鑽研語法不足以解決問題，甚至可能會失焦</strong>。 By ALPHA Camp</p>
+<p>參考資料：</p>
+<p><a target="_blank" rel="noopener" href="https://www.casper.tw/development/2020/10/16/async-await/">https://www.casper.tw/development/2020/10/16/async-await/</a></p>
+<p><a target="_blank" rel="noopener" href="https://pjchender.dev/javascript/js-async-await/">https://pjchender.dev/javascript/js-async-await/</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/09/22/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-22-Day22/" rel="prev" title="『Day -22』Promise">
+      <i class="fa fa-chevron-left"></i> 『Day -22』Promise
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Promise-%E8%88%87-async-await"><span class="nav-number">1.</span> <span class="nav-text">Promise 與 async, await</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Async-function-x2F-await"><span class="nav-number"></span> <span class="nav-text">Async function&#x2F;await</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Async-function"><span class="nav-number">1.</span> <span class="nav-text">Async function</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E5%AF%AB%E6%B3%95"><span class="nav-number">1.1.</span> <span class="nav-text">基本寫法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%9E%E5%82%B3%E5%80%BC"><span class="nav-number">1.2.</span> <span class="nav-text">回傳值</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Await"><span class="nav-number">2.</span> <span class="nav-text">Await</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6"><span class="nav-number">3.</span> <span class="nav-text">流程控制</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Jeff"
+      src="/uploads/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Jeff</p>
+  <div class="site-description" itemprop="description">這是一個紀錄自己成長的地方</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">77</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jeff0518" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jeff0518" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:cycivs07@icloud.com" title="E-Mail → mailto:cycivs07@icloud.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jeff</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
