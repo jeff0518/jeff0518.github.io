@@ -158,7 +158,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/09/24/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-24-Day24/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/09/25/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-25-Day25/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/uploads/avatar.jpeg">
@@ -172,7 +172,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2023/09/24/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-24-Day24/" class="post-title-link" itemprop="url">『Day -23』this</a>
+            <a href="/2023/09/25/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-25-Day25/" class="post-title-link" itemprop="url">『Day -25』認識call( ), apply( )和bind( )</a>
         </h2>
 
         <div class="post-meta">
@@ -183,7 +183,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2023-09-24 09:01:58 / Modified: 09:02:40" itemprop="dateCreated datePublished" datetime="2023-09-24T09:01:58+08:00">2023-09-24</time>
+              <time title="Created: 2023-09-25 10:28:27 / Modified: 10:30:18" itemprop="dateCreated datePublished" datetime="2023-09-25T10:28:27+08:00">2023-09-25</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -206,105 +206,103 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>今天這章我們要來了解什麼是<code>this</code> 。</p>
-<h2 id="What’s-this"><a href="#What’s-this" class="headerlink" title="What’s this?"></a><strong><strong>What’s this?</strong></strong></h2><p>我相信很多人跟我一樣完整學習的第一個程式語言是JavaScript，但其實在其他物件導向的程式語言也有它。但在JavaScript裡，<code>this</code> 所代表的不僅僅是那個被建立的物件。</p>
-<p>一樣先看看<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Operators/this">MDN</a>怎麼說：</p>
-<blockquote>
-<p>JavaScript <strong>函式內的 <code>this</code> 關鍵字</strong>表現，和其他語言相比略有差異。在嚴格模式與非嚴格模式下也有所不同。</p>
-</blockquote>
-<blockquote>
-<p>通常，<code>this</code> 值由被呼叫的函式來決定。它不能在執行期間被指派，每次函式呼叫調用的值也可能不同。ES5 引入了 <code>bind</code> 方法去設置函式的 <code>this</code> 值，而不管它怎麼被呼叫。ECMAScript 2015 也導入了定義 <code>this</code> 詞法範圍的箭頭函式（它的 <code>this</code> 值會維持在詞法作用域）。</p>
-</blockquote>
-<p>…..怎麼有看沒有懂，沒事我們還有各路大神的解釋。</p>
-<p>在之前的有提到過，我們在執行環境中會有：<code>Variable Environment</code>、<code>Outer Environment</code>、<code>this</code>。其中<code>this</code>某些情況是會指向<code>global environment</code>，某些時候則是指向不同的<code>object</code> 或不同的事情，這是取決於function 調用的方式（And this will be pointing at a different object, a different thing, depending on how the function is invoked）。</p>
-<p><img src="https://i.imgur.com/uOgRnHW.png"></p>
-<p>因為是取決於function 的調用，這導致了很多的混亂，因此我們需要透過幾段code來讓我們了解在各情況下的this分別指向哪邊：</p>
-<h2 id="各情況下的this"><a href="#各情況下的this" class="headerlink" title="各情況下的this"></a>各情況下的this</h2><h3 id="Global-execution"><a href="#Global-execution" class="headerlink" title="Global execution"></a>Global execution</h3><p>讓我們打開Developer Tools，並輸入：</p>
-<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>)</span><br></pre></td></tr></table></figure>
-
-<p>這時候我們會發現瀏覽器回傳了一個window object給我們。</p>
-<p><img src="https://i.imgur.com/CnOmNkW.png"></p>
-<p>因此我們知道了在 Outer Environment (程式的最外層)，<code>this</code> 指向的是window object。</p>
-<p>接下來我們在function裡面輸入<code>console.log(this)</code>：</p>
-<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">a</span>(<span class="params"></span>) &#123;</span><br><span class="line">	<span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">a</span>()</span><br></pre></td></tr></table></figure>
-
-<p>我們得到的結果是：</p>
-<p><img src="https://i.imgur.com/pWeD0kK.png"></p>
-<p>疑，也是指向window object？那我們來試試看function expression：</p>
-<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> b = <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">	<span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">b</span>()</span><br></pre></td></tr></table></figure>
-
-<p>我們得到的結果還是指向window object：</p>
-<p><img src="https://i.imgur.com/nRTcDWP.png"></p>
-<p>為什麼會這樣？</p>
-<p>這是因為在 JavaScript ，function 執行上下文中的預設行為，當 function 沒有明確指定 this 時，它會指向全域物件。</p>
-<p>在瀏覽器中，全域物件就是 window 物件。</p>
-<h3 id="Method-in-object"><a href="#Method-in-object" class="headerlink" title="Method in object"></a><strong><strong>Method in object</strong></strong></h3><p>忘記什麼是Method的朋友可以看一下這張圖：</p>
-<p><img src="https://i.imgur.com/nH4xxDo.png"></p>
-<p>在物件裡的值如果是原生值（primitive type；例如，字串、數值、邏輯值等等），我們會把這個新建立的東西稱為「<strong>屬性（property）</strong>」；如果物件裡面的值是函式（function）的話，我們則會把這個新建立的東西稱為「<strong>方法（method）</strong>」。</p>
-<p>讓我們回到題目，我們今天有一個object，如下：</p>
-<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> c = &#123;</span><br><span class="line">	<span class="attr">name</span>: <span class="string">&#x27;The c object&#x27;</span>,</span><br><span class="line">	<span class="attr">log</span>: <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">		<span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">c.<span class="title function_">log</span>()</span><br></pre></td></tr></table></figure>
-
-<p>讓我們執行這段code:</p>
-<p><img src="https://i.imgur.com/N8Kx1dv.png"></p>
-<p>這個時候我們發現，this的指向不再是window object了，而是指向c 這個object。</p>
-<p>因此我們可以利用這個來把code做一些改變：</p>
-<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> c = &#123;</span><br><span class="line">	<span class="attr">name</span>: <span class="string">&#x27;The c object&#x27;</span>,</span><br><span class="line">	<span class="attr">log</span>: <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">		<span class="variable language_">this</span>.<span class="property">name</span> = <span class="string">&#x27;Updated c object&#x27;</span></span><br><span class="line">		<span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">c.<span class="title function_">log</span>()</span><br></pre></td></tr></table></figure>
-
-<p>我們可以看到name的內容做了改變：</p>
-<p><img src="https://i.imgur.com/cHciEZX.png"></p>
-<p>因此我們得到了一個結論：</p>
-<blockquote>
-<p><strong>當某個function 是放在某一個object 裡面時，那麼該function 裡面的 this 指稱的就是該object 本身。</strong></p>
-</blockquote>
-<h3 id="讓很多人覺得有問題的地方"><a href="#讓很多人覺得有問題的地方" class="headerlink" title="讓很多人覺得有問題的地方"></a>讓很多人覺得有問題的地方</h3><p>讓我們直接看案例：</p>
-<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> c = &#123;</span><br><span class="line">  <span class="attr">name</span>: <span class="string">&#x27;The c object&#x27;</span>,</span><br><span class="line">  <span class="attr">log</span>: <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">name</span> = <span class="string">&#x27;Updated c object&#x27;</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> setName = <span class="keyword">function</span>(<span class="params">newName</span>) &#123;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">name</span> = newName</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="title function_">setName</span>(<span class="string">&#x27;Updated again! The c object&#x27;</span>)</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">c.<span class="title function_">log</span>()</span><br></pre></td></tr></table></figure>
-
-<p>依照我們的想法，第二次<code>console.log</code>出來的的name應該會變成Updated again! The c object：</p>
-<p><img src="https://i.imgur.com/H7XFuzL.png"></p>
-<p>why???而且更有趣的來了，我們打開window object會看到：</p>
-<p><img src="https://i.imgur.com/OtYkWoG.png"></p>
-<p>為什麼我們剛剛在<code>setName</code> 這個function 裡面的<code>this</code>會指向window object了？</p>
-<p>還記得我們前面有說到：</p>
-<blockquote>
-<p>在 JavaScript ，function 執行上下文中的預設行為，當 function 沒有明確指定 <code>this</code> 時，它會指向全域物件。</p>
-</blockquote>
-<p>什麼是明確指定？</p>
-<p>在JavaScript裡，<code>this</code>的指向取決於我們呼叫他的方式，我們總共有4種呼叫方式：</p>
+          <p>我們昨天有提到，在JavaScript裡，<code>this</code>的指向取決於我們呼叫他的方式，我們總共有4種呼叫方式：</p>
 <ul>
-<li><p><strong>一般呼叫</strong>：當你以一般方式呼叫一個function 時，例如剛剛的案例 <code>setName**()**</code>，**<code>this</code>** 會指向 **<code>window</code>**（在瀏覽器環境中）。</p>
-</li>
-<li><p><strong>物件方法呼叫</strong>：當你將一個function 作為 object 的方法來呼叫，例如剛剛的案例 <strong><code>c.log()</code><strong>，</strong><code>this</code></strong> 就會指向 c 這個object。</p>
-</li>
-<li><p>**使用 <code>.bind()</code>、<code>.call()</code> 或 <code>.apply()</code>**：你可以使用這些方法來明確設定function 的 <strong><code>this</code></strong> 值。這個會在下一章節介紹。</p>
-</li>
-<li><p><strong>箭頭函式</strong>：箭頭函式 (<strong><code>=&gt;</code></strong>) 不會改變 <strong><code>this</code></strong> 的值，或者這麼說：箭頭函式 (<strong><code>=&gt;</code></strong>) 不會像傳統函數那樣有自己的 **<code>this</code>**，而是會捕獲（capture）它們外部作用域的 **<code>this</code>**。這使得箭頭函式在定義時捕獲了 <strong><code>this</code></strong> 的值，不受呼叫方式的影響。</p>
-  <figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> obj = &#123;</span><br><span class="line">  <span class="attr">name</span>: <span class="string">&#x27;Alice&#x27;</span>,</span><br><span class="line">  <span class="attr">greet</span>: <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`Hello, <span class="subst">$&#123;<span class="variable language_">this</span>.name&#125;</span>`</span>); <span class="comment">// this 指向外部的 obj</span></span><br><span class="line">    &#125;, <span class="number">1000</span>);</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">obj.<span class="title function_">greet</span>();</span><br></pre></td></tr></table></figure>
-<p>  簡單來說如果你在箭頭函式裡看到<code>this</code>可以直接當作外面的<code>this</code>即可，因為箭頭函式不支援<code>this</code>。</p>
-</li>
+<li><strong>一般呼叫</strong>：當你以一般方式呼叫一個function 時，例如剛剛的案例 <code>setName**()**</code>，**<code>this</code>** 會指向 **<code>window</code>**（在瀏覽器環境中）。</li>
+<li><strong>物件方法呼叫</strong>：當你將一個function 作為 object 的方法來呼叫，例如剛剛的案例 <strong><code>c.log()</code><strong>，</strong><code>this</code></strong> 就會指向 c 這個object。</li>
+<li>**使用 <code>.bind()</code>、<code>.call()</code> 或 <code>.apply()</code>**：你可以使用這些方法來明確設定function 的 <strong><code>this</code></strong> 值。這個會在下一章節介紹。</li>
+<li><strong>箭頭函式</strong>：箭頭函式 (<strong><code>=&gt;</code></strong>) 不會改變 <strong><code>this</code></strong> 的值，或者這麼說：箭頭函式 (<strong><code>=&gt;</code></strong>) 不會像傳統函數那樣有自己的 **<code>this</code>**，而是會捕獲（capture）它們外部作用域的 **<code>this</code>**。這使得箭頭函式在定義時捕獲了 <strong><code>this</code></strong> 的值，不受呼叫方式的影響。</li>
 </ul>
-<p>因此我們知道了為什麼<code>setName</code> 這個function 裡面的<code>this</code>會指向window object了，那我們有沒有其他方法可以讓這個function的<code>this</code>指向 c 這個object呢？</p>
-<p>答案當然是有的，不然我也不會多打這幾行XD</p>
-<h3 id="使用變數儲存this"><a href="#使用變數儲存this" class="headerlink" title="使用變數儲存this"></a>使用變數儲存<code>this</code></h3><p>還記得object在傳遞資料是用 by reference 嗎？這時候我們就是要運用這項特性。</p>
-<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> c = &#123;</span><br><span class="line">  <span class="attr">name</span>: <span class="string">&#x27;The c object&#x27;</span>,</span><br><span class="line">  <span class="attr">log</span>: <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">		<span class="comment">// 加入這行</span></span><br><span class="line">		<span class="keyword">var</span> self = <span class="variable language_">this</span></span><br><span class="line">    self.<span class="property">name</span> = <span class="string">&#x27;Updated c object&#x27;</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(self)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> setName = <span class="keyword">function</span>(<span class="params">newName</span>) &#123;</span><br><span class="line">      self.<span class="property">name</span> = newName</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="title function_">setName</span>(<span class="string">&#x27;Updated again! The c object&#x27;</span>)</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(self)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">c.<span class="title function_">log</span>()</span><br></pre></td></tr></table></figure>
+<p>今天我們要針對第三點來做一次解說。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023/09/25/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-25-Day25/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
 
-<p>由於 by reference 的特性，self 和 this 會指稱到同一個記憶體位置，而 this 指稱到的是原本預期該指稱到的 object c，所以 self 一樣會指稱到 object c 的記憶體位置。</p>
-<h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>又是一篇花了非常久的時間才寫完的內容，寫完的當下也不確定自己是否真的搞懂了。</p>
-<p>非常建議大家要把下面三篇參考文章看完，看完真的會更了解this。</p>
-<p>最後用huli大大的結論來做總結：</p>
-<ol>
-<li><em>一但脫離了物件導向，其實 this 就沒有什麼太大的意義，因為：</em><ul>
-<li>嚴格模式底下就都是<code>undefined</code></li>
-<li>非嚴格模式，瀏覽器底下是<code>window</code></li>
-<li>非嚴格模式，node.js 底下是<code>global</code></li>
-</ul>
-</li>
-<li><em>this 的值跟作用域跟程式碼的位置在哪裡完全無關，只跟「你如何呼叫」有關</em></li>
-</ol>
-<p>參考資料：</p>
-<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/23804247">https://zhuanlan.zhihu.com/p/23804247</a></p>
-<p><a target="_blank" rel="noopener" href="https://blog.techbridge.cc/2019/02/23/javascript-this/">https://blog.techbridge.cc/2019/02/23/javascript-this/</a></p>
-<p><a target="_blank" rel="noopener" href="https://kuro.tw/posts/2017/10/12/What-is-THIS-in-JavaScript-%E4%B8%8A/">https://kuro.tw/posts/2017/10/12/What-is-THIS-in-JavaScript-上/</a></p>
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
 
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/09/24/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-24-Day24/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpeg">
+      <meta itemprop="name" content="Jeff">
+      <meta itemprop="description" content="這是一個紀錄自己成長的地方">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jeff的隨手筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/09/24/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-24-Day24/" class="post-title-link" itemprop="url">『Day -24』this</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-09-24 09:01:58" itemprop="dateCreated datePublished" datetime="2023-09-24T09:01:58+08:00">2023-09-24</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2023-09-25 10:30:10" itemprop="dateModified" datetime="2023-09-25T10:30:10+08:00">2023-09-25</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/2023%E9%90%B5%E4%BA%BA%E8%B3%BD/" itemprop="url" rel="index"><span itemprop="name">2023鐵人賽</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>今天這章我們要來了解什麼是<code>this</code> 。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023/09/24/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-24-Day24/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -942,81 +940,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/09/15/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-15-Day15/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/avatar.jpeg">
-      <meta itemprop="name" content="Jeff">
-      <meta itemprop="description" content="這是一個紀錄自己成長的地方">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Jeff的隨手筆記">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/09/15/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-15-Day15/" class="post-title-link" itemprop="url">『Day15』樹狀結構與 DOM 節點</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2023-09-15 15:20:29 / Modified: 15:24:38" itemprop="dateCreated datePublished" datetime="2023-09-15T15:20:29+08:00">2023-09-15</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/2023%E9%90%B5%E4%BA%BA%E8%B3%BD/" itemprop="url" rel="index"><span itemprop="name">2023鐵人賽</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>昨天我們解釋了什麼是DOM跟BOM，今天我們繼續來認識DOM Tree 和 DOM Node</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023/09/15/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-15-Day15/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1087,7 +1010,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">78</span>
+          <span class="site-state-item-count">79</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
