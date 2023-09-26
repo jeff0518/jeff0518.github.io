@@ -20,22 +20,24 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta property="og:type" content="article">
-<meta property="og:title" content="『JavaScript 基礎』 JavaScript繼承和原型鍊">
-<meta property="og:url" content="http://example.com/2023/02/11/JavaScript-%E5%9F%BA%E7%A4%8E-2023-02-11-step5-1-2023-02-11-step5-1/index.html">
+  <meta name="description" content="這是一個我一直沒有搞懂的主題，我也不曉得會分成幾篇，但我會盡力把他搞懂！！！">
+<meta property="og:type" content="article">
+<meta property="og:title" content="『Day26』原型、繼承和原型鍊">
+<meta property="og:url" content="http://example.com/2023/09/26/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-26-Day26/index.html">
 <meta property="og:site_name" content="Jeff的隨手筆記">
+<meta property="og:description" content="這是一個我一直沒有搞懂的主題，我也不曉得會分成幾篇，但我會盡力把他搞懂！！！">
 <meta property="og:locale" content="zh_TW">
-<meta property="og:image" content="https://i.imgur.com/rZvUip7.png">
+<meta property="og:image" content="https://i.imgur.com/bIDXKxC.jpg">
+<meta property="og:image" content="https://i.imgur.com/NDHi7W2.png">
 <meta property="og:image" content="https://i.imgur.com/bH3Tht9.png">
-<meta property="article:published_time" content="2023-02-11T07:48:41.000Z">
-<meta property="article:modified_time" content="2023-02-11T07:50:28.672Z">
+<meta property="article:published_time" content="2023-09-26T01:43:18.000Z">
+<meta property="article:modified_time" content="2023-09-26T01:44:01.373Z">
 <meta property="article:author" content="Jeff">
 <meta property="article:tag" content="JavaScript">
-<meta property="article:tag" content="JavaScript 基礎">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://i.imgur.com/rZvUip7.png">
+<meta name="twitter:image" content="https://i.imgur.com/bIDXKxC.jpg">
 
-<link rel="canonical" href="http://example.com/2023/02/11/JavaScript-%E5%9F%BA%E7%A4%8E-2023-02-11-step5-1-2023-02-11-step5-1/">
+<link rel="canonical" href="http://example.com/2023/09/26/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-26-Day26/">
 
 
 <script id="page-configurations">
@@ -48,7 +50,7 @@
   };
 </script>
 
-  <title>『JavaScript 基礎』 JavaScript繼承和原型鍊 | Jeff的隨手筆記</title>
+  <title>『Day26』原型、繼承和原型鍊 | Jeff的隨手筆記</title>
   
 
 
@@ -164,7 +166,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/02/11/JavaScript-%E5%9F%BA%E7%A4%8E-2023-02-11-step5-1-2023-02-11-step5-1/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/09/26/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-26-Day26/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/uploads/avatar.jpeg">
@@ -177,7 +179,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          『JavaScript 基礎』 JavaScript繼承和原型鍊
+          『Day26』原型、繼承和原型鍊
         </h1>
 
         <div class="post-meta">
@@ -188,7 +190,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2023-02-11 15:48:41 / Modified: 15:50:28" itemprop="dateCreated datePublished" datetime="2023-02-11T15:48:41+08:00">2023-02-11</time>
+              <time title="Created: 2023-09-26 09:43:18 / Modified: 09:44:01" itemprop="dateCreated datePublished" datetime="2023-09-26T09:43:18+08:00">2023-09-26</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -196,7 +198,7 @@
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/JavaScript-%E5%9F%BA%E7%A4%8E/" itemprop="url" rel="index"><span itemprop="name">JavaScript 基礎</span></a>
+                  <a href="/categories/2023%E9%90%B5%E4%BA%BA%E8%B3%BD/" itemprop="url" rel="index"><span itemprop="name">2023鐵人賽</span></a>
                 </span>
             </span>
 
@@ -211,45 +213,78 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img src="https://i.imgur.com/rZvUip7.png" alt="Imgur"></p>
+        <p>這是一個我一直沒有搞懂的主題，我也不曉得會分成幾篇，但我會盡力把他搞懂！！！</p>
 <span id="more"></span>
-
-<p>這是一門在Udemy 課程，是同學介紹的。主要是因為想要運用到過年前這段時間好好的增進自己的JavaScript的基礎能力，讓自己能往前端工程師更近一步。主要還是會以筆記的形式做呈現！</p>
-<hr>
-<p>這個篇我們來看一下什麼是<strong>繼承和原型鍊</strong></p>
-<h2 id="Inheritance（繼承）"><a href="#Inheritance（繼承）" class="headerlink" title="Inheritance（繼承）"></a>Inheritance（繼承）</h2><aside>
-💡 One object gets access to the properties and methods of another object.
-
-</aside>
-
+<h2 id="Class-與-物件導向"><a href="#Class-與-物件導向" class="headerlink" title="Class 與 物件導向"></a>Class 與 物件導向</h2><p>還記得剛開始學JavaScript時，看到很多文章都在說ES6 的 class 也只是語法糖而已，那時候就在想：</p>
+<p>有沒有class有差嗎？我學習到現在都沒有用到過，為什麼很多文章都在強調class呢？</p>
+<p>直到我看到了&lt;&lt;JS 原力覺醒&gt;&gt;裡的介紹才知道。</p>
+<p>以下內容節錄<a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10225205">&lt;&lt;JS 原力覺醒&gt;&gt;的原型章節</a>：</p>
+<p>在物件導向語言裡面，類別（class）定義了描述某件事或某個功能的基本概念，就像一件商品或是建築物的設計圖ㄧ樣；而物件（object）則是透過類別裡所描述的的概念實現出來的東西，對比於建築設計圖，就是建築物：</p>
+<ul>
+<li>類別（class） ←→ 建築設計圖</li>
+<li>物件（object） ←→ 建築物</li>
+</ul>
+<p><img src="https://i.imgur.com/bIDXKxC.jpg"></p>
+<p>這是一個非常粗淺的描述，這裡提出是為了讓跟我一樣有同樣疑惑的人了解。</p>
+<p>那JavaScript是物件導向（OOT）的語言嗎？嚴格來說不完全正確。</p>
+<p>更準確的說法應該是：JavaScript是物件原型導向（ Object-Prototype Oriented ）的語言。</p>
+<p>雖然JavaScript支持許多物件導向的概念，如封裝、繼承和多態，但它的實現方式與物件導向語言不同。</p>
+<p>JavaScript不是使用類（class）和類繼承，而是使用一種名為「建構式函式（constructor functions）」的函式來定義 object 和它們的特色。</p>
+<p>透過建構式函式，你可以更有效率地根據需要創建多個物件。因此，在JavaScript中，每個物件都有一個隱藏的屬性稱為<code>[[ Prototype ]]</code>，它可以用來共享屬性和方法，或者進行物件之間的複製。</p>
+<h2 id="Inheritance（繼承）"><a href="#Inheritance（繼承）" class="headerlink" title="Inheritance（繼承）"></a><strong><strong>Inheritance（繼承）</strong></strong></h2><p>繼承的意思簡單來說就是指：</p>
+<p><strong>一個物件可以提取到其他物件中的屬性或方法（One object gets access to the properties and methods of another object.）</strong>。</p>
 <p>繼承可以分成兩種，一種是 classical inheritance，這種方式用在 C# 或 JAVA 當中；另一種則是 JavaScript 所使用的，是屬於 prototypal inheritance。</p>
-<h2 id="prototype-chain-原型鍊"><a href="#prototype-chain-原型鍊" class="headerlink" title="prototype chain(原型鍊)"></a>prototype chain(原型鍊)</h2><p><img src="https://i.imgur.com/bH3Tht9.png" alt="Imgur"></p>
-<p>假設我們現在有一個物件，就稱作 obj ，而這個物件包含一個屬性（property），我們稱作 prop1。</p>
-<p>如果現在我們想要prop1的屬性值，我只要使用 <code>obj.prop1</code> 的方式就可以直接讀取到 prop1的屬性值。</p>
-<p>在之前的課程我們有學到，JavaScript 裡會有一些預設的屬性和方法，因此所有的物件和函式都有包含 prototype 這個屬性，現在假設我們把 prototype 叫做 proto。</p>
-<p>這時候如果我們打上 <code>obj.prop2</code> 時，JavaScript 引擎會先在 obj 這個物件的屬性裡去尋找有沒有叫作 prop2 的屬性，如果它找不到，這時候它就會再進一步往該物件的 proto 裡面去尋找。</p>
+<h2 id="建構式函式（Constructor-Functions）"><a href="#建構式函式（Constructor-Functions）" class="headerlink" title="建構式函式（Constructor Functions）"></a><strong><strong>建構式函式（Constructor Functions）</strong></strong></h2><p>先簡單介紹建構式函示，下一篇章會有完整介紹。</p>
+<p>建構式函式是一種特殊的function，它是用於創建object 的模板，我們可以使用它來創建具有相似屬性和方法的 object 。通常建構式函式的命名都是以大寫字母為開頭，以區分普通的function。</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">Person</span> ()&#123;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">firstName</span> = <span class="string">&#x27;John&#x27;</span>;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">lastName</span> = <span class="string">&#x27;Doe&#x27;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> john = <span class="keyword">new</span> <span class="title class_">Person</span>();</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(john);</span><br></pre></td></tr></table></figure>
+
+<p>我們看一下輸出：</p>
+<p><img src="https://i.imgur.com/NDHi7W2.png"></p>
+<p>透過 <code>new</code> 它會幫我們建立一個物件，然後在Person這個function裡面有了屬性名稱跟屬性值。</p>
+<h2 id="物件原型導向（-Object-Prototype-Oriented-）"><a href="#物件原型導向（-Object-Prototype-Oriented-）" class="headerlink" title="物件原型導向（ Object-Prototype Oriented ）"></a>物件原型導向（ Object-Prototype Oriented ）</h2><p>在JavaScript中，每個 object 都有一個被稱為<code>[[ Prototype ]]</code> 的隱藏屬性，它指向一個 object，而這個object 我們稱之為 <code>prototype object</code>（原型物件），它裡面包含了一些可以共享的屬性和方法。</p>
+<p>因此所有JavaScript的 object都可以從<code>prototype object</code>中繼承屬性和方法，而<code>prototype object</code>本身可能又會有有屬於它的<code>prototype object</code>，而這就是我們所稱的「原型鏈（prototype chain）」。</p>
+<h3 id="prototype-chain-原型鍊"><a href="#prototype-chain-原型鍊" class="headerlink" title="prototype chain(原型鍊)"></a><strong><strong>prototype chain(原型鍊)</strong></strong></h3><p>由於 JavaScript 使用的是 prototypal inheritance，所以必然會包含原型（prototype）的概念，讓我們看一下下面這張圖：</p>
+<p><img src="https://i.imgur.com/bH3Tht9.png"></p>
+<p>假設我們現在有一個object ，就稱作 obj ，而這個object 包含一個屬性（property），我們稱作 prop1。</p>
+<p>如果現在我們想要prop1的屬性值，我只要使用 <code>obj.prop1</code> 的方式就可以直接讀取到 prop1的屬性值。</p>
+<p>在前面有提到，JavaScript 裡會有一些預設的屬性和方法，因此所有的object 和 function 都有包含 prototype 這個屬性，現在我們把 prototype 叫做 proto。</p>
+<p>這當我們打上 <code>obj.prop2</code> 時，JavaScript 引擎會先在 obj 這個object  的屬性裡去尋找有沒有叫作 prop2 的屬性，如果它找不到，這時候它就會再進一步往該object 的 proto 裡面去尋找。</p>
+<blockquote>
 <p><em>如果打成<code>obj.proto.prop2</code>相信大家會比較了解，但因為<code>prototype chain</code>的特性我們不需要這樣打。</em></p>
-<p>每一個物件裡面都包含一個 prototype，包括物件 proto 本身也不例外，因此如果我要找prop3的話也是只要打上<code>obj.prop3</code>就可以了，JavaScript一樣會照上面的步驟執行。因此，從物件本身往 proto 尋找下去的鍊我們就稱作「原型鍊（prototype chain）」。</p>
+</blockquote>
+<p>每一個object 裡面都包含一個 prototype，因此如果我要找prop3的話也是只要打上<code>obj.prop3</code>就可以了，JavaScript一樣會照上面的步驟執行。</p>
+<p>這個從object 本身往 proto 尋找下去的鍊我們就稱作「原型鍊（prototype chain）」。</p>
 <p>P.S.它會一直找下去直到某個對象的原型為 null 為止（也就是不再有原型指向）。</p>
-<h2 id="範例"><a href="#範例" class="headerlink" title="範例"></a>範例</h2><p>我們用實際例子來加強印象：<br>（這個例子只是為了用來說明 prototype chain 的概念，講師有特別強調寫code時千萬不要使用這樣的方式！）</p>
+<h2 id="範例"><a href="#範例" class="headerlink" title="範例"></a><strong>範例</strong></h2><p>我們用實際例子來加強印象：</p>
+<p>（這個例子只是為了用來說明 prototype chain 的概念，寫code時千萬不要使用這樣的方式，因為會有效能上的問題！！！）</p>
 <figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> person = &#123;</span><br><span class="line">    <span class="attr">firstname</span>: <span class="string">&#x27;Default&#x27;</span>,</span><br><span class="line">    <span class="attr">lastname</span>: <span class="string">&#x27;Default&#x27;</span>,</span><br><span class="line">    <span class="attr">getFullName</span>: <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">firstname</span> + <span class="string">&#x27; &#x27;</span> + <span class="variable language_">this</span>.<span class="property">lastname</span>;  </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> john = &#123;</span><br><span class="line">    <span class="attr">firstname</span>: <span class="string">&#x27;John&#x27;</span>,</span><br><span class="line">    <span class="attr">lastname</span>: <span class="string">&#x27;Doe&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>記住！！！這只是為了說明才這樣打的，實際寫code千步不要這樣寫，因為會有效能上的問題！！！</p>
-<p>剛剛的講解讓我們知道所有的物件裡面都會包含原型（prototype）這個物件，在 JavaScript 中這個物件的名稱為 <code>__proto__</code>。</p>
+<p>剛剛的講解讓我們知道所有的物件裡面都會包含原型（prototype）這個物件，在 JavaScript 中這個物件的名稱為 <code>__proto__</code>。</p>
 <p>因此，我們做以下的步驟：</p>
 <figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">john.<span class="property">__proto__</span> = person;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(john.<span class="title function_">getFullName</span>());</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(john.<span class="property">firstname</span>);</span><br></pre></td></tr></table></figure>
 
-<p>首先，我們讓<code>john</code> 這個物件就繼承了 <code>person</code> 物件。</p>
-<p>根據剛剛所學的，如果原本 john 這個物件中找不到這個屬性名稱或方法時，JavaScript 引擎就會到 <code>__proto__ </code>裡面去找，因此第二行的code就會輸出：<code>John Doe</code>。</p>
-<p>那如果他直接在john 這個物件中找到這個屬性名稱或方法時，JavaScript 引擎就不會到 <code>__proto__ </code>裡面去找，因此第三行的code就會輸出：<code>John</code>。</p>
+<p>首先，我們讓<code>john</code> 這個物件就繼承了 <code>person</code> 物件。</p>
+<p>如果原本 john 這個物件中找不到這個屬性名稱或方法時，JavaScript 引擎就會到 <code>__proto__</code> 裡面去找，因此第二行的code就會輸出：<code>John Doe</code>。</p>
+<p>那如果他直接在john 這個物件中找到這個屬性名稱或方法時，JavaScript 引擎就不會到 <code>__proto__</code> 裡面去找，因此第三行的code就會輸出：<code>John</code>。</p>
 <p>再往下走，如果這時候我在加一個新的物件：</p>
 <figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> jane = &#123;</span><br><span class="line">    <span class="attr">firstname</span>: <span class="string">&#x27;Jane&#x27;</span>   </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">jane.<span class="property">__proto__</span> = person;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(jane.<span class="title function_">getFullName</span>());</span><br></pre></td></tr></table></figure>
 
 <p>輸出會是：</p>
 <figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Jane</span> <span class="title class_">Default</span></span><br></pre></td></tr></table></figure>
 
-<p>和你想的一樣吧，因為在 Jane 這個物件裡只有 firstName 這個屬性，所以當 JavaScript 引擎要尋找 getFullName() 這個方法時就會去 <code>__proto__</code> 去找，而這時候的<code>this</code>是指向Jane（因為是Jane這個object發起調用的），因此他找到了Jane，但Jane這個object沒有lastname，因此他去看了prototype並在那裡找到了lastname，所以我們得到了這個答案！</p>
-<p>因此，在 JavaScript 當中，所有的東西（字串、數值、布林值、函式、陣列、物件…）的 prototype 最後都是物件！<br>詳情可以到：<a target="_blank" rel="noopener" href="https://pjchender.blogspot.com/2016/06/javascriptprototypeobject.html">https://pjchender.blogspot.com/2016/06/javascriptprototypeobject.html</a> 來了解！</p>
+<p>和你想的一樣吧!</p>
+<p>因為在 Jane 這個物件裡只有 firstName 這個屬性，所以當JavaScript  引擎要尋找 getFullName() 這個方法時就會去 <code>__proto__</code> 去找，而這時候的<code>this</code>是指向Jane（因為是Jane這個object發起調用的），因此他找到了Jane，但Jane這個object沒有lastname，因此他去看了prototype並在那裡找到了lastname，所以我們得到了這個答案！</p>
+<p>因此，在 JavaScript 當中，所有的東西（字串、數值、布林值、函式、陣列、物件…）的 prototype 最後都是物件！</p>
+<h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>JavaScript採用了一種特殊的物件模型，即原型物件模型（Prototype Object Model），與傳統的基於類別的物件導向語言有所不同。</p>
+<p>在傳統的物件導向語言中，類別（Class）定義了物件的結構和行為，然後透過類別實例化出具體的物件。在JavaScript中，卻沒有類別的概念，而是使用建構函式（Constructor Function）創建物件，且物件可以直接繼承其他物件，形成原型鏈。</p>
+<p>原型鏈（Prototype Chain）是JavaScript物件之間繼承關係的關鍵。每個物件都有一個原型物件（Prototype），可以透過 <strong>proto</strong> 屬性訪問它。如果在一個物件上訪問一個屬性或方法時找不到，JavaScript引擎會自動沿著原型鏈向上查找，直到找到為止。</p>
+<p>這種原型繼承的方式使JavaScript非常靈活，可以動態地擴展和修改物件的屬性和方法，而不需要嚴格的類別定義。這也是為什麼JavaScript被描述為一種”物件原型導向”的語言。</p>
+<hr>
+<p>打完了花了好久的時間，主要的時間都是在閱讀其他大神的文章並且修改自己之前文章寫的不清楚或寫錯的地方，還好我有提前開始準備，不然以我的能力怎麼可能每天產出一篇文章。</p>
+<p>參考資料：</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/aszx87410/blog/issues/18">https://github.com/aszx87410/blog/issues/18</a></p>
+<p><a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2011/06/designing_ideas_of_inheritance_mechanism_in_javascript.html">http://www.ruanyifeng.com/blog/2011/06/designing_ideas_of_inheritance_mechanism_in_javascript.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/a97863b59ef7">https://www.jianshu.com/p/a97863b59ef7</a></p>
 
     </div>
 
@@ -260,7 +295,6 @@
       <footer class="post-footer">
           <div class="post-tags">
               <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
-              <a href="/tags/JavaScript-%E5%9F%BA%E7%A4%8E/" rel="tag"># JavaScript 基礎</a>
           </div>
 
         
@@ -269,13 +303,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2023/02/04/JavaScript-%E5%9F%BA%E7%A4%8E-2023-02-04-step4-7-2023-02-04-step4-7/" rel="prev" title="『JavaScript 基礎』 認識call( ), apply( )和bind( )">
-      <i class="fa fa-chevron-left"></i> 『JavaScript 基礎』 認識call( ), apply( )和bind( )
+    <a href="/2023/09/25/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-25-Day25/" rel="prev" title="『Day -25』認識call( ), apply( )和bind( )">
+      <i class="fa fa-chevron-left"></i> 『Day -25』認識call( ), apply( )和bind( )
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2023/02/11/JavaScript-%E5%9F%BA%E7%A4%8E-2023-02-11-step6-1-2023-02-11-step6-1/" rel="next" title="『JavaScript 基礎』 Function constructor（函式建構式）">
-      『JavaScript 基礎』 Function constructor（函式建構式） <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -334,7 +365,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Inheritance%EF%BC%88%E7%B9%BC%E6%89%BF%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">Inheritance（繼承）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#prototype-chain-%E5%8E%9F%E5%9E%8B%E9%8D%8A"><span class="nav-number">2.</span> <span class="nav-text">prototype chain(原型鍊)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AF%84%E4%BE%8B"><span class="nav-number">3.</span> <span class="nav-text">範例</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Class-%E8%88%87-%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91"><span class="nav-number">1.</span> <span class="nav-text">Class 與 物件導向</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Inheritance%EF%BC%88%E7%B9%BC%E6%89%BF%EF%BC%89"><span class="nav-number">2.</span> <span class="nav-text">Inheritance（繼承）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BB%BA%E6%A7%8B%E5%BC%8F%E5%87%BD%E5%BC%8F%EF%BC%88Constructor-Functions%EF%BC%89"><span class="nav-number">3.</span> <span class="nav-text">建構式函式（Constructor Functions）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%89%A9%E4%BB%B6%E5%8E%9F%E5%9E%8B%E5%B0%8E%E5%90%91%EF%BC%88-Object-Prototype-Oriented-%EF%BC%89"><span class="nav-number">4.</span> <span class="nav-text">物件原型導向（ Object-Prototype Oriented ）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#prototype-chain-%E5%8E%9F%E5%9E%8B%E9%8D%8A"><span class="nav-number">4.1.</span> <span class="nav-text">prototype chain(原型鍊)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AF%84%E4%BE%8B"><span class="nav-number">5.</span> <span class="nav-text">範例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B8%BD%E7%B5%90"><span class="nav-number">6.</span> <span class="nav-text">總結</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
