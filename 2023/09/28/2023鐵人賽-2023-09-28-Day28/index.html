@@ -20,20 +20,22 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="在剛開始接觸JavaScript時，常常會聽到有人說JavaScript是個 弱型別 的程式語言，那時候對於這句話的解讀是：因為JavaScript 的不嚴謹以及他的型別會自動轉換，所以才說它是弱型別 的程式語言。 直到2023的今天我才知道這樣的說法『不完全正確』，應該是要說：  JavaScript 是”動態型別”加”弱型別” 的程式語言">
+  <meta name="description" content="在現代網頁開發中，我們經常聽到關於AJAX的詞語，它代表著一項重要的技術，使我們能夠實現在不重新載入整個網頁的情況下，動態地獲取和顯示數據。 今天來認識一下什麼是AJAX以及與之相關的通訊協定和HTTP方法。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="『Day -5』資料型別(data types)(1)">
-<meta property="og:url" content="http://example.com/2023/09/07/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-07-Day5/index.html">
+<meta property="og:title" content="『Day28』AJAX與溝通協定">
+<meta property="og:url" content="http://example.com/2023/09/28/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-28-Day28/index.html">
 <meta property="og:site_name" content="Jeff的隨手筆記">
-<meta property="og:description" content="在剛開始接觸JavaScript時，常常會聽到有人說JavaScript是個 弱型別 的程式語言，那時候對於這句話的解讀是：因為JavaScript 的不嚴謹以及他的型別會自動轉換，所以才說它是弱型別 的程式語言。 直到2023的今天我才知道這樣的說法『不完全正確』，應該是要說：  JavaScript 是”動態型別”加”弱型別” 的程式語言">
+<meta property="og:description" content="在現代網頁開發中，我們經常聽到關於AJAX的詞語，它代表著一項重要的技術，使我們能夠實現在不重新載入整個網頁的情況下，動態地獲取和顯示數據。 今天來認識一下什麼是AJAX以及與之相關的通訊協定和HTTP方法。">
 <meta property="og:locale" content="zh_TW">
-<meta property="article:published_time" content="2023-09-07T01:33:59.000Z">
-<meta property="article:modified_time" content="2023-09-07T01:40:21.148Z">
+<meta property="og:image" content="https://i.imgur.com/W0xDTV4.png">
+<meta property="article:published_time" content="2023-09-28T01:29:22.000Z">
+<meta property="article:modified_time" content="2023-09-28T01:30:12.922Z">
 <meta property="article:author" content="Jeff">
 <meta property="article:tag" content="JavaScript">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.imgur.com/W0xDTV4.png">
 
-<link rel="canonical" href="http://example.com/2023/09/07/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-07-Day5/">
+<link rel="canonical" href="http://example.com/2023/09/28/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-28-Day28/">
 
 
 <script id="page-configurations">
@@ -46,7 +48,7 @@
   };
 </script>
 
-  <title>『Day -5』資料型別(data types)(1) | Jeff的隨手筆記</title>
+  <title>『Day28』AJAX與溝通協定 | Jeff的隨手筆記</title>
   
 
 
@@ -162,7 +164,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/09/07/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-07-Day5/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/09/28/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-28-Day28/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/uploads/avatar.jpeg">
@@ -175,7 +177,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          『Day -5』資料型別(data types)(1)
+          『Day28』AJAX與溝通協定
         </h1>
 
         <div class="post-meta">
@@ -186,7 +188,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2023-09-07 09:33:59 / Modified: 09:40:21" itemprop="dateCreated datePublished" datetime="2023-09-07T09:33:59+08:00">2023-09-07</time>
+              <time title="Created: 2023-09-28 09:29:22 / Modified: 09:30:12" itemprop="dateCreated datePublished" datetime="2023-09-28T09:29:22+08:00">2023-09-28</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -209,56 +211,88 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>在剛開始接觸JavaScript時，常常會聽到有人說JavaScript是個 <em><strong>弱型別</strong></em> 的程式語言，那時候對於這句話的解讀是：因為JavaScript 的不嚴謹以及他的型別會自動轉換，所以才說它是<em><strong>弱型別</strong></em> 的程式語言。</p>
-<p>直到2023的今天我才知道這樣的說法<em><strong>『不完全正確』</strong></em>，應該是要說：</p>
-<blockquote>
-<p>JavaScript 是”動態型別”加”弱型別” 的程式語言</p>
-</blockquote>
+        <p>在現代網頁開發中，我們經常聽到關於AJAX的詞語，它代表著一項重要的技術，使我們能夠實現在不重新載入整個網頁的情況下，動態地獲取和顯示數據。</p>
+<p>今天來認識一下什麼是AJAX以及與之相關的通訊協定和HTTP方法。</p>
 <span id="more"></span>
-<h1 id="靜態型別-vs-動態型別"><a href="#靜態型別-vs-動態型別" class="headerlink" title="靜態型別 vs 動態型別"></a>靜態型別 vs 動態型別</h1><p>那什麼是動態型別？既然有動態型別是不是也有靜態型別，下面我們就來看一下兩者的不同之處：</p>
-<h2 id="靜態型別"><a href="#靜態型別" class="headerlink" title="靜態型別"></a>靜態型別</h2><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">in</span> <span class="title class_">Java</span>（<span class="keyword">static</span> typing）:</span><br><span class="line">bool isNew = <span class="string">&#x27;hello&#x27;</span>; <span class="comment">// an error</span></span><br><span class="line"><span class="comment">// 設定這個變數是bool,所以當我放入true/false以外的字都會出現錯誤</span></span><br></pre></td></tr></table></figure>
-
-<p>編譯式語言多半是靜態語言，Java 和 C# 是其中的代表。</p>
-<p>這類語言在型別的管理上十分嚴謹，在語法撰寫時就會要求對變數型別有明確定義，有時讓人覺得囉嗦；但相對的，一旦有變數誤用或資料型態上的 Bug，在編譯時期就能發現，降低執行時期的風險。</p>
-<h2 id="動態型別"><a href="#動態型別" class="headerlink" title="動態型別"></a>動態型別</h2><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">in</span> <span class="title class_">JavaScript</span> (dynamic typing):</span><br><span class="line"><span class="keyword">var</span> isNew = <span class="literal">true</span>; <span class="comment">// no errors</span></span><br><span class="line">isNew = <span class="string">&#x27;yup!&#x27;</span></span><br><span class="line">isNew = <span class="number">1</span></span><br></pre></td></tr></table></figure>
-
-<p>在程式執行過程才會進行資料型態的檢查或確認，因此直譯式語言都是動態語言。如 Python、PHP、Ruby，還有 JavaScript，都屬於此類語言。</p>
-<p>這類語言在程式編寫時，不用花太多心思在宣告型別的語法上，簡潔而靈活，可以在過程依需求任意改變型別，做到十分靈活的變數處理；但相對缺乏對當前變數的型別限制，當執行到某一行程式時，無法絕對肯定變數現在放了什麼類型的值時，容易造成非預期的執行可能性，導致非預期的執行結果。</p>
-<h1 id="強型別-vs-弱型別"><a href="#強型別-vs-弱型別" class="headerlink" title="強型別 vs 弱型別"></a>強型別 vs 弱型別</h1><p>了解了動態型別跟靜態型別後，接下來我們來看一下強型別跟弱型別：</p>
+<h2 id="AJAX的基礎認識"><a href="#AJAX的基礎認識" class="headerlink" title="AJAX的基礎認識"></a>AJAX的基礎認識</h2><p>Ajax 是 Asynchronous JavaScript and XML 的縮寫。</p>
+<p>它是一種前端開發技術，用於實現在不刷新整個網頁的情況下，動態地獲取和顯示資料。</p>
+<p>所謂的AJAX技術在JavaScript中，即是以<code>XMLHttpRequest</code>物件(簡稱為XHR)為主要核心的實作。<br>正如它的名稱，它是用於客戶端對伺服器端送出httpRequest(要求)的物件，使用的資料格式是XML格式(但現今AJAX通常使用JSON等格式來處理資料)。<br>流程即是建立一個XMLHttpRequest(XHR)物件，打開網址然後送出要求，成功時最後由回調函式處理伺服器傳回的Response(回應)。</p>
+<p>要記住AJAX並不是單一的技術，而是一組綜合性的網頁開發技術。最早由Google在Gmail中使用，AJAX現在已成為Web開發的重要工具。</p>
+<h2 id="client-side-與-server-side"><a href="#client-side-與-server-side" class="headerlink" title="client-side 與 server-side"></a><strong>client-side 與 server-side</strong></h2><p>網絡應用程序的運行是基於客戶端-伺服器端（client-server）架構的。在這個架構中：</p>
 <ul>
-<li>強型別(strongly typed)：偏向不容許隱性型別轉換，型別檢查上較為嚴格。</li>
-<li>弱型別(weakly typed)：偏向容許隱性型別轉換，型別檢查上較為寬鬆。</li>
+<li>提出請求的一方是客戶端（client-side）。</li>
+<li>接受請求並提供回應的一方是伺服器端（server-side）。</li>
 </ul>
-<p>所謂的隱性型別轉換如下：</p>
-<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> a = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">const</span> b = <span class="string">&#x27;2&#x27;</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(a + b)</span><br></pre></td></tr></table></figure>
-
-<p>在可以隱性型別轉換的程式語言（如JavaScript）會因為變數是number + string，兩個型別不同而自動把第一個參數轉換成string，因此輸出結果就會是：12(這是字串)</p>
-<p>但如果是在不可以隱性型別轉換的程式語言（如Java），就會直接噴錯</p>
-<p>因此<strong>動態型別加上過於寬鬆的弱型別，就有人認為是 JavaScript 最叫人頭痛的萬惡根源。</strong></p>
-<h1 id="那JavaScript-有哪些型別？"><a href="#那JavaScript-有哪些型別？" class="headerlink" title="那JavaScript 有哪些型別？"></a>那JavaScript 有哪些型別？</h1><p>答案是2個：Primitive type 跟 object。<del>分法很簡單只要不是Primitive type就是屬於 object，ＸＤ。</del></p>
-<p>說正經的，Primitive type總共有7種，只要不屬於這7種的就是object。</p>
-<h2 id="Primitive-type："><a href="#Primitive-type：" class="headerlink" title="Primitive type："></a>Primitive type：</h2><ul>
-<li>undefined: you shouldn’t set a variable to this</li>
-<li>null:you can set a variable to this</li>
-<li>boolean</li>
-<li>number</li>
-<li>string</li>
-<li>symbol</li>
-<li>bigint</li>
+<p>客戶端和伺服器通常運行在不同的計算機上，例如你的電腦和Google的伺服器。伺服器方擁有資源，客戶端會向伺服器發出請求，以獲取這些資源的內容。伺服器接收請求後，根據需要提供回應。</p>
+<p>客戶端和伺服器之間的互動過程被稱為「請求-回應生命週期」（request-response life cycle）。</p>
+<h2 id="溝通協定：HTTP"><a href="#溝通協定：HTTP" class="headerlink" title="溝通協定：HTTP"></a><strong>溝通協定：HTTP</strong></h2><p>在全球資訊網（World Wide Web）上，我們使用HTTP（超文本傳輸協定）進行通訊。HTTP規定了請求和回應的結構：</p>
+<p><img src="https://i.imgur.com/W0xDTV4.png"></p>
+<p>裡面協定的細節真的太多了，我自己看得一個頭兩個大。因此我決定直接跳到method。</p>
+<h2 id="HTTP-Method"><a href="#HTTP-Method" class="headerlink" title="HTTP Method"></a><strong><strong>HTTP Method</strong></strong></h2><p>什麼是<strong><strong>HTTP Method？</strong></strong></p>
+<p><strong><strong>HTTP Method</strong></strong>是用來指示對資源的操作。每個API都對應一個特定的HTTP請求方法，只有當方法與API完全一致時，伺服器才能根據請求提供資源；反之，方法與 API 無法對應時就會出現錯誤（404 找不到路徑）。</p>
+<p>其實你在日常生活中已經不自覺的有使用過這個了。</p>
+<p>在我們平常上網時，當我們輸入網址、按下 Enter 鍵瀏覽網頁的時候，此時瀏覽器會向指定網頁發送 GET 請求。</p>
+<p>下面是一些常見的HTTP請求方法：</p>
+<ul>
+<li><strong>GET</strong>：請求特定資源，不提交任何資料，伺服器僅回應資源。</li>
+<li><strong>POST</strong>：提交特定資料以創建資源或更改狀態（例如，登入或註冊）。伺服器會回應新增或更改的結果。</li>
+<li><strong>PUT</strong>：取代特定資源，通常用於完全更新資源。伺服器會回應更新的結果。</li>
+<li><strong>PATCH</strong>：更新特定資源的一部分，通常用於部分資源的更新。伺服器會回應更新的結果。</li>
+<li><strong>DELETE</strong>：刪除特定資源。伺服器會回應刪除的結果。</li>
 </ul>
-<h2 id="Objects："><a href="#Objects：" class="headerlink" title="Objects："></a>Objects：</h2><ul>
-<li>object</li>
-<li>array</li>
-<li>function</li>
-<li>…</li>
+<p>簡化並用成表格方式呈現：</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>GET</td>
+<td>請求特定資源</td>
+</tr>
+<tr>
+<td>POST</td>
+<td>提交資料以創建或更改資源</td>
+</tr>
+<tr>
+<td>PUT</td>
+<td>取代或更新資源</td>
+</tr>
+<tr>
+<td>PATCH</td>
+<td>更新資源的一部分</td>
+</tr>
+<tr>
+<td>DELETE</td>
+<td>刪除特定資源</td>
+</tr>
+</tbody></table>
+<p>這些方法對應不同的操作，伺服器根據方法執行相應的操作。</p>
+<h2 id="HTTP-response"><a href="#HTTP-response" class="headerlink" title="HTTP response"></a>HTTP response</h2><p>剛剛介紹了客戶端（client-side）對伺服器端（server-side）的請求，那伺服器端（server-side）會以HTTP response 作為回應。</p>
+<h3 id="Status-Code"><a href="#Status-Code" class="headerlink" title="Status Code"></a>Status Code</h3><p>HTTP response的關鍵元素之一是Status Code。它提供有關請求狀態的信息。Status Code是一個三位數字，並且分為不同的類別：</p>
+<ul>
+<li><strong>1xx 資訊性回應</strong>：這些狀態碼表示服務器已經收到請求並繼續處理。</li>
+<li><strong>2xx 成功回應</strong>：這些狀態碼表示請求成功接收、理解並接受。</li>
+<li><strong>3xx 重定向回應</strong>：這些狀態碼表示需要進一步採取操作才能完成請求。</li>
+<li><strong>4xx 用戶端錯誤回應</strong>：這些狀態碼表示請求包含不正確的語法或無法完成。</li>
+<li><strong>5xx 服務器錯誤回應</strong>：這些狀態碼表示服務器未能滿足有效請求。</li>
 </ul>
-<blockquote>
-<p>這邊要特別注意一點，變數本身是沒有型別的，是變數的值才有型別之分。</p>
-</blockquote>
-<p>另外在JavaScript中，Primitive type 是不可變（immutable）的，而Objects 是可變（mutable）的。</p>
-<p>這是因為Primitive type在賦值或操作時，是直接複製其值到新的變數，而不會影響原始值本身。而Objects 則是引用類型，賦值或操作時是傳遞的是物件的引用（記憶體地址），因此改變新變數的值會影響原始物件，關於這段會在傳值還是傳址的篇章在做說明。</p>
+<h3 id="Response-Headers"><a href="#Response-Headers" class="headerlink" title="Response Headers"></a>Response Headers</h3><p>HTTP response還包括 Headers，提供有關回應的附加信息。一些常見的標頭包括：</p>
+<ul>
+<li><strong>Content-Type</strong>：指定回應中的內容類型，例如text&#x2F;html、application&#x2F;json等。</li>
+<li><strong>Content-Length</strong>：指示回應主體的大小（以字節為單位）。</li>
+<li><strong>Server</strong>：識別服務器使用的軟件。</li>
+<li><strong>Date</strong>：指定生成回應的日期和時間。</li>
+</ul>
 <hr>
-<p>簡單介紹了一下強弱型別以及動態型別、靜態型別，接下來就是要來介紹Primitive type 跟 objects了</p>
+<p>以上是簡略的介紹，如果有錯也請大家跟我說～</p>
+<p>參考資料：</p>
+<p><a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10252553">https://ithelp.ithome.com.tw/articles/10252553</a></p>
+<p><a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10247342">https://ithelp.ithome.com.tw/articles/10247342</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.techbridge.cc/2017/05/20/api-ajax-cors-and-jsonp/">https://blog.techbridge.cc/2017/05/20/api-ajax-cors-and-jsonp/</a></p>
+<p><a target="_blank" rel="noopener" href="https://eyesofkids.gitbooks.io/javascript-start-from-es6/content/part4/ajax_fetch.html">https://eyesofkids.gitbooks.io/javascript-start-from-es6/content/part4/ajax_fetch.html</a></p>
 
     </div>
 
@@ -277,13 +311,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2023/09/06/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-06-Day4/" rel="prev" title="『Day -4』提升(Hoisting)">
-      <i class="fa fa-chevron-left"></i> 『Day -4』提升(Hoisting)
+    <a href="/2023/09/27/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-27-Day27/" rel="prev" title="『Day27』Function constructor（函式建構式）">
+      <i class="fa fa-chevron-left"></i> 『Day27』Function constructor（函式建構式）
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2023/09/07/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-07-Day6/" rel="next" title="『Day -6』資料型別(data types)(2)">
-      『Day -6』資料型別(data types)(2) <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -342,7 +373,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%9D%9C%E6%85%8B%E5%9E%8B%E5%88%A5-vs-%E5%8B%95%E6%85%8B%E5%9E%8B%E5%88%A5"><span class="nav-number">1.</span> <span class="nav-text">靜態型別 vs 動態型別</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9D%9C%E6%85%8B%E5%9E%8B%E5%88%A5"><span class="nav-number">1.1.</span> <span class="nav-text">靜態型別</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8B%95%E6%85%8B%E5%9E%8B%E5%88%A5"><span class="nav-number">1.2.</span> <span class="nav-text">動態型別</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BC%B7%E5%9E%8B%E5%88%A5-vs-%E5%BC%B1%E5%9E%8B%E5%88%A5"><span class="nav-number">2.</span> <span class="nav-text">強型別 vs 弱型別</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%82%A3JavaScript-%E6%9C%89%E5%93%AA%E4%BA%9B%E5%9E%8B%E5%88%A5%EF%BC%9F"><span class="nav-number">3.</span> <span class="nav-text">那JavaScript 有哪些型別？</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Primitive-type%EF%BC%9A"><span class="nav-number">3.1.</span> <span class="nav-text">Primitive type：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Objects%EF%BC%9A"><span class="nav-number">3.2.</span> <span class="nav-text">Objects：</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#AJAX%E7%9A%84%E5%9F%BA%E7%A4%8E%E8%AA%8D%E8%AD%98"><span class="nav-number">1.</span> <span class="nav-text">AJAX的基礎認識</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#client-side-%E8%88%87-server-side"><span class="nav-number">2.</span> <span class="nav-text">client-side 與 server-side</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%BA%9D%E9%80%9A%E5%8D%94%E5%AE%9A%EF%BC%9AHTTP"><span class="nav-number">3.</span> <span class="nav-text">溝通協定：HTTP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTP-Method"><span class="nav-number">4.</span> <span class="nav-text">HTTP Method</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTP-response"><span class="nav-number">5.</span> <span class="nav-text">HTTP response</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Status-Code"><span class="nav-number">5.1.</span> <span class="nav-text">Status Code</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Response-Headers"><span class="nav-number">5.2.</span> <span class="nav-text">Response Headers</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
