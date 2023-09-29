@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="昨天我們認識了AJAX，但並沒有XMLHttpRequest ，最根本的原因在於：我不會，而且現在應該很少人用這個來請求了吧？現在大家不是都用fetch、axios…因此我就沒有介紹了。 那這篇就是要來介紹現在大家最常使用的fetch 以及axios 。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="『Day29』fetch 與 axios">
+<meta property="og:url" content="http://example.com/2023/09/29/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-29-Day29/index.html">
+<meta property="og:site_name" content="Jeff的隨手筆記">
+<meta property="og:description" content="昨天我們認識了AJAX，但並沒有XMLHttpRequest ，最根本的原因在於：我不會，而且現在應該很少人用這個來請求了吧？現在大家不是都用fetch、axios…因此我就沒有介紹了。 那這篇就是要來介紹現在大家最常使用的fetch 以及axios 。">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://i.imgur.com/NLSqXEL.png">
+<meta property="og:image" content="https://i.imgur.com/HWwOCfN.png">
+<meta property="og:image" content="https://i.imgur.com/E2CwpQo.png">
+<meta property="og:image" content="https://i.imgur.com/LedQ9O6.png">
+<meta property="og:image" content="https://i.imgur.com/5TEYXHi.png">
+<meta property="article:published_time" content="2023-09-29T02:30:42.000Z">
+<meta property="article:modified_time" content="2023-09-29T02:31:16.667Z">
+<meta property="article:author" content="Jeff">
+<meta property="article:tag" content="JavaScript">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.imgur.com/NLSqXEL.png">
+
+<link rel="canonical" href="http://example.com/2023/09/29/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-29-Day29/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-tw'
+  };
+</script>
+
+  <title>『Day29』fetch 與 axios | Jeff的隨手筆記</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Jeff的隨手筆記</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">學習當一個前端工程師</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/09/29/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-29-Day29/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpeg">
+      <meta itemprop="name" content="Jeff">
+      <meta itemprop="description" content="這是一個紀錄自己成長的地方">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jeff的隨手筆記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          『Day29』fetch 與 axios
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2023-09-29 10:30:42 / Modified: 10:31:16" itemprop="dateCreated datePublished" datetime="2023-09-29T10:30:42+08:00">2023-09-29</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/2023%E9%90%B5%E4%BA%BA%E8%B3%BD/" itemprop="url" rel="index"><span itemprop="name">2023鐵人賽</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>昨天我們認識了AJAX，但並沒有<code>XMLHttpRequest</code> ，最根本的原因在於：我不會，而且現在應該很少人用這個來請求了吧？現在大家不是都用<code>fetch</code>、<code>axios</code>…因此我就沒有介紹了。</p>
+<p>那這篇就是要來介紹現在大家最常使用的<code>fetch</code> 以及<code>axios</code> 。</p>
+<span id="more"></span>
+<h2 id="Fetch"><a href="#Fetch" class="headerlink" title="Fetch()"></a>Fetch()</h2><p>fetch()是一個全域的方法，包含了需要 fetch 的網址和對應的屬性設定 ( 例如 method、headers、mode、body…等，最基本的寫法屬性不一定要填 )，執行之後會送出 Request。</p>
+<p>fetch基本語法：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> promise = <span class="title function_">fetch</span>(url, [options])</span><br></pre></td></tr></table></figure>
+
+<p>裡面幾個參數的介紹：</p>
+<ul>
+<li><strong>url</strong>:一定要填，要訪問的網址。</li>
+<li>options:是一個可選的参數，例如method、header。</li>
+</ul>
+<p>如果只有放url 這個參數，沒有放[options]，就會預設這個請求的HTTP請求方法是GET。</p>
+<p>其餘options可以觀看<a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/API/fetch">MDN</a>。</p>
+<p>Fetch()的語法結構與<code>Promise</code>非常相似，同樣是用<code>then</code>和<code>catch</code>方法來處理成功和失敗的結果，如果送出去的請求得到回應就會回傳帶有 Response 的 Promise 物件(狀態是fulfilled)，使用 then 將回傳值傳遞下去：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">fetch</span>(<span class="string">&quot;http://example.com/movies.json&quot;</span>)</span><br><span class="line">  .<span class="title function_">then</span>(<span class="keyword">function</span> (<span class="params">response</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> response.<span class="title function_">json</span>();</span><br><span class="line">  &#125;)</span><br><span class="line">  .<span class="title function_">then</span>(<span class="keyword">function</span> (<span class="params">myJson</span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(myJson);</span><br><span class="line">  &#125;)</span><br><span class="line">	.<span class="title function_">catch</span>(<span class="keyword">function</span> (<span class="params">error</span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(error);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="Fetch-的-Request-屬性"><a href="#Fetch-的-Request-屬性" class="headerlink" title="Fetch 的 Request 屬性"></a>Fetch 的 Request 屬性</h3><p>介紹一些常用的 Request屬性，其餘部分大家可以到 <a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/API/Request">MDN</a> 上查看：</p>
+<table>
+<thead>
+<tr>
+<th>屬性</th>
+<th>設定值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>url</td>
+<td>第一個參數，一定要填的項目，代表需要 fetch 對象的網址</td>
+</tr>
+<tr>
+<td>method</td>
+<td>GET、POST、PUT、DELETE、HEAD ( 預設 GET )</td>
+</tr>
+<tr>
+<td>headers</td>
+<td>要求相關的 Headers 物件 ( 預設 {} )</td>
+</tr>
+<tr>
+<td>mode</td>
+<td>cors、no-cors、same-origin、navigate ( 預設 cors )</td>
+</tr>
+<tr>
+<td>redirect</td>
+<td>follow、error、manual ( 預設 manual )</td>
+</tr>
+<tr>
+<td>cache</td>
+<td>default、no-store、reload、no-cache、force-cache ( 預設 default )</td>
+</tr>
+<tr>
+<td>body</td>
+<td>要加到要求中的內容 ( 如果 method 為 GET 或 HEAD 則不設定 )</td>
+</tr>
+</tbody></table>
+<h3 id="Fetch-的-Response-屬性"><a href="#Fetch-的-Response-屬性" class="headerlink" title="Fetch 的 Response 屬性"></a><strong>Fetch 的 Response 屬性</strong></h3><p>介紹一些常用的 <strong>Respons</strong> 屬性，其餘部分大家可以到 <a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-TW/docs/Web/API/Response">MDN</a> 上查看：</p>
+<table>
+<thead>
+<tr>
+<th>屬性</th>
+<th>設定值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>headers</td>
+<td>包含與 response 相關的 Headers 物件</td>
+</tr>
+<tr>
+<td>ok</td>
+<td>成功回傳 true，不成功回傳 false</td>
+</tr>
+<tr>
+<td>status</td>
+<td>狀態代碼，成功為 200</td>
+</tr>
+<tr>
+<td>statusText</td>
+<td>狀態文字，成功為 ok</td>
+</tr>
+<tr>
+<td>type</td>
+<td>response 的類型，例如 basic、cors…等</td>
+</tr>
+<tr>
+<td>url</td>
+<td>response 的 url</td>
+</tr>
+</tbody></table>
+<h3 id="Fetch-的-Response-方法"><a href="#Fetch-的-Response-方法" class="headerlink" title="Fetch 的 Response 方法"></a><strong>Fetch 的 Response 方法</strong></h3><p>介紹一些常用的 <strong>Respons</strong> 方法，其餘部分大家可以到 <a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-TW/docs/Web/API/Response">MDN</a> 上查看：</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>設定值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>json()</td>
+<td>返回 Promise，resolves 是 JSON 物件</td>
+</tr>
+<tr>
+<td>text()</td>
+<td>返回 Promise，resolves 是 text string</td>
+</tr>
+<tr>
+<td>formData()</td>
+<td>返回 Promise，resolves 是 formData ( 表單資料對應的的 Key 或 Value )</td>
+</tr>
+<tr>
+<td>clone()</td>
+<td>建立 Response 的複製物件</td>
+</tr>
+<tr>
+<td>error()</td>
+<td>返回 Response 的錯誤物件</td>
+</tr>
+</tbody></table>
+<p>注意，只能使用一種方法來取得資料。例如我用了<code>.json()</code>的方法後，不能再用另一種方法來取得資料，因為該資料已經被處理過了。</p>
+<h3 id="簡單的案例"><a href="#簡單的案例" class="headerlink" title="簡單的案例"></a>簡單的案例</h3><p>看了這麼多文字跟表格，我們來實際操作一次吧。</p>
+<p>以下範例的請求都會從 <a target="_blank" rel="noopener" href="http://httpbin.org/">httpbin.org</a> 這個網站裡挑選，它提供了各種不同的請求方式，在練習時是個很棒的工具。</p>
+<ul>
+<li><p><strong>Get 用法</strong></p>
+<p>  先來看一下code：</p>
+  <figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">fetch</span>(<span class="string">&#x27;https://httpbin.org/get&#x27;</span>)</span><br><span class="line">    .<span class="title function_">then</span>(<span class="function">(<span class="params">response</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(response)</span><br><span class="line">        <span class="keyword">return</span> response.<span class="title function_">json</span>()</span><br><span class="line">        <span class="comment">//return response.text()</span></span><br><span class="line">    &#125;).<span class="title function_">then</span>(<span class="function">(<span class="params">myJson</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(myJson)</span><br><span class="line">    &#125;)</span><br></pre></td></tr></table></figure>
+<p>  我們剛剛學到過，當<code>fetch()</code>裡面只有 <code>url</code> 這個參數時，它的HTTP請求方法是GET。</p>
+<p>  當 fetch() 接受**<code>&#39;https://httpbin.org/get&#39;</code>** 這個網址時，表示要請求這個URL。 </p>
+<p>  當請求通過後我們會得到一個Promise，以及此次請求的相關資訊：</p>
+<p>  <img src="https://i.imgur.com/NLSqXEL.png"></p>
+<p>  讓我們看一下Response裡面有什麼：</p>
+<p>  <img src="https://i.imgur.com/HWwOCfN.png"></p>
+<p>  裡面有請求的 <code>url</code> 和用來判斷請求是否成功的 <code>status</code> 狀態，以及我們剛剛前面有看到過的屬性。</p>
+<p>  那我們用<code>console.log(myJson)</code> 的內容又會是怎樣呢：</p>
+<p>  <img src="https://i.imgur.com/E2CwpQo.png"></p>
+<p>  這邊有件事情要提醒一下，在 <code>response</code> 中有兩個內建函式可以用來得到請求回傳的資料。</p>
+<p>  一個是我們目前使用的<code>return response.json()</code> ，他能夠將回傳的資料以物件的方式傳給第二個 <code>then</code> 接收。</p>
+<p>  但當今天我們使用<code>return response.text()</code> ，當回傳的資料無法轉換為物件時，則會將請求資料以字串方式取出。</p>
+<p>  就會像這樣：</p>
+<p>  <img src="https://i.imgur.com/LedQ9O6.png"></p>
+<p>  我們可以看到前面回傳的都是一樣的，但是在第二個then()之後，console出來的卻都是字串了。</p>
+</li>
+<li><p><strong>Post 用法</strong></p>
+<p>  一樣先看一下code：</p>
+  <figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">fetch</span>(<span class="string">&#x27;https://httpbin.org/post&#x27;</span>, &#123;</span><br><span class="line">    <span class="attr">method</span>: <span class="string">&#x27;POST&#x27;</span>,</span><br><span class="line">    <span class="attr">body</span>: <span class="title class_">JSON</span>.<span class="title function_">stringify</span>(</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">name</span>: <span class="string">&#x27;GQSM&#x27;</span>,</span><br><span class="line">            <span class="attr">age</span>: <span class="number">25</span></span><br><span class="line">        &#125;</span><br><span class="line">    )</span><br><span class="line">&#125;).<span class="title function_">then</span>(<span class="function">(<span class="params">response</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> response.<span class="title function_">json</span>()</span><br><span class="line">&#125;).<span class="title function_">then</span>(<span class="function">(<span class="params">myJson</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(myJson)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>  我們可以看到使用 <code>POST</code> 請求時需另外在 <code>method</code> 屬性內指定 <code>POST</code> 方式，且多了 <code>body</code> 屬性指定要送出的資料。</p>
+<p>  另外我們還可以看到這裡：**<code>JSON.stringify()</code> 。**</p>
+<p>  為什麼要先轉換成字串型態呢？這是因為：</p>
+<ul>
+<li><strong>HTTP POST 請求的 <code>body</code> 須為字符串</strong>：<br>  根據 HTTP 協議，POST 請求的 <strong><code>body</code></strong> 可以包含不同類型的數據，如純文本、XML、JSON 等。然而，無論您要傳遞什麼類型的數據，它都必須是字符串。<br>  這是因為 HTTP 協議在傳輸數據時要求它們以純文本字符串的形式進行傳遞。</li>
+</ul>
+<p>  我們可以來看一下沒有轉成字串會發生什麼事：</p>
+<p>  <img src="https://i.imgur.com/5TEYXHi.png"></p>
+<p>  注意到了嗎？在data那欄出現的是 <code>[object Object]</code> ，這也導致我們的請求在 <code>server</code> 端則是沒有辦法接收到正確的內容。</p>
+</li>
+</ul>
+<h3 id="請求失敗"><a href="#請求失敗" class="headerlink" title="請求失敗"></a><strong><strong>請求失敗</strong></strong></h3><p>在 <code>Fetch</code> 中，請求失敗時不會有 <code>error</code> 可以直接捕捉，而是要以 <code>response</code>  的 <code>status</code> 的屬性值判斷，當 <code>status</code> 的值不等於 <code>200</code> 時，將在 <code>.then</code> 中使用 <code>throw</code> 創建一個錯誤，並由  <code>.catch</code>  接收錯誤內容處理</p>
+<p>以上就是簡單Fetch()介紹，接下來換<code>axios</code> 。 </p>
+<h2 id="Axios"><a href="#Axios" class="headerlink" title="Axios"></a>Axios</h2><p>什麼是<code>axios</code> ?</p>
+<p>它是一個基於 Promise 的 HTTP 客戶端庫，主要用於瀏覽器和 Node.js 環境中進行 HTTP 請求。它簡化發送 HTTP 請求、處理回應和處理異常。</p>
+<p>以下是 Axios 的一些主要特點和功能：</p>
+<ol>
+<li><strong>簡單的 API</strong>：Axios 提供了一個簡單、一致的 API，使您能夠輕鬆發送各種類型的 HTTP 請求，包括 GET、POST、PUT、DELETE 等。</li>
+<li><strong>Promise 基礎</strong>：Axios 基於 JavaScript Promises，這使得處理異步請求和回應更容易和具可讀性。</li>
+<li><strong>自動 JSON 轉換</strong>：Axios 在發送請求時自動將 JavaScript 對象轉換為 JSON 字符串（當您傳遞對象作為請求主體時），並在接收回應時自動將 JSON 字符串轉換為 JavaScript 對象。</li>
+<li><strong>處理錯誤</strong>：Axios 具有強大的錯誤處理功能，它可以捕獲並處理各種類型的錯誤，例如網絡錯誤、HTTP 錯誤狀態碼和超時。</li>
+<li><strong>取消請求</strong>：Axios 允許您取消未完成的請求，這對於處理用戶取消操作或避免冗餘請求非常有用。</li>
+</ol>
+<h3 id="基本語法"><a href="#基本語法" class="headerlink" title="基本語法"></a>基本語法</h3><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">axios</span>(url[,config])</span><br></pre></td></tr></table></figure>
+
+<p><code>axios</code>回傳的物件是Promise(fulfilled狀態)，所以我們一樣可以用<code>.then</code>和<code>.catch</code>去處理成功和失敗結果。</p>
+<ul>
+<li><p><strong>Get 用法</strong></p>
+  <figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">axios.<span class="title function_">get</span>(<span class="string">&#x27;https://httpbin.org/post&#x27;</span>)</span><br><span class="line">  .<span class="title function_">then</span>(<span class="function"><span class="params">response</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 成功的回應</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;成功：&#x27;</span>, response.<span class="property">data</span>);</span><br><span class="line">  &#125;)</span><br><span class="line">  .<span class="title function_">catch</span>(<span class="function"><span class="params">error</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 失敗或錯誤處理</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">&#x27;錯誤：&#x27;</span>, error);</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>Post 用法</strong></p>
+  <figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">axios.<span class="title function_">post</span>(<span class="string">&#x27;https://httpbin.org/post&#x27;</span>, &#123;</span><br><span class="line">  <span class="attr">title</span>: <span class="string">&#x27;標題&#x27;</span>,</span><br><span class="line">  <span class="attr">body</span>: <span class="string">&#x27;內容&#x27;</span>,</span><br><span class="line">  <span class="attr">userId</span>: <span class="number">1</span></span><br><span class="line">&#125;)</span><br><span class="line">  .<span class="title function_">then</span>(<span class="function"><span class="params">response</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 成功的回應</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;成功：&#x27;</span>, response.<span class="property">data</span>);</span><br><span class="line">  &#125;)</span><br><span class="line">  .<span class="title function_">catch</span>(<span class="function"><span class="params">error</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 失敗或錯誤處理</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">&#x27;錯誤：&#x27;</span>, error);</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>config物件 用法</strong></p>
+<p>  我們還可以通過傳遞一個 object 來自定義請求。</p>
+  <figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 定義請求配置</span></span><br><span class="line"><span class="keyword">const</span> config = &#123;</span><br><span class="line">  <span class="attr">method</span>: <span class="string">&#x27;POST&#x27;</span>, <span class="comment">// 請求方法</span></span><br><span class="line">  <span class="attr">url</span>: <span class="string">&#x27;https://httpbin.org/post&#x27;</span>, <span class="comment">// 請求的URL</span></span><br><span class="line">  <span class="attr">headers</span>: &#123;</span><br><span class="line">    <span class="string">&#x27;Content-Type&#x27;</span>: <span class="string">&#x27;application/json&#x27;</span>, <span class="comment">// 請求標頭</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">data</span>: &#123; <span class="comment">// 請求主體的數據</span></span><br><span class="line">    <span class="attr">title</span>: <span class="string">&#x27;標題&#x27;</span>,</span><br><span class="line">    <span class="attr">body</span>: <span class="string">&#x27;內容&#x27;</span>,</span><br><span class="line">    <span class="attr">userId</span>: <span class="number">1</span></span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 發送請求</span></span><br><span class="line"><span class="title function_">axios</span>(config)</span><br><span class="line">  .<span class="title function_">then</span>(<span class="function"><span class="params">response</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 成功的回應</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;成功：&#x27;</span>, response.<span class="property">data</span>);</span><br><span class="line">  &#125;)</span><br><span class="line">  .<span class="title function_">catch</span>(<span class="function"><span class="params">error</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 失敗或錯誤處理</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">&#x27;錯誤：&#x27;</span>, error);</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
+<p>  使用 <strong><code>config</code></strong> 的方式使您能夠更靈活地設置和自定義每個請求。</p>
+</li>
+</ul>
+<h3 id="用-create來預設axios裏的config物件"><a href="#用-create來預設axios裏的config物件" class="headerlink" title="**用.create來預設axios裏的config物件"></a>**<strong>用<code>.create</code>來預設axios裏的config物件</strong></h3><p>剛剛我們有介紹使用**<code>config</code>** 的方式來傳遞請求，axios有一個很方便的方法讓我們預設config。</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> instance = axios.<span class="title function_">create</span>(&#123;</span><br><span class="line">  <span class="attr">baseURL</span>: <span class="string">&#x27;https://httpbin.org/post&#x27;</span>, <span class="comment">// 設定基本 URL</span></span><br><span class="line">  <span class="attr">timeout</span>: <span class="number">5000</span>, <span class="comment">// 設定請求超時時間，超過時間請求就會被中斷</span></span><br><span class="line">  <span class="attr">headers</span>: &#123;</span><br><span class="line">    <span class="string">&#x27;Content-Type&#x27;</span>: <span class="string">&#x27;application/json&#x27;</span>, <span class="comment">// 預設請求標頭</span></span><br><span class="line">  &#125;,</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用預設配置的 GET 請求</span></span><br><span class="line">instance.<span class="title function_">get</span>(<span class="string">&#x27;/posts/1&#x27;</span>)</span><br><span class="line">  .<span class="title function_">then</span>(<span class="function"><span class="params">response</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 成功的回應</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;成功：&#x27;</span>, response.<span class="property">data</span>);</span><br><span class="line">  &#125;)</span><br><span class="line">  .<span class="title function_">catch</span>(<span class="function"><span class="params">error</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 失敗或錯誤處理</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">&#x27;錯誤：&#x27;</span>, error);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用預設配置的 POST 請求</span></span><br><span class="line">instance.<span class="title function_">post</span>(<span class="string">&#x27;/posts&#x27;</span>, &#123;</span><br><span class="line">  <span class="attr">title</span>: <span class="string">&#x27;標題&#x27;</span>,</span><br><span class="line">  <span class="attr">body</span>: <span class="string">&#x27;內容&#x27;</span>,</span><br><span class="line">  <span class="attr">userId</span>: <span class="number">1</span></span><br><span class="line">&#125;)</span><br><span class="line">  .<span class="title function_">then</span>(<span class="function"><span class="params">response</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 成功的回應</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;成功：&#x27;</span>, response.<span class="property">data</span>);</span><br><span class="line">  &#125;)</span><br><span class="line">  .<span class="title function_">catch</span>(<span class="function"><span class="params">error</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 失敗或錯誤處理</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">&#x27;錯誤：&#x27;</span>, error);</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
+
+<p>利用<code>.create</code>方法，我們就少寫一些重複的東西。<del>這是一個最適合懶人的做法XD</del></p>
+<hr>
+<p>我承認我有點懶惰了axios確實找比較少的資料，原諒我吧！！！<br>明天就是最後一天了，這段旅程真的要結束了！！！</p>
+<p>參考資料：</p>
+<p><a target="_blank" rel="noopener" href="https://eyesofkids.gitbooks.io/javascript-start-from-es6/content/part4/ajax_fetch.html">https://eyesofkids.gitbooks.io/javascript-start-from-es6/content/part4/ajax_fetch.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.meticulous.ai/blog/fetch-vs-axios">https://www.meticulous.ai/blog/fetch-vs-axios</a></p>
+<p><a target="_blank" rel="noopener" href="https://medium.com/enjoy-life-enjoy-coding/jacascript-fetch-%E8%AE%93-es6-%E6%93%81%E6%9C%89%E4%B8%80%E5%B0%8D%E7%BF%85%E8%86%80-%E5%9F%BA%E7%A4%8E%E6%95%99%E5%AD%B8-2f98efe55ba4">https://medium.com/enjoy-life-enjoy-coding/jacascript-fetch-讓-es6-擁有一對翅膀-基礎教學-2f98efe55ba4</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/09/28/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-28-Day28/" rel="prev" title="『Day28』AJAX與溝通協定">
+      <i class="fa fa-chevron-left"></i> 『Day28』AJAX與溝通協定
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Fetch"><span class="nav-number">1.</span> <span class="nav-text">Fetch()</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Fetch-%E7%9A%84-Request-%E5%B1%AC%E6%80%A7"><span class="nav-number">1.1.</span> <span class="nav-text">Fetch 的 Request 屬性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Fetch-%E7%9A%84-Response-%E5%B1%AC%E6%80%A7"><span class="nav-number">1.2.</span> <span class="nav-text">Fetch 的 Response 屬性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Fetch-%E7%9A%84-Response-%E6%96%B9%E6%B3%95"><span class="nav-number">1.3.</span> <span class="nav-text">Fetch 的 Response 方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B0%A1%E5%96%AE%E7%9A%84%E6%A1%88%E4%BE%8B"><span class="nav-number">1.4.</span> <span class="nav-text">簡單的案例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AB%8B%E6%B1%82%E5%A4%B1%E6%95%97"><span class="nav-number">1.5.</span> <span class="nav-text">請求失敗</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Axios"><span class="nav-number">2.</span> <span class="nav-text">Axios</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E8%AA%9E%E6%B3%95"><span class="nav-number">2.1.</span> <span class="nav-text">基本語法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%A8-create%E4%BE%86%E9%A0%90%E8%A8%ADaxios%E8%A3%8F%E7%9A%84config%E7%89%A9%E4%BB%B6"><span class="nav-number">2.2.</span> <span class="nav-text">**用.create來預設axios裏的config物件</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Jeff"
+      src="/uploads/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Jeff</p>
+  <div class="site-description" itemprop="description">這是一個紀錄自己成長的地方</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">83</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jeff0518" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jeff0518" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:cycivs07@icloud.com" title="E-Mail → mailto:cycivs07@icloud.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jeff</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
