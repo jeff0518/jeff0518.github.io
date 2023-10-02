@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="會打這一篇主要還是因為想把做Side Project時查找的資料做一個整理，方便之後如果要在串接一次Google API時可以方便查閱。 那我們就開始吧！">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Google API串接">
+<meta property="og:url" content="http://example.com/2023/10/02/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%A5%97%E4%BB%B6-2023-10-02-api/index.html">
+<meta property="og:site_name" content="Jeff的隨手筆記">
+<meta property="og:description" content="會打這一篇主要還是因為想把做Side Project時查找的資料做一個整理，方便之後如果要在串接一次Google API時可以方便查閱。 那我們就開始吧！">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2023-10-02T09:05:29.000Z">
+<meta property="article:modified_time" content="2023-10-02T09:07:42.240Z">
+<meta property="article:author" content="Jeff">
+<meta property="article:tag" content="Google 串接">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2023/10/02/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%A5%97%E4%BB%B6-2023-10-02-api/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-tw'
+  };
+</script>
+
+  <title>Google API串接 | Jeff的隨手筆記</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Jeff的隨手筆記</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">學習當一個前端工程師</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/10/02/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%A5%97%E4%BB%B6-2023-10-02-api/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpeg">
+      <meta itemprop="name" content="Jeff">
+      <meta itemprop="description" content="這是一個紀錄自己成長的地方">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jeff的隨手筆記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Google API串接
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2023-10-02 17:05:29 / Modified: 17:07:42" itemprop="dateCreated datePublished" datetime="2023-10-02T17:05:29+08:00">2023-10-02</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%A5%97%E4%BB%B6%E5%AD%B8%E7%BF%92/" itemprop="url" rel="index"><span itemprop="name">第三方套件學習</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>會打這一篇主要還是因為想把做Side Project時查找的資料做一個整理，方便之後如果要在串接一次Google API時可以方便查閱。</p>
+<p>那我們就開始吧！</p>
+<span id="more"></span>
+<h2 id="申請Google-API-金鑰"><a href="#申請Google-API-金鑰" class="headerlink" title="申請Google API 金鑰"></a>申請Google API 金鑰</h2><p>為了使用 Google 提供的服務，我們首先必須前往 <strong><a target="_blank" rel="noopener" href="https://cloud.google.com/free?utm_source=google&utm_medium=cpc&utm_campaign=japac-TW-all-en-dr-BKWS-all-core-trial-EXA-dr-1605216&utm_content=text-ad-none-none-DEV_c-CRE_644095273669-ADGP_Hybrid%20%7C%20BKWS%20-%20EXA%20%7C%20Txt%20~%20GCP_General_%20core%20brand_main-KWID_43700074766895904-aud-1596662389094:kwd-6458750523&userloc_9040379-network_g&utm_term=KW_google%20cloud&gclid=Cj0KCQjwjt-oBhDKARIsABVRB0wqVVwpKefebOIDVlnjtAh5ms991e_uu4D1SmDX1HonPraKH7ClAhEaArbHEALw_wcB&gclsrc=aw.ds&hl=zh-tw">Google Cloud</a></strong> 申請 API 金鑰。</p>
+<p>以下是申請 API 金鑰的步驟：</p>
+<ol>
+<li><p>首先，建立一個新的專案。</p>
+</li>
+<li><p>選擇您剛建立的專案。</p>
+</li>
+<li><p>在左側導覽欄中，找到 “憑證” 連結並點擊它。</p>
+<p> !<a target="_blank" rel="noopener" href="https://i.imgur.com/aLpp5wM.png">https://i.imgur.com/aLpp5wM.png</a></p>
+</li>
+<li><p>在憑證頁面上，點擊 “建立憑證”。</p>
+<p> !<a target="_blank" rel="noopener" href="https://i.imgur.com/VEkNztI.png">https://i.imgur.com/VEkNztI.png</a></p>
+</li>
+<li><p>從選單中選擇 “API 金鑰”。</p>
+</li>
+</ol>
+<p>這樣我們就獲得了 API 金鑰。若需進一步設定 API 金鑰的使用限制，您可以參考以下文章：**<a target="_blank" rel="noopener" href="https://www.weya.com.tw/design/google-map-api-key">Google 地圖 API 金鑰使用限制設定</a>**</p>
+<h2 id="選擇Google-API"><a href="#選擇Google-API" class="headerlink" title="選擇Google API"></a>選擇Google API</h2><p>我們可以在 “API 和服務” 頁面中啟用所需的 API 和服務。。</p>
+<p>!<a target="_blank" rel="noopener" href="https://i.imgur.com/aLpp5wM.png">https://i.imgur.com/aLpp5wM.png</a></p>
+<p>在這個頁面上，我們可以將需要的 API 添加到我們的專案中。以下是一些必須選擇的 API：</p>
+<ul>
+<li><strong>Maps JavaScript API（用於顯示地圖本身）：</strong> 使用 Maps JavaScript API，您可以在網站或應用程式中嵌入互動式 Google 地圖，自定義地圖樣式，添加標記、路線、交通信息等。</li>
+<li><strong>Places API（用於地點搜索）：</strong> 使用 Places API，您可以在應用程式中實現功能，如附近地點的搜索、自動完成地點建議、評價和評論的檢索等。</li>
+<li><strong>Geocoding API（將地址或地點名稱轉換為地理坐標）：</strong> Geocoding 是將地址或地點名稱轉換為地理坐標（緯度和經度）的過程。它可用於在地圖上標記特定位置或進行地理位置分析。</li>
+</ul>
+<p>當然，根據我們的專案需求，還有其他 API可以選擇。</p>
+<h1 id="在-React渲染-Google-地圖"><a href="#在-React渲染-Google-地圖" class="headerlink" title="在 React渲染 Google 地圖"></a><strong><strong>在 React渲染 Google 地圖</strong></strong></h1><h2 id="使用的套件"><a href="#使用的套件" class="headerlink" title="使用的套件"></a>使用的套件</h2><p>在這次專案中，我們使用了 <strong><code>react-google-maps/api</code></strong> 套件。</p>
+<p>您可以使用以下命令安裝此套件：**<code>npm i @react-google-maps/api</code>**</p>
+<p>這時候我們就可以直接導入我們所需要的Hook了：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">GoogleMap</span>, <span class="title class_">MarkerF</span>, useJsApiLoader &#125; <span class="keyword">from</span> <span class="string">&quot;@react-google-maps/api&quot;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>我們導入了3個Hook，下面將要來解說這3個分別是幹嘛的：</p>
+<h3 id="MarkerF-hook"><a href="#MarkerF-hook" class="headerlink" title="MarkerF hook"></a>MarkerF hook</h3><p><strong><code>MarkerF</code></strong> 是一個用於在 Google 地圖上標記特定位置的 React 元件。可以使用它來添加多個標記，每個標記代表一個地點或位置。</p>
+<p>有在網路上查過資料的朋友可能會有疑問？為什麼網路上很多資料都是使用<code>Marker</code> 為什麼現在你是使用<code>MarkerF</code>呢？</p>
+<p>我一開始是使用 <code>**Marker**</code> ，但是在實作過程中，我發現在我的頁面上卻無法顯示畫面。</p>
+<p>在經歷一番波折後，我在stack overflow 上找到答案：</p>
+<blockquote>
+<p>The problem that you’re having is something introduced by React 18 related to Strict Mode. If you remove Strict Mode from your app, the markers should appear. That also explains why Smokey Dawson’s app worked in production — I’m guessing they removed Strict Mode.</p>
+</blockquote>
+<blockquote>
+<p>for react 18+ you have to import <code>MarkerF</code> instead of Marker and use in it as a tag(of course)</p>
+</blockquote>
+<p>簡單來說，由於 React 18 的 Strict Mode，我們在使用 <strong><code>Marker</code></strong> 時可能會遇到問題。為了解決這個問題，我們改用了 **<code>MarkerF</code>**。</p>
+<h3 id="useJsApiLoader-hook"><a href="#useJsApiLoader-hook" class="headerlink" title="useJsApiLoader hook"></a>useJsApiLoader hook</h3><p><strong><code>useJsApiLoader()</code></strong> 是專為 Google Maps JavaScript API 設計的 Hook。它用於載入和管理 Google Map相關的 JavaScript 資源。這個 Hook 對於需要在應用程式中使用 Google Map的情況非常有用。它提供了特定於 Google Map的配置選項和輔助函數，以更輕鬆地集成 Google Map。</p>
+<p>除了 **<code>useJsApiLoader()</code>**，還有一個名為 <strong><code>useLoadScript()</code></strong> 的 Hook，它由 React Query 提供，用於動態載入資源。我們可以使用 <strong><code>useLoadScript()</code></strong> 來載入各種不同類型的資源，不僅僅是只能用在 Google Maps JavaScript API。</p>
+<p>如果以簡單的小專案來說，用哪一個都沒有關係。</p>
+<h3 id="GoogleMap-hook"><a href="#GoogleMap-hook" class="headerlink" title="GoogleMap hook"></a>GoogleMap hook</h3><p>這是一個 React 元件，它代表了 Google 地圖。通過在應用程序中使用這個元件，你可以將 Google 地圖集成到你的網頁中。</p>
+<p>GoogleMap 提供了預設的 props：</p>
+<ul>
+<li><strong>Zoom</strong>：設定地圖的初始縮放級別</li>
+<li><strong>center</strong>：設定地圖的預設中心</li>
+<li><strong>mapContainerClassName</strong>：指定 GoogleMap 元件的高度和寬度的 CSS 類別名稱</li>
+</ul>
+<p>要記住！如果我們不傳遞這些預設屬性，那麼 Map 元件將會崩潰，因為它沒有必要的資料。</p>
+<h2 id="定義地圖的選項"><a href="#定義地圖的選項" class="headerlink" title="定義地圖的選項"></a>定義地圖的選項</h2><p>當我們渲染出地圖後會看到很多的預設功能，例如顯示道路地圖還是衛星地圖等等，這邊我們都可以自行設定我們渲染出來的地圖要有哪先功能，就以我的專案來說我使用了以下的功能：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 定義地圖的選項</span></span><br><span class="line">  <span class="keyword">const</span> options = <span class="title function_">useMemo</span>(</span><br><span class="line">    <span class="function">() =&gt;</span> (&#123;</span><br><span class="line">      <span class="attr">disableDefaultUI</span>: <span class="literal">false</span>,</span><br><span class="line">      <span class="attr">clickableIcons</span>: <span class="literal">false</span>,</span><br><span class="line">      <span class="attr">zoomControl</span>: <span class="literal">true</span>,</span><br><span class="line">      <span class="attr">mapTypeControl</span>: <span class="literal">false</span>,</span><br><span class="line">    &#125;),</span><br><span class="line">    []</span><br><span class="line">  );</span><br></pre></td></tr></table></figure>
+
+<p>這別題一件事情：在這邊使用useMemo主要的目的是為了性能優化。</p>
+<p>我們知道在 React 中計算某個值，並且這個值在渲染過程中不經常變化時，使用 <strong><code>useMemo</code></strong> 可以避免在每次渲染時都重新計算這個值。而在這裡**<code>options</code>** 是一個靜態的地圖選項物件，它的值不會在component 渲染過程中改變。因此，使用 <strong><code>useMemo</code></strong> 可以確保這個值只在初始渲染時計算一次，並在後續的渲染中重複使用，從而節省性能。</p>
+<p>回到要解釋的內容：</p>
+<ol>
+<li><strong>disableDefaultUI</strong>: 禁用地圖的默認介面元素，例如縮放控制、地圖類型切換器等。在這它被設置為 **<code>false</code>**，表示不禁用默認介面元素。</li>
+<li><strong>clickableIcons</strong>: 是否允許點擊地圖上的圖示（如標記）來執行操作。在這它被設置為 **<code>false</code>**，表示不允許點擊圖示。</li>
+<li><strong>zoomControl</strong>: 是否顯示縮放控制元件，允許用戶手動縮放地圖。在這被設置為 **<code>true</code>**，表示顯示縮放控制。</li>
+<li><strong>mapTypeControl</strong>: 是否顯示地圖類型控制元件，用戶可以在不同地圖類型之間切換（如道路地圖、衛星地圖等）。在這它被設置為 **<code>false</code>**，表示不顯示地圖類型控制。</li>
+</ol>
+<p>這些選項只是 <a target="_blank" rel="noopener" href="https://developers.google.com/maps/documentation/javascript/reference/map?hl=zh-tw#MapOptions">Google Maps JavaScript API</a> 提供的一部分，還有許多其他選項可供選擇，具體選擇哪些選項取決於專案需求。</p>
+<h2 id="定位使用者所在地"><a href="#定位使用者所在地" class="headerlink" title="定位使用者所在地"></a>定位使用者所在地</h2><p>現在地圖準備好了，我們要來讓地圖的中心出現在我們的所在地，這時候我們就需要利用到<strong><strong>Geolocation API</strong></strong>。</p>
+<p>這是一個瀏覽器內建的 API，身處在 <code>navigator</code> 這個 object 當中。在<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-TW/docs/Web/API/Geolocation_API">MDN</a>所述，可以透過 <code>navigator.geolocation</code> 當中的 <code>getCurrentPosition()</code> 取得當前位置等資訊。</p>
+<p>語法如下：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">navigator.<span class="property">geolocation</span>.<span class="title function_">getCurrentPosition</span>(success, error, options)</span><br></pre></td></tr></table></figure>
+
+<p>參數解釋：</p>
+<ul>
+<li><em>success<br>成功取得位置訊息時的callback function</em></li>
+<li>error (可選)<br>無法<em>取得位置訊息時的callback function</em></li>
+<li>option (可選)<br>可以放置一個PositionOptions Object</li>
+</ul>
+<p>在我自己的專案我是要它一進到這個頁面就要去抓取這個資訊，因此我使用了useEffect 這個hook，而他的 dependencies我讓它保持是空的，讓它只會在component創建時執行一次：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 拿取當前使用者位子</span></span><br><span class="line">  <span class="title function_">useEffect</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    navigator.<span class="property">geolocation</span>.<span class="title function_">getCurrentPosition</span>(</span><br><span class="line">      <span class="function">(<span class="params">position</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="title function_">setUserLocation</span>(&#123;</span><br><span class="line">          <span class="attr">lat</span>: position.<span class="property">coords</span>.<span class="property">latitude</span>,</span><br><span class="line">          <span class="attr">lng</span>: position.<span class="property">coords</span>.<span class="property">longitude</span>,</span><br><span class="line">        &#125;);</span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;無法顯示或拒絕定位&quot;</span>);</span><br><span class="line">      &#125;</span><br><span class="line">    );</span><br><span class="line">  &#125;, []);</span><br></pre></td></tr></table></figure>
+
+<p>當然也會遇到使用者不同意瀏覽器取得他的資訊，因此我們也必須要設定一個預設的初始值：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 設定預設中心點(台北101)</span></span><br><span class="line"><span class="keyword">const</span> defaultCenter = &#123; <span class="attr">lat</span>: <span class="number">25.033671</span>, <span class="attr">lng</span>: <span class="number">121.564427</span> &#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> [userLocation, setUserLocation] = <span class="title function_">useState</span>(defaultCenter); <span class="comment">//存放使用者座標</span></span><br></pre></td></tr></table></figure>
+
+<p>並在一開始就把預設的值存在state裡面，這樣當我們無法抓取到使用這的位置時地圖中心還是會出現在我們預設的地方。</p>
+<h2 id="移動畫面圖標會始終在畫面的中心"><a href="#移動畫面圖標會始終在畫面的中心" class="headerlink" title="移動畫面圖標會始終在畫面的中心"></a>移動畫面圖標會始終在畫面的中心</h2><p>現在我們希望在移動地圖時，將地圖中心點的座標同步到我們的應用程式中，以實現畫面上的圖標始終位於地圖中心。</p>
+<p>要實現這一功能，我們需要使用 <strong><code>onLoad</code></strong> 事件。在 Google 地圖組件中，這個事件提供了一個方便的方式，在地圖初始化後執行自定義的操作，確保地圖以預期的方式運作。</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="title class_">GoogleMap</span></span><br><span class="line">  onLoad=&#123;onLoad&#125;</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+
+<p>因此我們先來設定我們要在地圖初始化後要做什麼動作。</p>
+<p>首先，我們定義了一個 <strong><code>screenCenterRef</code></strong> 變數，它是一個 <strong><code>useRef</code></strong> 的參考，用於存儲螢幕中心點的相關信息。然後，我們使用 <strong><code>onLoad</code></strong> 回調函數來處理地圖載入後的操作，將螢幕中心點的資訊存儲在 <strong><code>screenCenterRef</code></strong> 中並更新 <strong><code>screenCenter</code></strong> 狀態。</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> screenCenterRef = <span class="title function_">useRef</span>();</span><br><span class="line"><span class="keyword">const</span> onLoad = <span class="title function_">useCallback</span>(<span class="function">(<span class="params">screenCenter</span>) =&gt;</span> &#123;</span><br><span class="line">    screenCenterRef.<span class="property">current</span> = screenCenter;</span><br><span class="line">    <span class="title function_">setScreenCenter</span>(screenCenter);</span><br><span class="line">  &#125;, []);</span><br></pre></td></tr></table></figure>
+
+<p>其實這時候我們就完成了這項功能，但是當我們打開console時，就會發現一個很嚴重的效能浪費，</p>
+<p>我們無論何時拖動地圖，都立即執行資訊抓取操作，這個是我不想要的。</p>
+<p>為了解決這個問題，我們使用了 <strong><code>setTimeout</code></strong> 函數，設置一個計時器，僅在停止地圖拖曳 500 毫秒後才執行後續的操作：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> [timer, setTimer] = <span class="title function_">useState</span>(<span class="literal">null</span>); <span class="comment">//存放setTimeout的計時器</span></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">centerChangHandler</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">    <span class="keyword">if</span> (timer) &#123;</span><br><span class="line">      <span class="built_in">clearTimeout</span>(timer);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> newTimer = <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">if</span> (screenCenter) &#123;</span><br><span class="line">        <span class="keyword">const</span> newCurrentCenter = screenCenter.<span class="title function_">getCenter</span>();</span><br><span class="line">        <span class="title function_">setCurrentPosition</span>(&#123;</span><br><span class="line">          <span class="attr">lat</span>: newCurrentCenter.<span class="title function_">lat</span>(),</span><br><span class="line">          <span class="attr">lng</span>: newCurrentCenter.<span class="title function_">lng</span>(),</span><br><span class="line">        &#125;);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;, <span class="number">500</span>);</span><br><span class="line">    <span class="title function_">setTimer</span>(newTimer);</span><br><span class="line">  &#125;;</span><br></pre></td></tr></table></figure>
+
+<p>在 <strong><code>centerChangeHandler</code></strong> 函數中，我們首先檢查是否存在之前設置的計時器 **<code>timer</code>**，如果存在，則使用 <strong><code>clearTimeout</code></strong> 函數來取消計時器。接著，我們設置一個新的計時器，它將在延遲 500 毫秒後執行指定的操作。這個操作是抓取當前螢幕中心點的座標並更新應用程式的狀態，以確保畫面上的圖標位置與地圖中心點保持一致。</p>
+<h1 id="結束"><a href="#結束" class="headerlink" title="結束"></a>結束</h1><p>附上這個component回傳的code：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">&#123;style.container&#125;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">GoogleMap</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">        <span class="attr">zoom</span>=<span class="string">&#123;16&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">        <span class="attr">center</span>=<span class="string">&#123;userLocation&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">        <span class="attr">options</span>=<span class="string">&#123;options&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">        <span class="attr">mapContainerClassName</span>=<span class="string">&#123;style.googleMap&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">        <span class="attr">onLoad</span>=<span class="string">&#123;onLoad&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">        <span class="attr">onCenterChanged</span>=<span class="string">&#123;centerChangHandler&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">      &gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">MarkerF</span> <span class="attr">position</span>=<span class="string">&#123;userLocation&#125;</span> <span class="attr">icon</span>=<span class="string">&#123;currentIcon&#125;</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;/<span class="name">GoogleMap</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>以上就是一個簡單的Google map api的串接練習，提供給大家參考。</p>
+<p>後面可以依照需求增加更多的功能，這次就先介紹到這裡了！</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Google-%E4%B8%B2%E6%8E%A5/" rel="tag"># Google 串接</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/09/30/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-30-Day30/" rel="prev" title="『Day30』旅程的終點？不這只是起點！">
+      <i class="fa fa-chevron-left"></i> 『Day30』旅程的終點？不這只是起點！
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%B3%E8%AB%8BGoogle-API-%E9%87%91%E9%91%B0"><span class="nav-number">1.</span> <span class="nav-text">申請Google API 金鑰</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%81%B8%E6%93%87Google-API"><span class="nav-number">2.</span> <span class="nav-text">選擇Google API</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9C%A8-React%E6%B8%B2%E6%9F%93-Google-%E5%9C%B0%E5%9C%96"><span class="nav-number"></span> <span class="nav-text">在 React渲染 Google 地圖</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E7%9A%84%E5%A5%97%E4%BB%B6"><span class="nav-number">1.</span> <span class="nav-text">使用的套件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#MarkerF-hook"><span class="nav-number">1.1.</span> <span class="nav-text">MarkerF hook</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#useJsApiLoader-hook"><span class="nav-number">1.2.</span> <span class="nav-text">useJsApiLoader hook</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GoogleMap-hook"><span class="nav-number">1.3.</span> <span class="nav-text">GoogleMap hook</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9A%E7%BE%A9%E5%9C%B0%E5%9C%96%E7%9A%84%E9%81%B8%E9%A0%85"><span class="nav-number">2.</span> <span class="nav-text">定義地圖的選項</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9A%E4%BD%8D%E4%BD%BF%E7%94%A8%E8%80%85%E6%89%80%E5%9C%A8%E5%9C%B0"><span class="nav-number">3.</span> <span class="nav-text">定位使用者所在地</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A7%BB%E5%8B%95%E7%95%AB%E9%9D%A2%E5%9C%96%E6%A8%99%E6%9C%83%E5%A7%8B%E7%B5%82%E5%9C%A8%E7%95%AB%E9%9D%A2%E7%9A%84%E4%B8%AD%E5%BF%83"><span class="nav-number">4.</span> <span class="nav-text">移動畫面圖標會始終在畫面的中心</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%B5%90%E6%9D%9F"><span class="nav-number"></span> <span class="nav-text">結束</span></a></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Jeff"
+      src="/uploads/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Jeff</p>
+  <div class="site-description" itemprop="description">這是一個紀錄自己成長的地方</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">85</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jeff0518" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jeff0518" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:cycivs07@icloud.com" title="E-Mail → mailto:cycivs07@icloud.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jeff</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
