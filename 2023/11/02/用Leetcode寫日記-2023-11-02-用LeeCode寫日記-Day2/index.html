@@ -20,24 +20,21 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="『新手日記』Day-23 OOP物件導向程式設計 人家上班族放國慶連假，我這個全職學習仔居然也學人家放假…這禮拜要加倍努力補回來。">
+  <meta name="description" content="這個系列是之前就有計畫要執行的，剛好在LeetCode上有看到幫我們整理好30題ＪＳ相關的題目，就決定來一個類鐵人賽的方式，把這30題做完。 因為之前沒有寫過類似文章，因此格式什麼的我都是自己亂打的，如果發現格式有改變可能是我發現更棒的格式了！">
 <meta property="og:type" content="article">
-<meta property="og:title" content="『新手日記』Day-23 OOP物件導向程式設計">
-<meta property="og:url" content="http://example.com/2022/12/30/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97-2022-12-30-day23/index.html">
+<meta property="og:title" content="用LeeCode寫日記-Day2">
+<meta property="og:url" content="http://example.com/2023/11/02/%E7%94%A8Leetcode%E5%AF%AB%E6%97%A5%E8%A8%98-2023-11-02-%E7%94%A8LeeCode%E5%AF%AB%E6%97%A5%E8%A8%98-Day2/index.html">
 <meta property="og:site_name" content="Jeff的隨手筆記">
-<meta property="og:description" content="『新手日記』Day-23 OOP物件導向程式設計 人家上班族放國慶連假，我這個全職學習仔居然也學人家放假…這禮拜要加倍努力補回來。">
+<meta property="og:description" content="這個系列是之前就有計畫要執行的，剛好在LeetCode上有看到幫我們整理好30題ＪＳ相關的題目，就決定來一個類鐵人賽的方式，把這30題做完。 因為之前沒有寫過類似文章，因此格式什麼的我都是自己亂打的，如果發現格式有改變可能是我發現更棒的格式了！">
 <meta property="og:locale" content="zh_TW">
-<meta property="og:image" content="https://miro.medium.com/max/1400/1*n2QyVDVEE7rDEMb9hWjLvg.jpeg">
-<meta property="og:image" content="https://miro.medium.com/max/800/1*-xlxPhAYlGBC1Rpdh-KuNA.png">
-<meta property="article:published_time" content="2022-12-30T07:34:42.000Z">
-<meta property="article:modified_time" content="2022-12-30T08:40:47.927Z">
+<meta property="article:published_time" content="2023-11-02T03:31:29.000Z">
+<meta property="article:modified_time" content="2023-11-02T03:41:29.027Z">
 <meta property="article:author" content="Jeff">
-<meta property="article:tag" content="新手日記">
-<meta property="article:tag" content="網路概論">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="用LeeCode寫日記">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://miro.medium.com/max/1400/1*n2QyVDVEE7rDEMb9hWjLvg.jpeg">
 
-<link rel="canonical" href="http://example.com/2022/12/30/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97-2022-12-30-day23/">
+<link rel="canonical" href="http://example.com/2023/11/02/%E7%94%A8Leetcode%E5%AF%AB%E6%97%A5%E8%A8%98-2023-11-02-%E7%94%A8LeeCode%E5%AF%AB%E6%97%A5%E8%A8%98-Day2/">
 
 
 <script id="page-configurations">
@@ -50,7 +47,7 @@
   };
 </script>
 
-  <title>『新手日記』Day-23 OOP物件導向程式設計 | Jeff的隨手筆記</title>
+  <title>用LeeCode寫日記-Day2 | Jeff的隨手筆記</title>
   
 
 
@@ -166,7 +163,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/30/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97-2022-12-30-day23/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/11/02/%E7%94%A8Leetcode%E5%AF%AB%E6%97%A5%E8%A8%98-2023-11-02-%E7%94%A8LeeCode%E5%AF%AB%E6%97%A5%E8%A8%98-Day2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/uploads/avatar.jpeg">
@@ -179,7 +176,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          『新手日記』Day-23 OOP物件導向程式設計
+          用LeeCode寫日記-Day2
         </h1>
 
         <div class="post-meta">
@@ -190,7 +187,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2022-12-30 15:34:42 / Modified: 16:40:47" itemprop="dateCreated datePublished" datetime="2022-12-30T15:34:42+08:00">2022-12-30</time>
+              <time title="Created: 2023-11-02 11:31:29 / Modified: 11:41:29" itemprop="dateCreated datePublished" datetime="2023-11-02T11:31:29+08:00">2023-11-02</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -198,7 +195,7 @@
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97/" itemprop="url" rel="index"><span itemprop="name">新手日記系列</span></a>
+                  <a href="/categories/%E7%94%A8LeeCode%E5%AF%AB%E6%97%A5%E8%A8%98/" itemprop="url" rel="index"><span itemprop="name">用LeeCode寫日記</span></a>
                 </span>
             </span>
 
@@ -213,39 +210,29 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="『新手日記』Day-23-OOP物件導向程式設計"><a href="#『新手日記』Day-23-OOP物件導向程式設計" class="headerlink" title="『新手日記』Day-23 OOP物件導向程式設計"></a><strong>『新手日記』Day-23 OOP物件導向程式設計</strong></h1><p><img src="https://miro.medium.com/max/1400/1*n2QyVDVEE7rDEMb9hWjLvg.jpeg" alt="https://miro.medium.com/max/1400/1*n2QyVDVEE7rDEMb9hWjLvg.jpeg"></p>
-<p>人家上班族放國慶連假，我這個全職學習仔居然也學人家放假…這禮拜要加倍努力補回來。</p>
+        <p>這個系列是之前就有計畫要執行的，剛好在LeetCode上有看到幫我們整理好30題ＪＳ相關的題目，就決定來一個類鐵人賽的方式，把這30題做完。</p>
+<p>因為之前沒有寫過類似文章，因此格式什麼的我都是自己亂打的，如果發現格式有改變可能是我發現更棒的格式了！</p>
 <span id="more"></span>
+<h2 id="Day-2-Counter"><a href="#Day-2-Counter" class="headerlink" title="Day 2:Counter"></a>Day 2:Counter</h2><p>問題描述：</p>
+<p>Given an integer <code>n</code>, return a <code>counter</code> function. This <code>counter</code> function initially returns <code>n</code> and then returns 1 more than the previous value every subsequent time it is called (<code>n</code>, <code>n + 1</code>, <code>n + 2</code>, etc).</p>
+<p>問題難度：Easy</p>
+<p>問題限制：</p>
+<ul>
+<li><code>1000 &lt;= n &lt;= 1000</code></li>
+<li><code>0 &lt;= calls.length &lt;= 1000</code></li>
+<li><code>calls[i] === &quot;call&quot;</code></li>
+</ul>
+<h2 id="我的解題思路"><a href="#我的解題思路" class="headerlink" title="我的解題思路"></a>我的解題思路</h2><p>分析：</p>
+<p>第一個反應是用閉包的概念，先設定一個外部函數，它將初始計數作為參數，並傳回一個內部函數，該函數在每次呼叫時遞增並傳回計數。</p>
+<p>但結果出來卻是都比原本的結果多一，才發現我是已經先加1後才回傳，因此這邊做了修改：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> createCounter = <span class="keyword">function</span>(<span class="params">n</span>) &#123;</span><br><span class="line">    <span class="keyword">let</span> count = n - <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">function</span>(<span class="params">n</span>) &#123;</span><br><span class="line">        count++</span><br><span class="line">        <span class="keyword">return</span> count</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
+<p>這樣就正常了，但是先-1在加1真的覺得像白癡一樣，因此改成</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> createCounter = <span class="keyword">function</span>(<span class="params">n</span>) &#123;</span><br><span class="line">    <span class="keyword">let</span> count = n - <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">function</span>(<span class="params">n</span>) &#123;</span><br><span class="line">        count++</span><br><span class="line">        <span class="keyword">return</span> count</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
-<p>在之前談到ODM（文件資料庫） 與 ORM（關聯式資料庫）時有提到，他們兩個<strong>都是讓開發者可以使用『物件導向』語法來操作的資料庫，那什麼是物件導向？</strong></p>
-<h1 id="物件導向"><a href="#物件導向" class="headerlink" title="物件導向"></a><strong>物件導向</strong></h1><p>物件導向，完整名稱為Object-oriented programming（物件導向程式設計），使用物件的方式來模擬真實世界中的事物。ㄜ …有點抽象，換一總解釋。</p>
-<p>假設我們有1隻手機要賣，我是不是要把他的名稱、價格、照片、特色等等的資料用一個物件的方式包起來，但假如我現在有100隻手機要賣，如果我照著一隻手機的寫法寫100次這樣太讓費時間了，因此我們會先統一為手機物件建立一個抽象化的簡單模型，然後在程式中使用此模型來快速建立結構一致的手機物件實例 (instance)。</p>
-<p>簡單來說，他是將相關的變數（屬性）與函式（方法）結合成一個單位（也就是物件）</p>
-<h1 id="OOP的四大pillar"><a href="#OOP的四大pillar" class="headerlink" title="OOP的四大pillar"></a><strong>OOP的四大pillar</strong></h1><p>OOP總共有四大支柱，分別是：</p>
-<blockquote>
-<p>Encapsulation（封裝）</p>
-</blockquote>
-<p>我們可以把許多屬性、方法包裝成一個物件使用</p>
-<blockquote>
-<p>Abstraction（抽象）</p>
-</blockquote>
-<p>將此物件的某些屬性與方法隱藏（hide）起來。</p>
-<blockquote>
-<p>Inheritance（繼承）</p>
-</blockquote>
-<p>是繼承者擁有某些屬性或是方法，我們很常在Event Delegation(事件指派)裡面使用到</p>
-<p><a target="_blank" rel="noopener" href="https://medium.com/@cycivs07/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98-day-13-javascript-dom-event-15b668d937a">https:&#x2F;&#x2F;medium.com&#x2F;@cycivs07&#x2F;%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98-day-13-javascript-dom-event-15b668d937a</a></p>
-<blockquote>
-<p>Polymorphism（多型）</p>
-</blockquote>
-<p>使用相同名稱的方法，傳入不同的參數，會執行不同的指令。</p>
-<p>越學越深才知道自己真的懂的很少，就以今天這個主題來說，簡單講可以像這樣舉例然後介紹，但往深一點去研究光一個繼承可能就要弄個老半天。</p>
-<p>近期有在想是不是該結束這個類鐵人挑戰的系列，目前進入實作的複習感覺題材變少好多，還在猶豫的時候突然發現我的一個未看文章的資料夾</p>
-<p><img src="https://miro.medium.com/max/800/1*-xlxPhAYlGBC1Rpdh-KuNA.png" alt="https://miro.medium.com/max/800/1*-xlxPhAYlGBC1Rpdh-KuNA.png"></p>
-<p>恩找到方向了，接下來都會先把這些文章消化完並且找到分享的主題。</p>
-<p>參考資料：<br><a target="_blank" rel="noopener" href="https://teagan-hsu.coderbridge.io/2021/01/05/javascript-oop-constructor-function-class/">teagan-hsu.coderbridge.io</a></p>
-<p><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-TW/docs/Learn/JavaScript/Objects/Classes_in_JavaScript">https://developer.mozilla.org/zh-TW/docs/Learn/JavaScript/Objects/Classes_in_JavaScript</a></p>
+<h2 id="其他解法"><a href="#其他解法" class="headerlink" title="其他解法"></a>其他解法</h2><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Using arrow function</span></span><br><span class="line"><span class="keyword">var</span> <span class="title function_">createCounter</span> = (<span class="params">n</span>) =&gt;&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="function">() =&gt;</span> n++;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Using an ES6 class</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Counter</span> &#123;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params">start</span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">count</span> = start;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="title function_">next</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">count</span>++;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> counter = <span class="keyword">new</span> <span class="title class_">Counter</span>(<span class="number">10</span>);</span><br></pre></td></tr></table></figure>
+
+<h2 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h2><p>這題使用到了閉包的概念，在一開始還知道解題的方向但十座上遇到了一點小問題，但還好都不難一下子就解決了。<br>閉包相關的資料可以看這篇：<br><a target="_blank" rel="noopener" href="https://jeff0518.github.io/2023/09/20/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-20-Day20/">https://jeff0518.github.io/2023/09/20/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-20-Day20/</a></p>
 
     </div>
 
@@ -255,8 +242,8 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98/" rel="tag"># 新手日記</a>
-              <a href="/tags/%E7%B6%B2%E8%B7%AF%E6%A6%82%E8%AB%96/" rel="tag"># 網路概論</a>
+              <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+              <a href="/tags/%E7%94%A8LeeCode%E5%AF%AB%E6%97%A5%E8%A8%98/" rel="tag"># 用LeeCode寫日記</a>
           </div>
 
         
@@ -265,13 +252,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2022/12/30/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97-2022-12-30-day22/" rel="prev" title="『新手日記』Day-22 SASS以及BEM 命名規範">
-      <i class="fa fa-chevron-left"></i> 『新手日記』Day-22 SASS以及BEM 命名規範
+    <a href="/2023/11/02/%E7%94%A8Leetcode%E5%AF%AB%E6%97%A5%E8%A8%98-2023-11-02-%E7%94%A8LeeCode%E5%AF%AB%E6%97%A5%E8%A8%98-Day1/" rel="prev" title="用LeeCode寫日記-Day1">
+      <i class="fa fa-chevron-left"></i> 用LeeCode寫日記-Day1
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2022/12/30/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97-2022-12-30-day24/" rel="next" title="『新手日記』Day-24 JavaScript 的原型鍊">
-      『新手日記』Day-24 JavaScript 的原型鍊 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -330,7 +314,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E3%80%8E%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E3%80%8FDay-23-OOP%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91%E7%A8%8B%E5%BC%8F%E8%A8%AD%E8%A8%88"><span class="nav-number">1.</span> <span class="nav-text">『新手日記』Day-23 OOP物件導向程式設計</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91"><span class="nav-number">2.</span> <span class="nav-text">物件導向</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#OOP%E7%9A%84%E5%9B%9B%E5%A4%A7pillar"><span class="nav-number">3.</span> <span class="nav-text">OOP的四大pillar</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Day-2-Counter"><span class="nav-number">1.</span> <span class="nav-text">Day 2:Counter</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%91%E7%9A%84%E8%A7%A3%E9%A1%8C%E6%80%9D%E8%B7%AF"><span class="nav-number">2.</span> <span class="nav-text">我的解題思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E8%A7%A3%E6%B3%95"><span class="nav-number">3.</span> <span class="nav-text">其他解法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B5%90%E8%AA%9E"><span class="nav-number">4.</span> <span class="nav-text">結語</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
