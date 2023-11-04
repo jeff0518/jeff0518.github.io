@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="今天的心情：看到題目：感覺好簡單。到中段：為什麼這樣寫不行。結束後：媽的！我國文真的有夠差。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="用LeeCode寫日記-Day4">
+<meta property="og:url" content="http://example.com/2023/11/04/%E7%94%A8Leetcode%E5%AF%AB%E6%97%A5%E8%A8%98-2023-11-04-%E7%94%A8LeeCode%E5%AF%AB%E6%97%A5%E8%A8%98-Day4/index.html">
+<meta property="og:site_name" content="Jeff的隨手筆記">
+<meta property="og:description" content="今天的心情：看到題目：感覺好簡單。到中段：為什麼這樣寫不行。結束後：媽的！我國文真的有夠差。">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2023-11-04T01:59:23.000Z">
+<meta property="article:modified_time" content="2023-11-04T02:06:15.435Z">
+<meta property="article:author" content="Jeff">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="用LeeCode寫日記">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2023/11/04/%E7%94%A8Leetcode%E5%AF%AB%E6%97%A5%E8%A8%98-2023-11-04-%E7%94%A8LeeCode%E5%AF%AB%E6%97%A5%E8%A8%98-Day4/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-tw'
+  };
+</script>
+
+  <title>用LeeCode寫日記-Day4 | Jeff的隨手筆記</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Jeff的隨手筆記</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">學習當一個前端工程師</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/11/04/%E7%94%A8Leetcode%E5%AF%AB%E6%97%A5%E8%A8%98-2023-11-04-%E7%94%A8LeeCode%E5%AF%AB%E6%97%A5%E8%A8%98-Day4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpeg">
+      <meta itemprop="name" content="Jeff">
+      <meta itemprop="description" content="這是一個紀錄自己成長的地方">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jeff的隨手筆記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          用LeeCode寫日記-Day4
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2023-11-04 09:59:23 / Modified: 10:06:15" itemprop="dateCreated datePublished" datetime="2023-11-04T09:59:23+08:00">2023-11-04</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%94%A8LeeCode%E5%AF%AB%E6%97%A5%E8%A8%98/" itemprop="url" rel="index"><span itemprop="name">用LeeCode寫日記</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>今天的心情：<br>看到題目：感覺好簡單。<br>到中段：為什麼這樣寫不行。<br>結束後：媽的！我國文真的有夠差。</p>
+<span id="more"></span>
+<h2 id="Day-4-Counter-II"><a href="#Day-4-Counter-II" class="headerlink" title="Day 4: Counter II"></a>Day 4: Counter II</h2><p>問題描述：</p>
+<p>Write a function <code>createCounter</code>. It should accept an initial integer <code>init</code>. It should return an object with three functions.</p>
+<p>The three functions are:</p>
+<ul>
+<li><code>increment()</code> increases the current value by 1 and then returns it.</li>
+<li><code>decrement()</code> reduces the current value by 1 and then returns it.</li>
+<li><code>reset()</code> sets the current value to <code>init</code> and then returns it.</li>
+</ul>
+<p>問題難度：<strong>Easy</strong></p>
+<p>問題限制：</p>
+<ul>
+<li><code>1000 &lt;= init &lt;= 1000</code></li>
+<li><code>0 &lt;= calls.length &lt;= 1000</code></li>
+<li><code>calls[i]</code> is one of “increment”, “decrement” and “reset”</li>
+</ul>
+<h2 id="我的解題思路"><a href="#我的解題思路" class="headerlink" title="我的解題思路"></a>我的解題思路</h2><p>分析：</p>
+<p>題目要我寫一個function，然後回傳三個功能不一的function，一個是＋1、一個是-1及一個是原本的數字。</p>
+<p>先return </p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> &#123;</span><br><span class="line">        <span class="attr">increment</span>: <span class="function">() =&gt;</span> &#123;&#125;,</span><br><span class="line">        <span class="attr">decrement</span>: <span class="function">() =&gt;</span> &#123;&#125;,</span><br><span class="line">        <span class="attr">reset</span>: <span class="function">() =&gt;</span> &#123;&#125;,</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>之後設定裡面的邏輯：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> count = init</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        <span class="attr">increment</span>: <span class="function">() =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> ++coun</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="attr">decrement</span>: <span class="function">() =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> --count</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="attr">reset</span>: <span class="function">() =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> init</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>第二個測試過了，但第一個測試沒過。</p>
+<p>這邊我就有點搞不清楚為什麼會這樣，因此看了解答，看到了這段：</p>
+<ul>
+<li><p>Firstly we can’t return the <code>init</code> value on reset because the <code>reset function</code> is intended to reset the counter to its initial value, not to return that value.</p>
+</li>
+<li><p>Secondly In the current implementation of the <code>reset function</code>, it updates the value of <code>presentCount</code> to <code>init</code>, which effectively <code>resets</code> the counter to its initial value. If we were to modify the <code>reset function</code> to also return the init value, it would no longer be performing its <strong>intended functionality</strong>.</p>
+</li>
+<li><p>Finally, it’s worth noting that the <code>init</code> value may not necessarily be the same as the <code>current value of presentCount</code> at the time the <code>reset function</code> is called. If the <code>increment or decrement functions</code> have been called multiple times, the value of <code>presentCount</code> would have changed from its initial value.</p>
+</li>
+<li><p>Thus, it’s more appropriate for the <code>reset function</code> to update the value of <code>presentCount</code> to the <code>initial value</code> specified when the counter was created, rather than to return that value.</p>
+</li>
+<li><p>翻譯</p>
+<p>  首先，我們不能在重置函數中傳回初始值，因為重置函數的目的是將計數器重置為其初始值，而不是傳回該值。</p>
+<p>  其次，在目前的重置函數實作中，它將 presentCount 的值更新為 init，這實際上會將計數器重設為其初始值。 如果我們修改重置函數以傳回 init 的值，它將不再執行其預期的功能。</p>
+<p>  最後，值得注意的是，init 的值不一定與呼叫重置函數時的 presentCount 的目前值相同。 如果多次呼叫增加或減少函數，presentCount 的值會從其初始值變更。</p>
+<p>  因此，更合適的做法是使重置函數將 presentCount 的值更新為在建立計數器時指定的初始值，而不是傳回該值。</p>
+</li>
+</ul>
+<p>雖然還不是很懂，但我大概整理了一下：</p>
+<p>重置函式的目標是將計數器的值恢復到初始值，而不是返回初始值。而且當我們如果有執行其他兩個函式，初始值會有所改變，就如同我剛剛的程式碼。</p>
+<p>因此，最正確的做法應該是:</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> createCounter = <span class="keyword">function</span>(<span class="params">init</span>) &#123;</span><br><span class="line">    <span class="keyword">let</span> count = init</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        <span class="attr">increment</span>: <span class="function">() =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> ++count</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="attr">decrement</span>: <span class="function">() =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> --count</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="attr">reset</span>: <span class="function">() =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> count = init</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>在打完這段後，我終於發現問題在哪裡了….他的執行順序是：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">counter.<span class="title function_">increment</span>(); </span><br><span class="line">counter.<span class="title function_">reset</span>(); </span><br><span class="line">counter.<span class="title function_">decrement</span>();</span><br></pre></td></tr></table></figure>
+
+<p>答案的要求：計數器＋1—&gt;重置 計數器歸0 —&gt; 計數器 -1. </p>
+<p>我原本的程式碼：計數器 +1 —&gt; 回傳初始值(但此時計數器還是+1的狀況) —&gt; (計數器＋1) -1</p>
+<h2 id="其他解法"><a href="#其他解法" class="headerlink" title="其他解法"></a>其他解法</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">class Counter &#123;</span><br><span class="line">  constructor(init) &#123;</span><br><span class="line">    this.init = init;</span><br><span class="line">    this.presentCount = init;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  increment() &#123;</span><br><span class="line">    this.presentCount += 1;</span><br><span class="line">    return this.presentCount;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  decrement() &#123;</span><br><span class="line">    this.presentCount -= 1;</span><br><span class="line">    return this.presentCount;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  reset() &#123;</span><br><span class="line">    this.presentCount = this.init;</span><br><span class="line">    return this.presentCount;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var createCounter = function(init) &#123;</span><br><span class="line">  return new Counter(init);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h2 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h2><p>真的誤會大了…完全沒有理解題目的意思。<br>這次的教訓是真的要好好的理解題目！！！</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+              <a href="/tags/%E7%94%A8LeeCode%E5%AF%AB%E6%97%A5%E8%A8%98/" rel="tag"># 用LeeCode寫日記</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/11/03/%E7%94%A8Leetcode%E5%AF%AB%E6%97%A5%E8%A8%98-2023-11-03-%E7%94%A8LeeCode%E5%AF%AB%E6%97%A5%E8%A8%98-Day3/" rel="prev" title="用LeeCode寫日記-Day3">
+      <i class="fa fa-chevron-left"></i> 用LeeCode寫日記-Day3
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Day-4-Counter-II"><span class="nav-number">1.</span> <span class="nav-text">Day 4: Counter II</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%91%E7%9A%84%E8%A7%A3%E9%A1%8C%E6%80%9D%E8%B7%AF"><span class="nav-number">2.</span> <span class="nav-text">我的解題思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E8%A7%A3%E6%B3%95"><span class="nav-number">3.</span> <span class="nav-text">其他解法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B5%90%E8%AA%9E"><span class="nav-number">4.</span> <span class="nav-text">結語</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Jeff"
+      src="/uploads/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Jeff</p>
+  <div class="site-description" itemprop="description">這是一個紀錄自己成長的地方</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">89</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jeff0518" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jeff0518" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:cycivs07@icloud.com" title="E-Mail → mailto:cycivs07@icloud.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jeff</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
