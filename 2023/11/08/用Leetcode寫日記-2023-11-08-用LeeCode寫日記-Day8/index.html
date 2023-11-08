@@ -20,21 +20,21 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta property="og:type" content="article">
-<meta property="og:title" content="『JavaScript 基礎』名詞解釋-Syntax parser、Lexical environment、Execution context">
-<meta property="og:url" content="http://example.com/2022/12/31/JavaScript-%E5%9F%BA%E7%A4%8E-2022-12-31-%E5%90%8D%E8%A9%9E%E8%A7%A3%E9%87%8B-2022-12-31-%E5%90%8D%E8%A9%9E%E8%A7%A3%E9%87%8B/index.html">
+  <meta name="description" content="今天花了比平常還有久的一點時間，最後還是有稍微看一下答案">
+<meta property="og:type" content="article">
+<meta property="og:title" content="用LeeCode寫日記-Day8">
+<meta property="og:url" content="http://example.com/2023/11/08/%E7%94%A8Leetcode%E5%AF%AB%E6%97%A5%E8%A8%98-2023-11-08-%E7%94%A8LeeCode%E5%AF%AB%E6%97%A5%E8%A8%98-Day8/index.html">
 <meta property="og:site_name" content="Jeff的隨手筆記">
+<meta property="og:description" content="今天花了比平常還有久的一點時間，最後還是有稍微看一下答案">
 <meta property="og:locale" content="zh_TW">
-<meta property="og:image" content="https://i.imgur.com/rZvUip7.png">
-<meta property="article:published_time" content="2022-12-31T11:13:43.000Z">
-<meta property="article:modified_time" content="2023-01-30T15:40:08.807Z">
+<meta property="article:published_time" content="2023-11-08T03:18:50.000Z">
+<meta property="article:modified_time" content="2023-11-08T03:46:54.526Z">
 <meta property="article:author" content="Jeff">
+<meta property="article:tag" content="用LeeCode寫日記">
 <meta property="article:tag" content="JavaScript">
-<meta property="article:tag" content="JavaScript 基礎">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://i.imgur.com/rZvUip7.png">
 
-<link rel="canonical" href="http://example.com/2022/12/31/JavaScript-%E5%9F%BA%E7%A4%8E-2022-12-31-%E5%90%8D%E8%A9%9E%E8%A7%A3%E9%87%8B-2022-12-31-%E5%90%8D%E8%A9%9E%E8%A7%A3%E9%87%8B/">
+<link rel="canonical" href="http://example.com/2023/11/08/%E7%94%A8Leetcode%E5%AF%AB%E6%97%A5%E8%A8%98-2023-11-08-%E7%94%A8LeeCode%E5%AF%AB%E6%97%A5%E8%A8%98-Day8/">
 
 
 <script id="page-configurations">
@@ -47,7 +47,7 @@
   };
 </script>
 
-  <title>『JavaScript 基礎』名詞解釋-Syntax parser、Lexical environment、Execution context | Jeff的隨手筆記</title>
+  <title>用LeeCode寫日記-Day8 | Jeff的隨手筆記</title>
   
 
 
@@ -163,7 +163,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/31/JavaScript-%E5%9F%BA%E7%A4%8E-2022-12-31-%E5%90%8D%E8%A9%9E%E8%A7%A3%E9%87%8B-2022-12-31-%E5%90%8D%E8%A9%9E%E8%A7%A3%E9%87%8B/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/11/08/%E7%94%A8Leetcode%E5%AF%AB%E6%97%A5%E8%A8%98-2023-11-08-%E7%94%A8LeeCode%E5%AF%AB%E6%97%A5%E8%A8%98-Day8/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/uploads/avatar.jpeg">
@@ -176,7 +176,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          『JavaScript 基礎』名詞解釋-Syntax parser、Lexical environment、Execution context
+          用LeeCode寫日記-Day8
         </h1>
 
         <div class="post-meta">
@@ -185,23 +185,17 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
+              
 
-              <time title="Created: 2022-12-31 19:13:43" itemprop="dateCreated datePublished" datetime="2022-12-31T19:13:43+08:00">2022-12-31</time>
+              <time title="Created: 2023-11-08 11:18:50 / Modified: 11:46:54" itemprop="dateCreated datePublished" datetime="2023-11-08T11:18:50+08:00">2023-11-08</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-01-30 23:40:08" itemprop="dateModified" datetime="2023-01-30T23:40:08+08:00">2023-01-30</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/JavaScript-%E5%9F%BA%E7%A4%8E/" itemprop="url" rel="index"><span itemprop="name">JavaScript 基礎</span></a>
+                  <a href="/categories/%E7%94%A8LeeCode%E5%AF%AB%E6%97%A5%E8%A8%98/" itemprop="url" rel="index"><span itemprop="name">用LeeCode寫日記</span></a>
                 </span>
             </span>
 
@@ -216,42 +210,45 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img src="https://i.imgur.com/rZvUip7.png" alt="Imgur"></p>
+        <p>今天花了比平常還有久的一點時間，最後還是有稍微看一下答案</p>
 <span id="more"></span>
-<p>這是一門在Udemy 課程，是同學介紹的。主要是因為想要運用到過年前這段時間好好的增進自己的JavaScript的基礎能力，讓自己能往前端工程師更近一步。主要還是會以筆記的形式做呈現！</p>
-<hr>
-<h3 id="Syntax-parser-語法分析"><a href="#Syntax-parser-語法分析" class="headerlink" title="Syntax parser 語法分析"></a>Syntax parser 語法分析</h3><blockquote>
-<p><em><strong>A program that reads your code and determines what it does and if it’s grammar is valid</strong></em></p>
-</blockquote>
-<p>一個讀取你的程式碼的程序，負責確認他是做什麼的以及語法是否有效</p>
-<p>你的程式碼不是實際給電腦的指令，而是翻譯。<br>也就是說，電腦他其實是看不懂JS指令的，他是透過中介的引擎(又或是被稱為直譯、轉譯器)把這些 code 來轉換成電腦懂的語言</p>
-<h3 id="Lexical-environment-詞彙環境"><a href="#Lexical-environment-詞彙環境" class="headerlink" title="Lexical environment 詞彙環境"></a>Lexical environment 詞彙環境</h3><blockquote>
-<p><em><strong>Where you write something is important</strong></em></p>
-</blockquote>
-<p>你在哪裡寫東西在JS裡是非常重要的<br>例如我宣告一個變數在function的內部或外部就會差非常多。<br>當程式透過引擎轉譯給電腦執行時，會因為它應對的記憶體位置影響他和其他function的互動<br>因此 Lexical environment 就是指開發環境中程式碼的位置</p>
-<h3 id="Execution-context-執行環境"><a href="#Execution-context-執行環境" class="headerlink" title="Execution context 執行環境"></a>Execution context <strong>執行環境</strong></h3><blockquote>
-<p><em><strong>A wrapper to help manage the code that is running</strong></em></p>
-</blockquote>
-<p>雖然js是一個單執行緒、同步的程式，但在轉譯的過程中並不會逐行丟給電腦去執行。<br>我們的程式碼會在執行時，會先依照詞彙環境(Lexical Environment)被解析器轉換，在電腦中被創造並擺到該放的記憶體位置去，最後電腦才執行。尤其JS某些特性(例如提升)就是在創造階段產生，因此理解JS在執行環境中的狀態是很重要的一件事。</p>
-<h3 id="name-x2F-value-pair"><a href="#name-x2F-value-pair" class="headerlink" title="name&#x2F;value pair"></a>name&#x2F;value pair</h3><blockquote>
-<p><em><strong>A name which maps to a unique value</strong></em></p>
-</blockquote>
-<p>這個名稱映射到的唯一值</p>
-<p>在一段執行的code中，名稱可能會被賦予不同的值，但他都只對應到唯一一個值</p>
-<p>例如：</p>
-<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> <span class="title class_">Address</span> = <span class="string">&#x27;100 Main St.&#x27;</span></span><br></pre></td></tr></table></figure>
+<h2 id="Day8-Function-Composition"><a href="#Day8-Function-Composition" class="headerlink" title="Day8: Function Composition"></a>Day8: Function Composition</h2><p>問題描述：</p>
+<p>Given an array of functions <code>[f1, f2, f3, ..., fn]</code>, return a new function <code>fn</code> that is the <strong>function composition</strong> of the array of functions.</p>
+<p>The <strong>function composition</strong> of <code>[f(x), g(x), h(x)]</code> is <code>fn(x) = f(g(h(x)))</code>.</p>
+<p>The <strong>function composition</strong> of an empty list of functions is the <strong>identity function</strong> <code>f(x) = x</code>.</p>
+<p>You may assume each function in the array accepts one integer as input and returns one integer as output.</p>
+<p>問題難度：<strong>Easy</strong></p>
+<p>問題限制：</p>
+<ul>
+<li><code>1000 &lt;= x &lt;= 1000</code></li>
+<li><code>0 &lt;= functions.length &lt;= 1000</code></li>
+<li>all functions accept and return a single integer</li>
+</ul>
+<h2 id="我的解題思路"><a href="#我的解題思路" class="headerlink" title="我的解題思路"></a>我的解題思路</h2><p>我連題目都看不懂了…</p>
+<p>我的理解是給一個 <code>array</code> ，這個<code>array</code>裡面放的是<code>function</code>，然後要回傳出一個新的<code>function</code> ，<code>fn()</code></p>
+<p>而<code>fn()</code>會是長這樣: <code>fn(x) = f(g(h(x))).</code></p>
+<p>如果fn()裡面沒有任何值，那fn(x) &#x3D; x</p>
+<p>先從簡單的開始做起，如果 array 是空值：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (functions.<span class="property">length</span> === <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">function</span>(<span class="params">x</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> x</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 
-<p>var -&gt;宣告</p>
-<p>Address -&gt;變數名</p>
-<p>“100 Main St.” -&gt;值(字串)</p>
-<p>但該值可能會是多組 name&#x2F;value 的集合，也就是 object</p>
-<p>例如：</p>
-<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> <span class="title class_">Add</span> = &#123;</span><br><span class="line">	<span class="title class_">Address</span>: &#123;</span><br><span class="line">		<span class="title class_">Street</span>: <span class="string">&#x27;Main&#x27;</span>,</span><br><span class="line">		<span class="title class_">Number</span>: <span class="number">100</span></span><br><span class="line">		<span class="title class_">Apartment</span>: &#123;</span><br><span class="line">			<span class="title class_">Floor</span>: <span class="number">3</span>,</span><br><span class="line">			<span class="title class_">Number</span>: <span class="number">301</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>接下來要處理 <code>fn(x) = f(g(h(x))).</code></p>
+<p>一開始就想說就是要讓他遍歷一次但是是要從後面回來，因此第一個版本的回答是這樣的：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> <span class="keyword">function</span>(<span class="params">x</span>) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> i = functions.<span class="property">length</span>; i &gt;= <span class="number">0</span>; --i) &#123;</span><br><span class="line">            functions[i](x)  </span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 
-<p>在JS中，object本質還是 name&#x2F;value 的配對組合。</p>
-<h3 id="Global-environment-全域環境"><a href="#Global-environment-全域環境" class="headerlink" title="Global environment 全域環境"></a>Global environment 全域環境</h3><p>不論何時執行JavaScript ， JavaScript 都會在execution context(執行環境)裡執行，而global environment 就是指在執行時，把我們的程式碼包在裏頭執行的環境。JavaScript在執行時都會創造一個基礎執行環境作為他的Global environment，以網頁來說全域通常就是瀏覽器window，而Node.js就是Global。</p>
-<p>全域環境被創造時也會跟著產生Global Object (全域物件)和特殊的變數「this」，而這兩個是由JavaScript引擎所創建的。</p>
-<p>在JavaScript裡，當我們說到 global 時，代表的是他不在function裡。</p>
+<p>但這樣回傳出來的是 <code>functions[i] is not a function</code><br>想了一陣子才注意到我應該要設定變數來儲存x，因此改成：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> <span class="keyword">function</span>(<span class="params">x</span>) &#123;</span><br><span class="line">        <span class="keyword">let</span> newFn = x</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> i = functions.<span class="property">length</span>; i &gt;= <span class="number">0</span>; --i) &#123;</span><br><span class="line">            newFn = functions[i](newFn)  </span><br><span class="line">        &#125;</span><br><span class="line">				<span class="keyword">return</span> newFn</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>但還使出現錯誤<code>TypeError:functions[i] is not a function</code></p>
+<p>這時我真的沒有想法了，就去找答案了。</p>
+<p>解果答案一看才發現我的寫法跟答案差不多，唯一的差別在於：<code>let i = functions.length; i &gt;= 0; --i</code> </p>
+<p>是這一行發生了錯誤，原本的想法是想說因為<code>functions.length</code> 出來會比index多1，想說那我就從—i 開始執行(會有這個想法真的證明我是蠢豬)，因此改成：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> <span class="keyword">function</span>(<span class="params">x</span>) &#123;</span><br><span class="line">        <span class="keyword">let</span> newFn = x</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> i = functions.<span class="property">length</span> -<span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">            newFn = functions[i](newFn)</span><br><span class="line">            </span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> newFn</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>這樣就完成了</p>
+<h2 id="其他解法"><a href="#其他解法" class="headerlink" title="其他解法"></a>其他解法</h2><p>用高階函式：reduceRight()</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">  var compose = function(functions) &#123;</span><br><span class="line">  return x =&gt; functions.reduceRight((acc,f)=&gt;f(acc),x)</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h2 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h2><p>其他解法暫時還不會參考，我先把基本的學好就好了。<br>這次錯的地方真的很不應該，要用變數接回傳值這個明明就是很基本的操作居然忘記，最扯的還是<code>let i = functions.length; i &gt;= 0; --i</code><br>到底當時在想什麼<code>--i</code> 是更新的條件，但i還是會從<code>functions.length</code> 的值開始執行啊….</p>
 
     </div>
 
@@ -261,8 +258,8 @@
 
       <footer class="post-footer">
           <div class="post-tags">
+              <a href="/tags/%E7%94%A8LeeCode%E5%AF%AB%E6%97%A5%E8%A8%98/" rel="tag"># 用LeeCode寫日記</a>
               <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
-              <a href="/tags/JavaScript-%E5%9F%BA%E7%A4%8E/" rel="tag"># JavaScript 基礎</a>
           </div>
 
         
@@ -271,13 +268,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2022/12/30/%E6%96%B0%E6%89%8B%E6%97%A5%E8%A8%98%E7%B3%BB%E5%88%97-2022-12-30-day27/" rel="prev" title="『新手日記』Day-27 用官方文件開始學習React">
-      <i class="fa fa-chevron-left"></i> 『新手日記』Day-27 用官方文件開始學習React
+    <a href="/2023/11/07/%E7%94%A8Leetcode%E5%AF%AB%E6%97%A5%E8%A8%98-2023-11-07-%E7%94%A8LeeCode%E5%AF%AB%E6%97%A5%E8%A8%98-Day7/" rel="prev" title="用LeeCode寫日記-Day7">
+      <i class="fa fa-chevron-left"></i> 用LeeCode寫日記-Day7
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2022/12/31/JavaScript-%E5%9F%BA%E7%A4%8E-2022-12-31-Execution-2022-12-31-Execution/" rel="next" title="『JavaScript 基礎』Execution context">
-      『JavaScript 基礎』Execution context <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -336,7 +330,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Syntax-parser-%E8%AA%9E%E6%B3%95%E5%88%86%E6%9E%90"><span class="nav-number">1.</span> <span class="nav-text">Syntax parser 語法分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Lexical-environment-%E8%A9%9E%E5%BD%99%E7%92%B0%E5%A2%83"><span class="nav-number">2.</span> <span class="nav-text">Lexical environment 詞彙環境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Execution-context-%E5%9F%B7%E8%A1%8C%E7%92%B0%E5%A2%83"><span class="nav-number">3.</span> <span class="nav-text">Execution context 執行環境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#name-x2F-value-pair"><span class="nav-number">4.</span> <span class="nav-text">name&#x2F;value pair</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Global-environment-%E5%85%A8%E5%9F%9F%E7%92%B0%E5%A2%83"><span class="nav-number">5.</span> <span class="nav-text">Global environment 全域環境</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Day8-Function-Composition"><span class="nav-number">1.</span> <span class="nav-text">Day8: Function Composition</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%91%E7%9A%84%E8%A7%A3%E9%A1%8C%E6%80%9D%E8%B7%AF"><span class="nav-number">2.</span> <span class="nav-text">我的解題思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E8%A7%A3%E6%B3%95"><span class="nav-number">3.</span> <span class="nav-text">其他解法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B5%90%E8%AA%9E"><span class="nav-number">4.</span> <span class="nav-text">結語</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
