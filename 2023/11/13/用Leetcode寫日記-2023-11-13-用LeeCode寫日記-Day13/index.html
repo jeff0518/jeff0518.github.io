@@ -28,10 +28,10 @@
 <meta property="og:description" content="天氣變冷了…好不想起床">
 <meta property="og:locale" content="zh_TW">
 <meta property="article:published_time" content="2023-11-13T01:37:06.000Z">
-<meta property="article:modified_time" content="2023-11-13T01:43:16.314Z">
+<meta property="article:modified_time" content="2023-11-14T01:48:05.317Z">
 <meta property="article:author" content="Jeff">
-<meta property="article:tag" content="JavaScript">
 <meta property="article:tag" content="用LeeCode寫日記">
+<meta property="article:tag" content="JavaScript">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="http://example.com/2023/11/13/%E7%94%A8Leetcode%E5%AF%AB%E6%97%A5%E8%A8%98-2023-11-13-%E7%94%A8LeeCode%E5%AF%AB%E6%97%A5%E8%A8%98-Day13/">
@@ -185,10 +185,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2023-11-13 09:37:06 / Modified: 09:43:16" itemprop="dateCreated datePublished" datetime="2023-11-13T09:37:06+08:00">2023-11-13</time>
+              <time title="Created: 2023-11-13 09:37:06" itemprop="dateCreated datePublished" datetime="2023-11-13T09:37:06+08:00">2023-11-13</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2023-11-14 09:48:05" itemprop="dateModified" datetime="2023-11-14T09:48:05+08:00">2023-11-14</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -227,9 +233,9 @@
 <p>確實答案跑出來是正確的，但有誤差。</p>
 <p>但系統判正確，但想說還是試試看解答的答案是不是也會這樣</p>
 <p>確實也存在誤差，那就沒問題了</p>
-<h2 id="完整答案"><a href="#完整答案" class="headerlink" title="完整答案"></a>完整答案</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">async function sleep(millis) &#123;</span><br><span class="line">    return await new Promise((res) =&gt; &#123;</span><br><span class="line">        setTimeout(() =&gt; res(), millis)</span><br><span class="line">    &#125;)</span><br><span class="line">   </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="完整答案"><a href="#完整答案" class="headerlink" title="完整答案"></a>完整答案</h2><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">sleep</span>(<span class="params">millis</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">await</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">res</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> <span class="title function_">res</span>(), millis)</span><br><span class="line">    &#125;)</span><br><span class="line">   </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h2 id="其他解答"><a href="#其他解答" class="headerlink" title="其他解答"></a>其他解答</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">async function sleep(millis) &#123;</span><br><span class="line">  return new Promise((delayresolve, reject) =&gt; &#123;</span><br><span class="line">    if (typeof millis !== &#x27;number&#x27; || isNaN(millis)) &#123;</span><br><span class="line">      reject(new Error(&#x27;Invalid argument. Expected a number.&#x27;));</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">      setTimeout(delayresolve, millis);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="其他解答"><a href="#其他解答" class="headerlink" title="其他解答"></a>其他解答</h2><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">sleep</span>(<span class="params">millis</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">delayresolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> millis !== <span class="string">&#x27;number&#x27;</span> || <span class="built_in">isNaN</span>(millis)) &#123;</span><br><span class="line">      <span class="title function_">reject</span>(<span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&#x27;Invalid argument. Expected a number.&#x27;</span>));</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="built_in">setTimeout</span>(delayresolve, millis);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h2 id="結論"><a href="#結論" class="headerlink" title="結論"></a>結論</h2><p>這個題目問了蠻多問題，有promise、setTimeout、async function&#x2F;await，解完後還是需要把這幾個再做一次複習加深印象。</p>
 
@@ -241,8 +247,8 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
               <a href="/tags/%E7%94%A8LeeCode%E5%AF%AB%E6%97%A5%E8%A8%98/" rel="tag"># 用LeeCode寫日記</a>
+              <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
           </div>
 
         
@@ -254,7 +260,10 @@
     <a href="/2023/11/12/%E7%94%A8Leetcode%E5%AF%AB%E6%97%A5%E8%A8%98-2023-11-12-%E7%94%A8LeeCode%E5%AF%AB%E6%97%A5%E8%A8%98-Day12/" rel="prev" title="用LeeCode寫日記-Day12">
       <i class="fa fa-chevron-left"></i> 用LeeCode寫日記-Day12
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2023/11/14/%E7%94%A8Leetcode%E5%AF%AB%E6%97%A5%E8%A8%98-2023-11-14-%E7%94%A8LeeCode%E5%AF%AB%E6%97%A5%E8%A8%98-Day14/" rel="next" title="用LeeCode寫日記-Day14">
+      用LeeCode寫日記-Day14 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -328,7 +337,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">98</span>
+          <span class="site-state-item-count">99</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
