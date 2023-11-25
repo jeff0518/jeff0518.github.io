@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="靠….我現在才發現我LeetCode拼錯了…少打一個t…花了點時間把所有錯字訂正…">
+<meta property="og:type" content="article">
+<meta property="og:title" content="用LeetCode寫日記-Day24">
+<meta property="og:url" content="http://example.com/2023/11/25/%E7%94%A8Leetcode%E5%AF%AB%E6%97%A5%E8%A8%98-2023-11-25-%E7%94%A8LeeCode%E5%AF%AB%E6%97%A5%E8%A8%98-Day24/index.html">
+<meta property="og:site_name" content="Jeff的隨手筆記">
+<meta property="og:description" content="靠….我現在才發現我LeetCode拼錯了…少打一個t…花了點時間把所有錯字訂正…">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2023-11-25T07:55:52.000Z">
+<meta property="article:modified_time" content="2023-11-25T08:05:06.553Z">
+<meta property="article:author" content="Jeff">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="用LeetCode寫日記">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2023/11/25/%E7%94%A8Leetcode%E5%AF%AB%E6%97%A5%E8%A8%98-2023-11-25-%E7%94%A8LeeCode%E5%AF%AB%E6%97%A5%E8%A8%98-Day24/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-tw'
+  };
+</script>
+
+  <title>用LeetCode寫日記-Day24 | Jeff的隨手筆記</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Jeff的隨手筆記</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">學習當一個前端工程師</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/11/25/%E7%94%A8Leetcode%E5%AF%AB%E6%97%A5%E8%A8%98-2023-11-25-%E7%94%A8LeeCode%E5%AF%AB%E6%97%A5%E8%A8%98-Day24/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpeg">
+      <meta itemprop="name" content="Jeff">
+      <meta itemprop="description" content="這是一個紀錄自己成長的地方">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jeff的隨手筆記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          用LeetCode寫日記-Day24
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2023-11-25 15:55:52 / Modified: 16:05:06" itemprop="dateCreated datePublished" datetime="2023-11-25T15:55:52+08:00">2023-11-25</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%94%A8LeetCode%E5%AF%AB%E6%97%A5%E8%A8%98/" itemprop="url" rel="index"><span itemprop="name">用LeetCode寫日記</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>靠….我現在才發現我LeetCode拼錯了…少打一個t…<br>花了點時間把所有錯字訂正…</p>
+<span id="more"></span>
+<h2 id="Day24-Sort-By"><a href="#Day24-Sort-By" class="headerlink" title="Day24: Sort By"></a>Day24: Sort By</h2><p>問題描述：</p>
+<p>Given an array <code>arr</code> and a function <code>fn</code>, return a sorted array <code>sortedArr</code>. You can assume <code>fn</code> only returns numbers and those numbers determine the sort order of <code>sortedArr</code>. <code>sortedArray</code> must be sorted in <strong>ascending order</strong> by <code>fn</code> output.</p>
+<p>You may assume that <code>fn</code> will never duplicate numbers for a given array.</p>
+<p>問題難度：<strong>Easy</strong></p>
+<p>問題限制：</p>
+<ul>
+<li><code>arr is a valid JSON array</code></li>
+<li><code>fn is a function that returns a number</code></li>
+<li><code>1 &lt;= arr.length &lt;= 5 * 105</code></li>
+</ul>
+<h2 id="我的解題過程："><a href="#我的解題過程：" class="headerlink" title="我的解題過程："></a>我的解題過程：</h2><p>題目要我們做出一個可以升序排列的function。</p>
+<p>看完題目第一個想法是這次來使用reduce()吧，雖然用sort()很容易就做得出來，但之前印象有用過了，這次來挑戰一下用其他方式。</p>
+<p>首先，我們先創建一個sortArr的變數：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> sortArr = arr.<span class="title function_">reduce</span>(<span class="function">() =&gt;</span> &#123;&#125;, [])</span><br></pre></td></tr></table></figure>
+
+<p>reduce的語法：<code>reduce(callbackFn, initialValue)</code></p>
+<p>之所以在<code>initialValue</code> 這個參數使用空陣列，是因為這個初始的空陣列是用來累計已排序的結果，而在排序的過程中會不斷更新。</p>
+<p>接下來處理callback function：</p>
+<p>我們的function 會傳入兩個參數：<strong>accumulator跟currentValue，</strong>並且我們創建一個新的變數<code>currentFnValue</code> ****裡面放的是經過fn處理過後的值：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> sortedArr = arr.<span class="title function_">reduce</span>(<span class="function">(<span class="params">acc, current</span>) =&gt;</span> &#123;</span><br><span class="line">	<span class="keyword">const</span> currentFnValue = <span class="title function_">fn</span>(current)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>之後我們需要一個變數來存放布林值，這個變數是用來標記當前元素是否已經被插入到正確的位置。</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> inserted = <span class="literal">false</span>;</span><br></pre></td></tr></table></figure>
+
+<p>接下來就要處理兩個數之間的比較，我們在創建一個變數<code>accFnValue</code> ，這個變數存放對已排序的元素使用函數 <strong><code>fn</code></strong> 取得比較值：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; acc.<span class="property">length</span>; i++) &#123;</span><br><span class="line">        <span class="keyword">const</span> accFnValue = <span class="title function_">fn</span>(acc[i]);</span><br><span class="line">        <span class="keyword">if</span> (currentFnValue &lt; accFnValue) &#123;</span><br><span class="line">            acc.<span class="title function_">splice</span>(i, <span class="number">0</span>, current);</span><br><span class="line">            inserted = <span class="literal">true</span>;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>後面的判斷式是：如果當前元素的比較值小於已排序元素的比較值，表示找到了插入的位置。</p>
+<p>然後使用splice()把該元素放到現在i的位置。</p>
+<p>最後再加上**<code>if (!inserted) &#123; acc.push(current); &#125;</code> ，**這是當我們現在這個數字比我們要比較的數字都還要大時，就把它插入在array的最後一個位子。</p>
+<p>這樣我們整個function借完成了。</p>
+<p>結果最後提交出現了問題….Testcases passed, but took too long.</p>
+<p>超時了…..</p>
+<h2 id="我的code"><a href="#我的code" class="headerlink" title="我的code:"></a>我的code:</h2><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> sortBy = <span class="keyword">function</span>(<span class="params">arr, fn</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> sortArr = arr.<span class="title function_">reduce</span>(<span class="function">(<span class="params">acc, current</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> currentFnValue = <span class="title function_">fn</span>(current);</span><br><span class="line">        <span class="keyword">let</span> inserted = <span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; acc.<span class="property">length</span>; i++) &#123;</span><br><span class="line">            <span class="keyword">const</span> accFnValue = <span class="title function_">fn</span>(acc[i]);</span><br><span class="line">            <span class="keyword">if</span> (currentFnValue &lt; accFnValue) &#123;</span><br><span class="line">                acc.<span class="title function_">splice</span>(i, <span class="number">0</span>, current);</span><br><span class="line">                inserted = <span class="literal">true</span>;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (!inserted) &#123;</span><br><span class="line">            acc.<span class="title function_">push</span>(current);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> acc;</span><br><span class="line">    &#125;, []);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> sortArr;</span><br><span class="line">    </span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h2 id="其他解法："><a href="#其他解法：" class="headerlink" title="其他解法："></a>其他解法：</h2><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> sortBy = <span class="keyword">function</span>(<span class="params">arr, fn</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> arr.<span class="title function_">sort</span>(<span class="function">(<span class="params">a, b</span>) =&gt;</span> <span class="title function_">fn</span>(a) - <span class="title function_">fn</span>(b));</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h2 id="結論："><a href="#結論：" class="headerlink" title="結論："></a>結論：</h2><p>我幹嘛沒事找事做…10分鐘內可以解決的問題要搞到花了快1個小時…重點是還不能提交…<br>搞了老半天還是用sort()的方式…<br>唯一的好處是又複習了一次reduce()</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+              <a href="/tags/%E7%94%A8LeetCode%E5%AF%AB%E6%97%A5%E8%A8%98/" rel="tag"># 用LeetCode寫日記</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/11/24/%E7%94%A8Leetcode%E5%AF%AB%E6%97%A5%E8%A8%98-2023-11-24-%E7%94%A8LeeCode%E5%AF%AB%E6%97%A5%E8%A8%98-Day23/" rel="prev" title="用LeetCode寫日記-Day23">
+      <i class="fa fa-chevron-left"></i> 用LeetCode寫日記-Day23
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Day24-Sort-By"><span class="nav-number">1.</span> <span class="nav-text">Day24: Sort By</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%91%E7%9A%84%E8%A7%A3%E9%A1%8C%E9%81%8E%E7%A8%8B%EF%BC%9A"><span class="nav-number">2.</span> <span class="nav-text">我的解題過程：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%91%E7%9A%84code"><span class="nav-number">3.</span> <span class="nav-text">我的code:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E8%A7%A3%E6%B3%95%EF%BC%9A"><span class="nav-number">4.</span> <span class="nav-text">其他解法：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B5%90%E8%AB%96%EF%BC%9A"><span class="nav-number">5.</span> <span class="nav-text">結論：</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Jeff"
+      src="/uploads/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Jeff</p>
+  <div class="site-description" itemprop="description">這是一個紀錄自己成長的地方</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">109</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jeff0518" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jeff0518" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:cycivs07@icloud.com" title="E-Mail → mailto:cycivs07@icloud.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jeff</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
