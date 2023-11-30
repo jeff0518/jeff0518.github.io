@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="加今天還剩下3篇，加油！">
+<meta property="og:type" content="article">
+<meta property="og:title" content="用LeetCode寫日記-Day28">
+<meta property="og:url" content="http://example.com/2023/11/30/%E7%94%A8Leetcode%E5%AF%AB%E6%97%A5%E8%A8%98-2023-11-30-%E7%94%A8LeetCode%E5%AF%AB%E6%97%A5%E8%A8%98-Day28/index.html">
+<meta property="og:site_name" content="Jeff的隨手筆記">
+<meta property="og:description" content="加今天還剩下3篇，加油！">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2023-11-30T01:02:50.000Z">
+<meta property="article:modified_time" content="2023-11-30T01:10:50.826Z">
+<meta property="article:author" content="Jeff">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="用LeetCode寫日記">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2023/11/30/%E7%94%A8Leetcode%E5%AF%AB%E6%97%A5%E8%A8%98-2023-11-30-%E7%94%A8LeetCode%E5%AF%AB%E6%97%A5%E8%A8%98-Day28/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-tw'
+  };
+</script>
+
+  <title>用LeetCode寫日記-Day28 | Jeff的隨手筆記</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Jeff的隨手筆記</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">學習當一個前端工程師</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/11/30/%E7%94%A8Leetcode%E5%AF%AB%E6%97%A5%E8%A8%98-2023-11-30-%E7%94%A8LeetCode%E5%AF%AB%E6%97%A5%E8%A8%98-Day28/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpeg">
+      <meta itemprop="name" content="Jeff">
+      <meta itemprop="description" content="這是一個紀錄自己成長的地方">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jeff的隨手筆記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          用LeetCode寫日記-Day28
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2023-11-30 09:02:50 / Modified: 09:10:50" itemprop="dateCreated datePublished" datetime="2023-11-30T09:02:50+08:00">2023-11-30</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%94%A8LeetCode%E5%AF%AB%E6%97%A5%E8%A8%98/" itemprop="url" rel="index"><span itemprop="name">用LeetCode寫日記</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>加今天還剩下3篇，加油！</p>
+<span id="more"></span>
+<h2 id="Day28-Event-Emitter"><a href="#Day28-Event-Emitter" class="headerlink" title="Day28: Event Emitter"></a>Day28: Event Emitter</h2><p>問題描述：</p>
+<p>Design an <code>EventEmitter</code> class. This interface is similar (but with some differences) to the one found in Node.js or the Event Target interface of the DOM. The <code>EventEmitter</code> should allow for subscribing to events and emitting them.</p>
+<p>Your <code>EventEmitter</code> class should have the following two methods:</p>
+<ul>
+<li><strong>subscribe</strong> - This method takes in two arguments: the name of an event as a string and a callback function. This callback function will later be called when the event is emitted.An event should be able to have multiple listeners for the same event. When emitting an event with multiple callbacks, each should be called in the order in which they were subscribed. An array of results should be returned. You can assume no callbacks passed to <code>subscribe</code> are referentially identical.The <code>subscribe</code> method should also return an object with an <code>unsubscribe</code> method that enables the user to unsubscribe. When it is called, the callback should be removed from the list of subscriptions and <code>undefined</code> should be returned.</li>
+<li><strong>emit</strong> - This method takes in two arguments: the name of an event as a string and an optional array of arguments that will be passed to the callback(s). If there are no callbacks subscribed to the given event, return an empty array. Otherwise, return an array of the results of all callback calls in the order they were subscribed.</li>
+</ul>
+<p>問題難度：<strong>Medium</strong></p>
+<p>問題限制：</p>
+<ul>
+<li><code>1 &lt;= actions.length &lt;= 10</code></li>
+<li><code>values.length === actions.length</code></li>
+<li>All test cases are valid, e.g. you don’t need to handle scenarios when unsubscribing from a non-existing subscription.</li>
+<li>There are only 4 different actions: <code>EventEmitter</code>, <code>emit</code>, <code>subscribe</code>, and <code>unsubscribe</code>.</li>
+<li>The <code>EventEmitter</code> action doesn’t take any arguments.</li>
+<li>The <code>emit</code> action takes between either 1 or 2 arguments. The first argument is the name of the event we want to emit, and the 2nd argument is passed to the callback functions.</li>
+<li>The <code>subscribe</code> action takes 2 arguments, where the first one is the event name and the second is the callback function.</li>
+<li>The <code>unsubscribe</code> action takes one argument, which is the 0-indexed order of the subscription made before.</li>
+</ul>
+<h2 id="我的學習過程："><a href="#我的學習過程：" class="headerlink" title="我的學習過程："></a>我的學習過程：</h2><p>今天的題目…我完全不會。只好看別人的code來學習：</p>
+<p>這個問題是要求你實現一個簡化版的事件發布-訂閱（Publish-Subscribe）模式，即實作一個 <strong><code>EventEmitter</code></strong> 類別。這個模式常見於事件驅動的編程中，例如在 Node.js 或網頁開發中的 DOM 事件。</p>
+<p>以下是 <strong><code>EventEmitter</code></strong> 類別的主要方法：</p>
+<ol>
+<li><strong>subscribe(event, cb)</strong>: 訂閱事件。這個方法接受兩個參數，一個是事件名稱（字串），另一個是回調函數（callback）。訂閱後，當事件被觸發時，這個回調函數將被呼叫。如果同一事件有多個訂閱者（多個回調函數），它們應該按照訂閱的順序被呼叫。方法會返回一個物件，該物件有一個 <strong><code>unsubscribe</code></strong> 方法，呼叫此方法可以取消訂閱。</li>
+<li><strong>emit(event, args &#x3D; [])</strong>: 觸發事件。這個方法接受兩個參數，一個是事件名稱（字串），另一個是一個可選的參數陣列，這個陣列的內容將被傳遞給訂閱的回調函數。如果該事件沒有被訂閱，則返回一個空陣列；否則，返回一個包含所有回調函數執行結果的陣列。</li>
+</ol>
+<p>作者的教學：</p>
+<h3 id="使用的概念："><a href="#使用的概念：" class="headerlink" title="使用的概念："></a>使用的概念：</h3><p>Map：使用 Map 數據結構來存儲事件作為鍵，並將回調的數組作為值。它允許高效地檢索和操作事件監聽器。</p>
+<p>Subscriptions：當訂閱事件時，回調函數被添加到該事件的聽眾數組中。subscribe 方法返回一個帶有取消訂閱方法的對象，該方法允許從事件的聽眾中刪除回調。</p>
+<p>Callbacks and Arguments：與事件關聯的回調在發出事件時可以接收可選參數。emit 方法使用提供的參數依次調用每個回調，並收集結果。</p>
+<h3 id="Approach："><a href="#Approach：" class="headerlink" title="Approach："></a>Approach：</h3><p>在 EventEmitter 構造函數中，初始化了一個名為 events 的內部 Map，用於將事件名稱存儲為鍵，回調的數組存儲為值。</p>
+<p>subscribe 方法檢查事件是否已經存在於 events map 中。如果不存在，則為該事件創建一個空數組。</p>
+<p>提供的回調函數（cb）被添加到指定事件的回調數組中。</p>
+<p>subscribe 方法返回帶有取消訂閱方法的對象。這允許用戶通過找到其索引並從數組中切割它來從訂閱列表中刪除回調。</p>
+<p>emit 方法檢查 events map 中是否存在事件。如果不存在，則返回一個空數組，因為沒有訂閱該事件的回調。</p>
+<p>如果事件存在，則檢索該事件的回調數組。然後，該方法遍歷每個回調並使用提供的參數（args）調用它們。</p>
+<p>每個回調調用的結果存儲在一個數組（results）中，該數組在方法末尾被返回。</p>
+<p>通過使用 Map 數據結構，代碼高效地組織了事件和相應的回調。該類別通過在訂閱時返回一個帶有取消訂閱方法的對象，提供了清晰和直觀的界面。該實現確保事件可以有多個聽眾，並確保已訂閱的事件以它們被訂閱的順序觸發相應的回調。</p>
+<h2 id="解法："><a href="#解法：" class="headerlink" title="解法："></a>解法：</h2><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">EventEmitter</span> &#123;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">events</span> = <span class="keyword">new</span> <span class="title class_">Map</span>();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">subscribe</span>(<span class="params">event, cb</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (!<span class="variable language_">this</span>.<span class="property">events</span>.<span class="title function_">has</span>(event)) &#123;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">events</span>.<span class="title function_">set</span>(event, []);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> listeners = <span class="variable language_">this</span>.<span class="property">events</span>.<span class="title function_">get</span>(event);</span><br><span class="line">    listeners.<span class="title function_">push</span>(cb);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      <span class="attr">unsubscribe</span>: <span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> index = listeners.<span class="title function_">indexOf</span>(cb);</span><br><span class="line">        <span class="keyword">if</span> (index !== -<span class="number">1</span>) &#123;</span><br><span class="line">          listeners.<span class="title function_">splice</span>(index, <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">emit</span>(<span class="params">event, args = []</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (!<span class="variable language_">this</span>.<span class="property">events</span>.<span class="title function_">has</span>(event)) &#123;</span><br><span class="line">      <span class="keyword">return</span> [];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> listeners = <span class="variable language_">this</span>.<span class="property">events</span>.<span class="title function_">get</span>(event);</span><br><span class="line">    <span class="keyword">const</span> results = [];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">const</span> listener <span class="keyword">of</span> listeners) &#123;</span><br><span class="line">      results.<span class="title function_">push</span>(<span class="title function_">listener</span>(...args));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> results;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="結論："><a href="#結論：" class="headerlink" title="結論："></a>結論：</h2><p>這是這28天來第一次就算看了解答還搞不清楚的東西，暫時先跳過。等之後有時間再回來研究一下這個東西</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+              <a href="/tags/%E7%94%A8LeetCode%E5%AF%AB%E6%97%A5%E8%A8%98/" rel="tag"># 用LeetCode寫日記</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/11/29/%E7%94%A8Leetcode%E5%AF%AB%E6%97%A5%E8%A8%98-2023-11-29-%E7%94%A8LeetCode%E5%AF%AB%E6%97%A5%E8%A8%98-Day27/" rel="prev" title="用LeetCode寫日記-Day27">
+      <i class="fa fa-chevron-left"></i> 用LeetCode寫日記-Day27
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Day28-Event-Emitter"><span class="nav-number">1.</span> <span class="nav-text">Day28: Event Emitter</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%91%E7%9A%84%E5%AD%B8%E7%BF%92%E9%81%8E%E7%A8%8B%EF%BC%9A"><span class="nav-number">2.</span> <span class="nav-text">我的學習過程：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E7%9A%84%E6%A6%82%E5%BF%B5%EF%BC%9A"><span class="nav-number">2.1.</span> <span class="nav-text">使用的概念：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Approach%EF%BC%9A"><span class="nav-number">2.2.</span> <span class="nav-text">Approach：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E6%B3%95%EF%BC%9A"><span class="nav-number">3.</span> <span class="nav-text">解法：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B5%90%E8%AB%96%EF%BC%9A"><span class="nav-number">4.</span> <span class="nav-text">結論：</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Jeff"
+      src="/uploads/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Jeff</p>
+  <div class="site-description" itemprop="description">這是一個紀錄自己成長的地方</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">113</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jeff0518" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jeff0518" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:cycivs07@icloud.com" title="E-Mail → mailto:cycivs07@icloud.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jeff</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
