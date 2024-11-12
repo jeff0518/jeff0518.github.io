@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="前言在開始這趟學習旅程之前，想先和大家說明這系列文章的規劃。我會以 React 官方文件的架構為基礎來撰寫，但會略過一些環境設定和基礎 JavaScript 觀念。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="『Day 1』認識 React Component">
+<meta property="og:url" content="http://example.com/2024/11/12/2024%E9%90%B5%E4%BA%BA%E8%B3%BD-2024-11-12-Day1/index.html">
+<meta property="og:site_name" content="Jeff的隨手筆記">
+<meta property="og:description" content="前言在開始這趟學習旅程之前，想先和大家說明這系列文章的規劃。我會以 React 官方文件的架構為基礎來撰寫，但會略過一些環境設定和基礎 JavaScript 觀念。">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2024-11-12T13:14:52.000Z">
+<meta property="article:modified_time" content="2024-11-12T13:21:51.302Z">
+<meta property="article:author" content="Jeff">
+<meta property="article:tag" content="React">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2024/11/12/2024%E9%90%B5%E4%BA%BA%E8%B3%BD-2024-11-12-Day1/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-tw'
+  };
+</script>
+
+  <title>『Day 1』認識 React Component | Jeff的隨手筆記</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Jeff的隨手筆記</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">學習當一個前端工程師</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/11/12/2024%E9%90%B5%E4%BA%BA%E8%B3%BD-2024-11-12-Day1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpeg">
+      <meta itemprop="name" content="Jeff">
+      <meta itemprop="description" content="這是一個紀錄自己成長的地方">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jeff的隨手筆記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          『Day 1』認識 React Component
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2024-11-12 21:14:52 / Modified: 21:21:51" itemprop="dateCreated datePublished" datetime="2024-11-12T21:14:52+08:00">2024-11-12</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/2024%E9%90%B5%E4%BA%BA%E8%B3%BD/" itemprop="url" rel="index"><span itemprop="name">2024鐵人賽</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在開始這趟學習旅程之前，想先和大家說明這系列文章的規劃。我會以 React 官方文件的架構為基礎來撰寫，但會略過一些環境設定和基礎 JavaScript 觀念。</p>
+<span id="more"></span>
+
+<p>選擇跳過這些內容是因為網路上已經有許多優質的學習資源。不過還是要提醒大家，要真正掌握 React，需要對以下 JavaScript 概念有一定的理解：</p>
+<ul>
+<li>Closure（閉包）和 Scope（作用域）- 這對於理解 React Hooks 非常重要</li>
+<li>ES6+ 的重要特性：<ul>
+<li>Arrow Functions 和 this 的綁定</li>
+<li>Destructuring（解構賦值）</li>
+<li>Spread&#x2F;Rest 運算符</li>
+</ul>
+</li>
+<li>非同步處理：Promise 和 async&#x2F;await</li>
+<li>Event Loop 和 JavaScript 的執行機制</li>
+</ul>
+<p>如果對這些概念還不太熟悉的話，建議先花一些時間打好基礎。相信這樣不只能更好地理解 React 的運作原理，也能寫出更好的程式碼。</p>
+<h3 id="React-的開發理念"><a href="#React-的開發理念" class="headerlink" title="React 的開發理念"></a>React 的開發理念</h3><p>在深入 React 之前，我們先來聊聊它的核心開發理念，這和傳統的網頁開發方式有著根本的差異。</p>
+<p>傳統的網頁開發流程是這樣的：</p>
+<p>我們會先寫好 HTML 和 CSS，例如先把一個按鈕和表單放在頁面上，然後再透過 JavaScript 來「加工」這些元素。像是：「啊，這個按鈕按下去要做什麼」、「這個表單要怎麼驗證」。JavaScript 就像是事後才加上去的功能層，有點像是在完工的房子上再加裝設備的感覺。</p>
+<p>React 則是採取了完全不同的思維方式，它讓我們在寫程式時，就把「外觀」和「功能」一起思考。當我們要做一個按鈕時，我們不是先放個按鈕在那邊，之後再想要做什麼，而是一開始就規劃：「這個按鈕要顯示什麼文字」、「按下去要做什麼事」、「什麼時候要禁用它」。</p>
+<p>這種方式讓我們的程式碼更好組織，也更容易掌握整個應用程式的邏輯。</p>
+<p>這個概念轉變可能一開始會讓人不太習慣，但當你開始寫 React 時，你會發現這種思維方式其實更直覺也更有條理。</p>
+<p>簡單的小整理:</p>
+<ul>
+<li>傳統：HTML&#x2F;CSS 結構 -&gt; JavaScript 添加互動</li>
+<li>React：將互動性置於核心，JavaScript 和 UI 緊密結合</li>
+</ul>
+<blockquote>
+<p>在深入了解 Component 之前，有一個重要的概念需要先提一下：嚴格來說，React 的最小單位其實是 React element，而不是 Component。<br>React element 是構建 React 應用的最基本單位，它描述了你想要在螢幕上看到的內容。而 Component 則是由這些 React element 組合而成的。<br>我們可以把React element 想像成是積木，而Component 則是使用積木搭建而成的結構。</p>
+</blockquote>
+<h3 id="什麼是-React-Component"><a href="#什麼是-React-Component" class="headerlink" title="什麼是 React Component"></a><strong>什麼是 React Component</strong></h3><p>在 React 中，Component 本質上是 JavaScript 函數，開發者可以在其中巧妙地融入 HTML 標記。這種方法就是我們剛剛提到的開發理念：JavaScript 和 UI 的緊密結合。</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">function</span> <span class="title function_">Profile</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">img</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">      <span class="attr">src</span>=<span class="string">&quot;https://i.imgur.com/MK3eW3Am.jpg&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">      <span class="attr">alt</span>=<span class="string">&quot;Katherine Johnson&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">    /&gt;</span></span></span><br><span class="line">  )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="怎麼創建-React-Component"><a href="#怎麼創建-React-Component" class="headerlink" title="怎麼創建 React Component"></a><strong>怎麼創建 React Component</strong></h3><p>3個步驟:</p>
+<p><strong>Step 1: Export the component</strong></p>
+<p>我們會使用JavaScript語法裡的 export default，來宣告這個component，方便其他地方導入</p>
+<p><strong>Step 2: Define the function</strong></p>
+<p>這邊就會像我們在寫一般function一樣，只是component 的function名稱第一個字必須是大寫</p>
+<p><strong>Step 3: Add markup</strong></p>
+<p>這裡我們寫的並不是html，而是名叫JSX的語法，他寫在return 之後</p>
+<p>以下為範例:</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">function</span> <span class="title function_">Profile</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">img</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">      <span class="attr">src</span>=<span class="string">&quot;https://i.imgur.com/MK3eW3As.jpg&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">      <span class="attr">alt</span>=<span class="string">&quot;Katherine Johnson&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">    /&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="使用-React-Component"><a href="#使用-React-Component" class="headerlink" title="使用 React Component"></a><strong>使用 React Component</strong></h3><p>React 組件本質上是普通的 JavaScript 函數，因此你可以在同一個文件中定義多個元件。不過，當文件變得過於繁雜時，你隨時可以將 Profile 組件移至單獨的文件中，以提高代碼的可讀性和可維護性。</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">Profile</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">img</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">      <span class="attr">src</span>=<span class="string">&quot;https://i.imgur.com/MK3eW3As.jpg&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">      <span class="attr">alt</span>=<span class="string">&quot;Katherine Johnson&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">    /&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">function</span> <span class="title function_">Gallery</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">section</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">h1</span>&gt;</span>Amazing scientists<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">Profile</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">Profile</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">Profile</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">section</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>注意到 Profile 組件是在 Gallery 元件內部被渲染的——而且可能被多次使用。</p>
+<p>在這種情況下，我們稱 Gallery 為「父元件」，而每個 Profile 則是它的「子元件」。這正是 React 的魔力所在：你只需定義一次元件，就可以在應用的任何地方、任意次數地使用它。</p>
+<p>這種元件的可重用性和組合性是 React 的核心優勢之一。它不僅提高了開發效率，還使得代碼結構更加清晰和模塊化。通過將 UI 拆分成小的、獨立的元件，你可以更容易地管理複雜的用戶界面，同時也為團隊協作和代碼維護提供了便利。</p>
+<blockquote>
+<p>雖然可以在一個文件中包含多個元件，但在大型項目中，通常建議將每個主要組件放在其own文件中。這樣可以更好地組織代碼，並使得組件的重用和測試變得更加簡單。</p>
+</blockquote>
+<h3 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h3><p>在 React 中，元件是構建用戶界面的基本單位。它們是自包含的、可重用的代碼片段，可以將 UI 分割成獨立的、可重用的部分。</p>
+<p>元件可以被視為 React 應用的構建塊。它們可以是簡單的按鈕、輸入框，也可以是複雜的頁面佈局或整個應用程序。</p>
+<p>元件的核心特性包括：</p>
+<ul>
+<li>可重用性（Reusability）：元件一旦創建,就能在應用程式的不同地方重複使用,大幅提升開發效率。</li>
+<li>獨立性（Independence）：每個元件都能獨立管理自己的狀態和渲染邏輯,使得程式碼更容易維護。</li>
+<li>可組合性（Composability）：小型元件可以靈活組合成更複雜的大型元件,讓程式架構更有條理。</li>
+<li>單向數據流（One-way Data Flow）：數據從父元件向下流向子元件,使應用程式的數據流向清晰可預測。</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/React/" rel="tag"># React</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/11/11/2024%E9%90%B5%E4%BA%BA%E8%B3%BD-2024-11-11-Day0/" rel="prev" title="『Day 0』踏上 React 學習之旅：一段重新認識自我的過程">
+      <i class="fa fa-chevron-left"></i> 『Day 0』踏上 React 學習之旅：一段重新認識自我的過程
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#React-%E7%9A%84%E9%96%8B%E7%99%BC%E7%90%86%E5%BF%B5"><span class="nav-number">2.</span> <span class="nav-text">React 的開發理念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E9%BA%BC%E6%98%AF-React-Component"><span class="nav-number">3.</span> <span class="nav-text">什麼是 React Component</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%8E%E9%BA%BC%E5%89%B5%E5%BB%BA-React-Component"><span class="nav-number">4.</span> <span class="nav-text">怎麼創建 React Component</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-React-Component"><span class="nav-number">5.</span> <span class="nav-text">使用 React Component</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B8%BD%E7%B5%90"><span class="nav-number">6.</span> <span class="nav-text">總結</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Jeff"
+      src="/uploads/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Jeff</p>
+  <div class="site-description" itemprop="description">這是一個紀錄自己成長的地方</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">118</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jeff0518" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jeff0518" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:cycivs07@icloud.com" title="E-Mail → mailto:cycivs07@icloud.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jeff</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
