@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="前言在上一篇的內容中，不知道大家是否留意到這段程式碼：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="『Day 3』從 HTML 到 JSX">
+<meta property="og:url" content="http://example.com/2024/12/10/2024%E9%90%B5%E4%BA%BA%E8%B3%BD-2024-12-26-Day3/index.html">
+<meta property="og:site_name" content="Jeff的隨手筆記">
+<meta property="og:description" content="前言在上一篇的內容中，不知道大家是否留意到這段程式碼：">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2024-12-10T13:37:14.000Z">
+<meta property="article:modified_time" content="2024-12-26T12:46:31.090Z">
+<meta property="article:author" content="Jeff">
+<meta property="article:tag" content="React">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2024/12/10/2024%E9%90%B5%E4%BA%BA%E8%B3%BD-2024-12-26-Day3/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-tw'
+  };
+</script>
+
+  <title>『Day 3』從 HTML 到 JSX | Jeff的隨手筆記</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Jeff的隨手筆記</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">學習當一個前端工程師</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/12/10/2024%E9%90%B5%E4%BA%BA%E8%B3%BD-2024-12-26-Day3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpeg">
+      <meta itemprop="name" content="Jeff">
+      <meta itemprop="description" content="這是一個紀錄自己成長的地方">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jeff的隨手筆記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          『Day 3』從 HTML 到 JSX
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-12-10 21:37:14" itemprop="dateCreated datePublished" datetime="2024-12-10T21:37:14+08:00">2024-12-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2024-12-26 20:46:31" itemprop="dateModified" datetime="2024-12-26T20:46:31+08:00">2024-12-26</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/2024%E9%90%B5%E4%BA%BA%E8%B3%BD/" itemprop="url" rel="index"><span itemprop="name">2024鐵人賽</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在上一篇的內容中，不知道大家是否留意到這段程式碼：</p>
+<span id="more"></span>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">function</span> <span class="title function_">Gallery</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">section</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">h1</span>&gt;</span>Amazing scientists<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">section</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>看起來很特別對吧？在 JavaScript 的函式中竟然出現了類似 HTML 的語法。這個有趣的語法特性，正是我們今天要介紹的主角 - <em><strong>JSX</strong></em>。</p>
+<h2 id="為什麼需要-JSX？"><a href="#為什麼需要-JSX？" class="headerlink" title="為什麼需要 JSX？"></a>為什麼需要 JSX？</h2><p>回想網頁開發的演進，多年來我們習慣將：</p>
+<ul>
+<li>內容寫在 HTML</li>
+<li>樣式寫在 CSS</li>
+<li>邏輯寫在 JavaScript</li>
+</ul>
+<p>這三者通常都是分開的獨立檔案。但隨著網頁互動性越來越重要，JavaScript 的角色也產生了變化。它不再只是負責互動功能，更開始主導內容的呈現。</p>
+<p>這種轉變促使了 React 這類現代前端框架的誕生。React 選擇將渲染邏輯和 HTML 整合在一起，形成了我們現在熟知的「元件（Component）」概念。而 JSX 就是實現這個想法的關鍵工具。</p>
+<h2 id="認識-JSX"><a href="#認識-JSX" class="headerlink" title="認識 JSX"></a>認識 JSX</h2><p><strong>JSX 是一種特殊的語法糖</strong>，讓我們能在 JavaScript 中撰寫類似 HTML 的程式碼。雖然 JSX 看起來像 HTML，但本質上它是 JavaScript 語法的擴展，並與 HTML 有本質的不同。</p>
+<p>在運作時，我們寫的每段 JSX 程式碼都會經過<strong>轉譯</strong>，將這些類 HTML 語法轉換成 React 所需的 JavaScript 函式呼叫（如 <code>React.createElement</code>）。這就像一個翻譯過程，將我們易於閱讀的 JSX 語法轉換成電腦可以理解和執行的形式。</p>
+<p>許多人剛接觸 React 時常會誤以為 JSX 就是 HTML，因為它模仿了 HTML 的外觀，但這只是表象——<strong>JSX 的本質是生成 React 元素（elements）</strong>。經過轉譯後，JSX 會生成一連串 <code>React.createElement</code> 函式呼叫，從而建立 React 元素。</p>
+<p>這種轉譯過程帶來了一些 JSX 特有的規則，讓我們無法直接將 HTML 複製到 JSX 中使用，這些嚴格規則幫助我們編寫更好的 React 元件。</p>
+<h2 id="JSX-的三大重要規則"><a href="#JSX-的三大重要規則" class="headerlink" title="JSX 的三大重要規則"></a>JSX 的三大重要規則</h2><h3 id="1-只能回傳單一根元素（Return-a-single-root-element）"><a href="#1-只能回傳單一根元素（Return-a-single-root-element）" class="headerlink" title="1. 只能回傳單一根元素（Return a single root element）"></a>1. 只能回傳單一根元素（Return a single root element）</h3><p>每個 React 元件都必須回傳單一的 JSX 表達式。</p>
+<p>這個規則的本質是因為 JSX 在轉譯後會變成 <code>React.createElement()</code> 的函式呼叫，這個函式會回傳一個代表 React element 的 JavaScript 物件。</p>
+<p>在 React 的渲染過程中，需要一個單一的根元素來進行比較和更新。雖然這個「單一」的元素內部可以包含多個子元素，但最外層必須是單一的。這就是為什麼當我們需要回傳多個元素時，必須用一個父元素包住它們：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;div&gt;</span><br><span class="line">  <span class="language-xml"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>Hedy Lamarr&#x27;s Todos<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span></span><br><span class="line">  <span class="language-xml"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;https://i.imgur.com/yXOvdOSs.jpg&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;Hedy Lamarr&quot;</span> <span class="attr">class</span>=<span class="string">&quot;photo&quot;</span> /&gt;</span></span></span><br><span class="line">  <span class="language-xml"><span class="tag">&lt;<span class="name">ul</span>&gt;</span>...<span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span></span><br><span class="line">&lt;/div&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>如果不想多加一層 <code>div</code>，還可以使用 React 提供的 Fragment 語法，Fragment 最常見的寫法是空標籤 <code>&lt;&gt;</code> 和 <code>&lt;/&gt;</code>：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;&gt;</span><br><span class="line">  <span class="language-xml"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>Hedy Lamarr&#x27;s Todos<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span></span><br><span class="line">  <span class="language-xml"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;https://i.imgur.com/yXOvdOSs.jpg&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;Hedy Lamarr&quot;</span> <span class="attr">class</span>=<span class="string">&quot;photo&quot;</span> /&gt;</span></span></span><br><span class="line">  <span class="language-xml"><span class="tag">&lt;<span class="name">ul</span>&gt;</span>...<span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span></span><br><span class="line">&lt;/&gt;</span><br></pre></td></tr></table></figure>
+
+<p>除了這種簡短語法，還有一種完整的寫法 <code>&lt;Fragment&gt;</code> 和 <code>&lt;/Fragment&gt;</code>：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Fragment</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span></span><br><span class="line"></span><br><span class="line">&lt;<span class="title class_">Fragment</span>&gt;</span><br><span class="line">  <span class="language-xml"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>Hedy Lamarr&#x27;s Todos<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span></span><br><span class="line">  <span class="language-xml"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;https://i.imgur.com/yXOvdOSs.jpg&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;Hedy Lamarr&quot;</span> <span class="attr">class</span>=<span class="string">&quot;photo&quot;</span> /&gt;</span></span></span><br><span class="line">  <span class="language-xml"><span class="tag">&lt;<span class="name">ul</span>&gt;</span>...<span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span></span><br><span class="line">&lt;/<span class="title class_">Fragment</span>&gt;</span><br></pre></td></tr></table></figure>
+
+<p>雖然完整寫法較少使用，但在需要在 Fragment 上加上 key 屬性時（例如在迴圈中），就必須使用這種寫法。大部分情況下，我們都會使用較簡潔的空標籤寫法。<br>無論使用哪種方式，重要的是確保元件始終回傳單一的元素樹結構（single tree of elements），這樣 React 才能正確地管理和更新 DOM。</p>
+<h3 id="2-標籤必須正確閉合（Close-all-the-tags）"><a href="#2-標籤必須正確閉合（Close-all-the-tags）" class="headerlink" title="2. 標籤必須正確閉合（Close all the tags）"></a>2. 標籤必須正確閉合（Close all the tags）</h3><p>在 JSX 中，所有標籤都必須明確地關閉。以 <code>img</code> 標籤為例：</p>
+<ul>
+<li>HTML 寫法：<code>&lt;img src=&quot;image.jpg&quot;&gt;</code></li>
+<li>JSX 寫法：<code>&lt;img src=&quot;image.jpg&quot; /&gt;</code></li>
+</ul>
+<p>如果沒有閉合，React內建的JSX轉譯工具將沒辦法判別這個 React element 結束的位置而導致無法進行轉換。</p>
+<h3 id="3-使用駝峰式命名（camelCase-most-of-the-things）"><a href="#3-使用駝峰式命名（camelCase-most-of-the-things）" class="headerlink" title="3. 使用駝峰式命名（camelCase most of the things）"></a>3. 使用駝峰式命名（camelCase most of the things）</h3><p>在前面我們提到 JSX 最終會被轉換成 JavaScript，在這個過程中，HTML 的屬性（attributes）會變成 JavaScript 物件中的鍵（keys）。這就帶來了一個有趣的問題：JavaScript 對變數命名有一些特定的限制。</p>
+<p>這些限制包括：</p>
+<ul>
+<li>不能使用帶有破折號（-）的名稱</li>
+<li>不能使用 JavaScript 的保留字（例如 <code>class</code> 和 <code>for</code>）</li>
+<li>需要符合 JavaScript 的變數命名規則</li>
+</ul>
+<p>為了解決這些問題，同時也為了保持程式碼風格的一致性，JSX 採用了駝峰式（camelCase）的命名規則。這導致了一些 HTML 屬性在 JSX 中的寫法改變，最常見的例子是：</p>
+<ul>
+<li><code>class</code> 要寫成 <code>className</code></li>
+<li><code>for</code> 要寫成 <code>htmlFor</code></li>
+</ul>
+<p>這種命名規則的改變，不僅解決了與 JavaScript 語法的相容性問題，還讓我們看到駝峰式命名的屬性時，就能立即辨識出這是 React 元件的屬性，而不是普通的 HTML 屬性。</p>
+<h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>今天我們一起認識了 JSX 這個 React 中不可或缺的重要概念。從一開始 HTML、CSS、JavaScript 分離的傳統開發方式，到現在能夠在 JavaScript 中直接撰寫類 HTML 語法的轉變，這並不只是開發方式的改變，更代表了網頁開發思維的演進。</p>
+<p>JSX 雖然看起來很像 HTML，但它其實是一個更強大的工具。透過轉譯機制，它讓我們能用更直覺的方式撰寫 React 元件，同時又保有 JavaScript 的所有能力。</p>
+<p>要善用 JSX，記住三個關鍵規則：</p>
+<ol>
+<li>元件只能回傳單一根元素，需要時可以使用 Fragment</li>
+<li>所有標籤都要正確閉合</li>
+<li>使用駝峰式命名來撰寫屬性</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/React/" rel="tag"># React</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/11/12/2024%E9%90%B5%E4%BA%BA%E8%B3%BD-2024-11-12-Day1/" rel="prev" title="『Day 1』認識 React Component">
+      <i class="fa fa-chevron-left"></i> 『Day 1』認識 React Component
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2024/12/10/2024%E9%90%B5%E4%BA%BA%E8%B3%BD-2024-12-10-Day2/" rel="next" title="『Day 2』理解 React 的匯入與匯出">
+      『Day 2』理解 React 的匯入與匯出 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%82%BA%E4%BB%80%E9%BA%BC%E9%9C%80%E8%A6%81-JSX%EF%BC%9F"><span class="nav-number">2.</span> <span class="nav-text">為什麼需要 JSX？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AA%8D%E8%AD%98-JSX"><span class="nav-number">3.</span> <span class="nav-text">認識 JSX</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JSX-%E7%9A%84%E4%B8%89%E5%A4%A7%E9%87%8D%E8%A6%81%E8%A6%8F%E5%89%87"><span class="nav-number">4.</span> <span class="nav-text">JSX 的三大重要規則</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%8F%AA%E8%83%BD%E5%9B%9E%E5%82%B3%E5%96%AE%E4%B8%80%E6%A0%B9%E5%85%83%E7%B4%A0%EF%BC%88Return-a-single-root-element%EF%BC%89"><span class="nav-number">4.1.</span> <span class="nav-text">1. 只能回傳單一根元素（Return a single root element）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E6%A8%99%E7%B1%A4%E5%BF%85%E9%A0%88%E6%AD%A3%E7%A2%BA%E9%96%89%E5%90%88%EF%BC%88Close-all-the-tags%EF%BC%89"><span class="nav-number">4.2.</span> <span class="nav-text">2. 標籤必須正確閉合（Close all the tags）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E4%BD%BF%E7%94%A8%E9%A7%9D%E5%B3%B0%E5%BC%8F%E5%91%BD%E5%90%8D%EF%BC%88camelCase-most-of-the-things%EF%BC%89"><span class="nav-number">4.3.</span> <span class="nav-text">3. 使用駝峰式命名（camelCase most of the things）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B8%BD%E7%B5%90"><span class="nav-number">5.</span> <span class="nav-text">總結</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Jeff"
+      src="/uploads/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Jeff</p>
+  <div class="site-description" itemprop="description">這是一個紀錄自己成長的地方</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">120</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jeff0518" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jeff0518" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:cycivs07@icloud.com" title="E-Mail → mailto:cycivs07@icloud.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jeff</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
