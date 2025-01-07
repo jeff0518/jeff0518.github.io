@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="前言剛剛瀏覽到了一篇文章，在說在這個AI當道的時代，身為工程師的我們該如何去應對。可能很多人看到這裡會吐槽說，拜託都2025年了怎麼還在說這個。沒錯！這就是我看到這篇文章腦袋裡冒出的第一個想法，但畢竟是一個我很欣賞的團隊所發的，所以我把他看完了。結果這篇文章不僅打破了我的偏見，更引發了許多深刻的自省，因此寫下這篇算是讀書心得的文章。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="當我用 AI 寫下『別過度依賴 AI』這件事">
+<meta property="og:url" content="http://example.com/2025/01/07/%E8%87%AA%E6%88%91%E6%88%90%E9%95%B7-2025-01-07-ExplainThis01/index.html">
+<meta property="og:site_name" content="Jeff的隨手筆記">
+<meta property="og:description" content="前言剛剛瀏覽到了一篇文章，在說在這個AI當道的時代，身為工程師的我們該如何去應對。可能很多人看到這裡會吐槽說，拜託都2025年了怎麼還在說這個。沒錯！這就是我看到這篇文章腦袋裡冒出的第一個想法，但畢竟是一個我很欣賞的團隊所發的，所以我把他看完了。結果這篇文章不僅打破了我的偏見，更引發了許多深刻的自省，因此寫下這篇算是讀書心得的文章。">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2025-01-07T12:44:20.000Z">
+<meta property="article:modified_time" content="2025-01-07T12:50:01.040Z">
+<meta property="article:author" content="Jeff">
+<meta property="article:tag" content="自我成長">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2025/01/07/%E8%87%AA%E6%88%91%E6%88%90%E9%95%B7-2025-01-07-ExplainThis01/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-tw'
+  };
+</script>
+
+  <title>當我用 AI 寫下『別過度依賴 AI』這件事 | Jeff的隨手筆記</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Jeff的隨手筆記</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">學習當一個前端工程師</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/01/07/%E8%87%AA%E6%88%91%E6%88%90%E9%95%B7-2025-01-07-ExplainThis01/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpeg">
+      <meta itemprop="name" content="Jeff">
+      <meta itemprop="description" content="這是一個紀錄自己成長的地方">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jeff的隨手筆記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          當我用 AI 寫下『別過度依賴 AI』這件事
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2025-01-07 20:44:20 / Modified: 20:50:01" itemprop="dateCreated datePublished" datetime="2025-01-07T20:44:20+08:00">2025-01-07</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%87%AA%E6%88%91%E6%88%90%E9%95%B7/" itemprop="url" rel="index"><span itemprop="name">自我成長</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>剛剛瀏覽到了一篇文章，在說在這個AI當道的時代，身為工程師的我們該如何去應對。可能很多人看到這裡會吐槽說，拜託都2025年了怎麼還在說這個。沒錯！這就是我看到這篇文章腦袋裡冒出的第一個想法，但畢竟是一個我很欣賞的團隊所發的，所以我把他看完了。結果這篇文章不僅打破了我的偏見，更引發了許多深刻的自省，因此寫下這篇算是讀書心得的文章。</p>
+<span id="more"></span>
+
+<h2 id="重新定位：AI作為工具"><a href="#重新定位：AI作為工具" class="headerlink" title="重新定位：AI作為工具"></a>重新定位：AI作為工具</h2><p>關於AI的討論，從2022年底OpenAI發布以來就沒有停過。每隔幾天，社群媒體上就會出現「AI要取代xxx了」的聳動標題。我曾經對這類內容感到厭煩，尤其是看到某些KOL為了流量，不斷製造焦慮和恐慌。但經過這兩年的發展，我們逐漸看清了AI的真實面貌：它既不是想像中那麼全能，也不該被過度貶低。用遊戲的術語來說，我們好像在用「大後期的標準」來評價一個「初始階段的角色」。</p>
+<p>現在的AI更像是一個輔助工具，而工具本身並沒有好壞之分，關鍵在於使用者如何運用它。《<strong>卡片盒筆記</strong>》的作者<em>申克</em>．<em>艾倫斯</em>（Sönke Ahrens） 曾說過：「工具的好壞取決於你運用它的能力」。AI工具也是如此，關鍵不在工具本身，而在於我們如何駕馭它。<br>作為一位剛轉職不久的前端工程師，我的學習歷程恰好碰上了AI工具的興起。還記得第一次使用ChatGPT時，我把它當作一對一的家教，遇到問題就向它請教。雖然早期它的回答常常不夠準確，需要我額外去Google求證，但這反而讓我養成了一個寶貴的習慣——永遠保持懷疑和驗證的態度。</p>
+<p>這個過程讓我體會到，AI並不是萬能的解答機器，而是一個能夠協助我們加速學習和解決問題的好幫手。就像學習寫code時，Stack Overflow能提供參考答案，但真正的成長在於理解這些答案背後的原理，並且學會靈活運用。使用AI工具也是相同的道理，重要的是我們要有能力判斷它的建議是否合適，是否符合我們的實際需求。</p>
+<h2 id="寫作與思考的關係"><a href="#寫作與思考的關係" class="headerlink" title="寫作與思考的關係"></a>寫作與思考的關係</h2><p>文章中特別提到，那些善用AI的工程師從不會盲目接受AI的答案，而是會仔細思考它給出的解決方案是否合理，考慮是否有遺漏的極端情況，並努力讓生成的程式碼更容易維護。這讓我想到這幾年大家一直強調的媒體識讀能力，就像我們不能單純接受媒體餵給的資訊，在使用AI時也需要這樣的判斷力。</p>
+<p>而在文章的眾多觀點中，Paul Graham關於寫作的見解特別讓我產生共鳴。他認為在AI時代，真正具備寫作能力的人將會變得稀少，因為寫作的本質是思考。在下筆之前，我們需要先理清思緒，組織想法。當我們過度依賴AI來寫作時，某種程度上就是讓它代替了我們的思考過程。</p>
+<p>這個觀點讓我開始認真審視自己的寫作習慣。坦白說，我在寫作方面確實過度依賴了AI。有趣的是，在寫程式時，我一直很警惕不要過度依賴AI工具，但在寫作上卻不知不覺放鬆了這個原則。</p>
+<p>回顧我的寫作歷程，這種依賴是漸進式的。最初，我會先完整寫出文章，再請AI幫忙潤飾和調整，這時AI更像是一個編輯的角色。但到了2024年下半年，情況開始改變。我發現自己變得懶惰，常常只是簡單記下幾個重點，就期待AI能把它們編織成一篇完整的文章。更不妙的是，為了保持寫作風格的一致性，我會把之前的文章一併提供給AI參考。表面上看起來，這確實產出了風格統一、有系統的內容，但實際上，我正在逐漸失去最寶貴的思考過程。</p>
+<p>這種快速產出的方式確實提高了效率，但我不禁要問自己：這樣的改變值得嗎？如果寫作的目的是為了加深對主題的理解，那麼這種過度仰賴AI的方式，是否反而違背了初衷？就像在程式開發中常說的「結果導向」，我們需要先釐清目標：是要追求內容產出的速度，還是透過寫作過程來提升自己的思考深度？</p>
+<p>這個問題或許沒有標準答案，但它確實值得我們深思。</p>
+<h2 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h2><p>AI的出現確實對各行各業都造成衝擊，但與其慌亂地隨波逐流，不如靜下心來思考：在這波技術浪潮中，我的優勢在哪裡？這些工具能為我帶來什麼樣的助力或阻力？<br>最後，我特別認同文章的結語：當我們能夠帶著自己的思考去使用AI工具，就能確保自己最核心的價值不會被取代。或許這就是在AI時代，我們每個人都需要不斷提醒自己的事。</p>
+<p>作者：某個愛胡思亂想的Jeff | 校稿：一個沒被過度使用的 AI 助手</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E8%87%AA%E6%88%91%E6%88%90%E9%95%B7/" rel="tag"># 自我成長</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/01/05/2024%E9%90%B5%E4%BA%BA%E8%B3%BD-2025-01-05-Day6/" rel="prev" title="『Day 6』React 條件渲染">
+      <i class="fa fa-chevron-left"></i> 『Day 6』React 條件渲染
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%87%8D%E6%96%B0%E5%AE%9A%E4%BD%8D%EF%BC%9AAI%E4%BD%9C%E7%82%BA%E5%B7%A5%E5%85%B7"><span class="nav-number">2.</span> <span class="nav-text">重新定位：AI作為工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%AB%E4%BD%9C%E8%88%87%E6%80%9D%E8%80%83%E7%9A%84%E9%97%9C%E4%BF%82"><span class="nav-number">3.</span> <span class="nav-text">寫作與思考的關係</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B5%90%E8%AA%9E"><span class="nav-number">4.</span> <span class="nav-text">結語</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Jeff"
+      src="/uploads/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Jeff</p>
+  <div class="site-description" itemprop="description">這是一個紀錄自己成長的地方</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">125</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jeff0518" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jeff0518" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:cycivs07@icloud.com" title="E-Mail → mailto:cycivs07@icloud.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jeff</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
