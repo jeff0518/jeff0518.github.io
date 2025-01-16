@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="前言在 JavaScript 開發中，我們經常需要檢查一個物件是否擁有某個特定的屬性。最近，我在一個處理表格欄位排序的專案中嘗試使用 Object.hasOwn() 方法，但很快發現這個方法與我的開發環境不相容。這篇文章將分享我的經歷，以及我是如何找到並實施一個既安全又相容的解決方案的。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="『菜鳥的踩坑筆記』- JavaScript 相容性處理">
+<meta property="og:url" content="http://example.com/2025/01/16/%E8%8F%9C%E9%B3%A5%E7%9A%84%E8%B8%A9%E5%9D%91%E7%AD%86%E8%A8%98-2025-01-16-hasOwn/index.html">
+<meta property="og:site_name" content="Jeff的隨手筆記">
+<meta property="og:description" content="前言在 JavaScript 開發中，我們經常需要檢查一個物件是否擁有某個特定的屬性。最近，我在一個處理表格欄位排序的專案中嘗試使用 Object.hasOwn() 方法，但很快發現這個方法與我的開發環境不相容。這篇文章將分享我的經歷，以及我是如何找到並實施一個既安全又相容的解決方案的。">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2025-01-16T15:00:12.000Z">
+<meta property="article:modified_time" content="2025-01-16T15:01:50.284Z">
+<meta property="article:author" content="Jeff">
+<meta property="article:tag" content="JavaScript">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2025/01/16/%E8%8F%9C%E9%B3%A5%E7%9A%84%E8%B8%A9%E5%9D%91%E7%AD%86%E8%A8%98-2025-01-16-hasOwn/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-tw'
+  };
+</script>
+
+  <title>『菜鳥的踩坑筆記』- JavaScript 相容性處理 | Jeff的隨手筆記</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Jeff的隨手筆記</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">學習當一個前端工程師</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/01/16/%E8%8F%9C%E9%B3%A5%E7%9A%84%E8%B8%A9%E5%9D%91%E7%AD%86%E8%A8%98-2025-01-16-hasOwn/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpeg">
+      <meta itemprop="name" content="Jeff">
+      <meta itemprop="description" content="這是一個紀錄自己成長的地方">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jeff的隨手筆記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          『菜鳥的踩坑筆記』- JavaScript 相容性處理
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2025-01-16 23:00:12 / Modified: 23:01:50" itemprop="dateCreated datePublished" datetime="2025-01-16T23:00:12+08:00">2025-01-16</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%8F%9C%E9%B3%A5%E7%9A%84%E8%B8%A9%E5%9D%91%E7%AD%86%E8%A8%98/" itemprop="url" rel="index"><span itemprop="name">菜鳥的踩坑筆記</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在 JavaScript 開發中，我們經常需要檢查一個物件是否擁有某個特定的屬性。最近，我在一個處理表格欄位排序的專案中嘗試使用 <code>Object.hasOwn()</code> 方法，但很快發現這個方法與我的開發環境不相容。這篇文章將分享我的經歷，以及我是如何找到並實施一個既安全又相容的解決方案的。</p>
+<span id="more"></span>
+<h2 id="初次嘗試：Object-hasOwn"><a href="#初次嘗試：Object-hasOwn" class="headerlink" title="初次嘗試：Object.hasOwn()"></a>初次嘗試：Object.hasOwn()</h2><p>起初，我的程式碼是這樣的：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> sortDataByOrder = <span class="keyword">function</span> (<span class="params">dataMap, displayOrder</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> displayOrder.<span class="title function_">reduce</span>(<span class="keyword">function</span> (<span class="params">acc, code</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="title class_">Object</span>.<span class="title function_">hasOwn</span>(dataMap, code)) &#123;</span><br><span class="line">            acc.<span class="title function_">push</span>([code, dataMap[code]]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> acc;</span><br><span class="line">    &#125;, []);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我選擇使用 <code>Object.hasOwn()</code>，因為它是檢查物件是否擁有自有屬性的現代方法，並且經常被推薦作為替代傳統 <code>hasOwnProperty</code> 的選項。</p>
+<p><code>Object.hasOwn()</code> 是 ECMAScript 2022 中引入的新方法，其設計目的是提供一種更簡潔且不易出錯的語法。與傳統的 <code>hasOwnProperty</code> 相比，它具有以下優點：</p>
+<ol>
+<li><strong>簡潔性</strong>：語法更直觀，降低了程式碼的開發與閱讀成本。</li>
+<li><strong>避免覆蓋風險</strong>：<code>Object.hasOwn()</code> 直接作用於 <code>Object</code>，不依賴於物件本身的方法，因此即使物件覆蓋了 <code>hasOwnProperty</code>，它依然可以正常運作。</li>
+</ol>
+<p>然而，當我運行程式碼時，卻出現了這樣的錯誤：</p>
+<figure class="highlight vbnet"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">TypeError:</span> <span class="type">Object</span>.hasOwn <span class="built_in">is</span> <span class="built_in">not</span> a <span class="keyword">function</span></span><br></pre></td></tr></table></figure>
+
+<p>經過調查，我發現這是因為我的專案環境僅支援較早版本的 JavaScript，甚至早到不支援 ES6。這正是導致 <code>Object.hasOwn()</code> 無法運行的原因。</p>
+<h2 id="尋找替代方案"><a href="#尋找替代方案" class="headerlink" title="尋找替代方案"></a>尋找替代方案</h2><p>既然 <code>Object.hasOwn()</code> 在我們的開發環境中無法使用，我們就需要尋找其他方法來檢查物件的屬性。</p>
+<p>在 JavaScript 中，有幾種方法可以用來檢查物件是否擁有某個自有屬性，其中以下兩種是常用的做法：</p>
+<h3 id="方法一：直接使用-hasOwnProperty"><a href="#方法一：直接使用-hasOwnProperty" class="headerlink" title="方法一：直接使用 hasOwnProperty"></a>方法一：直接使用 hasOwnProperty</h3><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 直接在物件上呼叫 hasOwnProperty 方法</span></span><br><span class="line">columnsMap.<span class="title function_">hasOwnProperty</span>(columnKey)</span><br></pre></td></tr></table></figure>
+
+<p>這是最直覺的寫法，就像是這樣使用：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> tableData = &#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&#x27;產品名稱&#x27;</span>,</span><br><span class="line">    <span class="attr">price</span>: <span class="string">&#x27;單價&#x27;</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 檢查是否有 name 這個屬性</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(tableData.<span class="title function_">hasOwnProperty</span>(<span class="string">&#x27;name&#x27;</span>)); <span class="comment">// 輸出: true</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="方法二：使用-Object-prototype-的-call-方法"><a href="#方法二：使用-Object-prototype-的-call-方法" class="headerlink" title="方法二：使用 Object.prototype 的 call 方法"></a>方法二：使用 Object.prototype 的 call 方法</h3><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 透過 Object.prototype 來呼叫 hasOwnProperty</span></span><br><span class="line"><span class="title class_">Object</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">hasOwnProperty</span>.<span class="title function_">call</span>(columnsMap, columnKey)</span><br></pre></td></tr></table></figure>
+
+<p>這種寫法看起來比較複雜，但是更安全。舉例來說：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> tableData = <span class="title class_">Object</span>.<span class="title function_">create</span>(<span class="literal">null</span>); <span class="comment">// 創建一個沒有原型的物件</span></span><br><span class="line">tableData.<span class="property">name</span> = <span class="string">&#x27;產品名稱&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 第一種方法會出錯</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(tableData.<span class="title function_">hasOwnProperty</span>(<span class="string">&#x27;name&#x27;</span>)); <span class="comment">// 錯誤！</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 第二種方法安全可靠</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title class_">Object</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">hasOwnProperty</span>.<span class="title function_">call</span>(tableData, <span class="string">&#x27;name&#x27;</span>)); <span class="comment">// 正確：true</span></span><br></pre></td></tr></table></figure>
+
+<p>在 JavaScript 中，有時候我們會遇到：</p>
+<ol>
+<li>使用 <code>Object.create(null)</code> 創建的物件：這種物件沒有繼承任何方法，包括 <code>hasOwnProperty</code></li>
+<li>有人可能不小心覆蓋了原本的 <code>hasOwnProperty</code> 方法：</li>
+</ol>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> tableData = &#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&#x27;產品名稱&#x27;</span>,</span><br><span class="line">    <span class="attr">hasOwnProperty</span>: <span class="string">&#x27;糟糕，這個方法被覆蓋了&#x27;</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 第一種方法會出錯</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(tableData.<span class="title function_">hasOwnProperty</span>(<span class="string">&#x27;name&#x27;</span>)); <span class="comment">// 錯誤！</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 第二種方法依然安全</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title class_">Object</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">hasOwnProperty</span>.<span class="title function_">call</span>(tableData, <span class="string">&#x27;name&#x27;</span>)); <span class="comment">// 正確：true</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="最終解決方案"><a href="#最終解決方案" class="headerlink" title="最終解決方案"></a>最終解決方案</h2><p>考慮到安全性和相容性，我最終選擇了這個解決方案：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 原始資料</span></span><br><span class="line"><span class="keyword">const</span> tableData = &#123;</span><br><span class="line">    <span class="string">&#x27;name&#x27;</span>: <span class="string">&#x27;產品名稱&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;price&#x27;</span>: <span class="string">&#x27;單價&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;stock&#x27;</span>: <span class="string">&#x27;庫存&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;category&#x27;</span>: <span class="string">&#x27;分類&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;updateTime&#x27;</span>: <span class="string">&#x27;更新時間&#x27;</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 顯示順序設定</span></span><br><span class="line"><span class="keyword">const</span> displayOrder = [<span class="string">&#x27;category&#x27;</span>, <span class="string">&#x27;name&#x27;</span>, <span class="string">&#x27;price&#x27;</span>, <span class="string">&#x27;stock&#x27;</span>, <span class="string">&#x27;updateTime&#x27;</span>];</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> sortTableColumns = <span class="keyword">function</span> (<span class="params">columnsMap, displayOrder</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> displayOrder.<span class="title function_">reduce</span>(<span class="keyword">function</span> (<span class="params">acc, columnKey</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="title class_">Object</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">hasOwnProperty</span>.<span class="title function_">call</span>(columnsMap, columnKey)) &#123;</span><br><span class="line">            acc.<span class="title function_">push</span>(&#123;</span><br><span class="line">                <span class="attr">key</span>: columnKey,</span><br><span class="line">                <span class="attr">label</span>: columnsMap[columnKey]</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> acc;</span><br><span class="line">    &#125;, []);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用範例</span></span><br><span class="line"><span class="keyword">const</span> sortedColumns = <span class="title function_">sortTableColumns</span>(tableData, displayOrder);</span><br></pre></td></tr></table></figure>
+
+<p>這個方法有幾個優點：</p>
+<ol>
+<li>高度相容：可以在幾乎所有的 JavaScript 環境中運行</li>
+<li>安全：即使 <code>columnsMap</code> 覆蓋了 <code>hasOwnProperty</code> 方法，也能正常工作</li>
+<li>可靠：不依賴於物件是否繼承自 <code>Object.prototype</code></li>
+</ol>
+<h2 id="何時使用較簡單的方法"><a href="#何時使用較簡單的方法" class="headerlink" title="何時使用較簡單的方法"></a>何時使用較簡單的方法</h2><p>儘管我選擇了更安全的方法，但在某些情況下，使用 <code>columnsMap.hasOwnProperty(columnKey)</code> 也是可以接受的：</p>
+<ol>
+<li>在完全可控的封閉開發環境中</li>
+<li>單人或小團隊專案，團隊成員都了解潛在風險</li>
+<li>效能關鍵的應用，需要處理大量數據</li>
+</ol>
+<h2 id="從這次專案學習到"><a href="#從這次專案學習到" class="headerlink" title="從這次專案學習到"></a>從這次專案學習到</h2><p>這次經歷讓我學到了幾個重要的觀念：</p>
+<ol>
+<li>始終考慮目標環境的相容性</li>
+<li>不要忽視安全性，即使是在看似簡單的操作中</li>
+<li>閱讀文件和社群最佳實踐可以幫助避免潛在問題</li>
+</ol>
+<h2 id="結論"><a href="#結論" class="headerlink" title="結論"></a>結論</h2><p>雖然新的 JavaScript 特性如 <code>Object.hasOwn()</code> 提供了更簡潔和直觀的語法，但在處理需要廣泛相容性的專案時，使用經過時間考驗的方法如 <code>Object.prototype.hasOwnProperty.call()</code> 可能是更好的選擇。這不僅確保了程式碼在各種環境中的正常運行，還提供了額外的安全性保障。</p>
+<p>作為開發者，我們需要在新特性的便利性和程式碼的相容性之間找到平衡。希望這篇文章能幫助其他開發者在遇到類似情況時，做出更好的選擇。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/01/15/2024%E9%90%B5%E4%BA%BA%E8%B3%BD-2025-01-15-Day12/" rel="prev" title="『Day 12』React 渲染機制">
+      <i class="fa fa-chevron-left"></i> 『Day 12』React 渲染機制
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9D%E6%AC%A1%E5%98%97%E8%A9%A6%EF%BC%9AObject-hasOwn"><span class="nav-number">2.</span> <span class="nav-text">初次嘗試：Object.hasOwn()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%8B%E6%89%BE%E6%9B%BF%E4%BB%A3%E6%96%B9%E6%A1%88"><span class="nav-number">3.</span> <span class="nav-text">尋找替代方案</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E4%B8%80%EF%BC%9A%E7%9B%B4%E6%8E%A5%E4%BD%BF%E7%94%A8-hasOwnProperty"><span class="nav-number">3.1.</span> <span class="nav-text">方法一：直接使用 hasOwnProperty</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E4%BA%8C%EF%BC%9A%E4%BD%BF%E7%94%A8-Object-prototype-%E7%9A%84-call-%E6%96%B9%E6%B3%95"><span class="nav-number">3.2.</span> <span class="nav-text">方法二：使用 Object.prototype 的 call 方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%80%E7%B5%82%E8%A7%A3%E6%B1%BA%E6%96%B9%E6%A1%88"><span class="nav-number">4.</span> <span class="nav-text">最終解決方案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%95%E6%99%82%E4%BD%BF%E7%94%A8%E8%BC%83%E7%B0%A1%E5%96%AE%E7%9A%84%E6%96%B9%E6%B3%95"><span class="nav-number">5.</span> <span class="nav-text">何時使用較簡單的方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BE%9E%E9%80%99%E6%AC%A1%E5%B0%88%E6%A1%88%E5%AD%B8%E7%BF%92%E5%88%B0"><span class="nav-number">6.</span> <span class="nav-text">從這次專案學習到</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B5%90%E8%AB%96"><span class="nav-number">7.</span> <span class="nav-text">結論</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Jeff"
+      src="/uploads/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Jeff</p>
+  <div class="site-description" itemprop="description">這是一個紀錄自己成長的地方</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">132</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jeff0518" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jeff0518" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:cycivs07@icloud.com" title="E-Mail → mailto:cycivs07@icloud.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jeff</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
