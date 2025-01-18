@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="前言在前幾篇文章中，我們討論了 React 的狀態管理機制，包括狀態的快照特性以及批次更新的概念。今天想要分享一個在處理陣列型態狀態時常被忽略，但卻非常重要的觀念：不可變更新（Immutable Update）。這個觀念讓我在剛開始學習 React 時感到困惑，但理解後對於寫出更穩定的 React 應用程式有很大的幫助。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="『Day 16』理解 React 的陣列狀態更新">
+<meta property="og:url" content="http://example.com/2025/01/19/2024%E9%90%B5%E4%BA%BA%E8%B3%BD-2025-01-19-Day16/index.html">
+<meta property="og:site_name" content="Jeff的隨手筆記">
+<meta property="og:description" content="前言在前幾篇文章中，我們討論了 React 的狀態管理機制，包括狀態的快照特性以及批次更新的概念。今天想要分享一個在處理陣列型態狀態時常被忽略，但卻非常重要的觀念：不可變更新（Immutable Update）。這個觀念讓我在剛開始學習 React 時感到困惑，但理解後對於寫出更穩定的 React 應用程式有很大的幫助。">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2025-01-18T22:19:41.000Z">
+<meta property="article:modified_time" content="2025-01-18T22:20:31.023Z">
+<meta property="article:author" content="Jeff">
+<meta property="article:tag" content="React">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2025/01/19/2024%E9%90%B5%E4%BA%BA%E8%B3%BD-2025-01-19-Day16/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-tw'
+  };
+</script>
+
+  <title>『Day 16』理解 React 的陣列狀態更新 | Jeff的隨手筆記</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Jeff的隨手筆記</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">學習當一個前端工程師</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/01/19/2024%E9%90%B5%E4%BA%BA%E8%B3%BD-2025-01-19-Day16/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpeg">
+      <meta itemprop="name" content="Jeff">
+      <meta itemprop="description" content="這是一個紀錄自己成長的地方">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jeff的隨手筆記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          『Day 16』理解 React 的陣列狀態更新
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2025-01-19 06:19:41 / Modified: 06:20:31" itemprop="dateCreated datePublished" datetime="2025-01-19T06:19:41+08:00">2025-01-19</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/2024%E9%90%B5%E4%BA%BA%E8%B3%BD/" itemprop="url" rel="index"><span itemprop="name">2024鐵人賽</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在前幾篇文章中，我們討論了 React 的狀態管理機制，包括狀態的快照特性以及批次更新的概念。今天想要分享一個在處理陣列型態狀態時常被忽略，但卻非常重要的觀念：不可變更新（Immutable Update）。這個觀念讓我在剛開始學習 React 時感到困惑，但理解後對於寫出更穩定的 React 應用程式有很大的幫助。</p>
+<span id="more"></span>
+<h2 id="React-的淺比較機制"><a href="#React-的淺比較機制" class="headerlink" title="React 的淺比較機制"></a>React 的淺比較機制</h2><p>在深入討論之前，我們需要先了解 React 是如何判斷狀態是否有變化。React 使用了一個叫做「淺比較」的機制，它的運作方式其實很直觀：</p>
+<ul>
+<li>對於基本型別（數字、字串、布林），React 會直接比較它們的值</li>
+<li>對於物件和陣列，React 只會比較它們的參考位址，而不會深入比較內容</li>
+</ul>
+<p>讓我們用一個簡單的例子來理解：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> arr1 = [<span class="string">&#x27;蘋果&#x27;</span>, <span class="string">&#x27;香蕉&#x27;</span>];     <span class="comment">// 新的記憶體位置</span></span><br><span class="line"><span class="keyword">const</span> arr2 = [<span class="string">&#x27;蘋果&#x27;</span>, <span class="string">&#x27;香蕉&#x27;</span>];     <span class="comment">// 另一個新的記憶體位置</span></span><br><span class="line"><span class="keyword">const</span> arr3 = arr1;                <span class="comment">// 指向 arr1 的記憶體位置</span></span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(arr1 === arr2);       <span class="comment">// false，不同記憶體位置</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(arr1 === arr3);       <span class="comment">// true，相同記憶體位置</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>這個特性告訴我們一個重要的事實：當我們在 React 中直接修改陣列時（例如使用 <code>push</code> 方法），雖然內容改變了，但陣列本身的參考位址維持不變。</p>
+<p>而 React 在判斷狀態是否更新時，是透過比較參考位址來判斷的。</p>
+<p>就像是我們修改了筆記本的內容，但對 React 來說，它只會確認「是不是同一本筆記本」，而不會去檢查筆記本裡的內容是否改變了。</p>
+<p>這就解釋了為什麼直接修改陣列內容時，即使我們用 <code>setState</code> 更新狀態，React 可能還是會認為「這是同一個陣列，沒有變化」，進而不觸發重新渲染。這也是為什麼我們需要建立新的陣列來更新狀態，而不是直接修改原有的陣列。</p>
+<h2 id="常見的錯誤與正確做法"><a href="#常見的錯誤與正確做法" class="headerlink" title="常見的錯誤與正確做法"></a>常見的錯誤與正確做法</h2><p>在實務開發中，我曾經看過（也寫過！）這樣的程式碼：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ❌ 錯誤示範：直接修改原陣列</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">FruitList</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> [fruits, setFruits] = <span class="title function_">useState</span>([<span class="string">&#x27;蘋果&#x27;</span>, <span class="string">&#x27;香蕉&#x27;</span>]);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> <span class="title function_">addFruit</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">    fruits.<span class="title function_">push</span>(<span class="string">&#x27;橘子&#x27;</span>);    <span class="comment">// 參考位址沒變</span></span><br><span class="line">    <span class="title function_">setFruits</span>(fruits);      <span class="comment">// React 可能認為狀態沒改變！</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// ✅ 正確做法：建立新的陣列</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">FruitList</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> [fruits, setFruits] = <span class="title function_">useState</span>([<span class="string">&#x27;蘋果&#x27;</span>, <span class="string">&#x27;香蕉&#x27;</span>]);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> <span class="title function_">addFruit</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">    <span class="title function_">setFruits</span>([...fruits, <span class="string">&#x27;橘子&#x27;</span>]);  <span class="comment">// 創建新的參考</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>在第一個例子中，雖然我們確實修改了陣列的內容，但因為陣列的參考位址沒有改變，React 可能無法察覺到這個變化。而第二個例子中，我們透過展開運算符創建了一個全新的陣列，這樣 React 就能正確偵測到變化了。</p>
+<h2 id="處理巢狀結構"><a href="#處理巢狀結構" class="headerlink" title="處理巢狀結構"></a>處理巢狀結構</h2><p>在實際開發中，我們常常會遇到更複雜的資料結構，像是陣列中包含物件的情況：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">TodoList</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> [todos, setTodos] = <span class="title function_">useState</span>([</span><br><span class="line">    &#123; <span class="attr">id</span>: <span class="number">1</span>, <span class="attr">text</span>: <span class="string">&#x27;學習 React&#x27;</span>, <span class="attr">done</span>: <span class="literal">false</span> &#125;,</span><br><span class="line">    &#123; <span class="attr">id</span>: <span class="number">2</span>, <span class="attr">text</span>: <span class="string">&#x27;寫部落格&#x27;</span>, <span class="attr">done</span>: <span class="literal">false</span> &#125;</span><br><span class="line">  ]);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> <span class="title function_">toggleTodo</span> = (<span class="params">id</span>) =&gt; &#123;</span><br><span class="line">    <span class="title function_">setTodos</span>(todos.<span class="title function_">map</span>(<span class="function"><span class="params">todo</span> =&gt;</span></span><br><span class="line">      todo.<span class="property">id</span> === id</span><br><span class="line">        ? &#123; ...todo, <span class="attr">done</span>: !todo.<span class="property">done</span> &#125;  <span class="comment">// 建立新的物件</span></span><br><span class="line">        : todo</span><br><span class="line">    ));  <span class="comment">// 建立新的陣列</span></span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="這種方式的好處"><a href="#這種方式的好處" class="headerlink" title="這種方式的好處"></a>這種方式的好處</h2><p>採用不可變更新的方式來處理陣列狀態，帶來了幾個重要的優勢：</p>
+<ol>
+<li><strong>可預測性</strong>：避免直接修改原陣列可能帶來的意外副作用</li>
+<li><strong>效能優化</strong>：React 能夠正確地追蹤變化，只更新真正需要更新的部分</li>
+<li><strong>除錯方便</strong>：每次更新都會產生新的參考，讓我們更容易追蹤資料的變化</li>
+</ol>
+<h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>在 React 中處理陣列狀態時，記得要遵循不可變更新的原則。雖然這樣寫可能會多打一些程式碼，但這些「額外」的工作其實是在幫助我們建立更穩定、可維護的應用程式。理解並善用這個概念，能讓我們在處理複雜的狀態更新時更加得心應手。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/React/" rel="tag"># React</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/01/18/2024%E9%90%B5%E4%BA%BA%E8%B3%BD-2025-01-18-Day15/" rel="prev" title="『Day 15』在 React 中正確處理物件型 State">
+      <i class="fa fa-chevron-left"></i> 『Day 15』在 React 中正確處理物件型 State
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#React-%E7%9A%84%E6%B7%BA%E6%AF%94%E8%BC%83%E6%A9%9F%E5%88%B6"><span class="nav-number">2.</span> <span class="nav-text">React 的淺比較機制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E8%A6%8B%E7%9A%84%E9%8C%AF%E8%AA%A4%E8%88%87%E6%AD%A3%E7%A2%BA%E5%81%9A%E6%B3%95"><span class="nav-number">3.</span> <span class="nav-text">常見的錯誤與正確做法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%99%95%E7%90%86%E5%B7%A2%E7%8B%80%E7%B5%90%E6%A7%8B"><span class="nav-number">4.</span> <span class="nav-text">處理巢狀結構</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%99%E7%A8%AE%E6%96%B9%E5%BC%8F%E7%9A%84%E5%A5%BD%E8%99%95"><span class="nav-number">5.</span> <span class="nav-text">這種方式的好處</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B8%BD%E7%B5%90"><span class="nav-number">6.</span> <span class="nav-text">總結</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Jeff"
+      src="/uploads/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Jeff</p>
+  <div class="site-description" itemprop="description">這是一個紀錄自己成長的地方</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">136</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jeff0518" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jeff0518" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:cycivs07@icloud.com" title="E-Mail → mailto:cycivs07@icloud.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jeff</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
