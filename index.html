@@ -158,6 +158,156 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/01/18/2024%E9%90%B5%E4%BA%BA%E8%B3%BD-2025-01-18-Day15/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpeg">
+      <meta itemprop="name" content="Jeff">
+      <meta itemprop="description" content="這是一個紀錄自己成長的地方">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jeff的隨手筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2025/01/18/2024%E9%90%B5%E4%BA%BA%E8%B3%BD-2025-01-18-Day15/" class="post-title-link" itemprop="url">『Day 15』在 React 中正確處理物件型 State</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2025-01-18 20:22:27 / Modified: 20:23:34" itemprop="dateCreated datePublished" datetime="2025-01-18T20:22:27+08:00">2025-01-18</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/2024%E9%90%B5%E4%BA%BA%E8%B3%BD/" itemprop="url" rel="index"><span itemprop="name">2024鐵人賽</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在探索 React 官方文件的過程中，我注意到文件在講解 State 時特別強調了一個重要概念：將 State 視為不可變（Immutable）。這個觀念初看之下或許不太容易理解，畢竟在 JavaScript 中我們習慣直接修改物件的內容。但隨著對 React 的深入學習，漸漸體會到這個設計背後的巧思。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2025/01/18/2024%E9%90%B5%E4%BA%BA%E8%B3%BD-2025-01-18-Day15/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/01/18/2024%E9%90%B5%E4%BA%BA%E8%B3%BD-2025-01-18-Day14/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpeg">
+      <meta itemprop="name" content="Jeff">
+      <meta itemprop="description" content="這是一個紀錄自己成長的地方">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jeff的隨手筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2025/01/18/2024%E9%90%B5%E4%BA%BA%E8%B3%BD-2025-01-18-Day14/" class="post-title-link" itemprop="url">『Day 14』React 狀態更新排程概念</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2025-01-18 20:19:36 / Modified: 20:22:22" itemprop="dateCreated datePublished" datetime="2025-01-18T20:19:36+08:00">2025-01-18</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/2024%E9%90%B5%E4%BA%BA%E8%B3%BD/" itemprop="url" rel="index"><span itemprop="name">2024鐵人賽</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在探索 React 的旅程中，我們逐漸掌握了如何運用 useState 來管理元件的狀態。不過，你是否曾遇過明明更新了好幾次狀態，但畫面卻不如預期更新的情況？今天就讓我們一起來看看 React 中狀態更新的一些有趣細節。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2025/01/18/2024%E9%90%B5%E4%BA%BA%E8%B3%BD-2025-01-18-Day14/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
     <link itemprop="mainEntityOfPage" href="http://example.com/2025/01/16/2024%E9%90%B5%E4%BA%BA%E8%B3%BD-2025-01-16-Day13/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -757,156 +907,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2025/01/07/%E8%87%AA%E6%88%91%E6%88%90%E9%95%B7-2025-01-07-ExplainThis01/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/avatar.jpeg">
-      <meta itemprop="name" content="Jeff">
-      <meta itemprop="description" content="這是一個紀錄自己成長的地方">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Jeff的隨手筆記">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2025/01/07/%E8%87%AA%E6%88%91%E6%88%90%E9%95%B7-2025-01-07-ExplainThis01/" class="post-title-link" itemprop="url">當我用 AI 寫下『別過度依賴 AI』這件事</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2025-01-07 20:44:20 / Modified: 21:03:07" itemprop="dateCreated datePublished" datetime="2025-01-07T20:44:20+08:00">2025-01-07</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E8%8F%9C%E9%B3%A5%E7%9A%84%E7%A8%8B%E5%BC%8F%E5%B0%8F%E6%9C%AD/" itemprop="url" rel="index"><span itemprop="name">菜鳥的程式小札</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>剛剛瀏覽到了一篇文章，在說在這個AI當道的時代，身為工程師的我們該如何去應對。可能很多人看到這裡會吐槽說，拜託都2025年了怎麼還在說這個。沒錯！這就是我看到這篇文章腦袋裡冒出的第一個想法，但畢竟是一個我很欣賞的團隊所發的，所以我把他看完了。結果這篇文章不僅打破了我的偏見，更引發了許多深刻的自省，因此寫下這篇算是讀書心得的文章。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2025/01/07/%E8%87%AA%E6%88%91%E6%88%90%E9%95%B7-2025-01-07-ExplainThis01/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2025/01/05/2024%E9%90%B5%E4%BA%BA%E8%B3%BD-2025-01-05-Day6/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/avatar.jpeg">
-      <meta itemprop="name" content="Jeff">
-      <meta itemprop="description" content="這是一個紀錄自己成長的地方">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Jeff的隨手筆記">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2025/01/05/2024%E9%90%B5%E4%BA%BA%E8%B3%BD-2025-01-05-Day6/" class="post-title-link" itemprop="url">『Day 6』React 條件渲染</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2025-01-05 14:17:17 / Modified: 14:21:45" itemprop="dateCreated datePublished" datetime="2025-01-05T14:17:17+08:00">2025-01-05</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/2024%E9%90%B5%E4%BA%BA%E8%B3%BD/" itemprop="url" rel="index"><span itemprop="name">2024鐵人賽</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在前面幾篇文章中，我們討論了 React 元件的基本概念，包括如何建立元件以及如何透過 Props 傳遞資料。今天要來聊聊另一個重要的主題：條件渲染（Conditional Rendering）。<br>在實際開發中，我們經常需要根據不同的條件來決定畫面要顯示什麼內容。比方說：判斷使用者是否登入來顯示不同的導航列、根據商品庫存狀態顯示不同的按鈕等等。React 讓我們能夠運用熟悉的 JavaScript 條件判斷來處理這類需求。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2025/01/05/2024%E9%90%B5%E4%BA%BA%E8%B3%BD-2025-01-05-Day6/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -977,7 +977,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">133</span>
+          <span class="site-state-item-count">135</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
