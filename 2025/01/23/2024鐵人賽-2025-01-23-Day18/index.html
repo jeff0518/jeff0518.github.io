@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="前言在 React 的開發過程中，好的狀態管理不只關乎程式碼是否容易理解，更直接影響到專案的可維護性與穩定性。還記得我在學習 React 時，當課程進度進入到 state 的部分，一開始覺得還蠻簡單的，直到後來要重構整個程式碼時才發現：原來不好的 state 設計會讓程式變得多麽難維護。那時候真的是被 state 管理搞得焦頭爛額。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="『Day 18』 React State 的設計原則">
+<meta property="og:url" content="http://example.com/2025/01/23/2024%E9%90%B5%E4%BA%BA%E8%B3%BD-2025-01-23-Day18/index.html">
+<meta property="og:site_name" content="Jeff的隨手筆記">
+<meta property="og:description" content="前言在 React 的開發過程中，好的狀態管理不只關乎程式碼是否容易理解，更直接影響到專案的可維護性與穩定性。還記得我在學習 React 時，當課程進度進入到 state 的部分，一開始覺得還蠻簡單的，直到後來要重構整個程式碼時才發現：原來不好的 state 設計會讓程式變得多麽難維護。那時候真的是被 state 管理搞得焦頭爛額。">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2025-01-23T14:01:39.000Z">
+<meta property="article:modified_time" content="2025-01-23T14:02:36.120Z">
+<meta property="article:author" content="Jeff">
+<meta property="article:tag" content="React">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2025/01/23/2024%E9%90%B5%E4%BA%BA%E8%B3%BD-2025-01-23-Day18/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-tw'
+  };
+</script>
+
+  <title>『Day 18』 React State 的設計原則 | Jeff的隨手筆記</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Jeff的隨手筆記</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">學習當一個前端工程師</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/01/23/2024%E9%90%B5%E4%BA%BA%E8%B3%BD-2025-01-23-Day18/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpeg">
+      <meta itemprop="name" content="Jeff">
+      <meta itemprop="description" content="這是一個紀錄自己成長的地方">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jeff的隨手筆記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          『Day 18』 React State 的設計原則
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2025-01-23 22:01:39 / Modified: 22:02:36" itemprop="dateCreated datePublished" datetime="2025-01-23T22:01:39+08:00">2025-01-23</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/2024%E9%90%B5%E4%BA%BA%E8%B3%BD/" itemprop="url" rel="index"><span itemprop="name">2024鐵人賽</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在 React 的開發過程中，好的狀態管理不只關乎程式碼是否容易理解，更直接影響到專案的可維護性與穩定性。還記得我在學習 React 時，當課程進度進入到 state 的部分，一開始覺得還蠻簡單的，直到後來要重構整個程式碼時才發現：原來不好的 state 設計會讓程式變得多麽難維護。那時候真的是被 state 管理搞得焦頭爛額。</p>
+<span id="more"></span>
+<p>今天我們就來看看 React 官方對於狀態設計的建議。相信這些原則不只能幫助我們寫出更好的程式碼，也能讓其他正在學習的夥伴少走一些彎路。</p>
+<h2 id="相關狀態要懂得「抱團」"><a href="#相關狀態要懂得「抱團」" class="headerlink" title="相關狀態要懂得「抱團」"></a>相關狀態要懂得「抱團」</h2><p>在開發的初期，我常常會直覺地為每個需要追蹤的數值建立一個獨立的 state。但到最後才發現，當多個狀態總是一起更新時，分開管理可能導致程式碼難以維護。將相關狀態整合在一起，能使程式碼更簡潔、邏輯更清晰。</p>
+<p>假設我們要追蹤滑鼠在畫面上的位置：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">MouseTracker</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="comment">// 獨立的 state</span></span><br><span class="line">  <span class="keyword">const</span> [x, setX] = <span class="title function_">useState</span>(<span class="number">0</span>);</span><br><span class="line">  <span class="keyword">const</span> [y, setY] = <span class="title function_">useState</span>(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">onMouseMove</span>=<span class="string">&#123;(e)</span> =&gt;</span> &#123;</span></span><br><span class="line"><span class="language-xml">      setX(e.clientX);</span></span><br><span class="line"><span class="language-xml">      setY(e.clientY);</span></span><br><span class="line"><span class="language-xml">    &#125;&#125;&gt;</span></span><br><span class="line"><span class="language-xml">      滑鼠位置：&#123;x&#125;, &#123;y&#125;</span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>這樣寫雖然可以運作，但當我們把相關的狀態組織在一起時，程式碼會更容易理解和維護：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">MouseTracker</span>(<span class="params"></span>) &#123;</span><br><span class="line">	<span class="comment">// ✅ 優化後的寫法：將相關的數據組織在一起</span></span><br><span class="line">  <span class="keyword">const</span> [position, setPosition] = <span class="title function_">useState</span>(&#123; <span class="attr">x</span>: <span class="number">0</span>, <span class="attr">y</span>: <span class="number">0</span> &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">onMouseMove</span>=<span class="string">&#123;(e)</span> =&gt;</span> &#123;</span></span><br><span class="line"><span class="language-xml">      setPosition(&#123; x: e.clientX, y: e.clientY &#125;);</span></span><br><span class="line"><span class="language-xml">    &#125;&#125;&gt;</span></span><br><span class="line"><span class="language-xml">      滑鼠位置：&#123;position.x&#125;, &#123;position.y&#125;</span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>總結來說，將相關的狀態整合在一起不僅能減少重複更新的麻煩，也能讓程式碼的邏輯更直觀。</p>
+<h2 id="更新物件型態-State"><a href="#更新物件型態-State" class="headerlink" title="更新物件型態 State"></a>更新物件型態 State</h2><p>React 的 <code>setState</code> 預設是完全取代舊的狀態，而非進行部分合併。這樣的設計是為了避免預設合併邏輯帶來的不確定性，因此需要我們手動操作。</p>
+<p>因此當我們使用物件作為 state 時，更新的方式需要特別注意，不然很容易發生資料不見的問題。</p>
+<p>讓我用一個實際的例子來說明：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">UserProfile</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> [user, setUser] = <span class="title function_">useState</span>(&#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&#x27;小明&#x27;</span>,</span><br><span class="line">    <span class="attr">age</span>: <span class="number">25</span>,</span><br><span class="line">    <span class="attr">email</span>: <span class="string">&#x27;ming@example.com&#x27;</span></span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// ❌ 這樣寫會出問題！</span></span><br><span class="line">  <span class="keyword">const</span> <span class="title function_">updateName</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">    <span class="title function_">setUser</span>(&#123; <span class="attr">name</span>: <span class="string">&#x27;小華&#x27;</span> &#125;);<span class="comment">// 糟糕，age 和 email 不見了！</span></span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">p</span>&gt;</span>姓名：&#123;user.name&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">p</span>&gt;</span>年齡：&#123;user.age&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">p</span>&gt;</span>Email：&#123;user.email&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">button</span> <span class="attr">onClick</span>=<span class="string">&#123;updateName&#125;</span>&gt;</span>更新姓名<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>當我們點擊按鈕時，會發現畫面上只剩下名字，年齡和 email 都不見了！這是因為在 React 中，setState 不會幫我們合併物件，而是直接用新的物件取代舊的。</p>
+<p>正確的做法是使用展開運算符（…）來保留其他欄位：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ✅ 正確的寫法</span></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">updateName</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">  <span class="title function_">setUser</span>(&#123;</span><br><span class="line">    ...user,<span class="comment">// 先保留原本所有的資料</span></span><br><span class="line">    <span class="attr">name</span>: <span class="string">&#x27;小華&#x27;</span><span class="comment">// 再更新想改的部分</span></span><br><span class="line">  &#125;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>這樣寫有幾個好處：</p>
+<ol>
+<li>透過展開運算符（<code>...</code>）保留原本的資料，避免不小心遺失其他欄位</li>
+<li>程式碼的意圖更明確 - 我們可以清楚看到哪些是要保留的，哪些是要修改的部分</li>
+<li>當物件結構變得更複雜時，這種更新模式依然可以保持程式碼的可維護性</li>
+</ol>
+<p>這就是為什麼我們會想把相關的資料放在同一個物件裡面 - 既可以一次完整地保留所有需要的資料，又能清楚地表達程式的意圖。</p>
+<p>說真的，我第一次寫 React 時也在這裡踩過地雷。看到資料莫名消失時，整個人都傻了：「蛤？我明明就只改個名字而已，怎麼其他資料都不見了？」這個經驗讓我更深刻理解到，在操作物件型態的 state 時，正確的更新方式能幫助我們避免很多意想不到的問題。</p>
+<h2 id="避免狀態矛盾"><a href="#避免狀態矛盾" class="headerlink" title="避免狀態矛盾"></a>避免狀態矛盾</h2><p>在處理表單或複雜的使用者互動時，我們經常需要追蹤多個相關的狀態。這時候很容易不小心製造出互相矛盾的狀態。舉個例子，假設我們在處理一個表單提交的流程：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">FeedbackForm</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> [isSending, setIsSending] = <span class="title function_">useState</span>(<span class="literal">false</span>);</span><br><span class="line">  <span class="keyword">const</span> [isSent, setIsSent] = <span class="title function_">useState</span>(<span class="literal">false</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">handleSubmit</span>(<span class="params">e</span>) &#123;</span><br><span class="line">    e.<span class="title function_">preventDefault</span>();</span><br><span class="line">    <span class="title function_">setIsSending</span>(<span class="literal">true</span>);</span><br><span class="line">    <span class="keyword">await</span> <span class="title function_">sendMessage</span>();</span><br><span class="line">    <span class="title function_">setIsSending</span>(<span class="literal">false</span>);</span><br><span class="line">    <span class="title function_">setIsSent</span>(<span class="literal">true</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>這樣的設計看似合理，但如果網路請求失敗了呢？我們可能會遇到 <code>isSending</code> 和 <code>isSent</code> 狀態不一致的問題。</p>
+<p>更好的做法是使用單一的狀態來表達這個流程：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">FeedbackForm</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> [status, setStatus] = <span class="title function_">useState</span>(<span class="string">&#x27;idle&#x27;</span>); <span class="comment">// &#x27;idle&#x27; | &#x27;sending&#x27; | &#x27;sent&#x27;</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">handleSubmit</span>(<span class="params">e</span>) &#123;</span><br><span class="line">    e.<span class="title function_">preventDefault</span>();</span><br><span class="line">    <span class="title function_">setStatus</span>(<span class="string">&#x27;sending&#x27;</span>);</span><br><span class="line">    <span class="keyword">await</span> <span class="title function_">sendMessage</span>();</span><br><span class="line">    <span class="title function_">setStatus</span>(<span class="string">&#x27;sent&#x27;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="避免不必要的-State"><a href="#避免不必要的-State" class="headerlink" title="避免不必要的 State"></a>避免不必要的 State</h2><p>在實務上，我常看到開發者把可以從現有資料計算出來的值也放進狀態。這不只增加了程式碼的複雜度，更容易導致資料不同步的問題。</p>
+<p>比方說，處理使用者的全名：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 不建議的做法</span></span><br><span class="line"><span class="keyword">const</span> [firstName, setFirstName] = <span class="title function_">useState</span>(<span class="string">&#x27;&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> [lastName, setLastName] = <span class="title function_">useState</span>(<span class="string">&#x27;&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> [fullName, setFullName] = <span class="title function_">useState</span>(<span class="string">&#x27;&#x27;</span>);  <span class="comment">// 這是多餘的！</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 建議的做法</span></span><br><span class="line"><span class="keyword">const</span> [firstName, setFirstName] = <span class="title function_">useState</span>(<span class="string">&#x27;&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> [lastName, setLastName] = <span class="title function_">useState</span>(<span class="string">&#x27;&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> fullName = <span class="string">`<span class="subst">$&#123;firstName&#125;</span> <span class="subst">$&#123;lastName&#125;</span>`</span>;  <span class="comment">// 直接計算就好</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>好的狀態設計能讓我們的程式碼更容易維護，也能避免許多常見的錯誤。根據我的經驗，遵循以下原則能幫助我們寫出更好的 React 應用：</p>
+<ol>
+<li><strong>將相關的狀態組織在一起</strong>：減少重複更新，讓邏輯更清楚。</li>
+<li><strong>使用單一狀態來表示多個相關狀態</strong>：避免矛盾或不一致的狀態。</li>
+<li><strong>避免將可計算的值放入狀態</strong>：利用即時計算來減少狀態同步問題。</li>
+<li><strong>保持狀態結構扁平化</strong>：簡化狀態更新邏輯。</li>
+</ol>
+<p>記住，在設計狀態時要追求簡單但不過度簡化。找到這個平衡點需要經驗的累積，但只要持續實踐這些原則，相信大家都能寫好 React 。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/React/" rel="tag"># React</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/01/20/2024%E9%90%B5%E4%BA%BA%E8%B3%BD-2025-01-20-Day17/" rel="prev" title="『Day 17』從命令式到宣告式：React 的開發思維轉變">
+      <i class="fa fa-chevron-left"></i> 『Day 17』從命令式到宣告式：React 的開發思維轉變
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2025/01/23/2024%E9%90%B5%E4%BA%BA%E8%B3%BD-2025-01-23-Day19/" rel="next" title="『Day 19』 React 狀態提升與元件協作">
+      『Day 19』 React 狀態提升與元件協作 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%B8%E9%97%9C%E7%8B%80%E6%85%8B%E8%A6%81%E6%87%82%E5%BE%97%E3%80%8C%E6%8A%B1%E5%9C%98%E3%80%8D"><span class="nav-number">2.</span> <span class="nav-text">相關狀態要懂得「抱團」</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9B%B4%E6%96%B0%E7%89%A9%E4%BB%B6%E5%9E%8B%E6%85%8B-State"><span class="nav-number">3.</span> <span class="nav-text">更新物件型態 State</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%81%BF%E5%85%8D%E7%8B%80%E6%85%8B%E7%9F%9B%E7%9B%BE"><span class="nav-number">4.</span> <span class="nav-text">避免狀態矛盾</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%81%BF%E5%85%8D%E4%B8%8D%E5%BF%85%E8%A6%81%E7%9A%84-State"><span class="nav-number">5.</span> <span class="nav-text">避免不必要的 State</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B8%BD%E7%B5%90"><span class="nav-number">6.</span> <span class="nav-text">總結</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Jeff"
+      src="/uploads/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Jeff</p>
+  <div class="site-description" itemprop="description">這是一個紀錄自己成長的地方</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">140</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jeff0518" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jeff0518" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:cycivs07@icloud.com" title="E-Mail → mailto:cycivs07@icloud.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jeff</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

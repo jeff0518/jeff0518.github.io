@@ -158,6 +158,232 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/01/23/2024%E9%90%B5%E4%BA%BA%E8%B3%BD-2025-01-23-Day20/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpeg">
+      <meta itemprop="name" content="Jeff">
+      <meta itemprop="description" content="這是一個紀錄自己成長的地方">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jeff的隨手筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2025/01/23/2024%E9%90%B5%E4%BA%BA%E8%B3%BD-2025-01-23-Day20/" class="post-title-link" itemprop="url">『Day 20』理解 React State 的保存與重置機制</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2025-01-23 22:03:42 / Modified: 22:04:20" itemprop="dateCreated datePublished" datetime="2025-01-23T22:03:42+08:00">2025-01-23</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/2024%E9%90%B5%E4%BA%BA%E8%B3%BD/" itemprop="url" rel="index"><span itemprop="name">2024鐵人賽</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在開發 React 專案的過程中，常常會遇到一些看似神奇的狀況：明明是相同的元件，有時候狀態會保留，有時候卻會重置。這些行為背後其實蘊含著 React 狀態管理的重要原理。今天想跟大家分享我在研讀官方文件時，對於 React 狀態保存機制的一些理解與心得。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2025/01/23/2024%E9%90%B5%E4%BA%BA%E8%B3%BD-2025-01-23-Day20/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/01/23/2024%E9%90%B5%E4%BA%BA%E8%B3%BD-2025-01-23-Day19/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpeg">
+      <meta itemprop="name" content="Jeff">
+      <meta itemprop="description" content="這是一個紀錄自己成長的地方">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jeff的隨手筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2025/01/23/2024%E9%90%B5%E4%BA%BA%E8%B3%BD-2025-01-23-Day19/" class="post-title-link" itemprop="url">『Day 19』 React 狀態提升與元件協作</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2025-01-23 22:02:53 / Modified: 22:03:30" itemprop="dateCreated datePublished" datetime="2025-01-23T22:02:53+08:00">2025-01-23</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/2024%E9%90%B5%E4%BA%BA%E8%B3%BD/" itemprop="url" rel="index"><span itemprop="name">2024鐵人賽</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在寫這系列文章的過程中，漸漸體會到 React 每個概念間的環環相扣，今天想跟大家分享一個在實務開發中經常會用到的重要概念：「狀態提升（Lifting State Up）」。</p>
+<p>這個概念初次接觸時可能會覺得有點抽象，但其實它就像是一個團隊裡的溝通機制。想像一下，如果團隊中每個人都自己做決定，沒有互相溝通，那麼最後的成果可能會不太協調。但如果我們有一個共同的主管來協調大家的工作，事情就會順暢許多。在 React 的世界裡，「狀態提升」就扮演著這樣的角色。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2025/01/23/2024%E9%90%B5%E4%BA%BA%E8%B3%BD-2025-01-23-Day19/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/01/23/2024%E9%90%B5%E4%BA%BA%E8%B3%BD-2025-01-23-Day18/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpeg">
+      <meta itemprop="name" content="Jeff">
+      <meta itemprop="description" content="這是一個紀錄自己成長的地方">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jeff的隨手筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2025/01/23/2024%E9%90%B5%E4%BA%BA%E8%B3%BD-2025-01-23-Day18/" class="post-title-link" itemprop="url">『Day 18』 React State 的設計原則</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2025-01-23 22:01:39 / Modified: 22:02:36" itemprop="dateCreated datePublished" datetime="2025-01-23T22:01:39+08:00">2025-01-23</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/2024%E9%90%B5%E4%BA%BA%E8%B3%BD/" itemprop="url" rel="index"><span itemprop="name">2024鐵人賽</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在 React 的開發過程中，好的狀態管理不只關乎程式碼是否容易理解，更直接影響到專案的可維護性與穩定性。還記得我在學習 React 時，當課程進度進入到 state 的部分，一開始覺得還蠻簡單的，直到後來要重構整個程式碼時才發現：原來不好的 state 設計會讓程式變得多麽難維護。那時候真的是被 state 管理搞得焦頭爛額。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2025/01/23/2024%E9%90%B5%E4%BA%BA%E8%B3%BD-2025-01-23-Day18/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
     <link itemprop="mainEntityOfPage" href="http://example.com/2025/01/20/2024%E9%90%B5%E4%BA%BA%E8%B3%BD-2025-01-20-Day17/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -680,233 +906,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2025/01/15/2024%E9%90%B5%E4%BA%BA%E8%B3%BD-2025-01-15-Day11/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/avatar.jpeg">
-      <meta itemprop="name" content="Jeff">
-      <meta itemprop="description" content="這是一個紀錄自己成長的地方">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Jeff的隨手筆記">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2025/01/15/2024%E9%90%B5%E4%BA%BA%E8%B3%BD-2025-01-15-Day11/" class="post-title-link" itemprop="url">『Day 11』認識 React 的 State 與 useState Hook</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2025-01-15 22:11:47 / Modified: 22:12:57" itemprop="dateCreated datePublished" datetime="2025-01-15T22:11:47+08:00">2025-01-15</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/2024%E9%90%B5%E4%BA%BA%E8%B3%BD/" itemprop="url" rel="index"><span itemprop="name">2024鐵人賽</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在學習 React 的過程中，有一個很有趣的體悟：React 讓我們直接描述「畫面要長什麼樣子」，而不是一步步告訴電腦「要做什麼」，這點從前面幾篇文章的討論中相信大家也慢慢感受到了。</p>
-<p>然而，網頁不會永遠都是靜態的，使用者會點擊、輸入、選擇…，畫面必須因應這些操作而改變。但初次接觸 React 的朋友可能會發現，單純改變變數的值是不夠的。</p>
-<p>這是因為 React 需要知道「什麼時候」以及「更新什麼」，因此我們要來認識一下 React 中另一個重要的概念：State（狀態）。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2025/01/15/2024%E9%90%B5%E4%BA%BA%E8%B3%BD-2025-01-15-Day11/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2025/01/13/2024%E9%90%B5%E4%BA%BA%E8%B3%BD-2025-01-13-Day10/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/avatar.jpeg">
-      <meta itemprop="name" content="Jeff">
-      <meta itemprop="description" content="這是一個紀錄自己成長的地方">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Jeff的隨手筆記">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2025/01/13/2024%E9%90%B5%E4%BA%BA%E8%B3%BD-2025-01-13-Day10/" class="post-title-link" itemprop="url">『Day 10』React 的事件處理機制</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2025-01-13 21:32:41 / Modified: 21:36:08" itemprop="dateCreated datePublished" datetime="2025-01-13T21:32:41+08:00">2025-01-13</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/2024%E9%90%B5%E4%BA%BA%E8%B3%BD/" itemprop="url" rel="index"><span itemprop="name">2024鐵人賽</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>到目前為止我們討論了 React 元件的各種基礎概念，包括如何建立元件、使用 Props 傳遞資料，以及條件渲染等等。今天讓我們來聊聊在 React 中如何處理使用者的互動 - 也就是事件處理（Event Handling）。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2025/01/13/2024%E9%90%B5%E4%BA%BA%E8%B3%BD-2025-01-13-Day10/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2025/01/11/2024%E9%90%B5%E4%BA%BA%E8%B3%BD-2025-01-11-Day9/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/avatar.jpeg">
-      <meta itemprop="name" content="Jeff">
-      <meta itemprop="description" content="這是一個紀錄自己成長的地方">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Jeff的隨手筆記">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2025/01/11/2024%E9%90%B5%E4%BA%BA%E8%B3%BD-2025-01-11-Day9/" class="post-title-link" itemprop="url">『Day 9』React 元件樹的架構與應用</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2025-01-11 21:58:29 / Modified: 21:59:48" itemprop="dateCreated datePublished" datetime="2025-01-11T21:58:29+08:00">2025-01-11</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/2024%E9%90%B5%E4%BA%BA%E8%B3%BD/" itemprop="url" rel="index"><span itemprop="name">2024鐵人賽</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在前幾篇文章中，我們探討了 React 的基礎概念，像是 JSX、Props 和條件渲染。構建現代應用程式時，清晰的結構與高效的更新機制至關重要。React 的元件樹正是解決這些挑戰的核心工具。今天我們就來聊聊 React 是如何透過樹狀結構組織和管理元件，進而提升應用程式的可維護性與效能。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2025/01/11/2024%E9%90%B5%E4%BA%BA%E8%B3%BD-2025-01-11-Day9/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -977,7 +976,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">137</span>
+          <span class="site-state-item-count">140</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
