@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="前言在專案開發的過程中，處理副作用一直是個重要的課題。記得剛接觸 React 時，總是把 useEffect 跟傳統的生命週期掛鉤，導致寫出來的程式碼既複雜又難以維護。直到後來深入了解了 Effect 的本質 - 同步機制，才發現原來我們一直用錯了方向。今天就讓我分享這個重要的觀念轉變，以及在實務上如何正確運用 Effect。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="『Day 28』Effect 的生命週期">
+<meta property="og:url" content="http://example.com/2025/02/07/2024%E9%90%B5%E4%BA%BA%E8%B3%BD-2025-02-07-Day-28/index.html">
+<meta property="og:site_name" content="Jeff的隨手筆記">
+<meta property="og:description" content="前言在專案開發的過程中，處理副作用一直是個重要的課題。記得剛接觸 React 時，總是把 useEffect 跟傳統的生命週期掛鉤，導致寫出來的程式碼既複雜又難以維護。直到後來深入了解了 Effect 的本質 - 同步機制，才發現原來我們一直用錯了方向。今天就讓我分享這個重要的觀念轉變，以及在實務上如何正確運用 Effect。">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2025-02-07T12:41:27.000Z">
+<meta property="article:modified_time" content="2025-02-07T12:42:25.600Z">
+<meta property="article:author" content="Jeff">
+<meta property="article:tag" content="React">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2025/02/07/2024%E9%90%B5%E4%BA%BA%E8%B3%BD-2025-02-07-Day-28/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-tw'
+  };
+</script>
+
+  <title>『Day 28』Effect 的生命週期 | Jeff的隨手筆記</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Jeff的隨手筆記</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">學習當一個前端工程師</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/02/07/2024%E9%90%B5%E4%BA%BA%E8%B3%BD-2025-02-07-Day-28/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpeg">
+      <meta itemprop="name" content="Jeff">
+      <meta itemprop="description" content="這是一個紀錄自己成長的地方">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jeff的隨手筆記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          『Day 28』Effect 的生命週期
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2025-02-07 20:41:27 / Modified: 20:42:25" itemprop="dateCreated datePublished" datetime="2025-02-07T20:41:27+08:00">2025-02-07</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/2024%E9%90%B5%E4%BA%BA%E8%B3%BD/" itemprop="url" rel="index"><span itemprop="name">2024鐵人賽</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在專案開發的過程中，處理副作用一直是個重要的課題。記得剛接觸 React 時，總是把 useEffect 跟傳統的生命週期掛鉤，導致寫出來的程式碼既複雜又難以維護。直到後來深入了解了 Effect 的本質 - 同步機制，才發現原來我們一直用錯了方向。今天就讓我分享這個重要的觀念轉變，以及在實務上如何正確運用 Effect。</p>
+<span id="more"></span>
+<h2 id="Effect-與元件生命週期的差異"><a href="#Effect-與元件生命週期的差異" class="headerlink" title="Effect 與元件生命週期的差異"></a>Effect 與元件生命週期的差異</h2><p>傳統上，React 元件的生命週期分為：</p>
+<ol>
+<li>Mount（掛載）：元件首次被加入畫面</li>
+<li>Update（更新）：因 props 或 state 變更而重新渲染</li>
+<li>Unmount（卸載）：元件從畫面中移除</li>
+</ol>
+<p>但 Effect 的運作方式其實完全不同：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">ChatRoom</span>(<span class="params">&#123; roomId &#125;</span>) &#123;</span><br><span class="line">  <span class="title function_">useEffect</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 這不是 &quot;Mount&quot;，而是「開始同步」</span></span><br><span class="line">    <span class="keyword">const</span> connection = <span class="title function_">createConnection</span>(roomId);</span><br><span class="line">    connection.<span class="title function_">connect</span>();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 這不是 &quot;Unmount&quot;，而是「結束同步」</span></span><br><span class="line">    <span class="keyword">return</span> <span class="function">() =&gt;</span> &#123;</span><br><span class="line">      connection.<span class="title function_">disconnect</span>();</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;, [roomId]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Effect-的同步機制"><a href="#Effect-的同步機制" class="headerlink" title="Effect 的同步機制"></a>Effect 的同步機制</h2><h3 id="重新同步的時機"><a href="#重新同步的時機" class="headerlink" title="重新同步的時機"></a>重新同步的時機</h3><p>Effect 會在以下情況重新執行：</p>
+<ol>
+<li>依賴項改變</li>
+<li>元件重新渲染（只在依賴項發生變化時）</li>
+</ol>
+<p>同步的過程是這樣的：</p>
+<ol>
+<li>先執行清理函式，停止舊的同步</li>
+<li>然後執行 Effect 主體，開始新的同步</li>
+</ol>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">VideoPlayer</span>(<span class="params">&#123; src, isPlaying &#125;</span>) &#123;</span><br><span class="line">  <span class="title function_">useEffect</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> video = videoRef.<span class="property">current</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (isPlaying) &#123;</span><br><span class="line">      video.<span class="title function_">play</span>();  <span class="comment">// 開始播放</span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      video.<span class="title function_">pause</span>(); <span class="comment">// 暫停播放</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="function">() =&gt;</span> &#123;</span><br><span class="line">      video.<span class="title function_">pause</span>(); <span class="comment">// 清理：確保影片暫停</span></span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;, [isPlaying]);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="響應式值與依賴關係"><a href="#響應式值與依賴關係" class="headerlink" title="響應式值與依賴關係"></a>響應式值與依賴關係</h2><h3 id="什麼是響應式值？"><a href="#什麼是響應式值？" class="headerlink" title="什麼是響應式值？"></a>什麼是響應式值？</h3><p>在 React 中，響應式值包括：</p>
+<ol>
+<li>Props：從父元件傳入的值</li>
+<li>State：使用 useState 建立的狀態</li>
+<li>計算值：由 props 或 state 衍生的值</li>
+</ol>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">DataFetcher</span>(<span class="params">&#123; query, pageSize &#125;</span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> [pageIndex, setPageIndex] = <span class="title function_">useState</span>(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 這是一個響應式值</span></span><br><span class="line">  <span class="keyword">const</span> queryString = <span class="string">`?query=<span class="subst">$&#123;query&#125;</span>&amp;page=<span class="subst">$&#123;pageIndex&#125;</span>&amp;size=<span class="subst">$&#123;pageSize&#125;</span>`</span>;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">useEffect</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">fetchData</span>(<span class="params"></span>) &#123;</span><br><span class="line">      <span class="keyword">const</span> response = <span class="keyword">await</span> <span class="title function_">fetch</span>(<span class="string">&#x27;/api/data&#x27;</span> + queryString);</span><br><span class="line">      <span class="comment">// ...處理回應</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="title function_">fetchData</span>();</span><br><span class="line">  &#125;, [queryString]); <span class="comment">// queryString 必須加入依賴陣列</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="依賴項的重要性"><a href="#依賴項的重要性" class="headerlink" title="依賴項的重要性"></a>依賴項的重要性</h3><p>遺漏依賴項可能導致：</p>
+<ol>
+<li>使用到過期的值</li>
+<li>無法及時反應資料變化</li>
+<li>產生不預期的行為</li>
+</ol>
+<h2 id="進階概念：全域和可變值"><a href="#進階概念：全域和可變值" class="headerlink" title="進階概念：全域和可變值"></a>進階概念：全域和可變值</h2><h3 id="特殊情況處理"><a href="#特殊情況處理" class="headerlink" title="特殊情況處理"></a>特殊情況處理</h3><p>有些值不適合作為依賴項：</p>
+<ol>
+<li>全域變數（如 window.location）</li>
+<li>Ref 的 current 屬性</li>
+<li>可變物件</li>
+</ol>
+<p>處理這類值的方式：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">WindowTracker</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> [path, setPath] = <span class="title function_">useState</span>(<span class="variable language_">window</span>.<span class="property">location</span>.<span class="property">pathname</span>);</span><br><span class="line"></span><br><span class="line">  <span class="title function_">useEffect</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 正確處理全域變數變化</span></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">handlePathChange</span>(<span class="params"></span>) &#123;</span><br><span class="line">      <span class="title function_">setPath</span>(<span class="variable language_">window</span>.<span class="property">location</span>.<span class="property">pathname</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="variable language_">window</span>.<span class="title function_">addEventListener</span>(<span class="string">&#x27;popstate&#x27;</span>, handlePathChange);</span><br><span class="line">    <span class="keyword">return</span> <span class="function">() =&gt;</span> &#123;</span><br><span class="line">      <span class="variable language_">window</span>.<span class="title function_">removeEventListener</span>(<span class="string">&#x27;popstate&#x27;</span>, handlePathChange);</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;, []);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="最佳實踐"><a href="#最佳實踐" class="headerlink" title="最佳實踐"></a>最佳實踐</h2><ol>
+<li><p><strong>Effect 設計原則</strong></p>
+<ul>
+<li>每個 Effect 只負責一個獨立的同步邏輯</li>
+<li>提供完整的清理機制</li>
+<li>確保能處理多次執行的情況</li>
+</ul>
+</li>
+<li><p><strong>常見陷阱與解決方案</strong></p>
+ <figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ❌ 避免這樣做</span></span><br><span class="line"><span class="title function_">useEffect</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="title function_">setCount</span>(count + <span class="number">1</span>);</span><br><span class="line">&#125;, [count]);</span><br><span class="line"></span><br><span class="line"><span class="comment">// ✅ 改用 state updater</span></span><br><span class="line"><span class="title function_">useEffect</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="title function_">setCount</span>(<span class="function"><span class="params">c</span> =&gt;</span> c + <span class="number">1</span>);</span><br><span class="line">&#125;, []);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>效能考量</strong></p>
+<ul>
+<li>避免不必要的依賴</li>
+<li>適當拆分 Effect</li>
+<li>使用記憶化（useMemo）減少重複計算</li>
+</ul>
+</li>
+</ol>
+<h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>理解 Effect 的同步本質，能幫助我們：</p>
+<ol>
+<li>寫出更清晰的副作用處理邏輯</li>
+<li>避免生命週期的思維陷阱</li>
+<li>正確處理資源的訂閱與清理</li>
+<li>建立更容易維護的程式碼</li>
+</ol>
+<p>最重要的是要記住：Effect 不是生命週期事件，而是一個同步的過程。當我們轉換這個思維模式，很多原本覺得複雜的問題都會變得清晰許多。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/React/" rel="tag"># React</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/02/06/%E8%8F%9C%E9%B3%A5%E7%9A%84%E8%B8%A9%E5%9D%91%E7%AD%86%E8%A8%98-2025-02-06-float/" rel="prev" title="『菜鳥的踩坑筆記』- JavaScript浮點數">
+      <i class="fa fa-chevron-left"></i> 『菜鳥的踩坑筆記』- JavaScript浮點數
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Effect-%E8%88%87%E5%85%83%E4%BB%B6%E7%94%9F%E5%91%BD%E9%80%B1%E6%9C%9F%E7%9A%84%E5%B7%AE%E7%95%B0"><span class="nav-number">2.</span> <span class="nav-text">Effect 與元件生命週期的差異</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Effect-%E7%9A%84%E5%90%8C%E6%AD%A5%E6%A9%9F%E5%88%B6"><span class="nav-number">3.</span> <span class="nav-text">Effect 的同步機制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%87%8D%E6%96%B0%E5%90%8C%E6%AD%A5%E7%9A%84%E6%99%82%E6%A9%9F"><span class="nav-number">3.1.</span> <span class="nav-text">重新同步的時機</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9F%BF%E6%87%89%E5%BC%8F%E5%80%BC%E8%88%87%E4%BE%9D%E8%B3%B4%E9%97%9C%E4%BF%82"><span class="nav-number">4.</span> <span class="nav-text">響應式值與依賴關係</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E9%BA%BC%E6%98%AF%E9%9F%BF%E6%87%89%E5%BC%8F%E5%80%BC%EF%BC%9F"><span class="nav-number">4.1.</span> <span class="nav-text">什麼是響應式值？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BE%9D%E8%B3%B4%E9%A0%85%E7%9A%84%E9%87%8D%E8%A6%81%E6%80%A7"><span class="nav-number">4.2.</span> <span class="nav-text">依賴項的重要性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%B2%E9%9A%8E%E6%A6%82%E5%BF%B5%EF%BC%9A%E5%85%A8%E5%9F%9F%E5%92%8C%E5%8F%AF%E8%AE%8A%E5%80%BC"><span class="nav-number">5.</span> <span class="nav-text">進階概念：全域和可變值</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%B9%E6%AE%8A%E6%83%85%E6%B3%81%E8%99%95%E7%90%86"><span class="nav-number">5.1.</span> <span class="nav-text">特殊情況處理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%80%E4%BD%B3%E5%AF%A6%E8%B8%90"><span class="nav-number">6.</span> <span class="nav-text">最佳實踐</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B8%BD%E7%B5%90"><span class="nav-number">7.</span> <span class="nav-text">總結</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Jeff"
+      src="/uploads/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Jeff</p>
+  <div class="site-description" itemprop="description">這是一個紀錄自己成長的地方</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">149</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jeff0518" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jeff0518" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:cycivs07@icloud.com" title="E-Mail → mailto:cycivs07@icloud.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jeff</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

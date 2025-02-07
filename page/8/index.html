@@ -158,6 +158,88 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/09/25/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-25-Day25/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpeg">
+      <meta itemprop="name" content="Jeff">
+      <meta itemprop="description" content="這是一個紀錄自己成長的地方">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jeff的隨手筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/09/25/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-25-Day25/" class="post-title-link" itemprop="url">『Day -25』認識call( ), apply( )和bind( )</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2023-09-25 10:28:27 / Modified: 10:30:18" itemprop="dateCreated datePublished" datetime="2023-09-25T10:28:27+08:00">2023-09-25</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/2023%E9%90%B5%E4%BA%BA%E8%B3%BD/" itemprop="url" rel="index"><span itemprop="name">2023鐵人賽</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>我們昨天有提到，在JavaScript裡，<code>this</code>的指向取決於我們呼叫他的方式，我們總共有4種呼叫方式：</p>
+<ul>
+<li><strong>一般呼叫</strong>：當你以一般方式呼叫一個function 時，例如剛剛的案例 <code>setName**()**</code>，**<code>this</code>** 會指向 **<code>window</code>**（在瀏覽器環境中）。</li>
+<li><strong>物件方法呼叫</strong>：當你將一個function 作為 object 的方法來呼叫，例如剛剛的案例 <strong><code>c.log()</code><strong>，</strong><code>this</code></strong> 就會指向 c 這個object。</li>
+<li>**使用 <code>.bind()</code>、<code>.call()</code> 或 <code>.apply()</code>**：你可以使用這些方法來明確設定function 的 <strong><code>this</code></strong> 值。這個會在下一章節介紹。</li>
+<li><strong>箭頭函式</strong>：箭頭函式 (<strong><code>=&gt;</code></strong>) 不會改變 <strong><code>this</code></strong> 的值，或者這麼說：箭頭函式 (<strong><code>=&gt;</code></strong>) 不會像傳統函數那樣有自己的 **<code>this</code>**，而是會捕獲（capture）它們外部作用域的 **<code>this</code>**。這使得箭頭函式在定義時捕獲了 <strong><code>this</code></strong> 的值，不受呼叫方式的影響。</li>
+</ul>
+<p>今天我們要針對第三點來做一次解說。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023/09/25/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-25-Day25/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
     <link itemprop="mainEntityOfPage" href="http://example.com/2023/09/24/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-24-Day24/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -858,81 +940,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/09/15/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-15-Day15/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/avatar.jpeg">
-      <meta itemprop="name" content="Jeff">
-      <meta itemprop="description" content="這是一個紀錄自己成長的地方">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Jeff的隨手筆記">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/09/15/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-15-Day15/" class="post-title-link" itemprop="url">『Day15』樹狀結構與 DOM 節點</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2023-09-15 15:20:29 / Modified: 15:24:38" itemprop="dateCreated datePublished" datetime="2023-09-15T15:20:29+08:00">2023-09-15</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/2023%E9%90%B5%E4%BA%BA%E8%B3%BD/" itemprop="url" rel="index"><span itemprop="name">2023鐵人賽</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>昨天我們解釋了什麼是DOM跟BOM，今天我們繼續來認識DOM Tree 和 DOM Node</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023/09/15/2023%E9%90%B5%E4%BA%BA%E8%B3%BD-2023-09-15-Day15/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1003,7 +1010,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">148</span>
+          <span class="site-state-item-count">149</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
