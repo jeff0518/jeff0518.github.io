@@ -158,6 +158,158 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/02/09/2024%E9%90%B5%E4%BA%BA%E8%B3%BD-2025-02-09-Day31/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpeg">
+      <meta itemprop="name" content="Jeff">
+      <meta itemprop="description" content="這是一個紀錄自己成長的地方">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jeff的隨手筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2025/02/09/2024%E9%90%B5%E4%BA%BA%E8%B3%BD-2025-02-09-Day31/" class="post-title-link" itemprop="url">『Day 31』認識 Custom Hook</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2025-02-09 17:03:54 / Modified: 17:05:01" itemprop="dateCreated datePublished" datetime="2025-02-09T17:03:54+08:00">2025-02-09</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/2024%E9%90%B5%E4%BA%BA%E8%B3%BD/" itemprop="url" rel="index"><span itemprop="name">2024鐵人賽</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在前端開發的路上，隨著專案規模逐漸擴大，總是會遇到需要在不同元件中重複使用某些邏輯的情況。還記得以前遇到這種狀況時，我常常會直接複製貼上相關的程式碼，導致後續維護變得非常困難。後來接觸到了 React 的自訂 Hook 這個概念，才發現原來我們可以用更優雅的方式來處理這個問題。</p>
+<p>今天就讓我分享一下自訂 Hook 的使用心得，看看它如何幫助我們寫出更好維護的程式碼。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2025/02/09/2024%E9%90%B5%E4%BA%BA%E8%B3%BD-2025-02-09-Day31/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/02/09/2024%E9%90%B5%E4%BA%BA%E8%B3%BD-2025-02-09-Day30/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpeg">
+      <meta itemprop="name" content="Jeff">
+      <meta itemprop="description" content="這是一個紀錄自己成長的地方">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jeff的隨手筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2025/02/09/2024%E9%90%B5%E4%BA%BA%E8%B3%BD-2025-02-09-Day30/" class="post-title-link" itemprop="url">『Day 30』移除 Effect 的依賴項</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2025-02-09 17:01:50 / Modified: 17:02:37" itemprop="dateCreated datePublished" datetime="2025-02-09T17:01:50+08:00">2025-02-09</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/2024%E9%90%B5%E4%BA%BA%E8%B3%BD/" itemprop="url" rel="index"><span itemprop="name">2024鐵人賽</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>還記得我一開始學習 React 時，總是習慣性地調整依賴陣列來解決問題，想當然爾地認為：「反正只要控制好依賴，Effect 就會按照我想要的次數執行」。但隨著開發經驗的累積，漸漸明白到這樣的思維其實不太正確。</p>
+<p>這種做法雖然在短期內看似解決了問題，但往往會埋下一些難以發現的 bug。今天就讓我來分享一下，在實務上我們該如何處理 Effect 的依賴問題。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2025/02/09/2024%E9%90%B5%E4%BA%BA%E8%B3%BD-2025-02-09-Day30/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
     <link itemprop="mainEntityOfPage" href="http://example.com/2025/02/08/2024%E9%90%B5%E4%BA%BA%E8%B3%BD-2025-02-08-Day-29/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -757,161 +909,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2025/02/03/2024%E9%90%B5%E4%BA%BA%E8%B3%BD-2025-02-03-Day-22/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/avatar.jpeg">
-      <meta itemprop="name" content="Jeff">
-      <meta itemprop="description" content="這是一個紀錄自己成長的地方">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Jeff的隨手筆記">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2025/02/03/2024%E9%90%B5%E4%BA%BA%E8%B3%BD-2025-02-03-Day-22/" class="post-title-link" itemprop="url">『Day 22』React Context資料傳遞機制</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2025-02-03 20:42:38 / Modified: 20:47:02" itemprop="dateCreated datePublished" datetime="2025-02-03T20:42:38+08:00">2025-02-03</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/2024%E9%90%B5%E4%BA%BA%E8%B3%BD/" itemprop="url" rel="index"><span itemprop="name">2024鐵人賽</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在上一篇我們提到了使用 Context 來簡化購物車的狀態管理。不過究竟什麼是 Context？為什麼它能解決狀態傳遞的問題呢？</p>
-<p>在實務開發中，經常遇到需要跨多個層級傳遞資料的情況，除了購物車之外，還包括網站的主題設定、使用者的登入狀態等。如果用傳統的 props 一層一層往下傳，程式碼不只顯得冗長，後續的維護也相當費力。今天就讓我們深入了解 Context 這個 React 提供的解決方案。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2025/02/03/2024%E9%90%B5%E4%BA%BA%E8%B3%BD-2025-02-03-Day-22/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2025/02/03/2024%E9%90%B5%E4%BA%BA%E8%B3%BD-2025-02-03-Day-21/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/avatar.jpeg">
-      <meta itemprop="name" content="Jeff">
-      <meta itemprop="description" content="這是一個紀錄自己成長的地方">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Jeff的隨手筆記">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2025/02/03/2024%E9%90%B5%E4%BA%BA%E8%B3%BD-2025-02-03-Day-21/" class="post-title-link" itemprop="url">『Day 21』理解 React Reducer</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2025-02-03 20:41:21 / Modified: 20:45:20" itemprop="dateCreated datePublished" datetime="2025-02-03T20:41:21+08:00">2025-02-03</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/2024%E9%90%B5%E4%BA%BA%E8%B3%BD/" itemprop="url" rel="index"><span itemprop="name">2024鐵人賽</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>回想我之前做購物車 side project 的時候，在處理購物車的商品資料傳遞時，我是使用 Context（上下文）來處理這個狀況。雖然當時可以完成需求，但總覺得程式碼非常雜亂，寫起來有種說不出來的彆扭感。當時可能因為是練習作品，就沒有太在意這個問題。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2025/02/03/2024%E9%90%B5%E4%BA%BA%E8%B3%BD-2025-02-03-Day-21/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -978,7 +979,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">150</span>
+          <span class="site-state-item-count">152</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

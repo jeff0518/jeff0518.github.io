@@ -158,6 +158,157 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/02/03/2024%E9%90%B5%E4%BA%BA%E8%B3%BD-2025-02-03-Day-22/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpeg">
+      <meta itemprop="name" content="Jeff">
+      <meta itemprop="description" content="這是一個紀錄自己成長的地方">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jeff的隨手筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2025/02/03/2024%E9%90%B5%E4%BA%BA%E8%B3%BD-2025-02-03-Day-22/" class="post-title-link" itemprop="url">『Day 22』React Context資料傳遞機制</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2025-02-03 20:42:38 / Modified: 20:47:02" itemprop="dateCreated datePublished" datetime="2025-02-03T20:42:38+08:00">2025-02-03</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/2024%E9%90%B5%E4%BA%BA%E8%B3%BD/" itemprop="url" rel="index"><span itemprop="name">2024鐵人賽</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在上一篇我們提到了使用 Context 來簡化購物車的狀態管理。不過究竟什麼是 Context？為什麼它能解決狀態傳遞的問題呢？</p>
+<p>在實務開發中，經常遇到需要跨多個層級傳遞資料的情況，除了購物車之外，還包括網站的主題設定、使用者的登入狀態等。如果用傳統的 props 一層一層往下傳，程式碼不只顯得冗長，後續的維護也相當費力。今天就讓我們深入了解 Context 這個 React 提供的解決方案。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2025/02/03/2024%E9%90%B5%E4%BA%BA%E8%B3%BD-2025-02-03-Day-22/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/02/03/2024%E9%90%B5%E4%BA%BA%E8%B3%BD-2025-02-03-Day-21/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpeg">
+      <meta itemprop="name" content="Jeff">
+      <meta itemprop="description" content="這是一個紀錄自己成長的地方">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jeff的隨手筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2025/02/03/2024%E9%90%B5%E4%BA%BA%E8%B3%BD-2025-02-03-Day-21/" class="post-title-link" itemprop="url">『Day 21』理解 React Reducer</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2025-02-03 20:41:21 / Modified: 20:45:20" itemprop="dateCreated datePublished" datetime="2025-02-03T20:41:21+08:00">2025-02-03</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/2024%E9%90%B5%E4%BA%BA%E8%B3%BD/" itemprop="url" rel="index"><span itemprop="name">2024鐵人賽</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>回想我之前做購物車 side project 的時候，在處理購物車的商品資料傳遞時，我是使用 Context（上下文）來處理這個狀況。雖然當時可以完成需求，但總覺得程式碼非常雜亂，寫起來有種說不出來的彆扭感。當時可能因為是練習作品，就沒有太在意這個問題。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2025/02/03/2024%E9%90%B5%E4%BA%BA%E8%B3%BD-2025-02-03-Day-21/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
     <link itemprop="mainEntityOfPage" href="http://example.com/2025/01/23/2024%E9%90%B5%E4%BA%BA%E8%B3%BD-2025-01-23-Day20/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -756,160 +907,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2025/01/16/%E8%8F%9C%E9%B3%A5%E7%9A%84%E8%B8%A9%E5%9D%91%E7%AD%86%E8%A8%98-2025-01-16-hasOwn/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/avatar.jpeg">
-      <meta itemprop="name" content="Jeff">
-      <meta itemprop="description" content="這是一個紀錄自己成長的地方">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Jeff的隨手筆記">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2025/01/16/%E8%8F%9C%E9%B3%A5%E7%9A%84%E8%B8%A9%E5%9D%91%E7%AD%86%E8%A8%98-2025-01-16-hasOwn/" class="post-title-link" itemprop="url">『菜鳥的踩坑筆記』- JavaScript 相容性處理</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2025-01-16 23:00:12 / Modified: 23:01:50" itemprop="dateCreated datePublished" datetime="2025-01-16T23:00:12+08:00">2025-01-16</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E8%8F%9C%E9%B3%A5%E7%9A%84%E8%B8%A9%E5%9D%91%E7%AD%86%E8%A8%98/" itemprop="url" rel="index"><span itemprop="name">菜鳥的踩坑筆記</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在 JavaScript 開發中，我們經常需要檢查一個物件是否擁有某個特定的屬性。最近，我在一個處理表格欄位排序的專案中嘗試使用 <code>Object.hasOwn()</code> 方法，但很快發現這個方法與我的開發環境不相容。這篇文章將分享我的經歷，以及我是如何找到並實施一個既安全又相容的解決方案的。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2025/01/16/%E8%8F%9C%E9%B3%A5%E7%9A%84%E8%B8%A9%E5%9D%91%E7%AD%86%E8%A8%98-2025-01-16-hasOwn/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2025/01/15/2024%E9%90%B5%E4%BA%BA%E8%B3%BD-2025-01-15-Day12/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/avatar.jpeg">
-      <meta itemprop="name" content="Jeff">
-      <meta itemprop="description" content="這是一個紀錄自己成長的地方">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Jeff的隨手筆記">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2025/01/15/2024%E9%90%B5%E4%BA%BA%E8%B3%BD-2025-01-15-Day12/" class="post-title-link" itemprop="url">『Day 12』React 渲染機制</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2025-01-15 22:13:06 / Modified: 22:24:15" itemprop="dateCreated datePublished" datetime="2025-01-15T22:13:06+08:00">2025-01-15</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/2024%E9%90%B5%E4%BA%BA%E8%B3%BD/" itemprop="url" rel="index"><span itemprop="name">2024鐵人賽</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在學習 React 的過程中，助教一直再跟我們說要理解底層的邏輯，其中就屬渲染機制最令我印象深刻。當初在學習的時候，總是不太理解為什麼改變了某個值，畫面卻沒有跟著更新；或是為什麼有時候明明沒有要更新的元件，卻也跟著重新渲染。直到了解了 React 的渲染機制後，這些問題才慢慢有了答案。<br>今天想跟大家分享一下 React 渲染機制的運作方式。我們可以把它想像成一間餐廳的運作流程：顧客（使用者）點餐後，服務生（React）接收訂單並送到廚房（元件），最後將美味的餐點（UI）送到顧客面前。這個比喻或許可以幫助我們更直覺地理解整個渲染流程。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2025/01/15/2024%E9%90%B5%E4%BA%BA%E8%B3%BD-2025-01-15-Day12/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -976,7 +977,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">150</span>
+          <span class="site-state-item-count">152</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
