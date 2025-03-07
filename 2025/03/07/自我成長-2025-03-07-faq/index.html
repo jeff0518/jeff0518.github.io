@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="前言這是我在翻新舊版專案到新架構時遇到的問題，因為是第一次接觸反向代理，所以特別記錄下來，藉此加深理解。過程中，我發現反向代理在分流請求、提高安全性和優化效能方面發揮了重要作用。透過這次經驗，我學習了其基本概念，也清楚如何在專案中正確配置與應用。這篇文章將整理我的學習過程與心得，希望能幫助有相同需求的開發者更快上手。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="透過FAQ專案理解反向代理">
+<meta property="og:url" content="http://example.com/2025/03/07/%E8%87%AA%E6%88%91%E6%88%90%E9%95%B7-2025-03-07-faq/index.html">
+<meta property="og:site_name" content="Jeff的隨手筆記">
+<meta property="og:description" content="前言這是我在翻新舊版專案到新架構時遇到的問題，因為是第一次接觸反向代理，所以特別記錄下來，藉此加深理解。過程中，我發現反向代理在分流請求、提高安全性和優化效能方面發揮了重要作用。透過這次經驗，我學習了其基本概念，也清楚如何在專案中正確配置與應用。這篇文章將整理我的學習過程與心得，希望能幫助有相同需求的開發者更快上手。">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2025-03-07T15:30:42.000Z">
+<meta property="article:modified_time" content="2025-03-07T15:33:41.846Z">
+<meta property="article:author" content="Jeff">
+<meta property="article:tag" content="自我成長">
+<meta property="article:tag" content="程式小札">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2025/03/07/%E8%87%AA%E6%88%91%E6%88%90%E9%95%B7-2025-03-07-faq/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-tw'
+  };
+</script>
+
+  <title>透過FAQ專案理解反向代理 | Jeff的隨手筆記</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Jeff的隨手筆記</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">學習當一個前端工程師</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/03/07/%E8%87%AA%E6%88%91%E6%88%90%E9%95%B7-2025-03-07-faq/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpeg">
+      <meta itemprop="name" content="Jeff">
+      <meta itemprop="description" content="這是一個紀錄自己成長的地方">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jeff的隨手筆記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          透過FAQ專案理解反向代理
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2025-03-07 23:30:42 / Modified: 23:33:41" itemprop="dateCreated datePublished" datetime="2025-03-07T23:30:42+08:00">2025-03-07</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%8F%9C%E9%B3%A5%E7%9A%84%E7%A8%8B%E5%BC%8F%E5%B0%8F%E6%9C%AD/" itemprop="url" rel="index"><span itemprop="name">菜鳥的程式小札</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>這是我在翻新舊版專案到新架構時遇到的問題，因為是第一次接觸反向代理，所以特別記錄下來，藉此加深理解。過程中，我發現反向代理在分流請求、提高安全性和優化效能方面發揮了重要作用。<br>透過這次經驗，我學習了其基本概念，也清楚如何在專案中正確配置與應用。這篇文章將整理我的學習過程與心得，希望能幫助有相同需求的開發者更快上手。</p>
+<span id="more"></span>
+<h2 id="反向代理"><a href="#反向代理" class="headerlink" title="反向代理"></a>反向代理</h2><p>在開發過程中，我們經常會遇到前端與後端分開部署的情境，這時候 反向代理 (Reverse Proxy) 就能發揮關鍵作用。這篇文章將先介紹反向代理的概念與優勢，接著再進入 Vite 設定，最後說明 Base Path 與多語系配置。</p>
+<h3 id="什麼是反向代理"><a href="#什麼是反向代理" class="headerlink" title="什麼是反向代理"></a>什麼是反向代理</h3><p>我習慣用門牌來比喻網址，那麼反向代理就像是郵局。當使用者發送請求時，這些請求不會直接送到真正的伺服器，而是先經過「郵局」(反向代理伺服器)，郵局會負責轉送請求，再將結果帶回來給使用者。</p>
+<p>這樣的設計讓使用者無需知道真正的伺服器位置，只需與反向代理溝通即可。<br>與傳統代理的差別：</p>
+<ul>
+<li>傳統代理 (Forward Proxy)： 用戶請求代理，代理再去訪問網站（類似 VPN）。</li>
+<li>反向代理 (Reverse Proxy)： 用戶請求網站，實際上請求由代理伺服器處理，再轉發給內部伺服器。</li>
+</ul>
+<h3 id="好處是什麼"><a href="#好處是什麼" class="headerlink" title="好處是什麼"></a>好處是什麼</h3><p>那為什麼我們要多一道反向代理這個麻煩的手續呢？主要有 4 個關鍵優勢：<br>1.安全性：</p>
+<ul>
+<li>隱藏真實伺服器的 IP，避免直接攻擊（例如 DDoS）。</li>
+<li>可設定 存取控制 (Access Control)，只允許合法請求通過。</li>
+</ul>
+<p>2.效能提升：</p>
+<ul>
+<li>快取靜態資源，減少對後端的請求，提升回應速度。</li>
+<li>壓縮請求，減少頻寬消耗。</li>
+</ul>
+<p>3.負載平衡：</p>
+<ul>
+<li>分散流量 到多台伺服器，避免某台伺服器過載。</li>
+<li>可動態調整，讓高流量時網站依然穩定運行。</li>
+</ul>
+<p>4.集中管理：</p>
+<ul>
+<li>統一管理 SSL 憑證，簡化 HTTPS 配置。</li>
+<li>可設定 統一的存取控制、日誌管理，方便監控與維護。</li>
+</ul>
+<p>在開發過程中，反向代理常被用來處理 API 請求，特別是當前端與後端伺服器分開時，能有效解決 CORS 問題。</p>
+<h2 id="專案介紹及修改"><a href="#專案介紹及修改" class="headerlink" title="專案介紹及修改"></a>專案介紹及修改</h2><p>在了解了反向代理的概念後，接下來我們要來看一下我這次專案修改的部分了</p>
+<h3 id="基礎路徑（Base-Path）？"><a href="#基礎路徑（Base-Path）？" class="headerlink" title="基礎路徑（Base Path）？"></a>基礎路徑（Base Path）？</h3><p>我們一樣用門牌來比喻基礎路徑，以這個專案<code>/faq</code>為例，代表我的專案會是在<code>example.com/faq</code> 這個地址，我們所有的靜態資源都會從這個地址去找。常見的網站架構可能是這樣：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">example.com/       <span class="comment">#主網站</span></span><br><span class="line">example.com/faq/   <span class="comment">#FAQ</span></span><br><span class="line">example.com/admin  <span class="comment">#後台</span></span><br></pre></td></tr></table></figure>
+
+<p>在這種情境下，每個子系統都是獨立應用，需要各自的靜態資源。因此，我們透過 base 設定來區隔資源路徑，確保不同應用之間不會互相干擾。</p>
+<h3 id="Vite設定"><a href="#Vite設定" class="headerlink" title="Vite設定"></a>Vite設定</h3><p>因為我的專案是用vite，所以我必須要到<code>vite.config.ts</code>這隻檔案去做兩個設定：<br>1.開發環境的代理設定（Development Proxy）<br>如果我們的 API 伺服器位於 <code>https://backend.example.com</code>，我們希望開發時透過 <code>/api</code> 來轉發請求，可以這樣設定：</p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="title function_">defineConfig</span>(&#123;</span><br><span class="line">  <span class="attr">server</span>: &#123;</span><br><span class="line">    <span class="attr">proxy</span>: &#123;</span><br><span class="line">      <span class="string">&#x27;/api&#x27;</span>: &#123;</span><br><span class="line">        <span class="attr">target</span>: <span class="string">&#x27;&lt;https://backend.example.com&gt;&#x27;</span>,</span><br><span class="line">        <span class="attr">changeOrigin</span>: <span class="literal">true</span>,</span><br><span class="line">        <span class="attr">rewrite</span>: <span class="function">(<span class="params">path</span>) =&gt;</span> path.<span class="title function_">replace</span>(<span class="regexp">/^\\/</span>api/, <span class="string">&#x27;&#x27;</span>)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>2.基礎路徑設定（Base Path Configuration）</p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="title function_">defineConfig</span>(&#123;</span><br><span class="line">  <span class="attr">base</span>: <span class="string">&#x27;/faq/&#x27;</span>,    <span class="comment">// 設定基礎路徑</span></span><br><span class="line">  <span class="comment">// ...其他設定</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>這樣做有兩個主要目的：</p>
+<ul>
+<li>讓 Vite 知道應用程式會部署在 &#x2F;faq&#x2F;，確保產生的 HTML、CSS、JS 路徑正確。</li>
+<li>所有靜態資源都會從 &#x2F;faq&#x2F; 開始尋找，避免部署時發生 404 錯誤。<br>設定前後的變化：</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 設定前的資源路徑</span></span><br><span class="line">example.com/main.js</span><br><span class="line">example.com/style.css</span><br><span class="line"></span><br><span class="line"><span class="comment"># 設定後的資源路徑</span></span><br><span class="line">example.com/faq/main.js</span><br><span class="line">example.com/faq/style.css</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>如果不設定 base，Vite 預設會讓資源路徑從 &#x2F; 載入，當專案部署到 &#x2F;faq&#x2F; 這樣的子目錄時，所有靜態資源會無法正確載入，造成錯誤。<br>之後我們的網站長這樣：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">example.com/             <span class="comment"># 主網站</span></span><br><span class="line">example.com/faq/         <span class="comment"># FAQ 系統（你的專案）</span></span><br><span class="line">example.com/admin/       <span class="comment"># 後台管理系統</span></span><br><span class="line">example.com/shop/        <span class="comment"># 購物系統</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>每個子系統都是獨立應用</li>
+<li>每個子系統都需要各自的靜態資源</li>
+<li>透過base的設定來區隔資源路徑(這也是這次的主要目的之一)</li>
+</ul>
+<h3 id="多語系-i18n-設定"><a href="#多語系-i18n-設定" class="headerlink" title="多語系(i18n)設定"></a>多語系(i18n)設定</h3><p>i18n是一套多語系轉換常用到的套件，非常值得花一個篇幅來介紹，但本章的重點不是在此，所以只講這次修改到的地方，這次的修改重點在於調整語系檔案的載入方式，以減少不必要的資源下載。</p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">i18n.<span class="title function_">init</span>(&#123;</span><br><span class="line">  <span class="attr">ns</span>: [<span class="string">&#x27;common&#x27;</span>, <span class="string">&#x27;feature&#x27;</span>],  <span class="comment">// namespace(命名空間)</span></span><br><span class="line">  <span class="attr">defaultNS</span>: <span class="string">&#x27;common&#x27;</span>,        <span class="comment">// 預設命名空間</span></span><br><span class="line">  <span class="attr">backend</span>: &#123;</span><br><span class="line">    <span class="attr">loadPath</span>: <span class="string">&quot;faq/locales/&#123;&#123;lng&#125;&#125;/&#123;&#123;ns&#125;&#125;.json&quot;</span>,  <span class="comment">// 語系檔案路徑</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>這是一個動態路徑模板，用來告訴 i18n 要去哪裡找語系檔案：</p>
+<ul>
+<li><code>&#123;&#123;lng&#125;&#125;</code>是我們的語系，例如：zh-TW、en-US等等</li>
+<li><code>&#123;&#123;ns&#125;&#125;</code>是我們的命名空間的變數，這個專案有兩個 feature 跟 common<br>這樣設定完後，我們的結構長這樣：</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">faq/locales/</span><br><span class="line">├── en-US/</span><br><span class="line">│   ├── common.json    <span class="comment"># 共用翻譯</span></span><br><span class="line">│   └── feature.json   <span class="comment"># 功能翻譯</span></span><br><span class="line">└── zh-TW/</span><br><span class="line">    ├── common.json</span><br><span class="line">    └── feature.json</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>至於為什麼要這樣改？因為 原本的語系檔案過大，會一次載入所有語言與功能翻譯，導致初次加載時間變長。透過拆分，我們可以只載入當前語系所需的部分，大幅提升效能。</p>
+<h2 id="後記"><a href="#後記" class="headerlink" title="後記"></a>後記</h2><p>這次的 FAQ 專案讓我認識反向代理以及他的必要性。說真的，一開始接觸反向代理時，我也覺得這概念有點抽象 - 為什麼需要一個「中間人」來處理請求呢？<br>但當我實際在專案中使用 Nginx 作為反向代理後，才慢慢的理解它。我們可以想像 Nginx 就像是一個超級管家，幫我們：</p>
+<ul>
+<li>管理所有靜態檔案（JS、CSS）的存放位置</li>
+<li>處理多語系檔案的請求</li>
+<li>將 API 請求轉發到對的地方</li>
+</ul>
+<p>最讓我驚豔的是，這個「管家」不只是單純地轉發請求而已，它還：</p>
+<ul>
+<li>幫我們擋掉一些可能的攻擊（增加安全性）</li>
+<li>幫忙分散伺服器的負擔（負載平衡）</li>
+<li>透過快取來加速response的速度</li>
+</ul>
+<p>經過這次的實作，我不只學會了如何設定專案的基礎路徑（base path）和處理多語系載入，更重要的是理解了為什麼大型專案都需要反向代理這樣的架構。雖然設定過程中遇到了一些坑，但解決這些問題的過程也讓我學到很多。<br>希望這篇筆記對其他正在學習的前端工程師有幫助。有時候，一個看似複雜的概念，實作過後才發現：「原來是這樣啊！」</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E8%87%AA%E6%88%91%E6%88%90%E9%95%B7/" rel="tag"># 自我成長</a>
+              <a href="/tags/%E7%A8%8B%E5%BC%8F%E5%B0%8F%E6%9C%AD/" rel="tag"># 程式小札</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/02/13/2024%E9%90%B5%E4%BA%BA%E8%B3%BD-2025-02-13-day32/" rel="prev" title="『Day 32』完成後感言">
+      <i class="fa fa-chevron-left"></i> 『Day 32』完成後感言
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86"><span class="nav-number">2.</span> <span class="nav-text">反向代理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E9%BA%BC%E6%98%AF%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86"><span class="nav-number">2.1.</span> <span class="nav-text">什麼是反向代理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A5%BD%E8%99%95%E6%98%AF%E4%BB%80%E9%BA%BC"><span class="nav-number">2.2.</span> <span class="nav-text">好處是什麼</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%88%E6%A1%88%E4%BB%8B%E7%B4%B9%E5%8F%8A%E4%BF%AE%E6%94%B9"><span class="nav-number">3.</span> <span class="nav-text">專案介紹及修改</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E7%A4%8E%E8%B7%AF%E5%BE%91%EF%BC%88Base-Path%EF%BC%89%EF%BC%9F"><span class="nav-number">3.1.</span> <span class="nav-text">基礎路徑（Base Path）？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Vite%E8%A8%AD%E5%AE%9A"><span class="nav-number">3.2.</span> <span class="nav-text">Vite設定</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E8%AA%9E%E7%B3%BB-i18n-%E8%A8%AD%E5%AE%9A"><span class="nav-number">3.3.</span> <span class="nav-text">多語系(i18n)設定</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BE%8C%E8%A8%98"><span class="nav-number">4.</span> <span class="nav-text">後記</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Jeff"
+      src="/uploads/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Jeff</p>
+  <div class="site-description" itemprop="description">這是一個紀錄自己成長的地方</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">154</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jeff0518" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jeff0518" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:cycivs07@icloud.com" title="E-Mail → mailto:cycivs07@icloud.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jeff</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
